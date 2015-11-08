@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="textcolorwhite">@android:color/white</color>
     <color name="textcolorblack">@android:color/black</color>
+    <color name="googlebackcolor">#db4a37</color>
+    <color name="facebookbackcolor">1364b5</color>
 </resources>

@@ -12,27 +12,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
@@ -57,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 //    TextInputLayout passwordWrapper;
 
     private CallbackManager callbackManager;
-    private LoginButton fbLoginButton;
+
     ImageButton iv_close_login;
 
     private Button btnLogin, btnSignup;
@@ -80,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     /* Should we automatically resolve ConnectionResults when possible? */
     private boolean mShouldResolve = false;
 
-    private SignInButton mSignInButton;
+    private Button mSignInButton;
     private TextView mStatus;
     TextInputLayout usernameWrapper;
     TextInputLayout passwordWrapper;
@@ -109,68 +99,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btnSignup.setOnClickListener(this);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(this);
-        mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        mSignInButton = (Button) findViewById(R.id.sign_in_button);
         mSignInButton.setOnClickListener(this);
 
 
-        fbLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
-        fbLoginButton.setReadPermissions("public_profile");
-        fbLoginButton.setReadPermissions("email");
-//        fbLoginButton.setReadPermissions(Arrays.asList("email", "user_photos", "public_profile"));
-        fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                final String token = loginResult.getAccessToken().getToken();
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject me, GraphResponse response) {
-                                if (response.getError() != null) {
-                                    // handle error
-                                } else {
-                                    String email = me.optString("email");
-                                    System.out.println(me);
-                                    try {
-                                        String accessToken = AccessToken.getCurrentAccessToken().getToken();
-                                        Log.d("accessToken", accessToken);
-//                                        if (me.has("email"))
-                                        doSignup1(me.getString("name"), Constants.FB, me.getString("id"), token, me.optString("email"));
-//                                        else
-//                                            doSignup1(me.getString("name"), Constants.FB, me.getString("id"), token, "");
-                                        LoginManager.getInstance().logOut();
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-//                                    Intent i = new Intent(this, SignUpActivity.class);
-//                                    startActivity(new Intent(LoginActivity.this, SignUpActivity.class).putExtra("json", me.toString()));
-                                }
-                            }
-                        });
-                Bundle parameters = new Bundle();
-                parameters
-                        .putString("fields",
-                                "id,name, email, birthday,gender,first_name,last_name");
-                request.setParameters(parameters);
-                request.executeAsync();
-
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(getApplicationContext(), "Login cancelled by user!", Toast.LENGTH_LONG).show();
-                System.out.println("Facebook Login failed!!");
-
-            }
-
-            @Override
-            public void onError(FacebookException e) {
-                Toast.makeText(getApplicationContext(), "Login unsuccessful!", Toast.LENGTH_LONG).show();
-                System.out.println("Facebook Login failed!!");
-            }
-
-
-        });
     }
 
 
@@ -300,7 +232,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
                 break;
             case R.id.btnSignup:
-                startActivity(new Intent(getBaseContext(), SignUpActivity.class));
+//                startActivity(new Intent(getBaseContext(), SignUpActivity.class));
                 finish();
                 break;
             case R.id.btnLogin:
@@ -370,7 +302,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             if (result != null) {
                 // Successfully retrieved ID Token
                 googlePlusLogout();
-                doSignup1(username, Constants.GOOGLE, email, result, email);
+//                doSignup1(username, Constants.GOOGLE, email, result, email);
 //            public void doSignup1(String name, String flag, String authenticatedId, String token) {
 
             } else {
@@ -442,7 +374,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_MNO, response.getJSONArray("data").getJSONObject(0).getString("mobile_no"));
 
                                 SharedPreferenceUtil.save();
-                                startActivity(new Intent(getBaseContext(), OTPActivity.class).putExtra("flag", false));
+//                                startActivity(new Intent(getBaseContext(), OTPActivity.class).putExtra("flag", false));
                                 finish();
                             } else {
                                 loginResponse(response);
@@ -456,7 +388,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONArray("data").getJSONObject(0).getString("user_id"));
                                 SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_MNO);
                                 SharedPreferenceUtil.save();
-                                startActivity(new Intent(getBaseContext(), OTPActivity.class).putExtra("flag", false));
+//                                startActivity(new Intent(getBaseContext(), OTPActivity.class).putExtra("flag", false));
                                 finish();
                             } else {
                                 loginResponse(response);

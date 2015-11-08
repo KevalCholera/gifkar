@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -42,8 +43,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                     />
+                    android:layout_weight="2" />
 
                 <View
                     android:layout_width="0dp"
@@ -64,8 +64,7 @@
                 <ImageView
                     android:layout_width="@dimen/image_icn_login_32"
                     android:layout_height="@dimen/image_icn_login_32"
-                    android:layout_marginTop="@dimen/margin_5"
-                     />
+                    android:layout_marginTop="@dimen/margin_5" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/ti_usernameWrapper_Login"
@@ -100,8 +99,7 @@
                 <ImageView
                     android:layout_width="@dimen/image_icn_login_32"
                     android:layout_height="@dimen/image_icn_login_32"
-                    android:layout_marginTop="@dimen/margin_5"
-                    />
+                    android:layout_marginTop="@dimen/margin_5" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/ti_passwordWrapper_Login"
@@ -187,20 +185,33 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.google.android.gms.common.SignInButton
-                    android:id="@+id/sign_in_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:text="@string/common_signin_button_text_long" />
 
-                <com.facebook.login.widget.LoginButton
-                    android:id="@+id/fb_login_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                <Button
+                    android:background=""
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingBottom="10dp"
-                    android:paddingTop="10dp" />
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_google"
+                    android:text="@string/google_signup"/>
+
+                <!--<com.facebook.login.widget.LoginButton-->
+                <!--android:id="@+id/fb_login_button"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:paddingBottom="10dp"-->
+                <!--android:paddingTop="10dp" />-->
+                <fragment
+                    android:id="@+id/titles"
+                    class="com.smartsense.gifkar.FacebookLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:layout="@layout/fb_button" />
+
+
             </LinearLayout>
 
 
