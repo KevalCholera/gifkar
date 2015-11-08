@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -43,12 +42,8 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, Response.Listener<JSONObject>, Response.ErrorListener, View.OnClickListener {
 
-//    TextInputLayout usernameWrapper;
-//    TextInputLayout passwordWrapper;
 
     private CallbackManager callbackManager;
-
-    ImageButton iv_close_login;
 
     private Button btnLogin, btnSignup;
 
@@ -72,36 +67,34 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private Button mSignInButton;
     private TextView mStatus;
-    TextInputLayout usernameWrapper;
-    TextInputLayout passwordWrapper;
 
+    EditText etInputemail;
+    EditText etInputPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
         FacebookSdk.sdkInitialize(getApplicationContext());
-
         callbackManager = CallbackManager.Factory.create();
 
-        setContentView(R.layout.activity_login);
+        // Input Email and Password field
+        etInputemail = (EditText) findViewById(R.id.etLoginEmailId);
+        etInputPassword = (EditText) findViewById(R.id.etLoginPassword);
 
-        iv_close_login = (ImageButton) findViewById(R.id.iv_close_login);
-        iv_close_login.setOnClickListener(this);
-
-
-        usernameWrapper = (TextInputLayout) findViewById(R.id.ti_usernameWrapper_Login);
-        passwordWrapper = (TextInputLayout) findViewById(R.id.ti_passwordWrapper_Login);
-
+        // Forgot Password
         tvLoginForgotPwd = (TextView) findViewById(R.id.tvLoginForgotPwd);
         tvLoginForgotPwd.setOnClickListener(this);
+        // Sign Up button
         btnSignup = (Button) findViewById(R.id.btnSignup);
         btnSignup.setOnClickListener(this);
+        // Login Button
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(this);
+        //Google Sign in button
         mSignInButton = (Button) findViewById(R.id.sign_in_button);
         mSignInButton.setOnClickListener(this);
-
 
     }
 
@@ -189,39 +182,23 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 //        final String SCOPES = "https://www.googleapis.com/auth/plus.login ";
         final String SCOPES = "https://www.googleapis.com/auth/userinfo.email";
 
-//        try {
-//            token = GoogleAuthUtil.getToken(getApplicationContext(), email, "oauth2:" + SCOPES);
-//            Log.d("Access Token", token);
-//        } catch (IOException | GoogleAuthException e) {
-//            e.printStackTrace();
-//        }
 
         new GetIdTokenTask().execute(email, username);
-//        googlePlusLogout();
-//
-//        doSignup1(currentUser.getDisplayName(), Constants.GOOGLE, email, token);
-//        Intent i = new Intent(this, SignUpActivity.class).putExtra("json", "").putExtra("name", currentUser.getDisplayName()).putExtra("email", email).putExtra("url", urlImage);
-//        startActivity(i);
-
-//        finish();
     }
 
     @Override
     public void onClick(View view) {
-        String emailId = usernameWrapper.getEditText().getText().toString().trim();
+        String emailId = etInputemail.getText().toString();
         switch (view.getId()) {
-            case R.id.iv_close_login:
-                finish();
-                break;
             case R.id.tvLoginForgotPwd:
                 CommonUtil.closeKeyboard(LoginActivity.this);
                 if (!CommonUtil.isInternet(this))
                     CommonUtil.alertBox(this, "Error", getResources().getString(R.string.nointernet_try_again_msg));
                 else {
-                    if (!CommonUtil.isValidEmail(emailId)) {
-                        usernameWrapper.getEditText().setError(getString(R.string.wrn_email));
-                    } else if (TextUtils.isEmpty(emailId)) {
-                        passwordWrapper.getEditText().setError(getString(R.string.wrn_em));
+                    if (TextUtils.isEmpty(emailId)) {
+                        etInputemail.setError(getString(R.string.wrn_em));
+                    } else if (!CommonUtil.isValidEmail(emailId)) {
+                        etInputemail.setError(getString(R.string.wrn_email));
                     } else {
                         try {
                             doForgot(emailId);
@@ -239,15 +216,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 CommonUtil.showProgressDialog(this, "Wait...");
                 CommonUtil.closeKeyboard(LoginActivity.this);
 
-                String password = passwordWrapper.getEditText().getText().toString().trim();
-                if (!CommonUtil.isValidEmail(emailId)) {
-                    usernameWrapper.getEditText().setError(getString(R.string.wrn_email));
-                } else if (TextUtils.isEmpty(emailId)) {
-                    passwordWrapper.getEditText().setError(getString(R.string.wrn_em));
+                String password = etInputPassword.getText().toString().trim();
+                if (TextUtils.isEmpty(emailId)) {
+                    etInputemail.setError(getString(R.string.wrn_em));
+                } else if (!CommonUtil.isValidEmail(emailId)) {
+                    etInputemail.setError(getString(R.string.wrn_email));
                 } else if (TextUtils.isEmpty(password)) {
-                    passwordWrapper.getEditText().setError(getString(R.string.wrn_pwd));
+                    etInputPassword.setError(getString(R.string.wrn_pwd));
                 } else if (password.length() < 6) {
-                    passwordWrapper.getEditText().setError(getString(R.string.wrn_pwd_len));
+                    etInputPassword.setError(getString(R.string.wrn_pwd_len));
                 } else {
                     try {
                         if (!CommonUtil.isInternet(this))
@@ -268,8 +245,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     mGoogleApiClient.connect();
                 }
                 break;
-//            case R.id.iv_close_login:
-//                break;
             default:
         }
 

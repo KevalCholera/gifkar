@@ -9,8 +9,15 @@
     <Button
         android:id="@+id/fb_login_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Facebook"
-        android:textAllCaps="false" />
+        android:layout_height="match_parent"
+        android:background="@color/facebookbackcolor"
+        android:drawableLeft="@drawable/ic_facebook"
+        android:drawablePadding="@dimen/margin_5"
+        android:drawableStart="@drawable/ic_facebook"
+        android:maxHeight="50dp"
+        android:paddingLeft="@dimen/padding_10"
+        android:paddingRight="@dimen/padding_10"
+        android:text="@string/fb_signup"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>

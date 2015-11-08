@@ -6,5 +6,8 @@
     <color name="textcolorwhite">@android:color/white</color>
     <color name="textcolorblack">@android:color/black</color>
     <color name="googlebackcolor">#db4a37</color>
-    <color name="facebookbackcolor">1364b5</color>
+    <color name="facebookbackcolor">#1364b5</color>
+    <color name="loginedittext">#809b9b9b</color>
+    <color name="btn_orange">#ec9301</color>
+    <color name="btn_blue">#00aff0</color>
 </resources>
