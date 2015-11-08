@@ -1,0 +1,104 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".DeliveryJunction">
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/ll_scrollview_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <FrameLayout
+                android:id="@+id/fl_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <include
+                    android:id="@+id/newfeaturesView"
+                    layout="@layout/new_features"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+
+                    android:id="@+id/ll_city_view_dj"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center"
+                    android:background="#80000000"
+                    android:fitsSystemWindows="true"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/margin_5"
+                        android:src="@drawable/ic_location" />
+
+                    <TextView
+                        android:id="@+id/tv_city_name_dj"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textColor="@color/textcolorwhite"
+                        android:textSize="@dimen/text_16" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:layout_marginRight="@dimen/margin_5"
+                        android:src="@drawable/ic_edit" />
+                </LinearLayout>
+
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="@dimen/padding_5"
+                android:text="@string/shop_for"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <!--<ListView-->
+            <!--android:id="@+id/list_category"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="@dimen/margin_5"-->
+            <!--android:focusable="false"-->
+            <!--android:isScrollContainer="false" />-->
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
