@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
+    <!--<color name="colorPrimary">#f9f9f7</color>-->
     <color name="colorPrimaryDark">#303F9F</color>
+    <!--<color name="colorPrimaryDark">#f9f9f7</color>-->
     <color name="colorAccent">#FF4081</color>
     <color name="textcolorwhite">@android:color/white</color>
     <color name="textcolorblack">@android:color/black</color>
@@ -10,4 +12,8 @@
     <color name="loginedittext">#809b9b9b</color>
     <color name="btn_orange">#ec9301</color>
     <color name="btn_blue">#00aff0</color>
+    <color name="activity_bg">#e4e5e5</color>
+    <color name="tab_idicator">#01b0f1</color>
+    <color name="tab_normal_text">#606060</color>
+    <color name="textcolor">#4d4d4d</color>
 </resources>

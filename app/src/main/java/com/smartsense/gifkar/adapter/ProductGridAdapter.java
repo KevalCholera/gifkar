@@ -116,7 +116,9 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
 
     @Override
     public int getItemCount() {
-        return dataArray.length();
+
+//        return dataArray.length();
+        return 3;
     }
 
 

@@ -35,6 +35,7 @@ public class SplashActivity extends AppCompatActivity {
                     Thread.sleep(2000);
 //                    if (SharedPreferenceUtil.getBoolean(Constants.PrefKeys.PREF_ACCESS_TOKEN, false))
                     if (CommonUtil.isInternet(SplashActivity.this)) {
+//                        startActivity(new Intent(getBaseContext(), GifkarActivity.class));
                         startActivity(new Intent(getBaseContext(), LoginActivity.class));
                     } else
                         startActivity(new Intent(getBaseContext(), NoInternetConnection.class));

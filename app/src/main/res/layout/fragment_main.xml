@@ -1,104 +1,106 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:fitsSystemWindows="true"--><!--tools:context=".DeliveryJunction">-->
+
+
+<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:descendantFocusability="beforeDescendants"--><!--android:fillViewport="true"--><!--android:fitsSystemWindows="true"--><!--android:focusable="true"--><!--android:focusableInTouchMode="true"--><!--android:orientation="vertical"--><!--tools:context=".DeliveryJunction">-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlMain"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".DeliveryJunction">
+    android:layout_height="match_parent">
 
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        android:id="@+id/ll_scrollview_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvGreetText"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:weightSum="2"
+        tools:context=".DeliveryJunction">
+
+        <!--<FrameLayout-->
+        <!--android:id="@+id/fl_category"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:visibility="visible">-->
 
 
         <LinearLayout
-            android:id="@+id/ll_scrollview_layout"
+
+            android:id="@+id/ll_city_view_dj"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical"
-            android:weightSum="2">
+            android:layout_gravity="top|center"
+            android:background="#ffffff"
+            android:fitsSystemWindows="true"
+            android:orientation="horizontal">
 
-            <FrameLayout
-                android:id="@+id/fl_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible">
-
-                <include
-                    android:id="@+id/newfeaturesView"
-                    layout="@layout/new_features"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-
-                    android:id="@+id/ll_city_view_dj"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|center"
-                    android:background="#80000000"
-                    android:fitsSystemWindows="true"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/margin_5"
-                        android:src="@drawable/ic_location" />
-
-                    <TextView
-                        android:id="@+id/tv_city_name_dj"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginRight="3dp"
-                        android:layout_weight="1"
-                        android:padding="10dp"
-                        android:singleLine="true"
-                        android:text=""
-                        android:textColor="@color/textcolorwhite"
-                        android:textSize="@dimen/text_16" />
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="right|center_vertical"
-                        android:layout_marginRight="@dimen/margin_5"
-                        android:src="@drawable/ic_edit" />
-                </LinearLayout>
-
-
-            </FrameLayout>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_5"
+                android:src="@drawable/ic_location" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_city_name_dj"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:focusable="true"
-                android:gravity="center"
-                android:padding="@dimen/padding_5"
-                android:text="@string/shop_for"
-                android:textStyle="bold" />
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:text="Select City"
+                android:textColor="@color/tab_normal_text"
+                android:textSize="@dimen/text_16" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <!--<ListView-->
-            <!--android:id="@+id/list_category"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_margin="@dimen/margin_5"-->
-            <!--android:focusable="false"-->
-            <!--android:isScrollContainer="false" />-->
-
-
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:layout_marginRight="@dimen/margin_5"
+                android:src="@drawable/ic_edit" />
         </LinearLayout>
 
-    </ScrollView>
+        <include
+            android:id="@+id/newfeaturesView"
+            layout="@layout/new_features"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-</android.support.design.widget.CoordinatorLayout>
+
+        <!--</FrameLayout>-->
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabGravity="center"
+            app:tabMode="scrollable" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvGreetText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#8001b0f1"
+        android:gravity="center"
+        android:padding="@dimen/padding_10"
+        android:text="@string/greet_text_main"
+        android:textColor="@color/textcolorwhite"
+        android:textSize="@dimen/text_16" />
+</RelativeLayout><!--</ScrollView>-->
+
+    <!--</android.support.design.widget.CoordinatorLayout>-->

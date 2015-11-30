@@ -16,8 +16,16 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
@@ -35,6 +43,7 @@ import com.smartsense.gifkar.utill.JsonErrorShow;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -96,7 +105,66 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mSignInButton = (Button) findViewById(R.id.sign_in_button);
         mSignInButton.setOnClickListener(this);
 
+        Button loginButton = (Button) findViewById(R.id.fb_login_button);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Login with facebook on clicking custom button
+                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "email"));
+            }
+        });
+        LoginManager.getInstance().registerCallback(callbackManager, callback);
+
     }
+
+    private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            AccessToken accessToken = loginResult.getAccessToken();
+            Profile profile = Profile.getCurrentProfile();
+//            displayMessage(profile);
+            GraphRequest request = GraphRequest.newMeRequest(
+                    loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(JSONObject me, GraphResponse response) {
+
+                            Log.d("All requested data", me.toString());
+                            if (response.getError() != null) {
+                                // handle error
+                            } else {
+                                String email = me.optString("email");
+                                Log.d("All requested data", me.toString());
+                                try {
+                                    String accessToken = AccessToken.getCurrentAccessToken().getToken();
+                                    Log.d("accessToken", accessToken);
+                                    // Logout immediately after fetching data
+                                    LoginManager.getInstance().logOut();
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+//                                    Intent i = new Intent(this, SignUpActivity.class);
+//                                    startActivity(new Intent(LoginActivity.this, SignUpActivity.class).putExtra("json", me.toString()));
+                            }
+                        }
+                    });
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name, email, birthday,gender,first_name,last_name");
+            request.setParameters(parameters);
+            request.executeAsync();
+
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+
+        @Override
+        public void onError(FacebookException e) {
+
+        }
+    };
 
 
     public void doLogin(String email, String passsword) {
@@ -144,7 +212,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
-
+        Log.d("All requested data", "Result");
         if (requestCode == RC_SIGN_IN) {
             // If the error resolution was not successful we should not resolve further.
             if (resultCode != RESULT_OK) {

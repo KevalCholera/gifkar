@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_weight="2"
+        android:layout_weight="4"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -24,18 +24,42 @@
             android:id="@+id/tv_name_product_ele"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/padding_8"
             android:singleLine="true"
             android:text="Product Name"
-            android:textColor="@color/textcolorblack"
-            android:textSize="@dimen/text_18" />
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_detail_product_ele"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="Prahladnagar Main Road \n Delivery Minimum Time : 10 Minutes | Delivery Maximum Time : 20 Minutes \n Minimum Order : Rs.100" />
+            android:text="Prahladnagar Main Road \nDelivery Minimum Time : 10 Minutes | Delivery Maximum Time : 20 Minutes \nMinimum Order : Rs.100"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/text_10" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.03"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:textColor="@color/textcolorwhite"
+            android:background="@drawable/button_blue_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5.0" />
+
+        <TextView
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100% On Time" />
     </LinearLayout>
 
 </LinearLayout>
