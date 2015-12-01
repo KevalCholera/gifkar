@@ -20,7 +20,8 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:fontFamily="normal"
             android:id="@+id/tv_name_product_ele"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +32,8 @@
             android:textSize="@dimen/text_18"
             android:textStyle="bold" />
 
-        <TextView
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:fontFamily="normal"
             android:id="@+id/tv_detail_product_ele"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,14 +50,16 @@
         android:gravity="end"
         android:orientation="vertical">
 
-        <TextView
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:fontFamily="normal"
             android:textColor="@color/textcolorwhite"
             android:background="@drawable/button_blue_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="5.0" />
 
-        <TextView
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:fontFamily="normal"
             android:layout_marginTop="@dimen/margin_8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -11,11 +11,12 @@
     tools:context="com.smartsense.gifkar.ForgotPasswordActivity">
 
     <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        android:fontFamily="normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="2dp"
-        android:fontFamily="normal"
+
         android:padding="@dimen/padding_8"
         android:text="@string/otp_head"
         android:textColor="@color/mainColor" />
