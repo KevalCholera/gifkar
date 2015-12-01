@@ -6,7 +6,7 @@ public class Constants {
     public static final int STATUS_FAIL = 500;
     public static final int STATUS_CHECK = 201;
     public static final String DB_PATH = "/data/data/com.smartsense.deliveryjunction/databases/";
-    public static final String BASE_URL = "http://104.43.15.1:8025/services/";
+    public static final String BASE_URL = "https://gifkar.cloudapp.net/";
     public static final String BASE_IMAGE_URL = "http://104.43.15.1:8025";
     public static final String PRO_TITLE = "Please Wait";
     public static final String PRO_LIST = "Syncing Process Running...";
@@ -15,7 +15,8 @@ public class Constants {
     public static final String GOOGLE = "2  ";
     public static final String FB = "1";
     public static final String ONLINE_PAYMENT = "1";
-    public static final String COD = "2  ";
+    public static final String COD = "2";
+    public static final String DEFAULT_TOKEN ="Uxl5lRYZHwx2jDpVsUoANJtRK5fNffzRewwbQjjd";
     // public static final String BASE_URL =
     // "http://ywtest.cloudapp.net:8080/SupremeCab";
 

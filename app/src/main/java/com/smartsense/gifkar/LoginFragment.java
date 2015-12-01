@@ -1,13 +1,21 @@
 package com.smartsense.gifkar;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,12 +51,14 @@ import com.smartsense.gifkar.utill.JsonErrorShow;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+public class LoginFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, Response.Listener<JSONObject>, Response.ErrorListener, View.OnClickListener {
 
 
@@ -81,40 +91,41 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     EditText etInputPassword;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = (View) inflater.inflate(R.layout.fragment_login, container, false);
         // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        FacebookSdk.sdkInitialize(getApplicationContext());
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.fragment_login);
+        FacebookSdk.sdkInitialize(getActivity());
         callbackManager = CallbackManager.Factory.create();
 
         // Input Email and Password field
-        etInputemail = (EditText) findViewById(R.id.etLoginEmailId);
-        etInputPassword = (EditText) findViewById(R.id.etLoginPassword);
+        etInputemail = (EditText) view.findViewById(R.id.etLoginEmailId);
+        etInputPassword = (EditText) view.findViewById(R.id.etLoginPassword);
 
         // Forgot Password
-        tvLoginForgotPwd = (TextView) findViewById(R.id.tvLoginForgotPwd);
+        tvLoginForgotPwd = (TextView) view.findViewById(R.id.tvLoginForgotPwd);
         tvLoginForgotPwd.setOnClickListener(this);
         // Sign Up button
-        btnSignup = (Button) findViewById(R.id.btnSignup);
+        btnSignup = (Button) view.findViewById(R.id.btnSignup);
         btnSignup.setOnClickListener(this);
         // Login Button
-        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnLogin = (Button) view.findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(this);
         //Google Sign in button
-        mSignInButton = (Button) findViewById(R.id.sign_in_button);
+        mSignInButton = (Button) view.findViewById(R.id.sign_in_button);
         mSignInButton.setOnClickListener(this);
 
-        Button loginButton = (Button) findViewById(R.id.fb_login_button);
+        Button loginButton = (Button) view.findViewById(R.id.fb_login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Login with facebook on clicking custom button
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "email"));
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email"));
             }
         });
         LoginManager.getInstance().registerCallback(callbackManager, callback);
-
+        return view;
     }
 
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
@@ -144,7 +155,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     e.printStackTrace();
                                 }
 //                                    Intent i = new Intent(this, SignUpActivity.class);
-//                                    startActivity(new Intent(LoginActivity.this, SignUpActivity.class).putExtra("json", me.toString()));
+//                                    startActivity(new Intent(this, SignUpActivity.class).putExtra("json", me.toString()));
                             }
                         }
                     });
@@ -174,7 +185,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         params.put("event_id", String.valueOf(Constants.Events.EVENT_LOGIN));
         params.put("email_id", email);
         params.put("password", passsword);
-        CommonUtil.showProgressDialog(this, "Wait...");
+        CommonUtil.showProgressDialog(getActivity(), "Wait...");
         Log.d("login Params", params.toString());
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -188,7 +199,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Map<String, String> params = new HashMap<String, String>();
         params.put("event_id", String.valueOf(Constants.Events.EVENT_FORGOT_PASS));
         params.put("email_id", email);
-        CommonUtil.showProgressDialog(this, "Wait...");
+        CommonUtil.showProgressDialog(getActivity(), "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
@@ -197,7 +208,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
     private GoogleApiClient buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API)
@@ -215,7 +226,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d("All requested data", "Result");
         if (requestCode == RC_SIGN_IN) {
             // If the error resolution was not successful we should not resolve further.
-            if (resultCode != RESULT_OK) {
+            if (resultCode != Activity.RESULT_OK) {
                 mShouldResolve = false;
             }
 
@@ -259,9 +270,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         String emailId = etInputemail.getText().toString();
         switch (view.getId()) {
             case R.id.tvLoginForgotPwd:
-                CommonUtil.closeKeyboard(LoginActivity.this);
-                if (!CommonUtil.isInternet(this))
-                    CommonUtil.alertBox(this, "Error", getResources().getString(R.string.nointernet_try_again_msg));
+                CommonUtil.closeKeyboard(getActivity());
+                if (!CommonUtil.isInternet(getActivity()))
+                    CommonUtil.alertBox(getActivity(), "Error", getResources().getString(R.string.nointernet_try_again_msg));
                 else {
                     if (TextUtils.isEmpty(emailId)) {
                         etInputemail.setError(getString(R.string.wrn_em));
@@ -278,11 +289,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 break;
             case R.id.btnSignup:
 //                startActivity(new Intent(getBaseContext(), SignUpActivity.class));
-                finish();
+//                finish();
                 break;
             case R.id.btnLogin:
-                CommonUtil.showProgressDialog(this, "Wait...");
-                CommonUtil.closeKeyboard(LoginActivity.this);
+                CommonUtil.showProgressDialog(getActivity(), "Wait...");
+                CommonUtil.closeKeyboard(getActivity());
 
                 String password = etInputPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(emailId)) {
@@ -295,8 +306,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     etInputPassword.setError(getString(R.string.wrn_pwd_len));
                 } else {
                     try {
-                        if (!CommonUtil.isInternet(this))
-                            CommonUtil.alertBox(this, "Error", getResources().getString(R.string.nointernet_try_again_msg));
+                        if (!CommonUtil.isInternet(getActivity()))
+                            CommonUtil.alertBox(getActivity(), "Error", getResources().getString(R.string.nointernet_try_again_msg));
                         else
                             doLogin(emailId, password);
                     } catch (Exception e) {
@@ -305,8 +316,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
                 break;
             case R.id.sign_in_button:
-                if (!CommonUtil.isInternet(this))
-                    CommonUtil.alertBox(this, "Error", getResources().getString(R.string.nointernet_try_again_msg));
+                if (!CommonUtil.isInternet(getActivity()))
+                    CommonUtil.alertBox(getActivity(), "Error", getResources().getString(R.string.nointernet_try_again_msg));
                 else {
                     mGoogleApiClient = buildGoogleApiClient();
                     mShouldResolve = true;
@@ -329,7 +340,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             String scopes = "oauth2:profile email";
             //            String scopes = "audience:server:client_id:" + SERVER_CLIENT_ID; // Not the app's client ID.
             try {
-                return GoogleAuthUtil.getToken(getApplicationContext(), email, scopes);
+                return GoogleAuthUtil.getToken(getActivity(), email, scopes);
             } catch (IOException e) {
                 Log.e(TAG, "Error retrieving ID token.", e);
                 return null;
@@ -381,7 +392,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (!mIsResolving && mShouldResolve) {
             if (connectionResult.hasResolution()) {
                 try {
-                    connectionResult.startResolutionForResult(this, RC_SIGN_IN);
+                    connectionResult.startResolutionForResult(getActivity(), RC_SIGN_IN);
                     mIsResolving = true;
                 } catch (IntentSender.SendIntentException e) {
                     Log.e(TAG, "Could not resolve ConnectionResult.", e);
@@ -418,13 +429,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                                 SharedPreferenceUtil.save();
 //                                startActivity(new Intent(getBaseContext(), OTPActivity.class).putExtra("flag", false));
-                                finish();
+//                                finish();
                             } else {
                                 loginResponse(response);
                             }
                             break;
                         case Constants.Events.EVENT_FORGOT_PASS:
-                            CommonUtil.alertBox(LoginActivity.this, "Success", response.optString("message"));
+                            CommonUtil.alertBox(getActivity(), "Success", response.optString("message"));
                             break;
                         case Constants.Events.EVENT_SIGNUP:
                             if (response.getJSONArray("data").getJSONObject(0).getString("is_verify").equals("0")) {
@@ -432,15 +443,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                 SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_MNO);
                                 SharedPreferenceUtil.save();
 //                                startActivity(new Intent(getBaseContext(), OTPActivity.class).putExtra("flag", false));
-                                finish();
+//                                finish();
                             } else {
                                 loginResponse(response);
                             }
-//                            CommonUtil.alertBox(LoginActivity.this, "Success", response.optString("message"));
+//                            CommonUtil.alertBox(this, "Success", response.optString("message"));
                             break;
                     }
                 } else {
-                    JsonErrorShow.jsonErrorShow(response, this);
+                    JsonErrorShow.jsonErrorShow(response, getActivity());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -463,9 +474,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_DJ_WALLET, response.getJSONArray("data").getJSONObject(0).getString("wallet_amount"));
             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getString("token"));
             SharedPreferenceUtil.save();
-            if (getIntent().getBooleanExtra("check", true))
+//            if (getIntent().getBooleanExtra("check", true))
 //                startActivity(new Intent(getBaseContext(), DeliveryJunction.class));
-                finish();
+//                finish();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -481,12 +492,38 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         params.put("email", email);
         params.put("token", token);
         params.put("event_id", String.valueOf(Constants.Events.EVENT_SIGNUP));
-        CommonUtil.showProgressDialog(this, "Wait...");
+        CommonUtil.showProgressDialog(getActivity(), "Wait...");
         Log.d("params", params.toString());
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
 
+    }
+
+    public void doTest() {
+        final String tag = "test";
+        String url = "https://gifkar.cloudapp.net/test";
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+
+    }
+
+
+    public static void printHashKey(Context pContext) {
+        try {
+            PackageInfo info = pContext.getPackageManager().getPackageInfo(pContext.getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String hashKey = new String(Base64.encode(md.digest(), 0));
+                Log.i(TAG, "printHashKey() Hash Key: " + hashKey);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(TAG, "printHashKey()", e);
+        } catch (Exception e) {
+            Log.e(TAG, "printHashKey()", e);
+        }
     }
 
 }

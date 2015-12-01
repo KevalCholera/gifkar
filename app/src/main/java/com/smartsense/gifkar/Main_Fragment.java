@@ -50,6 +50,7 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) newFeaturesView.getLayoutParams();
         params.height = (int) (height / 3.5);
         newFeaturesView.setLayoutParams(params);
+        setReference(newFeaturesView);
 
         // tablayout and viewpager of category
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager_main);
@@ -58,7 +59,7 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
         tabLayout.setTabTextColors(getResources().getColor(R.color.tab_normal_text), getResources().getColor(R.color.tab_idicator));
         setupViewPager(viewPager);
 
-        setReference(newFeaturesView);
+
 
         return rootView;
     }
