@@ -1,0 +1,40 @@
+package com.smartsense.gifkar;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class OTPActivity extends AppCompatActivity {
+    TextView tvOtpNo, tvResend, tvEditNum;
+    String countryCode = "", mobileNo = "";
+    EditText etOne, etTwo, etThree, etFour;
+    Button btOTP;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_otp);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.center_action_bar, null);
+        TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
+        titleTextView.setText(getResources().getString(R.string.screen_otp));
+        getSupportActionBar().setCustomView(v);
+        tvOtpNo = (TextView) findViewById(R.id.tvOtpNo);
+        tvResend = (TextView) findViewById(R.id.tvOtpResend);
+        tvEditNum = (TextView) findViewById(R.id.tvOtpEditNumber);
+        etOne = (EditText) findViewById(R.id.etOTPOne);
+        etTwo = (EditText) findViewById(R.id.etOTPTwo);
+        etThree = (EditText) findViewById(R.id.etOTPThree);
+        etFour = (EditText) findViewById(R.id.etOTPFour);
+        btOTP =(Button) findViewById(R.id.btnOTP);
+        countryCode = "+91";
+        mobileNo = "9999999999";
+        tvOtpNo.setText("Please Enter the SMS code that you have received on " + countryCode + " " + mobileNo);
+    }
+}

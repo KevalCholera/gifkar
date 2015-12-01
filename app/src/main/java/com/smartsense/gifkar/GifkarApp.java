@@ -12,6 +12,8 @@ import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.imageutil.BitmapCache;
 import com.smartsense.gifkar.imageutil.BitmapUtil;
 import com.smartsense.gifkar.imageutil.DiskBitmapCache;
+import com.smartsense.gifkar.textstyleutil.CooperHewittExtractor;
+import com.smartsense.gifkar.textstyleutil.TypefaceManager;
 
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -30,6 +32,7 @@ public class GifkarApp extends Application {
     public void onCreate() {
         super.onCreate();
         appInstance = this;
+        TypefaceManager.addTextStyleExtractor(CooperHewittExtractor.getInstance());
         SharedPreferenceUtil.init(this);
     }
 

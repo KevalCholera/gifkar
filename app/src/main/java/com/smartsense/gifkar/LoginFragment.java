@@ -64,7 +64,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
 
     private CallbackManager callbackManager;
 
-    private Button btnLogin, btnSignup;
+    private Button btnLogin;
 
     private static final String TAG = "GplusLogin";
 
@@ -107,8 +107,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         tvLoginForgotPwd = (TextView) view.findViewById(R.id.tvLoginForgotPwd);
         tvLoginForgotPwd.setOnClickListener(this);
         // Sign Up button
-        btnSignup = (Button) view.findViewById(R.id.btnSignup);
-        btnSignup.setOnClickListener(this);
         // Login Button
         btnLogin = (Button) view.findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(this);
@@ -270,26 +268,23 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         String emailId = etInputemail.getText().toString();
         switch (view.getId()) {
             case R.id.tvLoginForgotPwd:
-                CommonUtil.closeKeyboard(getActivity());
-                if (!CommonUtil.isInternet(getActivity()))
-                    CommonUtil.alertBox(getActivity(), "Error", getResources().getString(R.string.nointernet_try_again_msg));
-                else {
-                    if (TextUtils.isEmpty(emailId)) {
-                        etInputemail.setError(getString(R.string.wrn_em));
-                    } else if (!CommonUtil.isValidEmail(emailId)) {
-                        etInputemail.setError(getString(R.string.wrn_email));
-                    } else {
-                        try {
-                            doForgot(emailId);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                break;
-            case R.id.btnSignup:
-//                startActivity(new Intent(getBaseContext(), SignUpActivity.class));
-//                finish();
+//                CommonUtil.closeKeyboard(getActivity());
+//                if (!CommonUtil.isInternet(getActivity()))
+//                    CommonUtil.alertBox(getActivity(), "Error", getResources().getString(R.string.nointernet_try_again_msg));
+//                else {
+//                    if (TextUtils.isEmpty(emailId)) {
+//                        etInputemail.setError(getString(R.string.wrn_em));
+//                    } else if (!CommonUtil.isValidEmail(emailId)) {
+//                        etInputemail.setError(getString(R.string.wrn_email));
+//                    } else {
+//                        try {
+//                            doForgot(emailId);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+                startActivity(new Intent(getActivity(), ForgotPasswordActivity.class));
                 break;
             case R.id.btnLogin:
                 CommonUtil.showProgressDialog(getActivity(), "Wait...");

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Gifkar</string>
+    <string name="screen_forgot">Forgot Password</string>
+    <string name="screen_otp">Enter SMS Code</string>
     <string name="app_id">738684459571187</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -33,6 +35,7 @@
 
     <string name="login">Login</string>
     <string name="signup">Sign Up</string>
+    <string name="done">DONE</string>
     <string name="forgot_password_hint">Forgot Password ?</string>
     <string name="sign_up">Sign Up</string>
     <string name="signup_greet_text">Welcome to Delivery Junction. \n Serving you with Best Quality.</string>
@@ -71,17 +74,27 @@
     <string name="pay_online">Pay OnLine</string>
     <string name="add_an_address">Add an Address</string>
     <string name="internet_error">Something is wrong with your internet connection.</string>
-    <string name="fb_signup">SIGN UP WITH FACEBOOK</string>
-    <string name="google_signup">SIGN UP WITH GOOGLE PLUS</string>
+    <string name="fb_signup">SIGN IN WITH FACEBOOK</string>
+    <string name="google_signup">SIGN IN WITH GOOGLE PLUS</string>
     <string name="sign_in">Sign In</string>
     <string name="or">or</string>
-    <string name="email">Email</string>
+    <string name="email">Email/Mobile Number</string>
+    <string name="mobile">Mobile Number</string>
+    <string name="email1">Email</string>
+    <string name="skip">SKIP</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
-
+    <string name="social_account">OR SIGN IN WITH SOCIAL ACCOUNT</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="new_feature_img">New Features</string>
+    <string name="accept">I Accept</string>
+    <string name="forgot_or">OR</string>
+    <string name="otp_head">VERIFYING YOUR NUMBER</string>
+    <string name="otp_resend">RESEND</string>
+    <string name="otp_editno">EDIT NUMBER</string>
+    <string name="terms"> <u>Terms &amp; Conditions</u></string>
+    <string name="forgot_text"> Enter Email/Mobile number to reset your Password</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
