@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.smartsense.gifkar.utill.Constants;
+
 public class OTPActivity extends AppCompatActivity implements View.OnClickListener {
     TextView tvOtpNo, tvResend, tvEditNum;
     String countryCode = "", mobileNo = "";
@@ -36,7 +38,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         etTwo = (EditText) findViewById(R.id.etOTPTwo);
         etThree = (EditText) findViewById(R.id.etOTPThree);
         etFour = (EditText) findViewById(R.id.etOTPFour);
-        btOTP =(Button) findViewById(R.id.btnOTP);
+        btOTP = (Button) findViewById(R.id.btnOTP);
         btOTP.setOnClickListener(this);
         countryCode = "+91";
         mobileNo = "9999999999";
@@ -48,8 +50,12 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.tvOtpEditNumber:
                 startActivity(new Intent(this, MobileNoActivity.class));
-            case  R.id.btnOTP:
-                startActivity(new Intent(this, MobileNoActivity.class));
+                break;
+            case R.id.btnOTP:
+                if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT)
+                    startActivity(new Intent(this, ChangePasswordActivity.class));
+                else
+                    startActivity(new Intent(this, GifkarActivity.class));
                 break;
             default:
         }

@@ -17,15 +17,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <com.smartsense.gifkar.textstyleutil.TypefaceEditText
                 android:id="@+id/etSignUpFirstName"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
+                android:layout_weight="1"
                 android:background="@drawable/edittext_round"
                 android:ems="10"
                 android:fontFamily="normal"
@@ -37,9 +37,9 @@
             <com.smartsense.gifkar.textstyleutil.TypefaceEditText
                 android:id="@+id/etSignUpLastName"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
+                android:layout_weight="1"
                 android:background="@drawable/edittext_round"
                 android:ems="10"
                 android:fontFamily="normal"
@@ -60,8 +60,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
                 android:background="@drawable/edittext_round"
+                android:clickable="true"
                 android:drawableRight="@drawable/down_arrow"
-                android:enabled="false"
+                android:focusable="false"
                 android:fontFamily="normal"
                 android:gravity="center"
                 android:padding="@dimen/padding_8"

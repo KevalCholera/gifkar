@@ -3,6 +3,7 @@
     <string name="screen_forgot">Forgot Password</string>
     <string name="screen_otp">Enter SMS Code</string>
     <string name="screen_enter">Enter Mobile Number</string>
+    <string name="screen_change">Change Password</string>
     <string name="app_id">738684459571187</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -85,6 +86,8 @@
     <string name="email1">Email</string>
     <string name="skip">SKIP</string>
     <string name="password">Password</string>
+    <string name="oldpassword">Old Password</string>
+    <string name="newpassword">New Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="social_account">OR SIGN IN WITH SOCIAL ACCOUNT</string>
     <!-- TODO: Remove or change this placeholder text -->

@@ -60,7 +60,7 @@ public class CountryCodeAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         JSONObject testJson = dataArray.optJSONObject(position);
-        holder.tvCountryCode.setText(testJson.optString("code")+" "+testJson.optString("India"));
+        holder.tvCountryCode.setText(testJson.optString("code")+" "+testJson.optString("name"));
 
 
         return view;

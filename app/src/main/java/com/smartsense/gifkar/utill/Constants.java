@@ -16,6 +16,7 @@ public class Constants {
     public static final String FB = "1";
     public static final String ONLINE_PAYMENT = "1";
     public static final String COD = "2";
+    public static final String SCREEN = "screen";
     public static final String DEFAULT_TOKEN ="Uxl5lRYZHwx2jDpVsUoANJtRK5fNffzRewwbQjjd";
     // public static final String BASE_URL =
     // "http://ywtest.cloudapp.net:8080/SupremeCab";
@@ -96,6 +97,11 @@ public class Constants {
         public static final int SERVER_ERROR = 4;
         public static final int UNVERIFIED = 5;
 
+    }
+
+    public class ScreenCode {
+        public static final int SCREEN_OTP = 1;
+        public static final int SCREEN_FORGOT = 2;
     }
 
 

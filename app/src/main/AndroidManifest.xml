@@ -28,6 +28,7 @@
         <activity
             android:name=".GifkarActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NoInternetConnection" />
 
@@ -42,6 +43,7 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <receiver android:name=".receivers.AlarmReceiver" />
@@ -56,14 +58,28 @@
 
         <activity
             android:name=".StartActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ForgotPasswordActivity"
-            android:label="@string/screen_forgot" />
+            android:label="@string/screen_forgot"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".OTPActivity"
-            android:label="@string/screen_otp" />
-        <activity android:name=".MobileNoActivity"></activity>
+            android:label="@string/screen_otp"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MobileNoActivity"
+            android:label="@string/screen_enter"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TermsandCondtionsActivity"
+            android:label="@string/terms"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="@string/screen_change"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

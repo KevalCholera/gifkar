@@ -2,6 +2,7 @@ package com.smartsense.gifkar;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.smartsense.gifkar.adapter.CountryCodeAdapter;
+import com.smartsense.gifkar.utill.Constants;
 
 import org.json.JSONObject;
 
@@ -47,7 +49,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnForgot:
-                finish();
+                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT));
                 break;
             case R.id.etForgotCountryCode:
                 openCountryPopup();
@@ -75,7 +77,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 "\t}\n" +
                 "}";
         try {
-            JSONObject response=new JSONObject(tempary);
+            JSONObject response = new JSONObject(tempary);
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -88,7 +90,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
             list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
 
-                    JSONObject getCityObj = (JSONObject) adapterView.getItemAtPosition(position);
+                    JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
+                    etCountryCode.setText(getCodeObj.optString("code"));
                     alert.dismiss();
 
                 }
