@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#01a8e5</color>
     <!--<color name="colorPrimary">#f9f9f7</color>-->
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#009bd3</color>
     <!--<color name="colorPrimaryDark">#f9f9f7</color>-->
     <color name="colorAccent">#FF4081</color>
     <color name="textcolorwhite">@android:color/white</color>
     <color name="textcolorblack">@android:color/black</color>
-    <color name="googlebackcolor">#db4a37</color>
-    <color name="facebookbackcolor">#1364b5</color>
+    <color name="googlebackcolor">#da4835</color>
+    <color name="facebookbackcolor">#1263b5</color>
     <color name="edittext_color">#F7F7F7</color>
     <color name="edittext_hint_color">#C9C9C9</color>
     <color name="edittext_border_color">#E4E4E4</color>
     <color name="btn_orange">#ec9301</color>
     <color name="btn_blue">#00aff0</color>
-    <color name="activity_bg">#e4e5e5</color>
+    <color name="activity_bg">#f2f2f2</color>
     <color name="tab_idicator">#01b0f1</color>
     <color name="tab_normal_text">#606060</color>
     <color name="textcolor">#4d4d4d</color>
     <color name="forgot_pass_textcolor">#47505C</color>
-    <color name="mainColor">#01A8E5</color>
+    <color name="mainColor">#01a8e5</color>
+    <color name="your_unselected_text_color">#47505C</color>
+    <color name="your_selected_text_color">#888888</color>
 </resources>

@@ -11,56 +11,23 @@
     tools:context="com.smartsense.gifkar.ForgotPasswordActivity">
 
     <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-        android:id="@+id/tvSignupTerms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
         android:fontFamily="normal"
         android:padding="@dimen/padding_8"
-        android:text="@string/forgot_text" />
-
-    <com.smartsense.gifkar.textstyleutil.TypefaceEditText
-        android:id="@+id/etForgotEmailId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_5"
-        android:background="@drawable/edittext_round"
-        android:ems="10"
-        android:fontFamily="normal"
-        android:hint="@string/email1"
-        android:inputType="textEmailAddress"
-        android:padding="@dimen/padding_8"
-        android:textColorHighlight="@android:color/white"
-        android:textColorHint="@color/edittext_hint_color" />
+        android:text="@string/mobile_text" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-
-
-
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:fontFamily="normal"
-            android:gravity="center"
-            android:layout_weight="2"
-            android:padding="@dimen/padding_8"
-            android:text="@string/forgot_or" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginBottom="@dimen/margin_10"
         android:gravity="center_vertical">
 
         <com.smartsense.gifkar.textstyleutil.TypefaceEditText
-            android:id="@+id/etForgotCountryCode"
+            android:id="@+id/etEnterCountryCode"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_5"
@@ -73,7 +40,7 @@
             android:text="+1" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceEditText
-            android:id="@+id/etForgotMobileNo"
+            android:id="@+id/etEnterMobileNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_5"
@@ -88,7 +55,7 @@
     </LinearLayout>
 
     <com.smartsense.gifkar.textstyleutil.TypefaceButton
-        android:id="@+id/btnForgot"
+        android:id="@+id/btnSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_5"

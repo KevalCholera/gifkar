@@ -5,30 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:fillViewport="true"
-    android:orientation="vertical"
+
     android:padding="@dimen/margin_5">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/margin_25"
-        android:layout_marginRight="@dimen/margin_25"
+        android:layout_margin="@dimen/margin_25"
         android:orientation="vertical">
 
-
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
-            android:id="@+id/etSignUpFullName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_5"
-            android:background="@drawable/edittext_round"
-            android:ems="10"
-            android:fontFamily="normal"
-            android:hint="@string/full_name"
-            android:padding="@dimen/padding_8"
-            android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+                android:id="@+id/etSignUpFirstName"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_5"
+                android:background="@drawable/edittext_round"
+                android:ems="10"
+                android:fontFamily="normal"
+                android:hint="@string/full_name"
+                android:padding="@dimen/padding_8"
+                android:textColorHighlight="@android:color/white"
+                android:textColorHint="@color/edittext_hint_color" />
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+                android:id="@+id/etSignUpLastName"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_5"
+                android:background="@drawable/edittext_round"
+                android:ems="10"
+                android:fontFamily="normal"
+                android:hint="@string/last_name"
+                android:padding="@dimen/padding_8"
+                android:textColorHighlight="@android:color/white"
+                android:textColorHint="@color/edittext_hint_color" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,12 +60,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
                 android:background="@drawable/edittext_round"
-                android:drawableRight="@drawable/com_facebook_tooltip_black_bottomnub"
-                android:padding="@dimen/padding_8"
+                android:drawableRight="@drawable/down_arrow"
                 android:enabled="false"
                 android:fontFamily="normal"
                 android:gravity="center"
-                android:text="+1"/>
+                android:padding="@dimen/padding_8"
+                android:text="+1" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceEditText
                 android:id="@+id/etSignUpMobileNo"
@@ -109,11 +128,12 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
-            <RadioButton
+            <com.smartsense.gifkar.textstyleutil.TypefaceCheckBox
                 android:id="@+id/rbSignupTerms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
+                android:fontFamily="normal"
                 android:text="@string/accept" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -146,6 +166,11 @@
             android:fontFamily="normal"
             android:text="@string/skip"
             android:textColor="@color/mainColor" />
+
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
     </LinearLayout>
 

@@ -1,12 +1,13 @@
 package com.smartsense.gifkar;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import com.smartsense.gifkar.adapter.StartPagerAdapter;
 
@@ -15,17 +16,27 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }else{
+            View decorView = getWindow().getDecorView();
+// Hide the status bar.
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+
+        }
         setContentView(R.layout.activity_start);
-        final ImageView headImage = (ImageView) findViewById(R.id.startHead);
+        final RelativeLayout headImage = (RelativeLayout) findViewById(R.id.startHead);
 
 //        FrameLayout fm = (FrameLayout) rootView.findViewById(R.id.fl_category);
         int height = getResources().getDisplayMetrics().heightPixels;
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) headImage.getLayoutParams();
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) headImage.getLayoutParams();
         params.height = (int) (height / 3.5);
         headImage.setLayoutParams(params);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("SIGN IN"));
         tabLayout.addTab(tabLayout.newTab().setText("SIGN UP"));

@@ -2,6 +2,7 @@
     <string name="app_name">Gifkar</string>
     <string name="screen_forgot">Forgot Password</string>
     <string name="screen_otp">Enter SMS Code</string>
+    <string name="screen_enter">Enter Mobile Number</string>
     <string name="app_id">738684459571187</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -39,7 +40,8 @@
     <string name="forgot_password_hint">Forgot Password ?</string>
     <string name="sign_up">Sign Up</string>
     <string name="signup_greet_text">Welcome to Delivery Junction. \n Serving you with Best Quality.</string>
-    <string name="full_name">Full Name</string>
+    <string name="full_name">First Name</string>
+    <string name="last_name">Last Name</string>
     <string name="set_password">Set Password</string>
     <string name="reenter_password">Re Enter Password</string>
     <string name="mobile_hint">Enter 10 Digit Mobile Number</string>
@@ -94,7 +96,8 @@
     <string name="otp_resend">RESEND</string>
     <string name="otp_editno">EDIT NUMBER</string>
     <string name="terms"> <u>Terms &amp; Conditions</u></string>
-    <string name="forgot_text"> Enter Email/Mobile number to reset your Password</string>
+    <string name="forgot_text"> Enter your Email/Mobile number to reset your Password</string>
+    <string name="mobile_text"> We will send an SMS a confirmation to the number</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

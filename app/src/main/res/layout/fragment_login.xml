@@ -5,16 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:orientation="vertical"
     android:fillViewport="true"
     android:padding="@dimen/margin_5">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/margin_25"
-        android:layout_marginRight="@dimen/margin_25"
-        android:gravity="center"
+        android:layout_margin="@dimen/margin_25"
         android:orientation="vertical">
 
 
@@ -24,8 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_5"
             android:background="@drawable/edittext_round"
-            android:fontFamily="normal"
             android:ems="10"
+            android:fontFamily="normal"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="@dimen/padding_8"
@@ -40,9 +37,9 @@
             android:layout_margin="@dimen/margin_5"
             android:background="@drawable/edittext_round"
             android:ems="10"
+            android:fontFamily="normal"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:fontFamily="normal"
             android:padding="@dimen/padding_8"
             android:textColorHint="@color/edittext_hint_color" />
 
@@ -54,8 +51,8 @@
             android:fontFamily="normal"
             android:padding="@dimen/padding_8"
             android:text="@string/forgot_password_hint"
-            android:textColor="@color/forgot_pass_textcolor"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/forgot_pass_textcolor"
             android:textStyle="normal" />
 
 
@@ -77,8 +74,8 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/margin_20"
             android:fontFamily="normal"
-            android:textColor="@color/forgot_pass_textcolor"
-            android:text="@string/social_account" />
+            android:text="@string/social_account"
+            android:textColor="@color/forgot_pass_textcolor" />
 
 
         <!--<fragment-->
@@ -122,10 +119,8 @@
             android:text="@string/google_signup"
             android:textColor="@android:color/white" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2" />
+
+
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:id="@+id/tvLoginSkip"
@@ -133,23 +128,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/margin_20"
-            android:textColor="@color/mainColor"
             android:fontFamily="normal"
-            android:text="@string/skip" />
+            android:text="@string/skip"
+            android:textColor="@color/mainColor" />
+
+
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
     </LinearLayout>
 
-    <!--<org.codeandmagic.android.TypefaceTextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:fontFamily="semiBoldItalic"-->
-    <!--android:text="@string/sourcesans_semi_bold_italic"/>-->
-
-    <!--<org.codeandmagic.android.TypefaceButton-->
-    <!--android:id="@+id/switch_theme"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center_horizontal"-->
-    <!--android:layout_marginTop="@dimen/activity_vertical_margin"-->
-    <!--android:fontFamily="black"-->
-    <!--android:text="@string/switch_theme"/>-->
 </ScrollView>

@@ -1,39 +1,69 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".LoginActivity.LoginActivity">
+    android:layout_height="match_parent">
 
-    <ImageView
+    <RelativeLayout
         android:id="@+id/startHead"
         android:layout_width="match_parent"
-        android:src="@drawable/ic_gifkar_logo"
-        android:layout_height="200dp" />
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/startHead"
-        android:background="?attr/colorPrimary"
-        android:elevation="6dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:tabIndicatorColor="@android:color/white" />
+        android:background="@color/activity_bg"
+        android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
+        <ImageView
+            android:id="@+id/ivRibbion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ribbion" />
+
+        <LinearLayout
+            android:layout_below="@id/ivRibbion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="1dp" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:src="@drawable/logo" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="1dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--<android.support.v7.widget.Toolbar-->
+    <!--android:id="@+id/toolbar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+
+    <!--android:background="?attr/colorPrimary"-->
+    <!--android:elevation="6dp"-->
+    <!--android:minHeight="?attr/actionBarSize"-->
+    <!--android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+    <!--app:tabIndicatorColor="@android:color/white" />-->
+
+    <com.smartsense.gifkar.textstyleutil.TypefaceTabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:background="?attr/colorPrimary"
+        android:layout_below="@id/startHead"
+        android:background="@drawable/tab_color_selector"
         android:elevation="6dp"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabSelectedTextColor="@color/your_selected_text_color"
+        app:tabTextColor="@color/your_unselected_text_color" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

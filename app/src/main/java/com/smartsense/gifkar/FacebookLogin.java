@@ -34,7 +34,7 @@ import java.util.Arrays;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class facebookLogin extends Fragment {
+public class FacebookLogin extends Fragment {
 
     private CallbackManager callbackManager;
 //    private TextView textView;
@@ -91,7 +91,7 @@ public class facebookLogin extends Fragment {
         }
     };
 
-    public facebookLogin() {
+    public FacebookLogin() {
 
     }
 
