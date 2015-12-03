@@ -1,5 +1,6 @@
 package com.smartsense.gifkar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,15 +10,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class GifkarActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
+    TextView actionBarTitle;
+    ImageView btSearch, btFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gifkar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_gifkar);
+        actionBarTitle =(TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
+        final String DOUBLE_BYTE_SPACE = "\u3000";
+        actionBarTitle.setText("Prahlad Nagar,380015 Kalupur Salukulu");
+        btFilter=(ImageView) toolbar.findViewById(R.id.btActionBarfilter);
+        btFilter.setOnClickListener(this);
+        btSearch=(ImageView) toolbar.findViewById(R.id.btActionBarSearch);
+        btSearch.setOnClickListener(this);
         setSupportActionBar(toolbar);
 //        if (getSupportActionBar() != null)
 //            getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_action_home));
@@ -44,11 +57,25 @@ public class GifkarActivity extends AppCompatActivity
         }
     }
 
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btActionBarfilter:
+                startActivity(new Intent(this, MobileNoActivity.class));
+                break;
+            case R.id.btActionBarSearch:
+                startActivity(new Intent(this, MobileNoActivity.class));
+                break;
+            default:
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.gifkar, menu);
-        return true;
+//        getMenuInflater().inflate(R.menu.gifkar, menu);
+        return false;
     }
 
     @Override

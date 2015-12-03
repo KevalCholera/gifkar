@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,18 +22,20 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
     EditText etCountryCode, etMobileNo;
     Button btSend;
     AlertDialog alert;
+    private ImageView btBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mobile_no);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.activity_mobile_no);        
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.center_action_bar, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
         titleTextView.setText(getResources().getString(R.string.screen_enter));
+        btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
+        btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         etCountryCode = (EditText) findViewById(R.id.etEnterCountryCode);
         etCountryCode.setOnClickListener(this);
@@ -50,6 +53,9 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
             case R.id.etEnterCountryCode:
                 openCountryPopup();
                 break;
+            case R.id.btActionBarBack:
+                finish();
+                break;
             default:
         }
     }
@@ -64,11 +70,11 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
                 "\t\t\"countries\": [{\n" +
                 "\t\t\t\"id\": \"18\",\n" +
                 "\t\t\t\"name\": \"India\",\n" +
-                "\t\t\t\"code\": \"+92\"\n" +
+                "\t\t\t\"code\": \"+91\"\n" +
                 "\t\t}, {\n" +
                 "\t\t\t\"id\": \"19\",\n" +
                 "\t\t\t\"name\": \"Pakistan\",\n" +
-                "\t\t\t\"code\": \"+93\"\n" +
+                "\t\t\t\"code\": \"+92\"\n" +
                 "\t\t}]\n" +
                 "\t}\n" +
                 "}";

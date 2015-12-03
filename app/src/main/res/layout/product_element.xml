@@ -21,23 +21,32 @@
         android:orientation="vertical">
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:fontFamily="normal"
             android:id="@+id/tv_name_product_ele"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="normal"
             android:paddingBottom="@dimen/padding_8"
             android:singleLine="true"
-            android:text="Product Name"
+            android:text="Shop Name"
             android:textColor="@color/textcolor"
             android:textSize="@dimen/text_18"
             android:textStyle="bold" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:fontFamily="normal"
             android:id="@+id/tv_detail_product_ele"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Prahladnagar Main Road \nDelivery Minimum Time : 10 Minutes | Delivery Maximum Time : 20 Minutes \nMinimum Order : Rs.100"
+            android:fontFamily="normal"
+            android:text="Prahladnagar Main Road \nDelivery Maximum Time : 20 Minutes \nMinimum Order : Rs.100"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/text_10" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tv_detail_product_ele"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="normal"
+            android:text="Prahladnagar Main Road \nDelivery Maximum Time : 20 Minutes \nMinimum Order : Rs.100"
             android:textColor="@color/textcolor"
             android:textSize="@dimen/text_10" />
 
@@ -51,19 +60,13 @@
         android:orientation="vertical">
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:fontFamily="normal"
-            android:textColor="@color/textcolorwhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/button_blue_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5.0" />
-
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:fontFamily="normal"
-            android:layout_marginTop="@dimen/margin_8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="100% On Time" />
+            android:text="5.0"
+            android:textColor="@color/textcolorwhite" />
+
     </LinearLayout>
 
 </LinearLayout>

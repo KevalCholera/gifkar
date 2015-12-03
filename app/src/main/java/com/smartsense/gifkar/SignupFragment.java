@@ -41,6 +41,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener {
         btSignUp = (Button) view.findViewById(R.id.btnSignup);
         btSignUp.setOnClickListener(this);
         tvSkip = (TextView) view.findViewById(R.id.tvSignupSkip);
+        tvSkip.setOnClickListener(this);
         tvTerms = (TextView) view.findViewById(R.id.tvSignupTerms);
         tvTerms.setOnClickListener(this);
         cbTerms = (CheckBox) view.findViewById(R.id.rbSignupTerms);
@@ -58,6 +59,9 @@ public class SignupFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.tvSignupTerms:
                 startActivity(new Intent(getActivity(), TermsandCondtionsActivity.class));
+                break;
+            case R.id.tvSignupSkip:
+                startActivity(new Intent(getActivity(), GifkarActivity.class));
                 break;
             default:
         }

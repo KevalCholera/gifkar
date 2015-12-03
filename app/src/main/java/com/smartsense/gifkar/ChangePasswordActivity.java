@@ -7,21 +7,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
-    EditText  etOldPass, etConPass, etNewPass;
+    EditText etOldPass, etConPass, etNewPass;
     Button btChangePass;
+    ImageView btBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.center_action_bar, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
         titleTextView.setText(getResources().getString(R.string.screen_change));
+        btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
+        btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_change_password);
         etOldPass = (EditText) findViewById(R.id.etChangePassoldPassword);
@@ -36,6 +40,9 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         switch (view.getId()) {
             case R.id.btnChangePass:
                 startActivity(new Intent(this, GifkarActivity.class));
+                break;
+            case R.id.btActionBarBack:
+                finish();
                 break;
             default:
         }

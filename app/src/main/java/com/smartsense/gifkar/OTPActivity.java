@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smartsense.gifkar.utill.Constants;
@@ -16,18 +17,20 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
     String countryCode = "", mobileNo = "";
     EditText etOne, etTwo, etThree, etFour;
     Button btOTP;
+    private ImageView btBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.center_action_bar, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
         titleTextView.setText(getResources().getString(R.string.screen_otp));
+        btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
+        btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
 
         tvOtpNo = (TextView) findViewById(R.id.tvOtpNo);
@@ -56,6 +59,9 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                     startActivity(new Intent(this, ChangePasswordActivity.class));
                 else
                     startActivity(new Intent(this, GifkarActivity.class));
+                break;
+            case R.id.btActionBarBack:
+                finish();
                 break;
             default:
         }

@@ -89,24 +89,25 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
 
     EditText etInputemail;
     EditText etInputPassword;
+    TextView tvSkip;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_login, container, false);
         // TODO Auto-generated method stub
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.fragment_login);
+
         FacebookSdk.sdkInitialize(getActivity());
         callbackManager = CallbackManager.Factory.create();
 
         // Input Email and Password field
         etInputemail = (EditText) view.findViewById(R.id.etLoginEmailId);
         etInputPassword = (EditText) view.findViewById(R.id.etLoginPassword);
-
         // Forgot Password
         tvLoginForgotPwd = (TextView) view.findViewById(R.id.tvLoginForgotPwd);
         tvLoginForgotPwd.setOnClickListener(this);
-        // Sign Up button
+        //skip
+        tvSkip = (TextView) view.findViewById(R.id.tvLoginSkip);
+        tvSkip.setOnClickListener(this);
         // Login Button
         btnLogin = (Button) view.findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(this);
@@ -319,6 +320,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                     mGoogleApiClient.connect();
                 }
                 break;
+            case R.id.tvLoginSkip:
+                startActivity(new Intent(getActivity(), GifkarActivity.class));
             default:
         }
 

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,18 +22,20 @@ import org.json.JSONObject;
 public class ForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener {
     EditText etEmail, etCountryCode, etMobileNo;
     Button btForgot;
+    ImageView btBack;
     AlertDialog alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.center_action_bar, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
+        btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
+        btBack.setOnClickListener(this);
         titleTextView.setText(getResources().getString(R.string.screen_forgot));
         getSupportActionBar().setCustomView(v);
 
@@ -53,6 +56,9 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.etForgotCountryCode:
                 openCountryPopup();
+                break;
+            case R.id.btActionBarBack:
+                finish();
                 break;
             default:
         }

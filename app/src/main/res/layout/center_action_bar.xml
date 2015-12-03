@@ -2,7 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center" >
+
+    android:layout_gravity="center">
+
+
+    <ImageView
+        android:id="@+id/btActionBarBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:padding="5dp"
+android:scaleType="fitXY"
+        android:src="@drawable/back_arrow" />
 
     <com.smartsense.gifkar.textstyleutil.TypefaceTextView
         android:id="@+id/actionBarTitle"
@@ -10,11 +22,12 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center_horizontal|center_vertical"
+        android:fontFamily="normal"
         android:gravity="center_horizontal|center_vertical"
         android:padding="8dp"
-        android:fontFamily="normal"
         android:text="@string/app_name"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#FFFFFF" />
+
 
 </RelativeLayout>

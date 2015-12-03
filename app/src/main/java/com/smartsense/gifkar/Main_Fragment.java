@@ -67,8 +67,6 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getChildFragmentManager());
         Fragment p = new ProductFragment();
-
-
         String tempary = "    [{\n" +
                 "        \"productManageId\":\"50\",\n" +
                 "        \"productName\":\"Atta- Ashirvaad whole wheat\",\n" +
@@ -96,7 +94,6 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
         for (int i = 0; i < dotsCount; i++) {
             dots[i].setImageDrawable(getResources().getDrawable(R.drawable.nonselecteditem_dot));
         }
-
         dots[position].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
     }
 
@@ -145,12 +142,8 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
     Integer[] mImageResources = {R.mipmap.one, R.mipmap.two, R.mipmap.three, R.mipmap.four};
 
     public void setReference(View view) {
-
-
         intro_images = (ViewPager) view.findViewById(R.id.pager_introduction);
-
         pager_indicator = (LinearLayout) view.findViewById(R.id.viewPagerCountDots);
-
 
         mAdapter = new NewFeatureAdapter(getActivity(), mImageResources);
         intro_images.setAdapter(mAdapter);
@@ -165,7 +158,7 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
                     position = position + 1;
                 }
                 intro_images.setCurrentItem(position, true);
-                handler.postDelayed(runnable, 5000);
+                handler.postDelayed(runnable, 3000);
             }
         };
         setUiPageViewController();
@@ -191,6 +184,21 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
         }
 
         dots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (handler != null) {
+            handler.removeCallbacks(runnable);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.postDelayed(runnable, 3000);
     }
 
 }
