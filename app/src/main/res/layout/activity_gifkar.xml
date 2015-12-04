@@ -28,6 +28,7 @@
 
         </android.support.v7.widget.Toolbar>
 
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/view_height_1"
@@ -36,7 +37,8 @@
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/activity_bg" />
     </LinearLayout>
     <!--<include-->
     <!--layout="@layout/app_bar_gifkar"-->
@@ -48,8 +50,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_gifkar"
-        app:menu="@menu/activity_gifkar_drawer" />
+        android:fitsSystemWindows="true" />
 
 </android.support.v4.widget.DrawerLayout>

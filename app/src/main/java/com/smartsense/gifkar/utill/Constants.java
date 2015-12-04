@@ -49,14 +49,18 @@ public class Constants {
 
     public class NavigationItems {
 
-        public static final int NAV_ALL_CATEGORIES = 0;
-        public static final int NAV_DJ_WALLET = 1;
-        public static final int NAV_CART = 2;
+        public static final int NAV_HOME = 0;
+        public static final int NAV_LOGIN = 1;
+        public static final int NAV_MY_CART = 2;
         public static final int NAV_MY_ORDERS = 3;
-        public static final int NAV_OFFERS = 4;
-        public static final int NAV_REFER_EARN = 5;
-        public static final int NAV_ADDRESS = 6;
-        public static final int NAV_SIGN_OUT = 7;
+        public static final int NAV_MY_ADDRESSES = 4;
+        public static final int NAV_REFER_FRIEND = 5;
+        public static final int NAV_MY_REMINDERS = 6;
+        public static final int NAV_NOTIFICATIONS = 7;
+        public static final int NAV_ABOUT_US = 8;
+        public static final int NAV_FEED_US = 9;
+        public static final int NAV_LOGOUT = 10;
+        public static final int NAV_SETTING = 11;
 
     }
 

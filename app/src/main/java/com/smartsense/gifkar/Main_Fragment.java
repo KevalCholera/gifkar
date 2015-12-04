@@ -47,9 +47,9 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
 
 //        FrameLayout fm = (FrameLayout) rootView.findViewById(R.id.fl_category);
         int height = getResources().getDisplayMetrics().heightPixels;
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) newFeaturesView.getLayoutParams();
-        params.height = (int) (height / 3.5);
-        newFeaturesView.setLayoutParams(params);
+//        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) newFeaturesView.getLayoutParams();
+//        params.height = (int) (height / 3.5);
+//        newFeaturesView.setLayoutParams(params);
         setReference(newFeaturesView);
 
         // tablayout and viewpager of category

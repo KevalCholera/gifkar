@@ -135,9 +135,9 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
             super(view);
 
 
-            tvNameProduct = (TextView) view.findViewById(R.id.tv_name_product_ele);
+            tvNameProduct = (TextView) view.findViewById(R.id.tvShopListShopName);
 
-            ivImgProduct = (NetworkImageView) view.findViewById(R.id.img_product_ele);
+            ivImgProduct = (NetworkImageView) view.findViewById(R.id.ivShopListImage);
         }
     }
 
