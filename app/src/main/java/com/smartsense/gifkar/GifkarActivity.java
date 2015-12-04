@@ -2,6 +2,7 @@ package com.smartsense.gifkar;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,6 +36,7 @@ public class GifkarActivity extends AppCompatActivity
     ImageView btSearch, btFilter;
     private static FragmentManager fm;
     ListView lvNavList;
+    private LinearLayout llHeadProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,9 @@ public class GifkarActivity extends AppCompatActivity
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header_gifkar, null);
         navigationView.addHeaderView(header);
         fm = getSupportFragmentManager();
+        llHeadProfile = (LinearLayout) header.findViewById(R.id.llHeadProfile);
+        llHeadProfile.setOnClickListener(this);
+
         lvNavList = (ListView) header.findViewById(R.id.lvHeadList);
         setHeader(GifkarActivity.this);
 
@@ -119,6 +125,9 @@ public class GifkarActivity extends AppCompatActivity
                 break;
             case R.id.btActionBarSearch:
 //                startActivity(new Intent(this, MobileNoActivity.class));
+                break;
+            case R.id.llHeadProfile:
+                startActivity(new Intent(this, ProfileActivity.class));
                 break;
             default:
         }
@@ -194,13 +203,13 @@ public class GifkarActivity extends AppCompatActivity
             if (1 == 1) {
                 //user is login and display sign out btn
                 mNavTitles = new String[]{"Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Setting", "Sign Out"};
-                mIcons = new int[]{R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
+                mIcons = new int[]{R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_home,
                         R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_setting, R.drawable.ic_logout};
 
             } else {
                 //user not logged in display sign in btn
                 mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Setting"};
-                mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
+                mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_home,
                         R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_setting};
 
             }

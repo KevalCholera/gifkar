@@ -79,7 +79,8 @@
         <activity
             android:name=".ChangePasswordActivity"
             android:label="@string/screen_change"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

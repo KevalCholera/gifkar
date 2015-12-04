@@ -62,6 +62,7 @@
     <string name="street_name">Street/Society Name</string>
     <string name="city_hint">Landmark/Locality, City</string>
     <string name="add_address">ADD</string>
+    <string name="update">Update</string>
     <string name="error_empty">Please fill the Details</string>
     <string name="use_dj_wallet">Use DJ Wallet</string>
     <string name="empty_msg">Add some stuff!</string>
@@ -194,4 +195,15 @@
     <string name="greet_text_main">Make Someone Happy Today, Gift Them :)</string>
     <string name="filter">Filter</string>
     <string name="cart">Cart</string>
+
+    <string name="flat">Flat/House/Office Number*</string>
+    <string name="street">Street/Society*t</string>
+    <string name="area">Area Name*</string>
+    <string name="city">City Name*</string>
+    <string name="country">Country Name*</string>
+    <string name="pin">Pin Code*</string>
+
+
+    <string name="dob">Enter Date of Birth</string>
+
 </resources>
