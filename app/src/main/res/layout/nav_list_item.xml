@@ -15,7 +15,8 @@
         android:layout_marginStart="@dimen/margin_10"
         android:src="@drawable/ic_login" />
 
-    <TextView
+    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        android:fontFamily="normal"
         android:id="@+id/tv_menuname_drawer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -25,7 +26,8 @@
         android:padding="@dimen/padding_8"
         android:text="@string/mobile" />
 
-    <TextView
+    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        android:fontFamily="normal"
         android:id="@+id/tv_menucount_drawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

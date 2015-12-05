@@ -106,6 +106,7 @@ public class Constants {
     public class ScreenCode {
         public static final int SCREEN_OTP = 1;
         public static final int SCREEN_FORGOT = 2;
+
     }
 
 

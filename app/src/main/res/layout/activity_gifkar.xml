@@ -50,6 +50,46 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true" />
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:id="@+id/llHeadBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:background="@color/activity_bg"
+            android:orientation="horizontal">
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:fontFamily="normal"
+                android:id="@+id/tvHeadPrivacy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/padding_8"
+                android:text="Privacy Policy"
+                android:textColor="@android:color/black" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_5"
+                android:background="@android:color/darker_gray" />
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:fontFamily="normal"
+                android:id="@+id/tvHeadTerms"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="@dimen/padding_8"
+                android:text="Terms and Conditions"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

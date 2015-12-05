@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_active_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/empty_order" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:fontFamily="normal"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="@string/noh"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="normal"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="@string/emapty_active_order" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+            android:id="@+id/btnActiveStartGifiting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@color/mainColor"
+            android:fontFamily="normal"
+
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="@string/btStartGift"
+            android:textColor="@color/textcolorwhite"
+            android:textSize="@dimen/text_size_20" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvLiveOrders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+
+

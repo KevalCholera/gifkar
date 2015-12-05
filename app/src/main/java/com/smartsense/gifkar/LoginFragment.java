@@ -53,7 +53,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -110,19 +109,19 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         tvSkip.setOnClickListener(this);
         // Login Button
         btnLogin = (Button) view.findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(this);
+//        btnLogin.setOnClickListener(this);
         //Google Sign in button
         mSignInButton = (Button) view.findViewById(R.id.sign_in_button);
-        mSignInButton.setOnClickListener(this);
+//        mSignInButton.setOnClickListener(this);
 
         Button loginButton = (Button) view.findViewById(R.id.fb_login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Login with facebook on clicking custom button
-                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email"));
-            }
-        });
+//        loginButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Login with facebook on clicking custom button
+//                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email"));
+//            }
+//        });
         LoginManager.getInstance().registerCallback(callbackManager, callback);
         return view;
     }

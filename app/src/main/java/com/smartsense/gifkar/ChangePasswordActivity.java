@@ -1,6 +1,5 @@
 package com.smartsense.gifkar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -9,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.smartsense.gifkar.utill.Constants;
 
 public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
     EditText etOldPass, etConPass, etNewPass;
@@ -23,12 +24,16 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.center_action_bar, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
-        titleTextView.setText(getResources().getString(R.string.screen_change));
+        titleTextView.setText(getResources().getString(R.string.screen_new_pass));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_change_password);
+
+
         etOldPass = (EditText) findViewById(R.id.etChangePassoldPassword);
+        if (getIntent().getIntExtra(Constants.SCREEN, 0) == Constants.ScreenCode.SCREEN_OTP)
+            etOldPass.setVisibility(View.GONE);
         etConPass = (EditText) findViewById(R.id.etChangePassConfirmPassword);
         etNewPass = (EditText) findViewById(R.id.etChangePassNewPassword);
         btChangePass = (Button) findViewById(R.id.btnChangePass);
@@ -39,7 +44,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnChangePass:
-                startActivity(new Intent(this, GifkarActivity.class));
+//                startActivity(new Intent(this, GifkarActivity.class));
                 break;
             case R.id.btActionBarBack:
                 finish();

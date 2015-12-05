@@ -13,41 +13,33 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.smartsense.gifkar.utill.CircleImageView;
-
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
-    ImageView btBack;
-    TextView tvName,tvMobile,tvVerified;
-    CircleImageView ivProfileImage;
+public class MyOrdersActivity extends AppCompatActivity implements View.OnClickListener {
+    private ImageView btBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.center_action_bar, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
-        titleTextView.setText(getResources().getString(R.string.screen_profile));
+        titleTextView.setText(getResources().getString(R.string.screen_order));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
-        tvMobile=(TextView) findViewById(R.id.tVProfileMobileNo);
-        tvName=(TextView) findViewById(R.id.tvProfileName);
-        tvVerified=(TextView) findViewById(R.id.tVProfileVerified);
-        ivProfileImage=(CircleImageView) findViewById(R.id.ivProfileImage);
-
+        setContentView(R.layout.activity_my_orders);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("PROFILE"));
-        tabLayout.addTab(tabLayout.newTab().setText("ADDRESS"));
-        tabLayout.addTab(tabLayout.newTab().setText("CHANGE PASSWORD"));
+        tabLayout.addTab(tabLayout.newTab().setText("ACTIVE ORDERS"));
+        tabLayout.addTab(tabLayout.newTab().setText("PAST ORDERS"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
+        // Get the ViewPager and set its PagerAdapter so that it can display items
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new ProfilePagerAdapter(getSupportFragmentManager(), this));
+
+        viewPager.setAdapter(new MyOrderPagerAdapter(getSupportFragmentManager(), this));
+        // Give the TabLayout the ViewPager
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(2);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -64,8 +56,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             }
         });
-
     }
+
 
     @Override
     public void onClick(View view) {
@@ -77,13 +69,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    public class ProfilePagerAdapter extends FragmentPagerAdapter {
+    public class MyOrderPagerAdapter extends FragmentPagerAdapter {
 
-        final int TAB_COUNT = 3;
-        private String[] tabtitles = new String[]{"PROFILE", "ADDRESS","CHANGE PASSWORD"};
+        final int TAB_COUNT = 2;
         private Context context;
-
-        public ProfilePagerAdapter(FragmentManager fm, Context context) {
+        private String[] tabtitles = new String[]{"ACTIVE ORDERS", "PAST ORDERS"};
+        public MyOrderPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
             this.context = context;
         }
@@ -92,11 +83,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new ProfileFragment();
+                    return new ActiveOrdersFragment();
                 case 1:
-                    return new AddressFragment();
-                case 2:
-                    return new ChangePasswordFragment();
+                    return new PastOrdersFragment();
                 default:
                     return null;
             }
@@ -113,5 +102,4 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             return tabtitles[position];
         }
     }
-
 }

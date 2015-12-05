@@ -1,12 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
     android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/startHead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:background="@color/activity_bg"
         android:orientation="vertical">
 
@@ -28,8 +31,8 @@
                 android:layout_height="1dp" />
 
             <ImageView
-                android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_10"
                 android:src="@drawable/logo" />
@@ -73,4 +76,10 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/tab_layout" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_ribbion" />
 </RelativeLayout>

@@ -203,13 +203,13 @@ public class GifkarActivity extends AppCompatActivity
             if (1 == 1) {
                 //user is login and display sign out btn
                 mNavTitles = new String[]{"Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Setting", "Sign Out"};
-                mIcons = new int[]{R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_home,
+                mIcons = new int[]{R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
                         R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_setting, R.drawable.ic_logout};
 
             } else {
                 //user not logged in display sign in btn
                 mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Setting"};
-                mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_home,
+                mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
                         R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_setting};
 
             }
@@ -344,7 +344,7 @@ public class GifkarActivity extends AppCompatActivity
 
             case Constants.NavigationItems.NAV_MY_ORDERS:
 //                setbackpress(2);
-//                c.startActivity(new Intent(c, CartActivity.class));
+                c.startActivity(new Intent(c, MyOrdersActivity.class));
                 break;
 
             case Constants.NavigationItems.NAV_MY_ADDRESSES:

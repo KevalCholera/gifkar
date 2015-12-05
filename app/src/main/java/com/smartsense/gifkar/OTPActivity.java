@@ -56,9 +56,9 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.btnOTP:
                 if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT)
-                    startActivity(new Intent(this, ChangePasswordActivity.class));
+                    startActivity(new Intent(this, ChangePasswordActivity.class).putExtra(Constants.SCREEN,Constants.ScreenCode.SCREEN_OTP));
                 else
-                    startActivity(new Intent(this, GifkarActivity.class));
+//                    startActivity(new Intent(this, GifkarActivity.class));
                 break;
             case R.id.btActionBarBack:
                 finish();

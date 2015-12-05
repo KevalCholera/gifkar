@@ -2,8 +2,11 @@
     <string name="app_name">Gifkar</string>
     <string name="screen_forgot">Forgot Password</string>
     <string name="screen_otp">Enter SMS Code</string>
-    <string name="screen_enter">Enter Mobile Number</string>
+    <string name="screen_enter">Change Mobile Number</string>
     <string name="screen_change">Change Password</string>
+    <string name="screen_new_pass">New Password</string>
+    <string name="screen_profile">Profile</string>
+    <string name="screen_order">My Orders</string>
     <string name="app_id">738684459571187</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -36,7 +39,7 @@
 
 
     <string name="login">Login</string>
-    <string name="signup">Sign Up</string>
+    <string name="signup">Register</string>
     <string name="done">DONE</string>
     <string name="forgot_password_hint">Forgot Password ?</string>
     <string name="sign_up">Sign Up</string>
@@ -196,14 +199,17 @@
     <string name="filter">Filter</string>
     <string name="cart">Cart</string>
 
-    <string name="flat">Flat/House/Office Number*</string>
-    <string name="street">Street/Society*t</string>
-    <string name="area">Area Name*</string>
-    <string name="city">City Name*</string>
-    <string name="country">Country Name*</string>
+    <string name="flat">Flat/House/Office Number</string>
+    <string name="street">Street/Society</string>
+    <string name="area">Area Name</string>
+    <string name="city">City Name</string>
+    <string name="country">Country Name</string>
     <string name="pin">Pin Code*</string>
 
 
     <string name="dob">Enter Date of Birth</string>
-
+    <string name="noh">No Order History</string>
+    <string name="emapty_active_order">Looks like don\'t have any on going orders.</string>
+    <string name="emapty_past_order">Looks like don\'t have any on past orders.</string>
+    <string name="btStartGift">START GIFTING</string>
 </resources>
