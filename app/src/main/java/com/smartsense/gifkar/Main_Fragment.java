@@ -1,6 +1,7 @@
 package com.smartsense.gifkar;
 
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -15,6 +16,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.smartsense.gifkar.adapter.NewFeatureAdapter;
+import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.DataBaseHelper;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +32,16 @@ import java.util.List;
 public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeListener {
 
 
-    public Main_Fragment() {
-        // Required empty public constructor
-
-    }
-
     ViewPager viewPager;
     TabLayout tabLayout;
     private Handler handler;
     View newFeaturesView;
+
+
+    public Main_Fragment() {
+        // Required empty public constructor
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,28 +67,45 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
         setupViewPager(viewPager);
 
 
-
         return rootView;
     }
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getChildFragmentManager());
         Fragment p = new ProductFragment();
-        String tempary = "    [{\n" +
-                "        \"productManageId\":\"50\",\n" +
-                "        \"productName\":\"Atta- Ashirvaad whole wheat\",\n" +
-                "        \"productImage\":\"/productmanageimage/thumb/atta1.jpg\",\n" +
-                "        \"purchaseLimit\":\"0\",\n" +
-                "        \"rate\":\"250\",\n" +
-                "        \"quantity\":\"10\",\n" +
-                "        \"unitName\":\"kg\",\n" +
-                "        \"packageName\":\"Packet\"\n" +
-                "    }]" +
-                "";
+        String tempary = "{ \"eventId\" : 123, \n" +
+                "\"errorCode\":0,\n" +
+                " \"status\":200,\n" +
+                " \"message\":\"Category List.\", \n" +
+                "\"data\" : { \"categories\" : [ { \"id\":\"1\", \"name\":\"Cakes\",\"shops\" : [ { \"id\":\"15\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"2\",\"name\":\"Sweets\",\"shops\":[{\"id\":\"15\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"3\",\"name\":\"Flowers\"},{\"id\":\"4\",\"name\":\"Backery\",\"shops\":[{\"id\":\"15\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"5\",\"name\":\"Indian\"},{\"id\":\"6\",\"name\":\"Italian\"} ] } }\n";
+
         adapter.addFragment(tempary, "Category 1");
         adapter.addFragment(tempary, "Category 2");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
+    CommonUtil commonUtil = new CommonUtil();
+
+    public void insertItemInCart(JSONArray product) {
+        for (int i = 0; i < product.length(); i++) {
+            JSONObject prodJson = product.optJSONObject(0);
+            ContentValues values = new ContentValues();
+            values.put(DataBaseHelper.COLUMN_SHOP_ID,  prodJson.optInt("id"));
+            values.put(DataBaseHelper.COLUMN_SHOP_NAME,  prodJson.optInt("name"));
+            values.put(DataBaseHelper.COLUMN_CUT_OF_TIME,  prodJson.optInt("cutOffTime"));
+            values.put(DataBaseHelper.COLUMN_MIN_ORDER,  prodJson.optInt("minOrder"));
+            values.put(DataBaseHelper.COLUMN_MID_NIGHT_DEL,  prodJson.optInt("midnightDeliveryStatus"));
+            values.put(DataBaseHelper.COLUMN_SAME_DAY_DELIVERY,  prodJson.optInt("sameDayDeliveryStatus"));
+            values.put(DataBaseHelper.COLUMN_RATING,  prodJson.optInt("rating"));
+            values.put(DataBaseHelper.COLUMN_OPEN_AT,  prodJson.optInt("opensAt"));
+            values.put(DataBaseHelper.COLUMN_CLOSE_AT,  prodJson.optInt("closesAt"));
+            values.put(DataBaseHelper.COLUMN_DELIVERY_FROM,  prodJson.optInt("deliveryFrom"));
+            values.put(DataBaseHelper.COLUMN_DELIVERY_TO,  prodJson.optInt("deliveryTo"));
+            values.put(DataBaseHelper.COLUMN_REMOTE_DELIVERY,  prodJson.optInt("remoteArea"));
+            commonUtil.insert(dbHelper, DataBaseHelper.TABLE_SHOP, values);
+        }
     }
 
     @Override

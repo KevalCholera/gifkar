@@ -30,7 +30,6 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
     private LayoutInflater inflater;
     ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
     static JSONArray productArray;
-
     JSONObject productObj;
     Boolean check;
     Activity context;
@@ -162,7 +161,6 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
                 productObj.put("rate", rate);
                 productObj.put("quantity", quantity);
                 productObj.put("unitName", unitName);
-
                 productArray.put(productObj);
             }
             Log.i("productArray", productArray.toString());
@@ -181,14 +179,13 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
 
     public static JSONArray remove(final int idx, final JSONArray from) {
         final List<JSONObject> objs = asList(from);
-        Log.i("objs", objs.toString());
+//        Log.i("objs", objs.toString());
         objs.remove(idx);
-        Log.i("objs", objs.toString());
+//        Log.i("objs", objs.toString());
         final JSONArray ja = new JSONArray();
         for (final JSONObject obj : objs) {
             ja.put(obj);
         }
-
         return ja;
     }
 

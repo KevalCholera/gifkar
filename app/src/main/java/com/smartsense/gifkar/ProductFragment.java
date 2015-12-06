@@ -16,7 +16,6 @@
 
 package com.smartsense.gifkar;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -50,25 +49,22 @@ public class ProductFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rv = (RecyclerView) inflater.inflate(R.layout.recycle_view, container, false);
         rv.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+
         try {
 
             jsonArray = new JSONArray(getArguments().getString("products"));
+            rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
+//            rv.setAdapter(new ProductGridAdapter(getActivity(), jsonArray, true));
+            rv.setAdapter(new ProductGridAdapter(getActivity(), jsonArray, true));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
 
-
-        checkData(getActivity());
 
 
         return rv;
     }
 
-    public static void checkData(Activity a) {
-        rv.setAdapter(new ProductGridAdapter(a, jsonArray, true));
-//        rv.notify();
-    }
 
 }

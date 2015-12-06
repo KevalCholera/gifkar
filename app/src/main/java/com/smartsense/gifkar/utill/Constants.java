@@ -5,7 +5,7 @@ public class Constants {
     public static final String STATUS_SUCCESS = "1";
     public static final int STATUS_FAIL = 500;
     public static final int STATUS_CHECK = 201;
-    public static final String DB_PATH = "/data/data/com.smartsense.deliveryjunction/databases/";
+    public static final String DB_PATH = "/data/data/com.smartsense.gifkar/databases/";
     public static final String BASE_URL = "https://gifkar.cloudapp.net/";
     public static final String BASE_IMAGE_URL = "http://104.43.15.1:8025";
     public static final String PRO_TITLE = "Please Wait";
