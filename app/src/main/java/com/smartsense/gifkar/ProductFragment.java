@@ -16,6 +16,7 @@
 
 package com.smartsense.gifkar;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,21 +26,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.smartsense.gifkar.adapter.ProductGridAdapter;
+import com.smartsense.gifkar.adapter.ShopListAdapter;
+import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.DataBaseHelper;
 import com.smartsense.gifkar.utill.SimpleDividerItemDecoration;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 public class ProductFragment extends Fragment {
 
-    static JSONArray jsonArray;
+//    static JSONArray jsonArray;
     static RecyclerView rv;
+    DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
+    CommonUtil commonUtil = new CommonUtil();
 
-    public static ProductFragment newInstance(String products) {
+    public static ProductFragment newInstance(String ID) {
         ProductFragment fragmentFirst = new ProductFragment();
         Bundle args = new Bundle();
-        args.putString("products", products);
+        args.putString("ID", ID);
         fragmentFirst.setArguments(args);
         return fragmentFirst;
     }
@@ -49,21 +51,18 @@ public class ProductFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rv = (RecyclerView) inflater.inflate(R.layout.recycle_view, container, false);
         rv.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-
         try {
-
-            jsonArray = new JSONArray(getArguments().getString("products"));
+//            jsonArray = new JSONArray(getArguments().getString("ID"));
+            Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM "+ DataBaseHelper.TABLE_SHOP+"  WHERE "+DataBaseHelper.COLUMN_CATEGORY_ID+" = '"
+                    + getArguments().getString("ID")+"'");
             rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
+            if (cursor.getCount() > 0) {
+                rv.setAdapter(new ShopListAdapter(getActivity(), cursor));
+            }
 //            rv.setAdapter(new ProductGridAdapter(getActivity(), jsonArray, true));
-            rv.setAdapter(new ProductGridAdapter(getActivity(), jsonArray, true));
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-
-
-
-
-        return rv;
+        }return rv;
     }
 
 

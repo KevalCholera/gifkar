@@ -45,7 +45,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + COLUMN_DELIVERY_TO + " text,  "
             + COLUMN_DELIVERY_FROM + " text,  "
             + COLUMN_CATEGORY_ID + " text,  "
-            + COLUMN_CATEGORY_NAME + " text,  "
+            + COLUMN_CATEGORY_NAME + " text  "
             + ");";
 
     private SQLiteDatabase myDataBase;

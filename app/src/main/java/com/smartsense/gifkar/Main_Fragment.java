@@ -2,6 +2,7 @@ package com.smartsense.gifkar;
 
 
 import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -20,6 +21,7 @@ import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -70,41 +72,63 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
         return rootView;
     }
 
+    DataBaseHelper dbHelper;
+
     private void setupViewPager(ViewPager viewPager) {
+        dbHelper = new DataBaseHelper(getActivity());
         Adapter adapter = new Adapter(getChildFragmentManager());
-        Fragment p = new ProductFragment();
         String tempary = "{ \"eventId\" : 123, \n" +
                 "\"errorCode\":0,\n" +
                 " \"status\":200,\n" +
                 " \"message\":\"Category List.\", \n" +
                 "\"data\" : { \"categories\" : [ { \"id\":\"1\", \"name\":\"Cakes\",\"shops\" : [ { \"id\":\"15\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"2\",\"name\":\"Sweets\",\"shops\":[{\"id\":\"15\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"3\",\"name\":\"Flowers\"},{\"id\":\"4\",\"name\":\"Backery\",\"shops\":[{\"id\":\"15\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"5\",\"name\":\"Indian\"},{\"id\":\"6\",\"name\":\"Italian\"} ] } }\n";
-
-        adapter.addFragment(tempary, "Category 1");
-        adapter.addFragment(tempary, "Category 2");
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+        try {
+            JSONObject response = new JSONObject(tempary);
+            JSONArray category = response.optJSONObject("data").optJSONArray("categories");
+            insertItemInCart(adapter, category);
+            viewPager.setAdapter(adapter);
+            tabLayout.setupWithViewPager(viewPager);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
+
     CommonUtil commonUtil = new CommonUtil();
 
-    public void insertItemInCart(JSONArray product) {
-        for (int i = 0; i < product.length(); i++) {
-            JSONObject prodJson = product.optJSONObject(0);
-            ContentValues values = new ContentValues();
-            values.put(DataBaseHelper.COLUMN_SHOP_ID,  prodJson.optInt("id"));
-            values.put(DataBaseHelper.COLUMN_SHOP_NAME,  prodJson.optInt("name"));
-            values.put(DataBaseHelper.COLUMN_CUT_OF_TIME,  prodJson.optInt("cutOffTime"));
-            values.put(DataBaseHelper.COLUMN_MIN_ORDER,  prodJson.optInt("minOrder"));
-            values.put(DataBaseHelper.COLUMN_MID_NIGHT_DEL,  prodJson.optInt("midnightDeliveryStatus"));
-            values.put(DataBaseHelper.COLUMN_SAME_DAY_DELIVERY,  prodJson.optInt("sameDayDeliveryStatus"));
-            values.put(DataBaseHelper.COLUMN_RATING,  prodJson.optInt("rating"));
-            values.put(DataBaseHelper.COLUMN_OPEN_AT,  prodJson.optInt("opensAt"));
-            values.put(DataBaseHelper.COLUMN_CLOSE_AT,  prodJson.optInt("closesAt"));
-            values.put(DataBaseHelper.COLUMN_DELIVERY_FROM,  prodJson.optInt("deliveryFrom"));
-            values.put(DataBaseHelper.COLUMN_DELIVERY_TO,  prodJson.optInt("deliveryTo"));
-            values.put(DataBaseHelper.COLUMN_REMOTE_DELIVERY,  prodJson.optInt("remoteArea"));
-            commonUtil.insert(dbHelper, DataBaseHelper.TABLE_SHOP, values);
+    public void insertItemInCart(Adapter adapter, JSONArray product) {
+        try {
+            SQLiteDatabase db;
+            db = dbHelper.getReadableDatabase();
+
+            for (int i = 0; i < product.length(); i++) {
+            JSONObject catJson = product.optJSONObject(i);
+            if (catJson.has("shops")) {
+                for (int j = 0; j < catJson.optJSONArray("shops").length(); j++) {
+                    JSONObject prodJson = catJson.optJSONArray("shops").optJSONObject(j);
+                    ContentValues values = new ContentValues();
+                    values.put(DataBaseHelper.COLUMN_SHOP_ID, prodJson.optString("id"));
+                    values.put(DataBaseHelper.COLUMN_SHOP_NAME, prodJson.optString("name"));
+                    values.put(DataBaseHelper.COLUMN_CUT_OF_TIME, prodJson.optString("cutOffTime"));
+                    values.put(DataBaseHelper.COLUMN_MIN_ORDER, prodJson.optString("minOrder"));
+                    values.put(DataBaseHelper.COLUMN_MID_NIGHT_DEL, prodJson.optString("midnightDeliveryStatus"));
+                    values.put(DataBaseHelper.COLUMN_SAME_DAY_DELIVERY, prodJson.optString("sameDayDeliveryStatus"));
+                    values.put(DataBaseHelper.COLUMN_RATING, prodJson.optString("rating"));
+                    values.put(DataBaseHelper.COLUMN_OPEN_AT, prodJson.optString("opensAt"));
+                    values.put(DataBaseHelper.COLUMN_CLOSE_AT, prodJson.optString("closesAt"));
+                    values.put(DataBaseHelper.COLUMN_DELIVERY_FROM, prodJson.optString("deliveryFrom"));
+                    values.put(DataBaseHelper.COLUMN_DELIVERY_TO, prodJson.optString("deliveryTo"));
+                    values.put(DataBaseHelper.COLUMN_REMOTE_DELIVERY, prodJson.optString("remoteArea"));
+                    values.put(DataBaseHelper.COLUMN_CATEGORY_ID, catJson.optString("id"));
+                    values.put(DataBaseHelper.COLUMN_CATEGORY_NAME, catJson.optString("name"));
+//                    commonUtil.insert(dbHelper, DataBaseHelper.TABLE_SHOP, values);
+                    db.insert(DataBaseHelper.TABLE_SHOP, null, values);
+                    db.close();
+                }
+                adapter.addFragment(catJson.optString("id"), catJson.optString("name"));
+            }
+        }} catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -129,20 +153,20 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
     static class Adapter extends FragmentPagerAdapter {
         //        private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
-        private final List<String> mFragmentProduct = new ArrayList<>();
+        private final List<String> mFragmentID = new ArrayList<>();
 
         public Adapter(FragmentManager fm) {
             super(fm);
         }
 
-        public void addFragment(String product, String title) {
-            mFragmentProduct.add(product);
+        public void addFragment(String id, String title) {
+            mFragmentID.add(id);
             mFragmentTitles.add(title);
         }
 
         @Override
         public Fragment getItem(int position) {
-            return ProductFragment.newInstance(mFragmentProduct.get(position));
+            return ProductFragment.newInstance(mFragmentID.get(position));
         }
 
         @Override
