@@ -21,7 +21,7 @@ public class MyOrdersActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater inflater = LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.center_action_bar, null);
+        View v = inflater.inflate(R.layout.action_bar_center, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
         titleTextView.setText(getResources().getString(R.string.screen_order));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);

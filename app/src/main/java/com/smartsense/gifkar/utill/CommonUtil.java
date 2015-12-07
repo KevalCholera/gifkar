@@ -170,7 +170,7 @@ public class CommonUtil {
         // TODO Auto-generated method stub
         Boolean check = false;
         try {
-            sqLiteDatabase = dbHelper.openDataBase();
+            sqLiteDatabase = dbHelper.getReadableDatabase();
             sqLiteDatabase.execSQL(sqlQuery);
             check = true;
         } catch (Exception e) {
@@ -184,7 +184,7 @@ public class CommonUtil {
     }
 
     public long insert(DataBaseHelper dbHelper, String table, ContentValues values) {
-        sqLiteDatabase = dbHelper.openDataBase();
+        sqLiteDatabase = dbHelper.getReadableDatabase();
         String nullColumnHack = null;
         return sqLiteDatabase.insert(table, nullColumnHack, values);
     }
@@ -302,6 +302,19 @@ public class CommonUtil {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
+        }
+    }
+
+    public static String beforeAlaram(int id) {
+        switch (id) {
+            case 1:
+                return "1 Day Before";
+            case 2:
+                return "2 Day Before";
+            case 3:
+                return "1 Hour Before";
+            default:
+                return "1 Day Before";
         }
     }
 

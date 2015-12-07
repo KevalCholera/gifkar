@@ -22,7 +22,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <include
-                layout="@layout/home_action_bar"
+                layout="@layout/action_bar_home"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

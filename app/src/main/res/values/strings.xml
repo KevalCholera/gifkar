@@ -7,6 +7,12 @@
     <string name="screen_new_pass">New Password</string>
     <string name="screen_profile">Profile</string>
     <string name="screen_order">My Orders</string>
+    <string name="screen_add_address">Add Address</string>
+    <string name="screen_add_reminder">Add Reminder</string>
+    <string name="screen_edit_address">Edit Address</string>
+    <string name="screen_edit_reminder">Edit Reminder</string>
+    <string name="screen_my_address">My Addresses</string>
+    <string name="screen_my_reminders">My Reminders</string>
     <string name="app_id">738684459571187</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -46,6 +52,7 @@
     <string name="signup_greet_text">Welcome to Delivery Junction. \n Serving you with Best Quality.</string>
     <string name="full_name">First Name</string>
     <string name="last_name">Last Name</string>
+    <string name="name">Name</string>
     <string name="set_password">Set Password</string>
     <string name="reenter_password">Re Enter Password</string>
     <string name="mobile_hint">Enter 10 Digit Mobile Number</string>
@@ -200,7 +207,7 @@
     <string name="cart">Cart</string>
 
     <string name="flat">Flat/House/Office Number</string>
-    <string name="street">Street/Society</string>
+    <string name="street">Street/Society Name</string>
     <string name="area">Area Name</string>
     <string name="city">City Name</string>
     <string name="country">Country Name</string>
@@ -212,4 +219,15 @@
     <string name="emapty_active_order">Looks like don\'t have any on going orders.</string>
     <string name="emapty_past_order">Looks like don\'t have any on past orders.</string>
     <string name="btStartGift">START GIFTING</string>
+    <string name="reception_name">Reception Name</string>
+    <string name="landmark">Landmark</string>
+    <string name="reception_no">Reception Mobile No.</string>
+    <string name="info">Info</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="des">Write Description Here</string>
+    <string name="reminder_type">Reminder About</string>
+    <string name="relationship">Relationship</string>
+    <string name="reminder_bottom">Reminder will help you to get notification</string>
+    <string name="reminder">Reminder</string>
 </resources>

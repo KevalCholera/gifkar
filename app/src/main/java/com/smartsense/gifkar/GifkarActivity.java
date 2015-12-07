@@ -61,7 +61,7 @@ public class GifkarActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View header = LayoutInflater.from(this).inflate(R.layout.nav_header_gifkar, null);
+        View header = LayoutInflater.from(this).inflate(R.layout.header_nav, null);
         navigationView.addHeaderView(header);
         fm = getSupportFragmentManager();
         llHeadProfile = (LinearLayout) header.findViewById(R.id.llHeadProfile);
@@ -261,8 +261,8 @@ public class GifkarActivity extends AppCompatActivity
         @Override
         public View getView(final int position, View convertView1, ViewGroup parent) {
 
-//            convertView = inflater.inflate(R.layout.nav_list_item, parent, false);
-            convertView = inflater.inflate(R.layout.nav_list_item, parent, false);
+//            convertView = inflater.inflate(R.layout.element_nav_list, parent, false);
+            convertView = inflater.inflate(R.layout.element_nav_list, parent, false);
             TextView tvTitle = (TextView) convertView.findViewById(R.id.tv_menuname_drawer);
             TextView tvCount = (TextView) convertView.findViewById(R.id.tv_menucount_drawer);
             ImageView iv_image = (ImageView) convertView.findViewById(R.id.iv_menuicon_drawer);
@@ -348,6 +348,7 @@ public class GifkarActivity extends AppCompatActivity
                 break;
 
             case Constants.NavigationItems.NAV_MY_ADDRESSES:
+                c.startActivity(new Intent(c, MyRemindersActivity.class));
 //                if (flag) {
 ////                    managebackpress();
 //                    setbackpress(3);
@@ -358,6 +359,7 @@ public class GifkarActivity extends AppCompatActivity
 //                }
                 break;
             case Constants.NavigationItems.NAV_MY_REMINDERS:
+                c.startActivity(new Intent(c, MyRemindersActivity.class));
 ////                managebackpress();
 //                setbackpress(2);
 //                fragmentcall(c, new OfferFragment(), fm);

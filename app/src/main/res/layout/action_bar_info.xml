@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/colorPrimary">
+
+
+    <ImageView
+        android:id="@+id/btActionBarBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/back_arrow" />
+
+
+    <ImageView
+        android:id="@+id/btActionBarInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+
+
+        android:src="@drawable/ic_action_info" />
+
+    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        android:id="@+id/actionBarTitle"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:fontFamily="normal"
+        android:gravity="center_horizontal|center_vertical"
+        android:padding="8dp"
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#FFFFFF" />
+
+
+</RelativeLayout>

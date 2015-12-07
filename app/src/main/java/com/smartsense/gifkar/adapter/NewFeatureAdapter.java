@@ -37,7 +37,7 @@ public class NewFeatureAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View itemView = LayoutInflater.from(mContext).inflate(R.layout.new_features_element, container, false);
+        View itemView = LayoutInflater.from(mContext).inflate(R.layout.element_new_features, container, false);
 
 //        NetworkImageView imageView = (NetworkImageView) itemView.findViewById(R.id.img_pager_item);
         ImageView imageView = (ImageView) itemView.findViewById(R.id.img_pager_item);

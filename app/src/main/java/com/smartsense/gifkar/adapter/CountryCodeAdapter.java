@@ -50,7 +50,7 @@ public class CountryCodeAdapter extends BaseAdapter {
 
         if (view == null) {
             holder = new ViewHolder();
-            view = inflater.inflate(R.layout.country_code_element, parent, false);
+            view = inflater.inflate(R.layout.element_country_code, parent, false);
             // TODO Auto-generated method stub
             holder.tvCountryCode = (TextView) view.findViewById(R.id.tvCountryCode);
 

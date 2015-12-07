@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.smartsense.gifkar">
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -101,7 +102,27 @@
             android:label="@string/screen_order"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".AddAddressActivity"
+            android:label="@string/screen_add_address"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".MyAddressActivity"
+            android:label="@string/screen_my_address"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".MyRemindersActivity"
+            android:label="@string/screen_my_reminders"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
+        <activity
+            android:name=".AddRemindersActivity"
+            android:label="@string/screen_add_reminder"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

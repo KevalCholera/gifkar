@@ -2,7 +2,6 @@ package com.smartsense.gifkar;
 
 
 import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -96,38 +95,40 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
 
     CommonUtil commonUtil = new CommonUtil();
 
-    public void insertItemInCart(Adapter adapter, JSONArray product) {
+    public void insertItemInCart(Adapter adapter, JSONArray category) {
         try {
-            SQLiteDatabase db;
-            db = dbHelper.getReadableDatabase();
+//            SQLiteDatabase db;
+//            db = dbHelper.getReadableDatabase();
+            commonUtil.execSQL(dbHelper, "DELETE FROM " + DataBaseHelper.TABLE_SHOP);
+            for (int i = 0; i < category.length(); i++) {
+                JSONObject catJson = category.optJSONObject(i);
+                if (catJson.has("shops")) {
+                    for (int j = 0; j < catJson.optJSONArray("shops").length(); j++) {
+                        JSONObject prodJson = catJson.optJSONArray("shops").optJSONObject(j);
+                        ContentValues values = new ContentValues();
+                        values.put(DataBaseHelper.COLUMN_SHOP_ID, prodJson.optString("id"));
+                        values.put(DataBaseHelper.COLUMN_SHOP_NAME, prodJson.optString("name"));
+                        values.put(DataBaseHelper.COLUMN_CUT_OF_TIME, prodJson.optString("cutOffTime"));
+                        values.put(DataBaseHelper.COLUMN_MIN_ORDER, prodJson.optString("minOrder"));
+                        values.put(DataBaseHelper.COLUMN_MID_NIGHT_DEL, prodJson.optString("midnightDeliveryStatus"));
+                        values.put(DataBaseHelper.COLUMN_SAME_DAY_DELIVERY, prodJson.optString("sameDayDeliveryStatus"));
+                        values.put(DataBaseHelper.COLUMN_RATING, prodJson.optString("rating"));
+                        values.put(DataBaseHelper.COLUMN_OPEN_AT, prodJson.optString("opensAt"));
+                        values.put(DataBaseHelper.COLUMN_CLOSE_AT, prodJson.optString("closesAt"));
+                        values.put(DataBaseHelper.COLUMN_DELIVERY_FROM, prodJson.optString("deliveryFrom"));
+                        values.put(DataBaseHelper.COLUMN_DELIVERY_TO, prodJson.optString("deliveryTo"));
+                        values.put(DataBaseHelper.COLUMN_REMOTE_DELIVERY, prodJson.optString("remoteArea"));
+                        values.put(DataBaseHelper.COLUMN_CATEGORY_ID, catJson.optString("id"));
+                        values.put(DataBaseHelper.COLUMN_CATEGORY_NAME, catJson.optString("name"));
+                        commonUtil.insert(dbHelper, DataBaseHelper.TABLE_SHOP, values);
+//                    db.insert(DataBaseHelper.TABLE_SHOP, null, values);
+//                    db.close();
+                    }
 
-            for (int i = 0; i < product.length(); i++) {
-            JSONObject catJson = product.optJSONObject(i);
-            if (catJson.has("shops")) {
-                for (int j = 0; j < catJson.optJSONArray("shops").length(); j++) {
-                    JSONObject prodJson = catJson.optJSONArray("shops").optJSONObject(j);
-                    ContentValues values = new ContentValues();
-                    values.put(DataBaseHelper.COLUMN_SHOP_ID, prodJson.optString("id"));
-                    values.put(DataBaseHelper.COLUMN_SHOP_NAME, prodJson.optString("name"));
-                    values.put(DataBaseHelper.COLUMN_CUT_OF_TIME, prodJson.optString("cutOffTime"));
-                    values.put(DataBaseHelper.COLUMN_MIN_ORDER, prodJson.optString("minOrder"));
-                    values.put(DataBaseHelper.COLUMN_MID_NIGHT_DEL, prodJson.optString("midnightDeliveryStatus"));
-                    values.put(DataBaseHelper.COLUMN_SAME_DAY_DELIVERY, prodJson.optString("sameDayDeliveryStatus"));
-                    values.put(DataBaseHelper.COLUMN_RATING, prodJson.optString("rating"));
-                    values.put(DataBaseHelper.COLUMN_OPEN_AT, prodJson.optString("opensAt"));
-                    values.put(DataBaseHelper.COLUMN_CLOSE_AT, prodJson.optString("closesAt"));
-                    values.put(DataBaseHelper.COLUMN_DELIVERY_FROM, prodJson.optString("deliveryFrom"));
-                    values.put(DataBaseHelper.COLUMN_DELIVERY_TO, prodJson.optString("deliveryTo"));
-                    values.put(DataBaseHelper.COLUMN_REMOTE_DELIVERY, prodJson.optString("remoteArea"));
-                    values.put(DataBaseHelper.COLUMN_CATEGORY_ID, catJson.optString("id"));
-                    values.put(DataBaseHelper.COLUMN_CATEGORY_NAME, catJson.optString("name"));
-//                    commonUtil.insert(dbHelper, DataBaseHelper.TABLE_SHOP, values);
-                    db.insert(DataBaseHelper.TABLE_SHOP, null, values);
-                    db.close();
                 }
                 adapter.addFragment(catJson.optString("id"), catJson.optString("name"));
             }
-        }} catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

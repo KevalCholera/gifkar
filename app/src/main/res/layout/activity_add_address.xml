@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+
+    android:padding="@dimen/margin_5">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_25"
+        android:orientation="vertical">
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etMyAddressAddName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:fontFamily="normal"
+            android:hint="@string/reception_name"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etMyAddressAddNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:fontFamily="normal"
+            android:hint="@string/reception_name"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etMyAddressAddFlatNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:fontFamily="normal"
+            android:hint="@string/flat"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etMyAddressAddStreet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:fontFamily="normal"
+            android:hint="@string/street"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etMyAddressAddLandmark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:fontFamily="normal"
+            android:hint="@string/landmark"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etMyAddressAddArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:enabled="false"
+            android:fontFamily="normal"
+            android:hint="@string/area"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etMyAddressAddPinCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:enabled="false"
+            android:fontFamily="normal"
+            android:hint="@string/pin"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+            android:id="@+id/btnMyAddressAddAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@color/mainColor"
+            android:fontFamily="normal"
+            android:text="@string/add_address"
+            android:textColor="@color/textcolorwhite"
+            android:textSize="@dimen/text_size_20" />
+
+
+    </LinearLayout>
+
+</ScrollView>
