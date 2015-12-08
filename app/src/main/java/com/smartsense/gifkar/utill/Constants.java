@@ -17,7 +17,7 @@ public class Constants {
     public static final String ONLINE_PAYMENT = "1";
     public static final String COD = "2";
     public static final String SCREEN = "screen";
-    public static final String DEFAULT_TOKEN ="Uxl5lRYZHwx2jDpVsUoANJtRK5fNffzRewwbQjjd";
+    public static final String DEFAULT_TOKEN = "Uxl5lRYZHwx2jDpVsUoANJtRK5fNffzRewwbQjjd";
     // public static final String BASE_URL =
     // "http://ywtest.cloudapp.net:8080/SupremeCab";
 
@@ -49,18 +49,22 @@ public class Constants {
 
     public class NavigationItems {
 
-        public static final int NAV_HOME = 0;
-        public static final int NAV_LOGIN = 1;
-        public static final int NAV_MY_CART = 2;
-        public static final int NAV_MY_ORDERS = 3;
-        public static final int NAV_MY_ADDRESSES = 4;
-        public static final int NAV_REFER_FRIEND = 5;
+
+        public static final int NAV_LOGIN = 0;
+        public static final int NAV_HOME = 1;
+
+        public static final int NAV_MY_CART = 3;
+        public static final int NAV_MY_ORDERS = 4;
+        public static final int NAV_MY_ADDRESSES = 5;
         public static final int NAV_MY_REMINDERS = 6;
-        public static final int NAV_NOTIFICATIONS = 7;
-        public static final int NAV_ABOUT_US = 8;
-        public static final int NAV_FEED_US = 9;
-        public static final int NAV_LOGOUT = 10;
-        public static final int NAV_SETTING = 11;
+
+        public static final int NAV_NOTIFICATIONS = 8;
+        public static final int NAV_REFER_FRIEND = 9;
+        public static final int NAV_ABOUT_US = 10;
+        public static final int NAV_FEED_US = 11;
+        public static final int NAV_SETTING = 12;
+        public static final int NAV_LOGOUT = 13;
+
 
     }
 

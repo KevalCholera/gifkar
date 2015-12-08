@@ -36,6 +36,7 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
         btInfo = (ImageView) v.findViewById(R.id.btActionBarInfo);
+//        btInfo.setBackground(getResources().getDrawable(R.drawable.));
         btInfo.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         Toolbar parent =(Toolbar) v.getParent();//first get parent toolbar of current action bar
@@ -57,7 +58,7 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llMyAddress:
-                startActivity(new Intent(this, MobileNoActivity.class));
+                startActivity(new Intent(this, AddAddressActivity.class));
                 break;
             case R.id.btActionBarBack:
                 finish();

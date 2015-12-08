@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_cart_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/empty_order" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:fontFamily="normal"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="@string/emapty_cart"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="normal"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="@string/emapty_cart_gift" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+            android:id="@+id/btnCartStartGifiting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@color/mainColor"
+            android:fontFamily="normal"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="@string/btStartGift"
+            android:textColor="@color/textcolorwhite"
+            android:textSize="@dimen/text_size_20" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_cart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/edittext_hint_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:id="@+id/tvCartShopName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_20"
+                android:layout_weight="1"
+                android:capitalize="sentences"
+                android:fontFamily="normal"
+                android:padding="@dimen/padding_2"
+                android:text="@string/shop_name"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:id="@+id/tvCartTotalRs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_20"
+                android:layout_weight="1"
+                android:capitalize="sentences"
+                android:fontFamily="normal"
+                android:gravity="right"
+                android:padding="@dimen/padding_2"
+                android:text="@string/shop_name"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+
+        <ListView
+            android:id="@+id/lvCart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="30dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            android:orientation="horizontal">
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_20"
+                android:fontFamily="normal"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal|right"
+                android:padding="@dimen/padding_2"
+                android:text="@string/checkout"
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+
+

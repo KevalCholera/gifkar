@@ -25,7 +25,7 @@
         android:layout_centerVertical="true"
 
 
-        android:src="@drawable/ic_action_info" />
+        android:background="@drawable/ic_action_info" />
 
     <com.smartsense.gifkar.textstyleutil.TypefaceTextView
         android:id="@+id/actionBarTitle"

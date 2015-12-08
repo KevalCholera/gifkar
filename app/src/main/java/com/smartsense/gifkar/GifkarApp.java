@@ -9,8 +9,6 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.mpt.storage.SharedPreferenceUtil;
-import com.parse.Parse;
-import com.parse.ParseInstallation;
 import com.smartsense.gifkar.imageutil.BitmapCache;
 import com.smartsense.gifkar.imageutil.BitmapUtil;
 import com.smartsense.gifkar.imageutil.DiskBitmapCache;
@@ -35,8 +33,8 @@ public class GifkarApp extends Application {
         super.onCreate();
         appInstance = this;
         TypefaceManager.addTextStyleExtractor(CooperHewittExtractor.getInstance());
-        Parse.initialize(this, "9yjUxrJuubYfJQvh8gONZuZqTEu3gcpqB1mdRkpH", "w3znN1nsItMDKIZaTJ8qzdRDPnfFKeW6uAI56C8Y");
-        ParseInstallation.getCurrentInstallation().saveInBackground();
+//        Parse.initialize(this, "9yjUxrJuubYfJQvh8gONZuZqTEu3gcpqB1mdRkpH", "w3znN1nsItMDKIZaTJ8qzdRDPnfFKeW6uAI56C8Y");
+//        ParseInstallation.getCurrentInstallation().saveInBackground();
         SharedPreferenceUtil.init(this);
     }
 

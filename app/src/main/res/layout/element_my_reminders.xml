@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
             android:fontFamily="normal"
-            android:padding="@dimen/padding_2"
+            android:paddingTop="@dimen/padding_2"
+            android:paddingLeft="@dimen/padding_10"
             android:text="@string/name"
             android:textColor="@color/mainColor"
             android:textSize="20sp" />
@@ -29,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="normal"
-            android:padding="@dimen/padding_2"
+            android:paddingTop="@dimen/padding_2"
+            android:paddingLeft="@dimen/padding_10"
             android:text="@string/relationship"
             android:textSize="16sp" />
 
@@ -37,6 +39,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+
             android:orientation="horizontal">
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -44,6 +47,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:drawableLeft="@drawable/ic_calendar"
+                android:paddingLeft="@dimen/padding_10"
                 android:fontFamily="normal"
                 android:padding="@dimen/padding_2"
                 android:text="@string/date"
@@ -53,6 +59,9 @@
                 android:id="@+id/tvMyReminderElementTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_clock"
+                android:paddingLeft="@dimen/padding_10"
+                android:gravity="center_vertical"
                 android:layout_weight="1"
                 android:fontFamily="normal"
                 android:hint="@string/time"

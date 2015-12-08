@@ -22,4 +22,9 @@
     <color name="mainColor">#01a8e5</color>
     <color name="your_unselected_text_color">#47505C</color>
     <color name="your_selected_text_color">#888888</color>
+    <color name="fb_refer">#1263B5</color>
+    <color name="whatsapp_refer">#2AB200</color>
+    <color name="gmail_refer">#E85858</color>
+    <color name="gplus_refer">#DD5044</color>
+    <color name="sms">#01A8E5</color>
 </resources>

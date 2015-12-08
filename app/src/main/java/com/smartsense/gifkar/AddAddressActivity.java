@@ -69,6 +69,9 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
             case R.id.btnMyAddressAddAddress:
 
                 break;
+            case R.id.btActionBarBack:
+                finish();
+                break;
             default:
         }
     }

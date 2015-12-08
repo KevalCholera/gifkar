@@ -200,7 +200,7 @@ public class GifkarActivity extends AppCompatActivity
 
         public void getList() {
 
-            if (1 == 1) {
+            if (0 == 1) {
                 //user is login and display sign out btn
                 mNavTitles = new String[]{"Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Setting", "Sign Out"};
                 mIcons = new int[]{R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
@@ -333,6 +333,7 @@ public class GifkarActivity extends AppCompatActivity
 //                fragmentcall(c, new CategoryFragment(), fm);
                 break;
             case Constants.NavigationItems.NAV_MY_CART:
+                c.startActivity(new Intent(c, MyCartActivity.class));
 //                if (flag) {
 //                    setbackpress(3);
 //                    fragmentcall(c, new DJWalletFragment(), fm);
@@ -348,7 +349,7 @@ public class GifkarActivity extends AppCompatActivity
                 break;
 
             case Constants.NavigationItems.NAV_MY_ADDRESSES:
-                c.startActivity(new Intent(c, MyRemindersActivity.class));
+                c.startActivity(new Intent(c, MyAddressActivity.class));
 //                if (flag) {
 ////                    managebackpress();
 //                    setbackpress(3);
@@ -365,6 +366,7 @@ public class GifkarActivity extends AppCompatActivity
 //                fragmentcall(c, new OfferFragment(), fm);
                 break;
             case Constants.NavigationItems.NAV_NOTIFICATIONS:
+                c.startActivity(new Intent(c, NotificationActivity.class));
 //                if (flag) {
 //                    fragmentcall(c, new ReferEarnFragment(), fm);
 ////                    managebackpress();
@@ -374,6 +376,8 @@ public class GifkarActivity extends AppCompatActivity
 //                }
                 break;
             case Constants.NavigationItems.NAV_REFER_FRIEND:
+                c.startActivity(new Intent(c, ReferFriendsActivity.class));
+
 //                if (flag) {
 //                    setbackpress(2);
 //                    c.startActivity(new Intent(c, AvailAddressActivity.class).putExtra("intent", false));

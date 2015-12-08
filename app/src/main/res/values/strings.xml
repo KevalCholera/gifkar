@@ -13,6 +13,9 @@
     <string name="screen_edit_reminder">Edit Reminder</string>
     <string name="screen_my_address">My Addresses</string>
     <string name="screen_my_reminders">My Reminders</string>
+    <string name="screen_my_cart">My Cart</string>
+    <string name="screen_notification">Notifications</string>
+    <string name="screen_refer">Refer Friends</string>
     <string name="app_id">738684459571187</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -80,6 +83,7 @@
     <string name="start_shopping">Start Shopping</string>
     <string name="retry">Retry</string>
     <string name="nointernet_msg">Oops! Something went wrong</string>
+    <string name="notification_msg">No Notifications</string>
     <string name="nointernet_try_again_msg">Please check your internet connection and try again</string>
     <string name="paid_amount">Paid Amount</string>
     <string name="deduction_djwallet">Deduction from DJWallet</string>
@@ -218,8 +222,11 @@
     <string name="noh">No Order History</string>
     <string name="emapty_active_order">Looks like don\'t have any on going orders.</string>
     <string name="emapty_past_order">Looks like don\'t have any on past orders.</string>
+    <string name="emapty_cart_gift">Why don\'t you Gift someone today?</string>
+    <string name="emapty_cart">Opps! Cart seems empty.</string>
     <string name="btStartGift">START GIFTING</string>
     <string name="reception_name">Reception Name</string>
+    <string name="notificaton_name">Notification Name</string>
     <string name="landmark">Landmark</string>
     <string name="reception_no">Reception Mobile No.</string>
     <string name="info">Info</string>
@@ -230,4 +237,13 @@
     <string name="relationship">Relationship</string>
     <string name="reminder_bottom">Reminder will help you to get notification</string>
     <string name="reminder">Reminder</string>
+    <string name="shop_name">Shop Name</string>
+    <string name="checkout">Checkout</string>
+    <string name="refer">Be a trendsetter and tell your friends about gifkar</string>
+    <string name="facebook">Facebook</string>
+    <string name="whatsapp">Whats App</string>
+    <string name="gmail">Gmail</string>
+    <string name="gplus">Google Plus</string>
+    <string name="msg">SMS</string>
+    <string name="share_msg">Share With Friends</string>
 </resources>
