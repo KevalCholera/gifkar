@@ -27,7 +27,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mobile_no);        
+        setContentView(R.layout.activity_mobile_no);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -83,7 +83,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View dialog = inflater.inflate(R.layout.list_view, null);
+            View dialog = inflater.inflate(R.layout.dialog_city_select, null);
             ListView list_view = (ListView) dialog.findViewById(R.id.list_view);
 
             CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(this, response.getJSONObject("data").getJSONArray("countries"), true);

@@ -87,7 +87,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View dialog = inflater.inflate(R.layout.list_view, null);
+            View dialog = inflater.inflate(R.layout.dialog_city_select, null);
             ListView list_view = (ListView) dialog.findViewById(R.id.list_view);
 
             CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(this, response.getJSONObject("data").getJSONArray("countries"), true);

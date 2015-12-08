@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="@dimen/margin_5">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_25"
+        android:orientation="vertical">
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etNewShopName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:fontFamily="normal"
+            android:hint="@string/shop_name"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etNewShopAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:fontFamily="normal"
+            android:hint="@string/address"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etNewShopArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:fontFamily="normal"
+            android:hint="@string/area"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etNewShopCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:fontFamily="normal"
+            android:hint="@string/city"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etNewShopPin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:fontFamily="normal"
+            android:hint="@string/pin"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etNewShopWeblink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:enabled="false"
+            android:fontFamily="normal"
+            android:hint="@string/weblink"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etNewShopEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/edittext_round"
+            android:ems="10"
+            android:enabled="false"
+            android:fontFamily="normal"
+            android:hint="@string/email1"
+            android:padding="@dimen/padding_8"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+            android:id="@+id/btnNewShopAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@color/mainColor"
+            android:fontFamily="normal"
+            android:text="@string/add_address"
+            android:textColor="@color/textcolorwhite"
+            android:textSize="@dimen/text_size_20" />
+    </LinearLayout>
+
+</ScrollView>

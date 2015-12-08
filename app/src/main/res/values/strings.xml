@@ -117,6 +117,21 @@
     <string name="forgot_text"> Enter your Email/Mobile number to reset your Password</string>
     <string name="mobile_text"> We will send an SMS a confirmation to the number</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+
+    <string name="large">
+    "Material is the metaphor.\n\n"
+
+    "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+    "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+    "technologically advanced and open to imagination and magic.\n"
+    "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
+    "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
+    "flexibility of the material creates new affordances that supercede those in the physical "
+    "world, without breaking the rules of physics.\n"
+    "The fundamentals of light, surface, and movement are key to conveying how objects move, "
+    "interact, and exist in space and in relation to each other. Realistic lighting shows "
+    "seams, divides space, and indicates moving parts.\n\n"
+    </string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -246,4 +261,18 @@
     <string name="gplus">Google Plus</string>
     <string name="msg">SMS</string>
     <string name="share_msg">Share With Friends</string>
+    <string name="select_country">Select Country</string>
+    <string name="screen_about">About Us</string>
+    <string name="app_ver">1.0.0</string>
+    <string name="version_app">VERSION OF APP</string>
+    <string name="help">Help</string>
+    <string name="faq">FAQ\'s</string>
+    <string name="screen_feed">Feed Us</string>
+    <string name="suggest_new_shop">SUGGEST NEW SHOP</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="email_us">Email Us</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="weblink">Website Link</string>
+    <string name="address">Address</string>
+    <string name="screen_suggest">Suggest New Shop</string>
 </resources>

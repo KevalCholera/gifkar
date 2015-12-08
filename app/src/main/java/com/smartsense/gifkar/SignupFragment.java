@@ -90,7 +90,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener {
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(getActivity());
             LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View dialog = inflater.inflate(R.layout.list_view, null);
+            View dialog = inflater.inflate(R.layout.dialog_city_select, null);
             ListView list_view = (ListView) dialog.findViewById(R.id.list_view);
 
             CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(getActivity(), response.getJSONObject("data").getJSONArray("countries"), true);

@@ -386,6 +386,7 @@ public class GifkarActivity extends AppCompatActivity
 //                }
                 break;
             case Constants.NavigationItems.NAV_ABOUT_US:
+                c.startActivity(new Intent(c, AboutUsActivity.class));
 //                if (flag) {
 //                    setbackpress(2);
 //                    c.startActivity(new Intent(c, AvailAddressActivity.class).putExtra("intent", false));
@@ -394,6 +395,7 @@ public class GifkarActivity extends AppCompatActivity
 //                }
                 break;
             case Constants.NavigationItems.NAV_FEED_US:
+                c.startActivity(new Intent(c, FeedUsActivity.class));
 //                if (flag) {
 //                    setbackpress(2);
 //                    c.startActivity(new Intent(c, AvailAddressActivity.class).putExtra("intent", false));
