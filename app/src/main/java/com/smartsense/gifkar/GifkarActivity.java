@@ -121,7 +121,7 @@ public class GifkarActivity extends AppCompatActivity
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btActionBarfilter:
-//                startActivity(new Intent(this, MobileNoActivity.class));
+                startActivity(new Intent(this, ShopFilterActivity.class));
                 break;
             case R.id.btActionBarSearch:
 //                startActivity(new Intent(this, MobileNoActivity.class));

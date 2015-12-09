@@ -30,7 +30,7 @@ public class TermsandCondtionsActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setCustomView(v);
-        setContentView(R.layout.activity_termsand_condtions);
+        setContentView(R.layout.activity_terms_and_condtions);
         wvTerms = (WebView) findViewById(R.id.webView);
         wvTerms.setWebViewClient(new MyBrowser());
         wvTerms.getSettings().setLoadsImagesAutomatically(true);

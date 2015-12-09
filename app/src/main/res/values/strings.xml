@@ -222,7 +222,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="greet_text_main">Make Someone Happy Today, Gift Them :)</string>
-    <string name="filter">Filter</string>
+    <string name="filter">Filters</string>
     <string name="cart">Cart</string>
 
     <string name="flat">Flat/House/Office Number</string>
@@ -275,4 +275,12 @@
     <string name="weblink">Website Link</string>
     <string name="address">Address</string>
     <string name="screen_suggest">Suggest New Shop</string>
+    <string name="screen_city">Select City</string>
+    <string name="city_bottom">Celebrate Every Occasion With  Your Loved Ones</string>
+    <string name="search_nearby">SEARCH NEARBY</string>
+    <string name="to_get_it">(to get it delivered)</string>
+    <string name="delivery_hint">Where do you want to deliver?</string>
+    <string name="screen_area">Select Area -</string>
+    <string name="sort_by">SORT BY</string>
+    <string name="rattinag">RATTING</string>
 </resources>

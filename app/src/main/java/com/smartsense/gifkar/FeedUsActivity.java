@@ -2,6 +2,7 @@ package com.smartsense.gifkar;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -15,7 +16,7 @@ import com.smartsense.gifkar.utill.CommonUtil;
 public class FeedUsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView btBack;
-    private LinearLayout llRateUs, llEmailUs, llContactUs;
+    private LinearLayout llRateUs, llEmailUs, llContactUs, llSuggestShop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,18 +27,20 @@ public class FeedUsActivity extends AppCompatActivity implements View.OnClickLis
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.action_bar_center, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
-        titleTextView.setText(getResources().getString(R.string.screen_about));
+        titleTextView.setText(getResources().getString(R.string.screen_feed));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
 
         setContentView(R.layout.activity_feed_us);
-        llContactUs=(LinearLayout) findViewById(R.id.llContactUs);
+        llContactUs = (LinearLayout) findViewById(R.id.llContactUs);
         llContactUs.setOnClickListener(this);
-        llRateUs=(LinearLayout) findViewById(R.id.llRateUs);
+        llRateUs = (LinearLayout) findViewById(R.id.llRateUs);
         llRateUs.setOnClickListener(this);
-        llEmailUs=(LinearLayout) findViewById(R.id.llEmailUs);
+        llEmailUs = (LinearLayout) findViewById(R.id.llEmailUs);
         llEmailUs.setOnClickListener(this);
+        llSuggestShop = (LinearLayout) findViewById(R.id.llSuggestShop);
+        llSuggestShop.setOnClickListener(this);
     }
 
     @Override
@@ -55,6 +58,10 @@ public class FeedUsActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.llContactUs:
                 openInfoPopup();
                 break;
+            case R.id.llSuggestShop:
+                startActivity(new Intent(this, SuggestNewShopActivity.class));
+                break;
+
 
         }
     }

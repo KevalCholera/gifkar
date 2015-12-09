@@ -51,7 +51,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="@dimen/margin_5"
-                android:src="@drawable/refer_whatsapp" />
+                android:src="@drawable/star" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="@dimen/margin_5"
-                android:src="@drawable/refer_whatsapp" />
+                android:src="@drawable/mail" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -155,7 +155,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_margin="@dimen/margin_5"
-                android:src="@drawable/refer_whatsapp" />
+                android:src="@drawable/contact_us" />
 
             <LinearLayout
 

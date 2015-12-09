@@ -27,4 +27,5 @@
     <color name="gmail_refer">#E85858</color>
     <color name="gplus_refer">#DD5044</color>
     <color name="sms">#01A8E5</color>
+    <color name="city_auto_location">#E6E6E6</color>
 </resources>

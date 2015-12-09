@@ -48,7 +48,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSend:
-                startActivity(new Intent(this, MobileNoActivity.class));
+                startActivity(new Intent(this, OTPActivity.class));
                 break;
             case R.id.etEnterCountryCode:
                 openCountryPopup();
