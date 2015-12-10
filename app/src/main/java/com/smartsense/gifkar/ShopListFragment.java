@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeListener {
+public class ShopListFragment extends Fragment implements ViewPager.OnPageChangeListener {
 
 
     ViewPager viewPager;
@@ -39,7 +39,7 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
     View newFeaturesView;
 
 
-    public Main_Fragment() {
+    public ShopListFragment() {
         // Required empty public constructor
 
     }
@@ -48,7 +48,7 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_shoplist, container, false);
         handler = new Handler();
 
         newFeaturesView = (View) rootView.findViewById(R.id.newfeaturesView);
@@ -80,7 +80,7 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
                 "\"errorCode\":0,\n" +
                 " \"status\":200,\n" +
                 " \"message\":\"Category List.\", \n" +
-                "\"data\" : { \"categories\" : [ { \"id\":\"1\", \"name\":\"Cakes\",\"shops\" : [ { \"id\":\"15\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"2\",\"name\":\"Sweets\",\"shops\":[{\"id\":\"15\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"3\",\"name\":\"Flowers\"},{\"id\":\"4\",\"name\":\"Backery\",\"shops\":[{\"id\":\"15\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"5\",\"name\":\"Indian\"},{\"id\":\"6\",\"name\":\"Italian\"} ] } }\n";
+                "\"data\" : { \"categories\" : [ { \"id\":\"1\", \"name\":\"Cakes\",\"shops\" : [ { \"id\":\"16\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"2\",\"name\":\"Sweets\",\"shops\":[{\"id\":\"15\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"3\",\"name\":\"Flowers\"},{\"id\":\"4\",\"name\":\"Backery\",\"shops\":[{\"id\":\"5\",\"name\":\"Shop 7\",\"cutOffTime\":\"0\",\"minOrder\":\"21\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"5\",\"name\":\"Indian\"},{\"id\":\"6\",\"name\":\"Italian\"} ] } }\n";
         try {
             JSONObject response = new JSONObject(tempary);
             JSONArray category = response.optJSONObject("data").optJSONArray("categories");
@@ -167,7 +167,7 @@ public class Main_Fragment extends Fragment implements ViewPager.OnPageChangeLis
 
         @Override
         public Fragment getItem(int position) {
-            return ProductFragment.newInstance(mFragmentID.get(position));
+            return ShopFragment.newInstance(mFragmentID.get(position));
         }
 
         @Override

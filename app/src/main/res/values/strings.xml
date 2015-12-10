@@ -248,6 +248,7 @@
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="des">Write Description Here</string>
+    <string name="description">Description : </string>
     <string name="reminder_type">Reminder About</string>
     <string name="relationship">Relationship</string>
     <string name="reminder_bottom">Reminder will help you to get notification</string>
@@ -283,4 +284,6 @@
     <string name="screen_area">Select Area -</string>
     <string name="sort_by">SORT BY</string>
     <string name="rattinag">RATTING</string>
+    <string name="prod_name">Product Name</string>
+    <string name="unit_name">Unit Name :</string>
 </resources>

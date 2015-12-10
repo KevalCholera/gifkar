@@ -167,19 +167,27 @@
             android:label="@string/screen_city"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".ShopFilterActivity"
             android:label="@string/filter"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".ProductFilterActivity"
             android:label="@string/filter"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ProductListActivity"
+            android:label="@string/shop_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
+        <activity
+            android:name=".ProductDetailActivity"
+            android:label="@string/prod_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
         <!-- <service android:name="com.parse.PushService" /> -->
 

@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:orientation="horizontal"
-    android:padding="@dimen/padding_16">
+    android:gravity="center"
+    android:orientation="horizontal">
 
     <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/ivShopListImage"
+        android:id="@+id/ivProdElementImage"
         android:layout_width="@dimen/product_image_height"
         android:layout_height="@dimen/product_image_height"
         android:background="@drawable/ic_gifkar_logo" />
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:id="@+id/tvShopListShopName"
+            android:id="@+id/tvProdElementName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="normal"
@@ -31,30 +30,21 @@
             android:singleLine="true"
             android:text="Shop Name"
             android:textColor="@color/textcolor"
-            android:textSize="@dimen/text_18"
+            android:textSize="@dimen/text_12"
             android:textStyle="bold" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:id="@+id/tvShopListCutofTime"
+            android:id="@+id/tvProdElementCate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="normal"
-            android:text="Cut of Time :2hours"
-            android:textColor="@color/textcolor"
-            android:textSize="@dimen/text_10" />
-
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:id="@+id/tvShopListMinOrder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="normal"
-            android:text="Minimum Order : Rs.100"
+            android:text="Eggless"
             android:textColor="@color/textcolor"
             android:textSize="@dimen/text_10" />
 
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:id="@+id/tvShopListDeliveryTime"
+            android:id="@+id/tvProdElementDeliveryTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="normal"
@@ -67,27 +57,66 @@
 
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight=".5"
-        android:gravity="center"
         android:orientation="vertical">
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:id="@+id/tvShopListRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_blue_back"
-            android:fontFamily="normal"
-            android:text="5.0"
-            android:textColor="@color/textcolorwhite" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/ivShopListTiming"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_5"
-            android:background="@drawable/ic_cast_disabled_light" />
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:id="@+id/tvProdElementRs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="normal"
+                android:text="\u20B9 100" />
+
+            <ImageButton
+                android:id="@+id/ibProdElementNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@drawable/right_icon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/ibProdElementMinus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_product_minus_unfill"
+                android:padding="@dimen/padding_1" />
+
+            <TextView
+                android:id="@+id/tvProdElementQty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="@string/total_quntity"
+                android:textColor="@color/textcolorblack" />
+
+            <ImageButton
+                android:id="@+id/ibProdElementPlus"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_product_plus_unfill"
+                android:padding="@dimen/padding_1" />
+        </LinearLayout>
+
 
     </LinearLayout>
 

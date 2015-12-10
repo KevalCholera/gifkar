@@ -32,7 +32,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
             @Override
             public View newView(Context context, Cursor cursor, ViewGroup parent) {
                 // Inflate the view here
-                return LayoutInflater.from(context).inflate(R.layout.element_product, parent, false);
+                return LayoutInflater.from(context).inflate(R.layout.element_shop, parent, false);
             }
 
             @Override
@@ -57,6 +57,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
                 tvShopListDeliveryTime.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_FROM)) +" to "+cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_TO)));
                 tvShopListShopName.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_NAME)));
                 tvShopListMinOrder.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_MIN_ORDER)));
+                view.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_ID)));
 //              ivShopListImage.setDefaultImageResId(R.drawable.ic_gifkar_logo);
 //              ivShopListImage.setImageUrl(Constants.BASE_IMAGE_URL + cursor.getString(cursor.getColumnIndexOrThrow("body")), imageLoader);
 

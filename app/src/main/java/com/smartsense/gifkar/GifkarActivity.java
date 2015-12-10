@@ -61,7 +61,7 @@ public class GifkarActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View header = LayoutInflater.from(this).inflate(R.layout.header_nav, null);
+        View header = LayoutInflater.from(this).inflate(R.layout.acitivity_drawer, null);
         navigationView.addHeaderView(header);
         fm = getSupportFragmentManager();
         llHeadProfile = (LinearLayout) header.findViewById(R.id.llHeadProfile);
@@ -70,7 +70,7 @@ public class GifkarActivity extends AppCompatActivity
         lvNavList = (ListView) header.findViewById(R.id.lvHeadList);
         setHeader(GifkarActivity.this);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new Main_Fragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ShopListFragment()).commit();
 
     }
 

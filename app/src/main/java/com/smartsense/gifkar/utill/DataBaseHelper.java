@@ -28,6 +28,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CATEGORY_ID = "category_id";
     public static final String COLUMN_CATEGORY_NAME = "category_name";
     private static final int DATABASE_VERSION = 1;
+
+    public static final String COLUMN_PROD_ID = "prod_id";
+    public static final String COLUMN_PROD_NAME = "prod_name";
+    public static final String COLUMN_PROD_IMAGE = "prod_image";
+    public static final String COLUMN_PROD_QUANTITY = "prod_qty";
+    public static final String COLUMN_PROD_PRICE = "prod_price";
+    public static final String COLUMN_PROD_ITEM_TYPE = "prod_item_type";
+    public static final String COLUMN_PROD_EARLIY_DEL= "prod_earliy_del";
+    public static final String COLUMN_PROD_DESC= "prod_description";
+    public static final String COLUMN_PROD_IS_AVAIL = "prod_is_avail";
+    public static final String COLUMN_PROD_UNIT_NAME= "prod_unit_name";
+    public static final String COLUMN_PROD_UNIT_ID = "prod_unit_id";
+    public static final String COLUMN_PROD_PACKAGE_NAME = "prod_pckg_name";
+    public static final String COLUMN_PROD_PACKAGE_ID = "prod_pckg_id";
+    public static final String COLUMN_PROD_CATEGORY_ID = "prod_category_id";
+    public static final String COLUMN_PROD_CATEGORY_NAME = "prod_category_name";
         // Database creation sql statement
     private static final String TABLE_SHOPLIST = "create table "
             + TABLE_SHOP + "(" + COLUMN_ID
@@ -48,6 +64,26 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + COLUMN_CATEGORY_NAME + " text  "
             + ");";
 
+    private static final String TABLE_PRODUCTLIST = "create table "
+            + TABLE_PRODUCT + "(" + COLUMN_ID
+            + " integer primary key autoincrement, "
+            + COLUMN_PROD_ID + " integer, "
+            + COLUMN_PROD_NAME + " text,  "
+            + COLUMN_PROD_IMAGE + " text,  "
+            + COLUMN_PROD_QUANTITY + " text,  "
+            + COLUMN_PROD_PRICE + " text,  "
+            + COLUMN_PROD_ITEM_TYPE + " text,  "
+            + COLUMN_PROD_EARLIY_DEL + " text,  "
+            + COLUMN_PROD_IS_AVAIL + " text,  "
+            + COLUMN_PROD_UNIT_ID + " text,  "
+            + COLUMN_PROD_UNIT_NAME + " text,  "
+            + COLUMN_PROD_PACKAGE_ID + " text,  "
+            + COLUMN_PROD_PACKAGE_NAME + " text,  "
+            + COLUMN_PROD_CATEGORY_ID + " text,  "
+            + COLUMN_PROD_CATEGORY_NAME + " text,  "
+            + COLUMN_PROD_DESC + " text  "
+            + ");";
+
     private SQLiteDatabase myDataBase;
 
     public DataBaseHelper(Context context) {
@@ -57,7 +93,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(TABLE_SHOPLIST);
-//        database.execSQL(TABLE_PRODUCTLIST);
+        database.execSQL(TABLE_PRODUCTLIST);
     }
 
     public SQLiteDatabase openDataBase() throws SQLException {
@@ -72,8 +108,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Log.w(DataBaseHelper.class.getName(),
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOPLIST);
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTLIST);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOP);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCT);
         onCreate(db);
     }
 }

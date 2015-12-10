@@ -5,7 +5,7 @@
 
     <include
         android:id="@+id/one_product_element"
-        layout="@layout/element_product"
+        layout="@layout/element_shop"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

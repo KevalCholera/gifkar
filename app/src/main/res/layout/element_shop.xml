@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="horizontal"
+    android:padding="@dimen/padding_16">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/ivShopListImage"
+        android:layout_width="@dimen/product_image_height"
+        android:layout_height="@dimen/product_image_height"
+        android:background="@drawable/ic_gifkar_logo" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tvShopListShopName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="normal"
+            android:paddingBottom="@dimen/padding_8"
+            android:singleLine="true"
+            android:text="Shop Name"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/text_18"
+            android:textStyle="bold" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tvShopListCutofTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="normal"
+            android:text="Cut of Time :2hours"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/text_10" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tvShopListMinOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="normal"
+            android:text="Minimum Order : Rs.100"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/text_10" />
+
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tvShopListDeliveryTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="normal"
+            android:text="Delivery Time : 10:00AM to 5:00PM"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/text_10" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".5"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tvShopListRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_blue_back"
+            android:fontFamily="normal"
+            android:text="5.0"
+            android:textColor="@color/textcolorwhite" />
+
+        <ImageView
+            android:id="@+id/ivShopListTiming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/ic_cast_disabled_light" />
+
+    </LinearLayout>
+
+</LinearLayout>
