@@ -15,11 +15,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_SHOP_ID = "shop_id";
     public static final String COLUMN_SHOP_NAME = "shop_name";
+    public static final String COLUMN_SHOP_IMAGE = "shop_image";
     public static final String COLUMN_CUT_OF_TIME = "cut_of_time";
     public static final String COLUMN_MIN_ORDER = "min_order";
     public static final String COLUMN_MID_NIGHT_DEL = "mid_night_delivery";
     public static final String COLUMN_SAME_DAY_DELIVERY = "same_day_delivery";
-    public static final String COLUMN_RATING= "rating";
+    public static final String COLUMN_RATING = "rating";
     public static final String COLUMN_OPEN_AT = "open_at";
     public static final String COLUMN_CLOSE_AT = "close_at";
     public static final String COLUMN_DELIVERY_FROM = "delivery_from";
@@ -29,27 +30,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CATEGORY_NAME = "category_name";
     private static final int DATABASE_VERSION = 1;
 
-    public static final String COLUMN_PROD_ID = "prod_id";
+    public static final String COLUMN_PROD_ID = "productId";
+    public static final String COLUMN_PROD_DETAIL_ID = "productDetailId";
     public static final String COLUMN_PROD_NAME = "prod_name";
+    public static final String COLUMN_PROD_CODE = "prod_code";
     public static final String COLUMN_PROD_IMAGE = "prod_image";
     public static final String COLUMN_PROD_QUANTITY = "prod_qty";
     public static final String COLUMN_PROD_PRICE = "prod_price";
     public static final String COLUMN_PROD_ITEM_TYPE = "prod_item_type";
-    public static final String COLUMN_PROD_EARLIY_DEL= "prod_earliy_del";
-    public static final String COLUMN_PROD_DESC= "prod_description";
+    public static final String COLUMN_PROD_EARLIY_DEL = "prod_earliy_del";
+    public static final String COLUMN_PROD_DESC = "prod_description";
     public static final String COLUMN_PROD_IS_AVAIL = "prod_is_avail";
-    public static final String COLUMN_PROD_UNIT_NAME= "prod_unit_name";
+    public static final String COLUMN_PROD_UNIT_NAME = "prod_unit_name";
     public static final String COLUMN_PROD_UNIT_ID = "prod_unit_id";
     public static final String COLUMN_PROD_PACKAGE_NAME = "prod_pckg_name";
     public static final String COLUMN_PROD_PACKAGE_ID = "prod_pckg_id";
     public static final String COLUMN_PROD_CATEGORY_ID = "prod_category_id";
     public static final String COLUMN_PROD_CATEGORY_NAME = "prod_category_name";
-        // Database creation sql statement
+    // Database creation sql statement
     private static final String TABLE_SHOPLIST = "create table "
             + TABLE_SHOP + "(" + COLUMN_ID
             + " integer primary key autoincrement, "
             + COLUMN_SHOP_ID + " integer, "
             + COLUMN_SHOP_NAME + " text,  "
+            + COLUMN_SHOP_IMAGE + " text,  "
             + COLUMN_CUT_OF_TIME + " text,  "
             + COLUMN_MIN_ORDER + " text,  "
             + COLUMN_MID_NIGHT_DEL + " text,  "
@@ -60,7 +64,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + COLUMN_CLOSE_AT + " text,  "
             + COLUMN_DELIVERY_TO + " text,  "
             + COLUMN_DELIVERY_FROM + " text,  "
-            + COLUMN_CATEGORY_ID + " text,  "
+            + COLUMN_CATEGORY_ID + " integer,  "
             + COLUMN_CATEGORY_NAME + " text  "
             + ");";
 
@@ -80,7 +84,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + COLUMN_PROD_PACKAGE_ID + " text,  "
             + COLUMN_PROD_PACKAGE_NAME + " text,  "
             + COLUMN_PROD_CATEGORY_ID + " text,  "
-            + COLUMN_PROD_CATEGORY_NAME + " text,  "
+            + COLUMN_PROD_CATEGORY_NAME + " text, "
+            + COLUMN_PROD_DETAIL_ID + " integer, "
+            + COLUMN_PROD_CODE + " text,  "
             + COLUMN_PROD_DESC + " text  "
             + ");";
 

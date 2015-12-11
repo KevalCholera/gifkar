@@ -63,13 +63,14 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         llProdDetailCheckOut =(LinearLayout) findViewById(R.id.llProdDetailCheckOut);
         llProdDetailCheckOut.setOnClickListener(this);
 
-        Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM "+ DataBaseHelper.TABLE_PRODUCT+"  WHERE "+DataBaseHelper.COLUMN_PROD_ID+" = '"
-                + getIntent().getStringExtra("ProdID")+"'");
+        Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM "+ DataBaseHelper.TABLE_PRODUCT+"  WHERE "+DataBaseHelper.COLUMN_PROD_DETAIL_ID+" = '"
+                + getIntent().getIntExtra("ProdDEID",0)+"'");
         if (cursor.getCount() > 0) {
             tvProdDes.setText(cursor.getString(cursor
                     .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DESC)));
             tvProdUnitName.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME)));
+                    .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME))+" "+cursor.getString(cursor
+                    .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME)));
             tvProdPrice.setText(cursor.getString(cursor
                     .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PRICE)));
             tvProdName.setText(cursor.getString(cursor
@@ -83,10 +84,14 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibProdDetailPlus:
-
+                if (Integer.valueOf(tvProdQty.getText().toString()) >= 1) {
+                    tvProdQty.setText("" + (Integer.valueOf(tvProdQty.getText().toString()) - 1));
+                }
                 break;
             case R.id.ibProdDetailMinus:
-
+                if (Integer.valueOf(tvProdQty.getText().toString()) < 3) {
+                    tvProdQty.setText("" + (Integer.valueOf(tvProdQty.getText().toString()) + 1));
+                }
                 break;
             case R.id.btActionBarBack:
                 finish();

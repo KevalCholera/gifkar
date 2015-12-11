@@ -67,8 +67,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         setupViewPager(viewPager);
 //        tvProdCartCount = (TextView) findViewById(R.id.tvProdListCartCount);
 //        tvProdCartRs = (TextView) findViewById(R.id.tvProdListCartRs);
-//        llProdCart =(LinearLayout) findViewById(R.id.llProdListCart);
-//        llProdCart.setOnClickListener(this);
+        llProdCart =(LinearLayout) findViewById(R.id.llProdListCart);
+        llProdCart.setOnClickListener(this);
 //        llProdCheckOut =(LinearLayout) findViewById(R.id.llProdDetailCheckOut);
 //        llProdCheckOut.setOnClickListener(this);
         getIntent().getIntExtra("ShopID", 0);
@@ -87,7 +87,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                 startActivity(new Intent(this, AddAddressActivity.class));
                 break;
             case R.id.llProdListCart:
-                startActivity(new Intent(this, AddAddressActivity.class));
+                startActivity(new Intent(this, MyCartActivity.class));
                 break;
             case R.id.llProdListCheckOut:
                 startActivity(new Intent(this, AddAddressActivity.class));
@@ -128,7 +128,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
 
     private void setupViewPager(ViewPager viewPager) {
         productListAdapter adapter = new productListAdapter(getSupportFragmentManager());
-        String tempary = "{\"eventId\":123,\"errorCode\":0,\"status\":200,\"message\":\"Product List.\",\"data\":{\"products\":[{\"id\":1,\"name\":\"Sub category\",\"products\":[{\"id\":7,\"subCategoryId\":1,\"description\":\"\",\"productCode\":\"123153\",\"quantity\":10,\"price\":\"100.00\",\"image\":\"productImg1446529988.png\",\"itemType\":\"na\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":4,\"name\":\"Bottle\",\"description\":\"Bottle\\n\"},\"packageType\":{\"id\":12,\"name\":\"Box\"}},{\"id\":9,\"subCategoryId\":1,\"description\":\"desc2\",\"productCode\":\"12354\",\"quantity\":11,\"price\":\"100.00\",\"image\":\"productImg1446525634.jpg\",\"itemType\":\"non-veg\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":2,\"name\":\"Ml\",\"description\":\"Miligram\\n\"},\"packageType\":{\"id\":5,\"name\":\"Bottle\"}},{\"id\":10,\"subCategoryId\":1,\"description\":\"desc\",\"productCode\":\"121356\",\"quantity\":12,\"price\":\"100.00\",\"image\":\"productImg1446530085.jpg\",\"itemType\":\"veg\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":3,\"name\":\"Box\",\"description\":\"BOx\"},\"packageType\":{\"id\":12,\"name\":\"Box\"}}]},{\"id\":2,\"name\":\"Sub category1\",\"products\":[{\"id\":12,\"subCategoryId\":2,\"description\":\"description\",\"productCode\":\"123153\",\"quantity\":1,\"price\":\"100.00\",\"image\":\"\",\"itemType\":\"na\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":1,\"name\":\"Kg\",\"description\":\"Kilogram\\n\"},\"packageType\":{\"id\":5,\"name\":\"Bottle\"}}]}]}}\n";
+        String tempary = "{\"eventId\":123,\"errorCode\":0,\"status\":200,\"message\":\"Product List.\",\"data\":{\"products\":[{\"id\":1,\"name\":\"Sub category\",\"products\":[{\"productDetailId\":7,\"subCategoryId\":1,\"description\":\"\",\"productCode\":\"123153\",\"quantity\":10,\"price\":\"100.00\",\"image\":\"productImg1446529988.png\",\"itemType\":\"na\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":4,\"name\":\"Bottle\",\"description\":\"Bottle\\n\"},\"productId\":6,\"name\":\"product6\",\"packageType\":{\"id\":12,\"name\":\"Box\"}},{\"productDetailId\":9,\"subCategoryId\":1,\"description\":\"desc2\",\"productCode\":\"12354\",\"quantity\":11,\"price\":\"100.00\",\"image\":\"productImg1446525634.jpg\",\"itemType\":\"non-veg\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":2,\"name\":\"Ml\",\"description\":\"Miligram\\n\"},\"productId\":6,\"name\":\"product6\",\"packageType\":{\"id\":5,\"name\":\"Bottle\"}},{\"productDetailId\":10,\"subCategoryId\":1,\"description\":\"desc\",\"productCode\":\"121356\",\"quantity\":12,\"price\":\"100.00\",\"image\":\"productImg1446530085.jpg\",\"itemType\":\"veg\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":3,\"name\":\"Box\",\"description\":\"BOx\"},\"productId\":6,\"name\":\"product6\",\"packageType\":{\"id\":12,\"name\":\"Box\"}}]},{\"id\":2,\"name\":\"Sub category1\",\"products\":[{\"productDetailId\":12,\"subCategoryId\":2,\"description\":\"description\",\"productCode\":\"123153\",\"quantity\":1,\"price\":\"100.00\",\"image\":\"\",\"itemType\":\"na\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":1,\"name\":\"Kg\",\"description\":\"Kilogram\\n\"},\"productId\":9,\"name\":\"Some Item\",\"packageType\":{\"id\":5,\"name\":\"Bottle\"}}]}]}}\n";
         try {
             JSONObject response = new JSONObject(tempary);
             JSONArray product = response.optJSONObject("data").optJSONArray("products");
@@ -152,7 +152,10 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                     for (int j = 0; j < catJson.optJSONArray("products").length(); j++) {
                         JSONObject prodJson = catJson.optJSONArray("products").optJSONObject(j);
                         ContentValues values = new ContentValues();
-                        values.put(DataBaseHelper.COLUMN_PROD_ID, prodJson.optString("id"));
+
+                        values.put(DataBaseHelper.COLUMN_PROD_CODE, prodJson.optString("productCode"));
+                        values.put(DataBaseHelper.COLUMN_PROD_DETAIL_ID, prodJson.optString("productDetailId"));
+                        values.put(DataBaseHelper.COLUMN_PROD_ID, prodJson.optString("productId"));
                         values.put(DataBaseHelper.COLUMN_PROD_NAME, prodJson.optString("name"));
                         values.put(DataBaseHelper.COLUMN_PROD_IMAGE, prodJson.optString("image"));
                         values.put(DataBaseHelper.COLUMN_PROD_PRICE, prodJson.optString("price"));
@@ -162,12 +165,12 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                         values.put(DataBaseHelper.COLUMN_PROD_IS_AVAIL, prodJson.optString("isAvailble"));
                         values.put(DataBaseHelper.COLUMN_PROD_DESC, prodJson.optString("description"));
                         if (prodJson.has("unit")) {
-                            values.put(DataBaseHelper.COLUMN_PROD_UNIT_ID, prodJson.optJSONObject("unit").optString("closesAt"));
-                            values.put(DataBaseHelper.COLUMN_PROD_UNIT_NAME, prodJson.optJSONObject("unit").optString("deliveryFrom"));
+                            values.put(DataBaseHelper.COLUMN_PROD_UNIT_ID, prodJson.optJSONObject("unit").optString("id"));
+                            values.put(DataBaseHelper.COLUMN_PROD_UNIT_NAME, prodJson.optJSONObject("unit").optString("name"));
                         }
                         if (prodJson.has("packageType")) {
-                            values.put(DataBaseHelper.COLUMN_PROD_PACKAGE_ID, prodJson.optJSONObject("packageType").optString("deliveryTo"));
-                            values.put(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME, prodJson.optJSONObject("packageType").optString("remoteArea"));
+                            values.put(DataBaseHelper.COLUMN_PROD_PACKAGE_ID, prodJson.optJSONObject("packageType").optString("id"));
+                            values.put(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME, prodJson.optJSONObject("packageType").optString("name"));
                         }
                         values.put(DataBaseHelper.COLUMN_PROD_CATEGORY_ID, catJson.optString("id"));
                         values.put(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME, catJson.optString("name"));

@@ -3,6 +3,7 @@ package com.smartsense.gifkar.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.ProductDetailActivity;
 import com.smartsense.gifkar.R;
+import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -24,13 +29,20 @@ import java.util.List;
 
 public class ProductAdapter extends CursorAdapter {
     Cursor productCursor;
-    int day_id;
+    DataBaseHelper dbHelper;
+    CommonUtil commonUtil = new CommonUtil();
+    static JSONArray productArray;
+    JSONObject productObj;
+    Context context;
+    Boolean checkCart;
 
-
-    public ProductAdapter(Context context, Cursor productCursor) {
+    public ProductAdapter(Context context, Cursor productCursor, DataBaseHelper dbHelper,Boolean checkCart) {
         super(context, productCursor, 0);
         this.productCursor = productCursor;
-        this.day_id = day_id;
+        this.dbHelper = dbHelper;
+        this.context=context;
+        this.checkCart=checkCart;
+        getCartItem();
     }
 
     @Override
@@ -52,7 +64,6 @@ public class ProductAdapter extends CursorAdapter {
 //        } else {
 //            view.setBackground(context.getResources().getDrawable(R.drawable.shape_box));
 //        }
-
         tvProdElementCate.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_QUANTITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME)));
         tvProdElementDT.setText(cursor.getString(cursor
                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_EARLIY_DEL)));
@@ -60,9 +71,10 @@ public class ProductAdapter extends CursorAdapter {
                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PRICE)));
         tvProdElementName.setText(cursor.getString(cursor
                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_NAME)));
+        tvProdElementQty.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
         ibProdElementPlus.setTag(tvProdElementQty);
         ibProdElementMinus.setTag(tvProdElementQty);
-        ibProdElementMinus.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_ID)));
+        ibProdElementNext.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
 //         ivProdPhoto.setImageBitmap(CommonUtil.decodeFromBitmap(cursor.getString(cursor
 //                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_IMAGE))));
 
@@ -72,6 +84,7 @@ public class ProductAdapter extends CursorAdapter {
                 TextView tvProdElementQty = (TextView) v.getTag();
                 if (Integer.valueOf(tvProdElementQty.getText().toString()) >= 1) {
                     tvProdElementQty.setText("" + (Integer.valueOf(tvProdElementQty.getText().toString()) - 1));
+                    addProduct(false, (Integer) tvProdElementQty.getTag(),Integer.valueOf(tvProdElementQty.getText().toString()));
                 }
             }
         });
@@ -82,6 +95,7 @@ public class ProductAdapter extends CursorAdapter {
                 TextView tvProdElementQty = (TextView) v.getTag();
                 if (Integer.valueOf(tvProdElementQty.getText().toString()) < 3) {
                     tvProdElementQty.setText("" + (Integer.valueOf(tvProdElementQty.getText().toString()) + 1));
+                    addProduct(true, (Integer) tvProdElementQty.getTag(),Integer.valueOf(tvProdElementQty.getText().toString()));
                 }
             }
         });
@@ -90,7 +104,7 @@ public class ProductAdapter extends CursorAdapter {
             @Override
             public void onClick(View v) {
 //                (String) v.getTag()
-                context.startActivity(new Intent(context, ProductDetailActivity.class).putExtra("ProdID", (Integer) v.getTag()));
+                context.startActivity(new Intent(context, ProductDetailActivity.class).putExtra("ProdDEID", (Integer) v.getTag()));
 
             }
         });
@@ -105,44 +119,89 @@ public class ProductAdapter extends CursorAdapter {
     }
 
 
-//    public void addProduct(Boolean insert, int qty, int productmanageId, String productName, String productImage, String rate, String originalRate, String quantity, String unitName) {
-//        try {
-//            for (int i = 0; i < productArray.length(); i++) {
-//                if (productmanageId == productArray.getJSONObject(i).getInt("productManageId")) {
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                        productArray.remove(i);
-//                    } else {
-//                        productArray = remove(i, productArray);
-//                    }
-//                    break;
+    public static void getCartItem() {
+        try {
+            if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, "") == "")
+                productArray = new JSONArray();
+            else
+                productArray = new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void addProduct(Boolean insert, int prodDetailId,int qty) {
+        try {
+            Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCT + "  WHERE " + DataBaseHelper.COLUMN_PROD_DETAIL_ID + " = '"
+                    + prodDetailId + "'");
+            if (cursor.getCount() > 0) {
+                for (int i = 0; i < productArray.length(); i++) {
+                    if (prodDetailId == productArray.getJSONObject(i).getInt(DataBaseHelper.COLUMN_PROD_DETAIL_ID)) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            productArray.remove(i);
+                        } else {
+                            productArray = remove(i, productArray);
+                        }
+                        break;
+                    }
+                }
+                if (qty != 0) {
+                    productObj = new JSONObject();
+                    productObj.put(DataBaseHelper.COLUMN_PROD_DETAIL_ID, cursor.getInt(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
+                    productObj.put(DataBaseHelper.COLUMN_PROD_ID, cursor.getInt(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_ID)));
+                    productObj.put("quantity", qty);
+                    productObj.put(DataBaseHelper.COLUMN_PROD_NAME, cursor.getString(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_NAME)));
+                    productObj.put(DataBaseHelper.COLUMN_PROD_IMAGE, cursor.getString(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_IMAGE)));
+                    productObj.put(DataBaseHelper.COLUMN_PROD_PRICE, cursor.getString(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PRICE)));
+                    productObj.put(DataBaseHelper.COLUMN_PROD_QUANTITY, cursor.getString(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_QUANTITY)));
+                    productObj.put(DataBaseHelper.COLUMN_PROD_ITEM_TYPE, cursor.getString(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_ITEM_TYPE)));
+                    productObj.put(DataBaseHelper.COLUMN_PROD_DESC, cursor.getString(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DESC)));
+                    productObj.put(DataBaseHelper.COLUMN_PROD_UNIT_NAME, cursor.getString(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME)));
+                    productObj.put(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME, cursor.getString(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME)));
+                    productObj.put(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME, cursor.getString(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME)));
+                    productObj.put(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME, cursor.getString(cursor
+                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME)));
+//                    productObj.put(DataBaseHelper.COLUMN_PROD_EARLIY_DEL, cursor.getString(cursor
+//                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_EARLIY_DEL)));
+//                    productObj.put(DataBaseHelper.COLUMN_PROD_IS_AVAIL, cursor.getString(cursor
+//                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_IS_AVAIL)));
+
+//                    productObj.put(DataBaseHelper.COLUMN_PROD_UNIT_ID, cursor.getString(cursor
+//                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_ID)));
+
+//                    productObj.put(DataBaseHelper.COLUMN_PROD_PACKAGE_ID, cursor.getString(cursor
+//                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_ID)));
+//                    productObj.put(DataBaseHelper.COLUMN_PROD_CATEGORY_ID, cursor.getString(cursor
+//                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_CATEGORY_ID)));
+                    productArray.put(productObj);
+                }
+                Log.i("productArray", productArray.toString());
+                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_PROD_LIST, productArray.toString());
+                SharedPreferenceUtil.save();
+//                if (checkCart) {
+//                    ProductFragment.checkCart(context);
+//                } else {
+//                    CartActivity.setAdapter(context, productArray, qty);
+//
 //                }
-//            }
-//            if (qty != 0) {
-//                productObj = new JSONObject();
-//                productObj.put("productManageId", productmanageId);
-//                productObj.put("productpurchaseqty", qty);
-//                productObj.put("productName", productName);
-//                productObj.put("productImage", productImage);
-//                productObj.put("rate", rate);
-//                productObj.put("original_rate", originalRate);
-//                productObj.put("quantity", quantity);
-//                productObj.put("unitName", unitName);
-//
-//                productArray.put(productObj);
-//            }
-//            Log.i("productArray", productArray.toString());
-//            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_PROD_LIST, productArray.toString());
-//            SharedPreferenceUtil.save();
-//            if (!check) {
-//                CartActivity.setAdapter(context, productArray, qty);
-//
-//            } else {
-//                CategoryActivity.checkCart(context);
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public static JSONArray remove(final int idx, final JSONArray from) {

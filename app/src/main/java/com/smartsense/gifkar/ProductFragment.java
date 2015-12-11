@@ -16,6 +16,7 @@
 
 package com.smartsense.gifkar;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,7 @@ import com.smartsense.gifkar.utill.DataBaseHelper;
 
 public class ProductFragment extends Fragment {
     ListView lvProduct;
+    static int itemcart = 0;
     DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
     CommonUtil commonUtil = new CommonUtil();
 
@@ -46,15 +48,24 @@ public class ProductFragment extends Fragment {
         View view = (View) inflater.inflate(R.layout.fragment_product, container, false);
         lvProduct = (ListView) view.findViewById(R.id.lvProductList);
         try {
-            Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM "+ DataBaseHelper.TABLE_PRODUCT+"  WHERE "+DataBaseHelper.COLUMN_PROD_CATEGORY_ID+" = '"
-                    + getArguments().getString("ID")+"'");
+            Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCT + "  WHERE " + DataBaseHelper.COLUMN_PROD_CATEGORY_ID + " = '"
+                    + getArguments().getString("ID") + "'");
             if (cursor.getCount() > 0) {
-                lvProduct.setAdapter(new ProductAdapter(getActivity(), cursor));
+                lvProduct.setAdapter(new ProductAdapter(getActivity(), cursor, dbHelper, true));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return view;
+    }
+
+
+    public static void checkCart(Context context) {
+        if (CommonUtil.checkCartCount() == 0)
+            itemcart = 0;
+        else
+            itemcart = CommonUtil.checkCartCount();
+
     }
 
 

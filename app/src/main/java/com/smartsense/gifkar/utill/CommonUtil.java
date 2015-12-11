@@ -27,6 +27,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
+import com.mpt.storage.SharedPreferenceUtil;
+
+import org.json.JSONArray;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -315,6 +319,25 @@ public class CommonUtil {
                 return "1 Hour Before";
             default:
                 return "1 Day Before";
+        }
+    }
+
+    public static int checkCartCount() {
+        try {
+            if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, "") != "") {
+                JSONArray productArray = new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
+                if (productArray.length() < 1) {
+                    return 0;
+                } else {
+                    return productArray.length();
+                }
+            } else {
+                return 0;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
         }
     }
 
