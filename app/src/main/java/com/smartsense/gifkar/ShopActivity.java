@@ -15,6 +15,7 @@ import com.smartsense.gifkar.adapter.ShopPagerAdapter;
 public class ShopActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView btBack;
+    private TabLayout tabLayout;
 
 
     @Override
@@ -37,7 +38,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         shopTOP.setLayoutParams(params);
 
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_shop);
+        tabLayout = (TabLayout) findViewById(R.id.tabs_shop);
         tabLayout.addTab(tabLayout.newTab().setText("CONTACT"));
         tabLayout.addTab(tabLayout.newTab().setText("REVIEWS"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -65,8 +66,13 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+        setupTabIcons();
 
-
+    }
+    private int[] imageResId = { R.drawable.ic_pencil, R.drawable.ic_pencil };
+    private void setupTabIcons() {
+        tabLayout.getTabAt(0).setIcon(imageResId[0]);
+        tabLayout.getTabAt(1).setIcon(imageResId[1]);
     }
 
     @Override
