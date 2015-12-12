@@ -1,6 +1,7 @@
 package com.smartsense.gifkar;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -16,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
 import org.json.JSONArray;
@@ -37,8 +40,10 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     CommonUtil commonUtil = new CommonUtil();
     private LinearLayout llProdCheckOut;
     private LinearLayout llProdCart;
-    private TextView tvProdCartRs;
-    private TextView tvProdCartCount;
+    private static TextView tvProdCartRs;
+    private static TextView tvProdCartCount;
+    private static LinearLayout llProdBottom;
+    private productListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +69,30 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         tabLayout = (TabLayout) findViewById(R.id.tlProdListTabList);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.tab_idicator));
         tabLayout.setTabTextColors(getResources().getColor(R.color.tab_normal_text), getResources().getColor(R.color.tab_idicator));
-        setupViewPager(viewPager);
-//        tvProdCartCount = (TextView) findViewById(R.id.tvProdListCartCount);
-//        tvProdCartRs = (TextView) findViewById(R.id.tvProdListCartRs);
-        llProdCart =(LinearLayout) findViewById(R.id.llProdListCart);
+        setupViewPager();
+        tvProdCartCount = (TextView) findViewById(R.id.tvProdListCartCount);
+        tvProdCartRs = (TextView) findViewById(R.id.tvProdListCartRs);
+        llProdCart = (LinearLayout) findViewById(R.id.llProdListCart);
         llProdCart.setOnClickListener(this);
+        llProdBottom = (LinearLayout) findViewById(R.id.llProdListBottom);
+
 //        llProdCheckOut =(LinearLayout) findViewById(R.id.llProdDetailCheckOut);
 //        llProdCheckOut.setOnClickListener(this);
         getIntent().getIntExtra("ShopID", 0);
+        getCartItem();
+    }
+
+    public void getCartItem() {
+        try {
+            JSONArray productArray;
+            if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, "") == "")
+                productArray = new JSONArray();
+            else
+                productArray = new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
+            checkCart(ProductListActivity.this, productArray);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -84,7 +105,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                 finish();
                 break;
             case R.id.btActionBarInfo:
-                startActivity(new Intent(this, AddAddressActivity.class));
+                startActivity(new Intent(this, ShopActivity.class));
                 break;
             case R.id.llProdListCart:
                 startActivity(new Intent(this, MyCartActivity.class));
@@ -126,22 +147,33 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        productListAdapter adapter = new productListAdapter(getSupportFragmentManager());
+    private void setupViewPager() {
+        adapter = new productListAdapter(getSupportFragmentManager());
         String tempary = "{\"eventId\":123,\"errorCode\":0,\"status\":200,\"message\":\"Product List.\",\"data\":{\"products\":[{\"id\":1,\"name\":\"Sub category\",\"products\":[{\"productDetailId\":7,\"subCategoryId\":1,\"description\":\"\",\"productCode\":\"123153\",\"quantity\":10,\"price\":\"100.00\",\"image\":\"productImg1446529988.png\",\"itemType\":\"na\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":4,\"name\":\"Bottle\",\"description\":\"Bottle\\n\"},\"productId\":6,\"name\":\"product6\",\"packageType\":{\"id\":12,\"name\":\"Box\"}},{\"productDetailId\":9,\"subCategoryId\":1,\"description\":\"desc2\",\"productCode\":\"12354\",\"quantity\":11,\"price\":\"100.00\",\"image\":\"productImg1446525634.jpg\",\"itemType\":\"non-veg\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":2,\"name\":\"Ml\",\"description\":\"Miligram\\n\"},\"productId\":6,\"name\":\"product6\",\"packageType\":{\"id\":5,\"name\":\"Bottle\"}},{\"productDetailId\":10,\"subCategoryId\":1,\"description\":\"desc\",\"productCode\":\"121356\",\"quantity\":12,\"price\":\"100.00\",\"image\":\"productImg1446530085.jpg\",\"itemType\":\"veg\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":3,\"name\":\"Box\",\"description\":\"BOx\"},\"productId\":6,\"name\":\"product6\",\"packageType\":{\"id\":12,\"name\":\"Box\"}}]},{\"id\":2,\"name\":\"Sub category1\",\"products\":[{\"productDetailId\":12,\"subCategoryId\":2,\"description\":\"description\",\"productCode\":\"123153\",\"quantity\":1,\"price\":\"100.00\",\"image\":\"\",\"itemType\":\"na\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":1,\"name\":\"Kg\",\"description\":\"Kilogram\\n\"},\"productId\":9,\"name\":\"Some Item\",\"packageType\":{\"id\":5,\"name\":\"Bottle\"}}]}]}}\n";
         try {
             JSONObject response = new JSONObject(tempary);
             JSONArray product = response.optJSONObject("data").optJSONArray("products");
-            insertItemInCart(adapter, product);
-            viewPager.setAdapter(adapter);
-            tabLayout.setupWithViewPager(viewPager);
+            insertItemInCart(product);
+            adpterViewPager();
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    private void adpterViewPager() {
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+    }
 
-    public void insertItemInCart(productListAdapter adapter, JSONArray product) {
+    @Override
+    public void onResume() {
+        super.onResume();
+        adpterViewPager();
+        getCartItem();
+    }
+
+
+    public void insertItemInCart(JSONArray product) {
         try {
 //            SQLiteDatabase db;
 //            db = dbHelper.getReadableDatabase();
@@ -185,6 +217,22 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void checkCart(Context context, JSONArray productArray) {
+        double totalAmount = 0;
+        for (int i = 0; i < productArray.length(); i++) {
+            totalAmount += (productArray.optJSONObject(i).optDouble(DataBaseHelper.COLUMN_PROD_PRICE) * productArray.optJSONObject(i).optDouble("quantity"));
+        }
+
+        if (totalAmount == 0) {
+            llProdBottom.setVisibility(View.GONE);
+        } else {
+            llProdBottom.setVisibility(View.VISIBLE);
+            tvProdCartRs.setText("₹" + totalAmount);
+            tvProdCartCount.setText("" + productArray.length());
+        }
+
     }
 
 

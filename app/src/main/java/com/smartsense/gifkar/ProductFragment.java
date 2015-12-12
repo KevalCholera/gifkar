@@ -16,7 +16,6 @@
 
 package com.smartsense.gifkar;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -31,7 +30,7 @@ import com.smartsense.gifkar.utill.DataBaseHelper;
 
 public class ProductFragment extends Fragment {
     ListView lvProduct;
-    static int itemcart = 0;
+
     DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
     CommonUtil commonUtil = new CommonUtil();
 
@@ -60,13 +59,6 @@ public class ProductFragment extends Fragment {
     }
 
 
-    public static void checkCart(Context context) {
-        if (CommonUtil.checkCartCount() == 0)
-            itemcart = 0;
-        else
-            itemcart = CommonUtil.checkCartCount();
-
-    }
 
 
 }

@@ -14,7 +14,9 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 import com.mpt.storage.SharedPreferenceUtil;
+import com.smartsense.gifkar.MyCartActivity;
 import com.smartsense.gifkar.ProductDetailActivity;
+import com.smartsense.gifkar.ProductListActivity;
 import com.smartsense.gifkar.R;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
@@ -77,6 +79,25 @@ public class ProductAdapter extends CursorAdapter {
         ibProdElementNext.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
 //         ivProdPhoto.setImageBitmap(CommonUtil.decodeFromBitmap(cursor.getString(cursor
 //                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_IMAGE))));
+
+
+        try {
+            if (productArray.length() > 0) {
+                for (int i = 0; i < productArray.length(); i++) {
+                    if (productArray.getJSONObject(i).getInt(DataBaseHelper.COLUMN_PROD_DETAIL_ID) == cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID))) {
+                        tvProdElementQty.setText("" + productArray.getJSONObject(i).getInt("quantity"));
+                        break;
+                    } else {
+                        tvProdElementQty.setText("" + 0);
+                    }
+                }
+            } else {
+                tvProdElementQty.setText("" + 0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         ibProdElementMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,12 +212,12 @@ public class ProductAdapter extends CursorAdapter {
                 Log.i("productArray", productArray.toString());
                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_PROD_LIST, productArray.toString());
                 SharedPreferenceUtil.save();
-//                if (checkCart) {
-//                    ProductFragment.checkCart(context);
-//                } else {
-//                    CartActivity.setAdapter(context, productArray, qty);
-//
-//                }
+                if (checkCart) {
+                    ProductListActivity.checkCart(context,productArray);
+                } else {
+                    MyCartActivity.setAdapter(context, productArray, qty);
+
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

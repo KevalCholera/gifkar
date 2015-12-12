@@ -286,4 +286,14 @@
     <string name="rattinag">RATTING</string>
     <string name="prod_name">Product Name</string>
     <string name="unit_name">Unit Name :</string>
+    <string name="cate_name">Category Name</string>
+    <string name="report_error">Report Error</string>
+    <string name="screen_add_review">ADD REVIEW</string>
+    <string name="shop_email">Email : </string>
+    <string name="shop_mno">Contact Numbar : </string>
+    <string name="shop_add">Address : </string>
+    <string name="open_time">Open Time : </string>
+    <string name="close_time">Close Time : </string>
+    <string name="map">Map : </string>
+    <string name="days">Days : </string>
 </resources>

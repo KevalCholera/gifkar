@@ -179,13 +179,18 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ProductListActivity"
-            android:label="@string/shop_name"
+            android:label="@string/cate_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ProductDetailActivity"
+            android:label="@string/prod_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".ProductDetailActivity"
-            android:label="@string/prod_name"
+            android:name=".ShopActivity"
+            android:label="@string/shop_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 

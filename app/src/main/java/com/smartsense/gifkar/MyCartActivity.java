@@ -1,7 +1,7 @@
 package com.smartsense.gifkar;
 
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,20 +14,25 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.MyCartAdapter;
+import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.Constants;
+import com.smartsense.gifkar.utill.DataBaseHelper;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MyCartActivity extends AppCompatActivity implements View.OnClickListener{
-    ListView lvMyCart;
-    LinearLayout llMyCart,llMyCartEmpty;
+    static ListView lvMyCart;
+    static LinearLayout llMyCart;
+    static LinearLayout llMyCartEmpty;
     private ImageView btBack, btCart;
-    private TextView tvCartTotalRs;
+    private static TextView tvCartTotalRs;
     private TextView tvCartShopName;
     private LinearLayout llChackout;
-    private double totalAmount;
+    private static double totalAmount;
+    static JSONArray productArray;
+    private static TextView titleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +42,7 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.action_bar_info, null);
-        TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
+        titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
         titleTextView.setText(getResources().getString(R.string.screen_my_cart));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
@@ -57,25 +62,34 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
         lvMyCart=(ListView) findViewById(R.id.lvCart);
         tvCartShopName=(TextView) findViewById(R.id.tvCartShopName);
         tvCartTotalRs=(TextView) findViewById(R.id.tvCartTotalRs);
-    }
 
 
-    public void myCartFill(JSONObject address) {
-        MyCartAdapter myCartAdapter = null;
         try {
-            myCartAdapter = new MyCartAdapter(this, address.getJSONObject("data").getJSONArray("deliveryAddresses"), true);
-            lvMyCart.setAdapter(myCartAdapter);
-        } catch (JSONException e) {
+            if (CommonUtil.checkCartCount()!=0) {
+                productArray = new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
+                llMyCartEmpty.setVisibility(View.VISIBLE);
+                llMyCart.setVisibility(View.GONE);
+                lvMyCart.setAdapter(new MyCartAdapter(MyCartActivity.this, productArray, false));
+                setAdapter(MyCartActivity.this, productArray, 1);
+            } else {// no product set visibile empty cart
+                productArray = new JSONArray();
+                llMyCartEmpty.setVisibility(View.GONE);
+                llMyCart.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
+        getSupportActionBar().setTitle("Cart(" + CommonUtil.checkCartCount() + ")");
     }
 
-    public void setAdapter(Activity a, JSONArray productArray, int qty) {
+
+    public static void setAdapter(Context a, JSONArray productArray, int qty) {
         totalAmount = 0;
         for (int i = 0; i < productArray.length(); i++) {
-            totalAmount += (productArray.optJSONObject(i).optDouble("rate") * productArray.optJSONObject(i).optDouble("productpurchaseqty"));
+            totalAmount += (productArray.optJSONObject(i).optDouble(DataBaseHelper.COLUMN_PROD_PRICE) * productArray.optJSONObject(i).optDouble("quantity"));
         }
+
+        titleTextView.setText(a.getResources().getString(R.string.screen_my_cart)+"("+productArray.length()+")");
 
         if (totalAmount == 0) {
             llMyCartEmpty.setVisibility(View.VISIBLE);
