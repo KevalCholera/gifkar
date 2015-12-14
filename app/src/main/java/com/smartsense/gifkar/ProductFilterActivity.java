@@ -1,18 +1,19 @@
 package com.smartsense.gifkar;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.smartsense.gifkar.utill.Constants;
 
 public class ProductFilterActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView btBack;
+    CheckBox cbName,cbPrice;
+    private Button btApplyFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +28,17 @@ public class ProductFilterActivity extends AppCompatActivity implements View.OnC
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_product_filter);
+        cbName=(CheckBox) findViewById(R.id.cbProdFilterName);
+        cbPrice=(CheckBox) findViewById(R.id.cbProdFilterPrice);
+        btApplyFilter=(Button) findViewById(R.id.btnProdApplyFilter);
+        btApplyFilter.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tvOtpEditNumber:
-                startActivity(new Intent(this, MobileNoActivity.class));
-                break;
-            case R.id.btnOTP:
-                if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT)
-                    startActivity(new Intent(this, ChangePasswordActivity.class).putExtra(Constants.SCREEN,Constants.ScreenCode.SCREEN_OTP));
-                else
-                    startActivity(new Intent(this, CitySelectActivity.class));
+            case R.id.btnProdApplyFilter:
+
                 break;
             case R.id.btActionBarBack:
                 finish();

@@ -1,13 +1,9 @@
 package com.smartsense.gifkar.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 
 import com.smartsense.gifkar.R;
 import com.smartsense.gifkar.ReviewsFragment;
@@ -48,13 +44,13 @@ public class ShopPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
-//        return tabtitles[position];
-        Drawable image = context.getResources().getDrawable(imageResId[position]);
-        image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
-        // Replace blank spaces with image icon
-        SpannableString sb = new SpannableString("   " + tabtitles[position]);
-        ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
-        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return sb;
+        return tabtitles[position];
+//        Drawable image = context.getResources().getDrawable(imageResId[position]);
+//        image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+//        // Replace blank spaces with image icon
+//        SpannableString sb = new SpannableString("   " + tabtitles[position]);
+//        ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);
+//        sb.setSpan(imageSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        return sb;
     }
 }

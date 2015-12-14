@@ -1,5 +1,6 @@
 package com.smartsense.gifkar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +18,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageView btBack;
     private TabLayout tabLayout;
+    private Button btReport;
 
 
     @Override
@@ -31,6 +34,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_shop);
+        btReport=(Button) findViewById(R.id.btReport);
         final View shopTOP = (View) findViewById(R.id.shopTop);
         int height = getResources().getDisplayMetrics().heightPixels;
         ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) shopTOP.getLayoutParams();
@@ -80,6 +84,9 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.btActionBarBack:
                 finish();
+                break;
+            case R.id.btReport:
+                startActivity(new Intent(this, ReportErrorActivity.class));
                 break;
             default:
         }

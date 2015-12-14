@@ -1,18 +1,21 @@
 package com.smartsense.gifkar;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.smartsense.gifkar.utill.Constants;
 
 public class ShopFilterActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ImageView btBack;
+    private CheckBox cbRatting;
+    private CheckBox cbName;
+    private CheckBox cbMinOrder;
+    private Button btApplyFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +30,18 @@ public class ShopFilterActivity extends AppCompatActivity implements View.OnClic
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_shop_filter);
+        cbName=(CheckBox) findViewById(R.id.cbShopFilterName);
+        cbMinOrder=(CheckBox) findViewById(R.id.cbShopFilterMinOrder);
+        cbRatting=(CheckBox) findViewById(R.id.cbShopFilterRatting);
+        btApplyFilter=(Button) findViewById(R.id.btnShopApplyFilter);
+        btApplyFilter.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tvOtpEditNumber:
-                startActivity(new Intent(this, MobileNoActivity.class));
-                break;
-            case R.id.btnOTP:
-                if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT)
-                    startActivity(new Intent(this, ChangePasswordActivity.class).putExtra(Constants.SCREEN,Constants.ScreenCode.SCREEN_OTP));
-                else
-                    startActivity(new Intent(this, CitySelectActivity.class));
+            case R.id.btnShopApplyFilter:
+
                 break;
             case R.id.btActionBarBack:
                 finish();

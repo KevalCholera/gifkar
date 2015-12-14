@@ -187,13 +187,27 @@
             android:label="@string/prod_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name=".ShopActivity"
             android:label="@string/shop_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Checkout1Activity"
+            android:label="@string/checkout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Checkout2Activity"
+            android:label="@string/checkout"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
 
+        <activity
+            android:name=".ReportErrorActivity"
+            android:label="@string/report_error"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <!-- <service android:name="com.parse.PushService" /> -->
 
 

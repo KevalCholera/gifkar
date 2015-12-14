@@ -110,7 +110,7 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llChackout:
-                startActivity(new Intent(this, MobileNoActivity.class));
+                startActivity(new Intent(this, Checkout1Activity.class));
                 break;
             case R.id.btActionBarBack:
                 finish();

@@ -25,72 +25,46 @@
 
     </LinearLayout>
 
-
     <LinearLayout
-        android:id="@+id/llRateUs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_25"
-        android:background="@drawable/borderblue"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:padding="@dimen/padding_20"
+        android:layout_marginTop="@dimen/margin_10"
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="@dimen/margin_5"
-            android:src="@drawable/star" />
-
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/activity_bg" />
-
-
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:layout_width="match_parent"
+        <CheckBox
+            android:id="@+id/cbShopFilterRatting"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="normal"
-            android:gravity="center"
-            android:text="@string/rattinag"
-            android:textColor="@color/textcolorwhite"
-            android:textSize="24sp" />
+            android:background="@drawable/ratting_background"
+            android:button="@android:color/transparent" />
+
+        <CheckBox
+            android:id="@+id/cbShopFilterMinOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_25"
+            android:layout_marginTop="@dimen/margin_25"
+            android:background="@drawable/min_order_background"
+            android:button="@android:color/transparent" />
+
+        <CheckBox
+            android:id="@+id/cbShopFilterName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/name_background"
+            android:button="@android:color/transparent" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll"
+    <com.smartsense.gifkar.textstyleutil.TypefaceButton
+        android:id="@+id/btnShopApplyFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_25"
-        android:background="@drawable/borderwhite"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="@dimen/margin_5"
-            android:src="@drawable/star" />
-
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/mainColor" />
-
-
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="normal"
-            android:gravity="center"
-            android:text="@string/rattinag"
-            android:textColor="@color/mainColor"
-            android:textSize="24sp" />
-    </LinearLayout>
-
-
+        android:layout_margin="@dimen/margin_10"
+        android:background="@color/mainColor"
+        android:fontFamily="normal"
+        android:text="@string/apply_filter"
+        android:textColor="@color/textcolorwhite"
+        android:textSize="@dimen/text_size_20" />
 </LinearLayout>

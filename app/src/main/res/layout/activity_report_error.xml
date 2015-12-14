@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llMyAddress"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/activity_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_25"
+            android:layout_weight="1"
+            android:capitalize="sentences"
+            android:fontFamily="normal"
+            android:text="@string/whats_wrong"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rgReportError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10"
+        android:padding="@dimen/padding_10">
+
+
+        <RadioButton
+            android:id="@+id/rbReportErrorPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_no"
+            android:textColor="@color/mainColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_25"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/activity_bg" />
+
+        </LinearLayout>
+
+        <RadioButton
+            android:id="@+id/rbReportErrorAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/address"
+            android:textColor="@color/mainColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_25"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/activity_bg" />
+
+        </LinearLayout>
+
+        <RadioButton
+            android:id="@+id/rbReportErrorShopClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shop_close"
+            android:textColor="@color/mainColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_25"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/activity_bg" />
+
+        </LinearLayout>
+
+        <RadioButton
+            android:id="@+id/rbReportErrorMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_in"
+            android:textColor="@color/mainColor" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            android:id="@+id/etReportErrorDes"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@drawable/edittext_round"
+            android:fontFamily="normal"
+            android:gravity="top"
+            android:hint="@string/tap_here"
+            android:padding="@dimen/padding_10"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/edittext_hint_color" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+            android:id="@+id/btnReportError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@color/mainColor"
+            android:fontFamily="normal"
+            android:text="@string/done"
+            android:textColor="@color/textcolorwhite"
+            android:textSize="@dimen/text_size_20" />
+    </RadioGroup>
+
+</LinearLayout>

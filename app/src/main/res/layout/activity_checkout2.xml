@@ -1,0 +1,312 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/activity_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:id="@+id/tvChackout2ShopName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_25"
+                android:layout_weight="1"
+                android:capitalize="sentences"
+                android:fontFamily="normal"
+                android:text="@string/shop_name"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/activity_bg"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_10">
+
+                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_25"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:text="@string/total"
+                    android:textColor="@android:color/black" />
+
+                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    android:id="@+id/tvChackout2Total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_25"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:gravity="right"
+                    android:text="\u20B9 200"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_10">
+
+                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_25"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:text="@string/shipping"
+                    android:textColor="@android:color/black" />
+
+                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    android:id="@+id/tvChackout2Shipping"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_25"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:gravity="right"
+                    android:text="\u20B9 200"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_10">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/margin_25"
+                    android:layout_marginRight="@dimen/margin_25"
+                    android:background="@android:color/darker_gray" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_10">
+
+                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_25"
+                    android:layout_weight="1"
+                    android:fontFamily="bold"
+                    android:text="@string/payable"
+                    android:textColor="@android:color/black" />
+
+                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    android:id="@+id/tvChackout2Payable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_25"
+                    android:layout_weight="1"
+                    android:fontFamily="bold"
+                    android:gravity="right"
+                    android:text="\u20B9 200"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/textcolorwhite"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_20">
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="bold"
+                android:paddingBottom="@dimen/padding_16"
+                android:text="@string/delivery_address"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_16" />
+
+            <LinearLayout
+                android:id="@+id/llChackout2DelAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/borderwhite"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_10">
+
+
+                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    android:id="@+id/tvChackout2DelAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_25"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:padding="@dimen/padding_10"
+                    android:hint="@string/add_new_address" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|right"
+                    android:layout_marginRight="@dimen/margin_5"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:background="@drawable/ic_product_plus_unfill" />
+
+            </LinearLayout>
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="bold"
+                android:paddingBottom="@dimen/padding_16"
+                android:paddingTop="@dimen/padding_16"
+                android:text="@string/delivery_date_and_time"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.smartsense.gifkar.textstyleutil.TypefaceButton
+                    android:id="@+id/btnCheckout2Today"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/borderwhite"
+                    android:fontFamily="normal"
+                    android:padding="@dimen/padding_5"
+                    android:text="@string/today_del"
+                    android:textColor="@color/mainColor"
+                    android:textSize="@dimen/text_10" />
+
+                <com.smartsense.gifkar.textstyleutil.TypefaceButton
+                    android:id="@+id/btnCheckout2Tomorrow"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/padding_5"
+                    android:layout_marginRight="@dimen/padding_5"
+                    android:layout_weight="1"
+                    android:background="@drawable/borderwhite"
+                    android:fontFamily="normal"
+                    android:padding="@dimen/padding_5"
+                    android:text="@string/tommorow_del"
+                    android:textColor="@color/mainColor"
+                    android:textSize="@dimen/text_10" />
+
+                <com.smartsense.gifkar.textstyleutil.TypefaceButton
+                    android:id="@+id/btnCheckout2AfterTomorrow"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/borderwhite"
+                    android:fontFamily="normal"
+                    android:padding="@dimen/padding_5"
+                    android:text="@string/day_after_tommorow_del"
+                    android:textColor="@color/mainColor"
+                    android:textSize="@dimen/text_10" />
+
+            </LinearLayout>
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="bold"
+                android:paddingBottom="@dimen/padding_16"
+                android:paddingTop="@dimen/padding_16"
+                android:text="@string/occasion"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+                android:id="@+id/etCheckout2SelectOccasion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_round"
+                android:clickable="true"
+                android:drawableRight="@drawable/down_arrow"
+                android:focusable="false"
+                android:fontFamily="normal"
+                android:hint="@string/select_occasion"
+                android:padding="@dimen/padding_8" />
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+                android:id="@+id/etCheckout2WriteOccasion"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@drawable/edittext_round"
+                android:fontFamily="normal"
+                android:gravity="top"
+                android:hint="@string/write_occasion"
+                android:padding="@dimen/padding_8"
+                android:textColorHighlight="@android:color/white"
+                android:textColorHint="@color/edittext_hint_color" />
+
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="normal"
+                android:gravity="center"
+                android:paddingBottom="@dimen/margin_16"
+                android:paddingTop="@dimen/margin_5"
+                android:text="@string/by_using" />
+
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceButton
+                android:id="@+id/btnCheckout2PlaceOrder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/mainColor"
+                android:fontFamily="normal"
+                android:text="@string/place_order"
+                android:textColor="@color/textcolorwhite"
+                android:textSize="@dimen/text_size_20" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -12,7 +12,7 @@
         android:gravity="center"
 
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
         android:id="@+id/ll_cart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical">
 
         <LinearLayout
@@ -110,18 +110,19 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_gravity="bottom"
+            android:gravity="center"
             android:background="@color/colorPrimary"
             android:orientation="horizontal">
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_20"
                 android:fontFamily="normal"
                 android:layout_gravity="center"
-                android:gravity="center_horizontal|right"
+                android:gravity="center"
                 android:padding="@dimen/padding_2"
                 android:text="@string/checkout"
+                android:drawableRight="@drawable/ic_right_arrow"
                 android:textColor="@android:color/white"
                 android:textSize="20dp" />
 

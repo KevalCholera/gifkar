@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:gravity="center"
+    android:padding="@dimen/padding_16"
+    android:orientation="horizontal">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/ivCheckout1ElementImage"
+        android:layout_width="@dimen/product_image_height"
+        android:layout_height="@dimen/product_image_height"
+        android:background="@drawable/ic_gifkar_logo" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tvCheckout1ElementName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="normal"
+            android:paddingBottom="@dimen/padding_8"
+            android:singleLine="true"
+            android:text="Product Name"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/text_12"
+            android:textStyle="bold" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tvCheckout1ElementCate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="normal"
+            android:text="Eggless"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/text_10" />
+
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tvCheckout1ElementDeliveryTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="normal"
+            android:text="Delivery Time : 10:00AM to 5:00PM"
+            android:textColor="@color/textcolor"
+            android:textSize="@dimen/text_10" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tvCheckout1ElementRs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/padding_10"
+            android:fontFamily="normal"
+            android:textColor="@color/mainColor"
+            android:gravity="center_vertical|bottom"
+            android:text="\u20B9 100" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

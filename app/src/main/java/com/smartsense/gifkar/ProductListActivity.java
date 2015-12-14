@@ -75,9 +75,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         llProdCart = (LinearLayout) findViewById(R.id.llProdListCart);
         llProdCart.setOnClickListener(this);
         llProdBottom = (LinearLayout) findViewById(R.id.llProdListBottom);
-
-//        llProdCheckOut =(LinearLayout) findViewById(R.id.llProdDetailCheckOut);
-//        llProdCheckOut.setOnClickListener(this);
+        llProdCheckOut =(LinearLayout) findViewById(R.id.llProdListCheckOut);
+        llProdCheckOut.setOnClickListener(this);
         getIntent().getIntExtra("ShopID", 0);
         getCartItem();
     }
@@ -99,7 +98,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btActionBarfilter:
-                startActivity(new Intent(this, AddAddressActivity.class));
+                startActivity(new Intent(this, ProductFilterActivity.class));
                 break;
             case R.id.btActionBarBack:
                 finish();
@@ -111,7 +110,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                 startActivity(new Intent(this, MyCartActivity.class));
                 break;
             case R.id.llProdListCheckOut:
-                startActivity(new Intent(this, AddAddressActivity.class));
+                startActivity(new Intent(this, Checkout1Activity.class));
                 break;
             default:
         }
