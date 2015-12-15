@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:id="@+id/tvOrderElementOrderNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="bold"
+                android:padding="@dimen/padding_8"
+                android:text="@string/order_no"
+                android:textSize="20dp" />
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:id="@+id/tvOrderElementDateTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="normal"
+                android:padding="@dimen/padding_8"
+                android:text="@string/datetime"
+                android:textSize="16dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="bold"
+                android:gravity="right"
+                android:padding="@dimen/padding_8"
+                android:text="@string/details"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:id="@+id/tvOrderElementDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="normal"
+                android:gravity="right"
+                android:padding="@dimen/padding_8"
+                android:text="@string/items"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/textcolorwhite"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:padding="@dimen/padding_20"
+        android:orientation="horizontal">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/ivShopListImage"
+            android:layout_width="@dimen/product_image_height"
+            android:layout_height="@dimen/product_image_height"
+            android:background="@drawable/ic_gifkar_logo" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:id="@+id/tvOrderElementShopName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="bold"
+                android:padding="@dimen/padding_2"
+                android:text="@string/shop_name"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:id="@+id/tvOrderElementOrderStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="normal"
+                android:padding="@dimen/padding_2"
+                android:text="@string/delivery_status"
+                android:textSize="16dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+</LinearLayout>
+
+

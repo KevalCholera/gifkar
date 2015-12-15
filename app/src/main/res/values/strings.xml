@@ -82,9 +82,9 @@
     <string name="empty_item">Currently you have no items in your cart</string>
     <string name="start_shopping">Start Shopping</string>
     <string name="retry">Retry</string>
-    <string name="nointernet_msg">Oops! Something went wrong</string>
+    <string name="nointernet_msg">No Internet Connection !!!</string>
     <string name="notification_msg">No Notifications</string>
-    <string name="nointernet_try_again_msg">Please check your internet connection and try again</string>
+    <string name="nointernet_try_again_msg">Please check your internet settings</string>
     <string name="paid_amount">Paid Amount</string>
     <string name="deduction_djwallet">Deduction from DJWallet</string>
     <string name="zero">0</string>
@@ -321,4 +321,17 @@
     <string name="submit">SUBMIT</string>
     <string name="review_user">Review By Ronak</string>
     <string name="pickup_time">Pick a time slot</string>
+    <string name="search">Search</string>
+    <string name="no_internet">No Internet</string>
+    <string name="order_no">Order ID : 256754651</string>
+    <string name="details">Details</string>
+    <string name="datetime">03 Nov 2015 | 10:15 AM</string>
+    <string name="items">2 Items</string>
+    <string name="delivery_status">Your Order is Delivered</string>
+    <string name="screen_order_detail">Order Details</string>
+    <string name="receiver_info">Receiver\'s Info:</string>
+    <string name="sender_info">Sender\'s Info:</string>
+    <string name="email_details">Email Details</string>
+    <string name="call_us">Call us</string>
+    <string name="your_order">Your Order Details will be sent on this Email</string>
 </resources>

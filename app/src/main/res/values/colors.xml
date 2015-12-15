@@ -15,6 +15,7 @@
     <color name="btn_orange">#ec9301</color>
     <color name="btn_blue">#00aff0</color>
     <color name="activity_bg">#f2f2f2</color>
+    <color name="gray_bg">#f8f8f8</color>
     <color name="tab_idicator">#01b0f1</color>
     <color name="tab_normal_text">#606060</color>
     <color name="textcolor">#4d4d4d</color>

@@ -124,7 +124,7 @@ public class GifkarActivity extends AppCompatActivity
                 startActivity(new Intent(this, ShopFilterActivity.class));
                 break;
             case R.id.btActionBarSearch:
-//                startActivity(new Intent(this, MobileNoActivity.class));
+                startActivity(new Intent(this, SearchActivity.class));
                 break;
             case R.id.llHeadProfile:
                 startActivity(new Intent(this, ProfileActivity.class));

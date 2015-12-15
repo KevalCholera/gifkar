@@ -1,19 +1,13 @@
 package com.smartsense.gifkar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.smartsense.gifkar.utill.CommonUtil;
-
-
-public class NoInternetConnection extends AppCompatActivity implements View.OnClickListener{
+public class OrderDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView btBack;
 
@@ -25,24 +19,12 @@ public class NoInternetConnection extends AppCompatActivity implements View.OnCl
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.action_bar_center, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
-        titleTextView.setText(getResources().getString(R.string.no_internet));
+        titleTextView.setText(getResources().getString(R.string.screen_order_detail));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
-        setContentView(R.layout.activity_no_internet_connection);
-        Button btnnointernet = (Button) findViewById(R.id.btn_retry_noconnection);
-        btnnointernet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (CommonUtil.isInternetAvailable(NoInternetConnection.this)) {
-                    Intent i = new Intent(NoInternetConnection.this, SplashActivity.class);
-                    startActivity(i);
-                    finish();
-                } else {
-                    Toast.makeText(NoInternetConnection.this, "Check Internet Connection", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        setContentView(R.layout.activity_order_detail);
+
     }
 
     @Override

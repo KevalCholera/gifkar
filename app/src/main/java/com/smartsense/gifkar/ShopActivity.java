@@ -35,6 +35,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_shop);
         btReport=(Button) findViewById(R.id.btReport);
+        btReport.setOnClickListener(this);
         final View shopTOP = (View) findViewById(R.id.shopTop);
         int height = getResources().getDisplayMetrics().heightPixels;
         ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) shopTOP.getLayoutParams();

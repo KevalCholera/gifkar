@@ -44,6 +44,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     private static TextView tvProdCartCount;
     private static LinearLayout llProdBottom;
     private productListAdapter adapter;
+    private ImageView btActionBarSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         btFilter.setOnClickListener(this);
         btInfo = (ImageView) v.findViewById(R.id.btActionBarInfo);
         btInfo.setOnClickListener(this);
+        btActionBarSearch= (ImageView) v.findViewById(R.id.btActionBarSearch);
+        btActionBarSearch.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         Toolbar parent = (Toolbar) v.getParent();
         parent.setContentInsetsAbsolute(0, 0);
@@ -99,6 +102,9 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         switch (view.getId()) {
             case R.id.btActionBarfilter:
                 startActivity(new Intent(this, ProductFilterActivity.class));
+                break;
+            case R.id.btActionBarSearch:
+                startActivity(new Intent(this, SearchActivity.class));
                 break;
             case R.id.btActionBarBack:
                 finish();

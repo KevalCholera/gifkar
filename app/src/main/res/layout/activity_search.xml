@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/textcolorwhite"
+    android:orientation="vertical">
+
+    <com.smartsense.gifkar.textstyleutil.TypefaceAutoTextView
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@drawable/edittext_round"
+        android:drawableRight="@drawable/ic_search"
+        android:ems="10"
+        android:fontFamily="normal"
+        android:hint="@string/search"
+        android:padding="@dimen/padding_8"
+        android:textColorHighlight="@android:color/white"
+        android:textColorHint="@color/edittext_hint_color" />
+
+    <LinearLayout
+        android:id="@+id/llSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/looking_for_something" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Looking for something ?"
+            android:fontFamily="bold"
+            android:textSize="@dimen/text_size_20"
+            android:gravity="center"
+            android:padding="@dimen/padding_8" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/etSearch" />
+
+</RelativeLayout>

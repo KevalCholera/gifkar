@@ -43,7 +43,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_checkout2);
         llChackout2DelAddress= (LinearLayout) v.findViewById(R.id.llChackout2DelAddress);
-//        llChackout2DelAddress.setOnClickListener(this);
+        llChackout2DelAddress.setOnClickListener(this);
         tvChackout2DelAddress= (TextView) findViewById(R.id.tvChackout2DelAddress);
         tvCheckoutTotal = (TextView) findViewById(R.id.tvChackout2Total);
         tvCheckoutPayable = (TextView) findViewById(R.id.tvChackout2Payable);

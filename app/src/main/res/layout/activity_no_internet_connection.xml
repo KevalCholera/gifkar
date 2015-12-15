@@ -17,27 +17,31 @@
         android:padding="@dimen/padding_20"
         android:src="@drawable/check_network" />
 
-    <TextView
+    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="bold"
         android:padding="@dimen/padding_3"
-        android:text="@string/nointernet_msg"
-        android:textStyle="bold" />
+        android:textSize="@dimen/text_size_20"
+        android:text="@string/nointernet_msg" />
 
-    <TextView
+    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_5"
-        android:textSize="@dimen/text_12"
-        android:text="@string/nointernet_try_again_msg" />
 
-    <Button
+        android:fontFamily="normal"
+        android:padding="@dimen/padding_5"
+        android:text="@string/nointernet_try_again_msg"
+        android:textSize="@dimen/text_16" />
+
+    <com.smartsense.gifkar.textstyleutil.TypefaceButton
         android:id="@+id/btn_retry_noconnection"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/margin_8"
         android:background="@color/colorPrimary"
+        android:fontFamily="normal"
         android:paddingLeft="@dimen/padding_8"
         android:paddingRight="@dimen/padding_8"
         android:text="@string/retry"
