@@ -36,11 +36,11 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
 
-                android:orientation="horizontal">
+                <!--android:orientation="horizontal">-->
 
                 <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                     android:fontFamily="normal"
@@ -58,13 +58,13 @@
                     android:id="@+id/tVProfileVerified"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_5"
-                    android:drawablePadding="@dimen/padding_8"
-                    android:drawableRight="@drawable/profile_edit"
+
+                    android:drawablePadding="@dimen/padding_2"
+                    android:drawableLeft="@drawable/verified"
                     android:gravity="center"
                     android:text="Verified"
                     android:textColor="@android:color/black" />
-            </LinearLayout>
+            <!--</LinearLayout>-->
         </LinearLayout>
 
 
@@ -88,6 +88,6 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tab_layout" />
 </LinearLayout>

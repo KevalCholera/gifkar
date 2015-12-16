@@ -14,19 +14,39 @@
         android:layout_margin="@dimen/margin_25"
         android:orientation="vertical">
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
-            android:id="@+id/etProfileEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_5"
-            android:background="@drawable/edittext_round"
-            android:ems="10"
-            android:fontFamily="normal"
-            android:hint="@string/email1"
-            android:padding="@dimen/padding_8"
-            android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
 
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+                android:id="@+id/etProfileEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_5"
+                android:background="@drawable/edittext_round"
+                android:ems="10"
+                android:fontFamily="normal"
+                android:hint="@string/email1"
+                android:padding="@dimen/padding_8"
+                android:textColorHighlight="@android:color/white"
+                android:textColorHint="@color/edittext_hint_color" />
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:fontFamily="normal"
+                android:id="@+id/tVProfileVerified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="8dp"
+                android:drawablePadding="@dimen/padding_2"
+                android:drawableLeft="@drawable/unverified"
+                android:gravity="center"
+                android:text="Unverified"
+                android:textColor="@color/red" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,22 +99,22 @@
         <RadioGroup
             android:id="@+id/rbProfileGroup"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <com.smartsense.gifkar.textstyleutil.TypefaceRadioButton
-            android:fontFamily="normal"
+                android:id="@+id/rbProfileMale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Male"
-                android:id="@+id/rbProfileMale" />
-
-            <com.smartsense.gifkar.textstyleutil.TypefaceRadioButton
                 android:fontFamily="normal"
+                android:text="Male" />
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceRadioButton
+                android:id="@+id/rbProfileFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Female"
-                android:id="@+id/rbProfileFemale" />
+                android:fontFamily="normal"
+                android:text="Female" />
         </RadioGroup>
 
         <com.smartsense.gifkar.textstyleutil.TypefaceButton
@@ -109,6 +129,6 @@
             android:textSize="@dimen/text_size_20" />
 
 
-    </LinearLayout>
+</LinearLayout>
 
 </ScrollView>

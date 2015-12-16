@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/activity_bg">
+    android:background="@color/activity_bg"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -143,35 +144,52 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/padding_10">
 
-                <ImageView
-                    android:id="@+id/ivOrderAccepted"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/accepted_unfill" />
+                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    android:id="@+id/tvOrderAccepted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/borderwhite"
+                    android:drawableTop="@drawable/accepted_unfill"
+                    android:gravity="center"
+                    android:text="ACCEPTED" />
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginLeft="-18dp"
+                    android:layout_marginRight="-18dp"
                     android:layout_weight="1"
                     android:background="@drawable/dashline" />
 
-                <ImageView
-                    android:id="@+id/ivOrderProcess"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/in_progress_unfill" />
+                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    android:id="@+id/tvOrderProcess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/borderwhite"
+                    android:drawableTop="@drawable/in_progress_unfill"
+                    android:gravity="center"
+                    android:text="IN PROCESS" />
+
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginLeft="-18dp"
+                    android:layout_marginRight="-18dp"
                     android:layout_weight="1"
                     android:background="@drawable/dashline" />
 
-                <ImageView
-                    android:id="@+id/ivOrderCompleted"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/deliverd_unfill" />
+                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    android:id="@+id/tvOrderCompleted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/deliverd_unfill"
+                    android:gravity="center"
+                    android:text="DLIVERED" />
+
 
             </LinearLayout>
         </LinearLayout>
@@ -179,9 +197,8 @@
         <ListView
             android:id="@+id/lvOrderDetail"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -228,57 +245,49 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llProdListBottom"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/colorPrimary"
             android:gravity="center"
             android:orientation="horizontal"
             android:translationZ="10000dp">
 
-            <LinearLayout
-                android:id="@+id/llOrderDetailEmail"
+
+            <com.smartsense.gifkar.textstyleutil.TypefaceButton
+                android:id="@+id/btProdDetailEmail"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
+                android:drawableLeft="@drawable/ic_mail_white"
+                android:fontFamily="normal"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:padding="@dimen/padding_10"
+                android:text="@string/email_details"
+                android:textColor="@color/textcolorwhite"
+                android:textSize="@dimen/text_16" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_right_arrow"
-                    android:fontFamily="normal"
-                    android:gravity="center"
-                    android:text="@string/email_details"
-                    android:textColor="@color/textcolorwhite"
-                    android:textSize="@dimen/text_16" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llOrderDetailPhone"
+            <com.smartsense.gifkar.textstyleutil.TypefaceButton
+                android:id="@+id/btProdDetailCall"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
+                android:drawableLeft="@drawable/ic_call_white"
+                android:fontFamily="normal"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:padding="@dimen/padding_10"
+                android:text="@string/call_us"
+                android:textColor="@color/textcolorwhite"
+                android:textSize="@dimen/text_16" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_right_arrow"
-                    android:fontFamily="normal"
-                    android:gravity="center"
-                    android:text="@string/call_us"
-                    android:textColor="@color/textcolorwhite"
-                    android:textSize="@dimen/text_16" />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

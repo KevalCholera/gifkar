@@ -334,4 +334,6 @@
     <string name="email_details">Email Details</string>
     <string name="call_us">Call us</string>
     <string name="your_order">Your Order Details will be sent on this Email</string>
+    <string name="cancel">CANCEL</string>
+    <string name="send">SEND</string>
 </resources>

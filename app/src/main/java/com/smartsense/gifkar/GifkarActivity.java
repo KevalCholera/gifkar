@@ -37,6 +37,7 @@ public class GifkarActivity extends AppCompatActivity
     private static FragmentManager fm;
     ListView lvNavList;
     private LinearLayout llHeadProfile;
+    private LinearLayout llHeadAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,8 @@ public class GifkarActivity extends AppCompatActivity
         fm = getSupportFragmentManager();
         llHeadProfile = (LinearLayout) header.findViewById(R.id.llHeadProfile);
         llHeadProfile.setOnClickListener(this);
-
+        llHeadAddress = (LinearLayout) header.findViewById(R.id.llHeadAddress);
+        llHeadAddress.setOnClickListener(this);
         lvNavList = (ListView) header.findViewById(R.id.lvHeadList);
         setHeader(GifkarActivity.this);
 
@@ -124,11 +126,15 @@ public class GifkarActivity extends AppCompatActivity
                 startActivity(new Intent(this, ShopFilterActivity.class));
                 break;
             case R.id.btActionBarSearch:
-                startActivity(new Intent(this, SearchActivity.class));
+                startActivity(new Intent(this, OrderDetailActivity.class));
                 break;
             case R.id.llHeadProfile:
                 startActivity(new Intent(this, ProfileActivity.class));
                 break;
+            case R.id.llHeadAddress:
+                startActivity(new Intent(this, CitySelectActivity.class));
+                break;
+
             default:
         }
     }

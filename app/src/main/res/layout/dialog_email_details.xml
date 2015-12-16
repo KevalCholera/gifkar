@@ -1,38 +1,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/llMyAddress"
+
+    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_16"
+        android:gravity="center"
         android:background="@color/activity_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:fontFamily="normal"
+        android:text="@string/your_order"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_25"
-            android:layout_weight="1"
-            android:fontFamily="normal"
-            android:text="@string/your_order"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
-
-    </LinearLayout>
 
     <com.smartsense.gifkar.textstyleutil.TypefaceEditText
-        android:id="@+id/etSignUpFirstName"
+        android:id="@+id/etEmailDialogEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_20"
         android:background="@drawable/edittext_round"
         android:fontFamily="normal"
-        android:hint="@string/email"
+        android:hint="@string/email1"
         android:padding="@dimen/padding_16"
         android:textColorHighlight="@android:color/white"
         android:textColorHint="@color/edittext_hint_color" />
@@ -51,17 +44,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/mainColor"
-            android:text="@string/done"
+            android:text="@string/send"
             android:textColor="@color/textcolorwhite" />
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/btEmailDialogCancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:layout_weight="1"
             android:background="@color/mainColor"
-            android:layout_gravity="right"
-            android:text="cancel"
+            android:text="@string/cancel"
             android:textColor="@color/textcolorwhite" />
     </LinearLayout>
 </LinearLayout>
