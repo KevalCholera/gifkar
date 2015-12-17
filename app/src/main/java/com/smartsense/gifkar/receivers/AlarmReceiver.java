@@ -7,17 +7,23 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import com.smartsense.gifkar.utill.NotificationUtil;
 
-import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        intent.getIntExtra("NOTIFICATION_ID", 0);
-        JSONArray reminderList=new JSONArray();
-        NotificationUtil.createNotification(context, reminderList.optJSONObject(0));
-        // Update lists in tab fragments
-        updateLists(context);
+        JSONObject reminderList = null;
+        try {
+            reminderList = new JSONObject(intent.getStringExtra("NOTIFICATION_ID"));
+            NotificationUtil.createNotification(context, reminderList);
+            // Update lists in tab fragments
+            updateLists(context);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void updateLists(Context context) {

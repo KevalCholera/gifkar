@@ -16,8 +16,7 @@ import org.json.JSONObject;
 public class JsonErrorShow {
     public static void jsonErrorShow(JSONObject response, Activity a) {
         String msg = response.optString("message");
-        int errorCode = Integer.valueOf(response.optString("error_code"));
-        switch (errorCode) {
+        switch (response.optInt("errorCode")) {
             case 0:
                 diloagMsgShow(a, msg);
                 break;
@@ -37,9 +36,9 @@ public class JsonErrorShow {
                 a.startActivity(new Intent(a, GifkarActivity.class));
                 a.finish();
                 break;
-            case Constants.ErrorCode.UNVERIFIED:
-                diloagMsgShow(a, msg);
-                break;
+//            case Constants.ErrorCode.UNVERIFIED:
+//                diloagMsgShow(a, msg);
+//                break;
             default:
                 a.startActivity(new Intent(a, GifkarActivity.class));
                 a.finish();

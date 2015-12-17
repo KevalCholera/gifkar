@@ -127,6 +127,7 @@
             android:layout_height="100dp"
             android:layout_margin="@dimen/margin_5"
             android:background="@drawable/edittext_round"
+            android:gravity="top"
             android:fontFamily="normal"
             android:hint="@string/des"
             android:padding="@dimen/padding_8"
@@ -150,7 +151,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
-            <Switch
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/switchMyReminder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -170,6 +171,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:checked="true"
                 android:fontFamily="normal"
                 android:text="1 Day Before"
                 android:textSize="11sp" />
@@ -209,7 +211,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_5"
             android:fontFamily="normal"
-            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:layout_gravity="center_vertical|bottom"
             android:padding="@dimen/padding_8"
             android:text="@string/reminder_bottom" />
 

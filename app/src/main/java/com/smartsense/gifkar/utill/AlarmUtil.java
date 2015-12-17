@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import org.json.JSONObject;
+
 import java.util.Calendar;
 
 public class AlarmUtil {
 
-    public static void setAlarm(Context context, Intent intent, int notificationId, Calendar calendar) {
-        intent.putExtra("NOTIFICATION_ID", notificationId);
+    public static void setAlarm(Context context, Intent intent, int notificationId, JSONObject reminderObj,Calendar calendar) {
+        intent.putExtra("NOTIFICATION_ID", reminderObj.toString());
+//        intent.putExtra
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 

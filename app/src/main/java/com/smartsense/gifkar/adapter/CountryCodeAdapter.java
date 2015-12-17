@@ -19,9 +19,10 @@ import org.json.JSONObject;
 public class CountryCodeAdapter extends BaseAdapter {
     JSONArray dataArray;
     private LayoutInflater inflater;
+    Boolean check;
 
     public CountryCodeAdapter(Context context, JSONArray dataArray, Boolean check) {
-
+        this.check = check;
         this.dataArray = dataArray;
         inflater = LayoutInflater.from(context);
     }
@@ -60,8 +61,10 @@ public class CountryCodeAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         JSONObject testJson = dataArray.optJSONObject(position);
-        holder.tvCountryCode.setText(testJson.optString("code")+" "+testJson.optString("name"));
-
+        if(check)
+        holder.tvCountryCode.setText(testJson.optString("code") + " " + testJson.optString("name"));
+        else
+            holder.tvCountryCode.setText(testJson.optString("name"));
 
         return view;
     }

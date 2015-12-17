@@ -41,7 +41,9 @@
     <string name="wrn_match">Password didn\'t match</string>
     <string name="wrn_change_match">Please change password</string>
     <string name="wrn_oldmatch">Old Password didn\'t match</string>
-    <string name="wrn_name">Enter Full Name</string>
+    <string name="wrn_name">Enter Name</string>
+    <string name="wrn_desc">Enter Description</string>
+    <string name="wrn_relation">Enter Relation</string>
     <string name="wrn_mno">Enter Mobile No</string>
     <string name="wrn_rco">Enter Refer Code</string>
     <string name="wrn_valid_mno">Enter valid 10 Digit Mobile No</string>

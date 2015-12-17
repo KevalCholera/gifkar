@@ -8,12 +8,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.smartsense.gifkar.AddRemindersActivity;
@@ -66,7 +66,7 @@ public class MyRemindersAdapter extends BaseAdapter implements View.OnClickListe
             holder.tvTime = (TextView) view.findViewById(R.id.tvMyReminderElementTime);
             holder.ivEdit = (ImageView) view.findViewById(R.id.ivMyReminderElementEdit);
             holder.ivDelete = (ImageView) view.findViewById(R.id.ivMyReminderElementDelete);
-            holder.reminder = (Switch) view.findViewById(R.id.switchMyReminderElement);
+            holder.reminder = (SwitchCompat) view.findViewById(R.id.switchMyReminderElement);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -88,7 +88,7 @@ public class MyRemindersAdapter extends BaseAdapter implements View.OnClickListe
         TextView tvType;
         TextView tvDate;
         TextView tvTime;
-        Switch reminder;
+        SwitchCompat reminder;
         ImageView ivEdit;
         ImageView ivDelete;
     }

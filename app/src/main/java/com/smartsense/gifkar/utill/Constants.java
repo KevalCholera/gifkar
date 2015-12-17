@@ -2,11 +2,11 @@ package com.smartsense.gifkar.utill;
 
 public class Constants {
 
-    public static final String STATUS_SUCCESS = "1";
+    public static final int STATUS_SUCCESS = 200;
     public static final int STATUS_FAIL = 500;
     public static final int STATUS_CHECK = 201;
     public static final String DB_PATH = "/data/data/com.smartsense.gifkar/databases/";
-    public static final String BASE_URL = "https://gifkar.cloudapp.net/";
+    public static final String BASE_URL = "https://gifkar.cloudapp.net";
     public static final String BASE_IMAGE_URL = "http://104.43.15.1:8025";
     public static final String PRO_TITLE = "Please Wait";
     public static final String PRO_LIST = "Syncing Process Running...";
@@ -94,16 +94,16 @@ public class Constants {
         public static final int EVENT_RESEND_OTP = 22;
         public static final int EVENT_CHECK_RATING = 24;
         public static final int EVENT_DO_RATING = 23;
-        public static final int EVENT_REFER = 22;
-        public static final int EVENT_EMAIL_DETAILS = 23;
+        public static final int EVENT_REFER = 25;
+        public static final int EVENT_EMAIL_DETAILS = 26;
+        public static final int EVENT_ADD_REMINDER = 27;
     }
 
     public class ErrorCode {
-        public static final int INVALID_CREDENTIALS = 1;
-        public static final int PARAM_MISSING = 2;
-        public static final int UNAUTHORIZED = 3;
-        public static final int SERVER_ERROR = 4;
-        public static final int UNVERIFIED = 5;
+        public static final int INVALID_CREDENTIALS = 1003;
+        public static final int PARAM_MISSING = 1001;
+        public static final int UNAUTHORIZED = 1002;
+        public static final int SERVER_ERROR = 1004;
 
     }
 
@@ -114,5 +114,11 @@ public class Constants {
         public static final int SCREEN_MYREMINDER = 4;
     }
 
+
+    public class ScreenReminderCode {
+        public static final int ONE_HOUR = 3;
+        public static final int ONE_DAY = 1;
+        public static final int TWO_DAY = 2;
+    }
 
 }

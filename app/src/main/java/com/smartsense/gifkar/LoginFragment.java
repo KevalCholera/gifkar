@@ -417,8 +417,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         CommonUtil.cancelProgressDialog();
         if (response != null) {
             try {
-                if (response.getString("status_code").equalsIgnoreCase(Constants.STATUS_SUCCESS)) {
-                    switch (Integer.valueOf(response.getString("event_id"))) {
+                if (response.getInt("status") == Constants.STATUS_SUCCESS) {
+                    switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_LOGIN:
                             if (response.getJSONArray("data").getJSONObject(0).getString("is_verify").equals("0")) {
                                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONArray("data").getJSONObject(0).getString("user_id"));
