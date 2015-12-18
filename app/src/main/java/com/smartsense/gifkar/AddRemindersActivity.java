@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class AddRemindersActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
@@ -98,11 +99,14 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
         btnAddReminder.setOnClickListener(this);
         if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_MYREMINDER) {
             try {
+                SimpleDateFormat sdf = new SimpleDateFormat("y-M-d H:m:s", Locale.ENGLISH);
+                mCalendar.setTime(sdf.parse(reminderObj.optString("reminderDate")));
                 btnAddReminder.setText(getResources().getString(R.string.update));
                 String[] parts = reminderObj.optString("reminderDate").split(" ");
                 etMyReminderAddDate.setText(parts[0]);
                 etMyReminderAddTime.setText(parts[1]);
                 etMyReminderAddRelationType.setText(reminderObj.optJSONObject("occasion").optString("name"));
+                etMyReminderAddRelationType.setTag(reminderObj.optJSONObject("occasion").optString("id"));
                 etMyReminderAddRelation.setText(reminderObj.optString("relation"));
                 etMyReminderName.setText(reminderObj.optString("name"));
                 etMyReminderAddDescription.setText(reminderObj.optString("description"));
@@ -214,8 +218,16 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
             int alertTime = (int) rB.getTag();
             int isActive = switchMyReminder.isChecked() ? 1 : 0;
             final String tag = "ReminderAdd";
-            String url = Constants.BASE_URL + "/mobile/reminder/create";
+            String url;
             Map<String, String> params = new HashMap<String, String>();
+            if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_MYREMINDER) {
+                url = Constants.BASE_URL + "/mobile/reminder/update";
+                params.put("reminderId", reminderObj.optString("id"));
+                params.put("eventId", String.valueOf(Constants.Events.EVENT_ADD_REMINDER));
+            }else {
+                url = Constants.BASE_URL + "/mobile/reminder/create";
+                params.put("eventId", String.valueOf(Constants.Events.EVENT_ADD_REMINDER));
+            }
             params.put("name", etMyReminderName.getText().toString());
             params.put("relation", etMyReminderAddRelation.getText().toString());
             params.put("description", etMyReminderAddDescription.getText().toString());
@@ -225,10 +237,12 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
             params.put("date", new SimpleDateFormat("y-M-d").format(mCalendar.getTime()));
             params.put("occasionId", (String) etMyReminderAddRelationType.getTag());
             params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
-            params.put("eventId", String.valueOf(Constants.Events.EVENT_ADD_REMINDER));
             params.put("defaultToken", Constants.DEFAULT_TOKEN);
             Log.i("params", params.toString());
+            //In Response
             try {
+                Intent alarmIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
+                int reminderId = 0;
                 if (switchMyReminder.isChecked()) {
                     JSONObject reminderObj = new JSONObject();
                     reminderObj.put("name", etMyReminderName.getText().toString());
@@ -248,12 +262,12 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                             break;
                         default:
                     }
-                    Intent alarmIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
-                    int reminderId = 0;
                     AlarmUtil.setAlarm(getApplicationContext(), alarmIntent, reminderId, reminderObj, mCalendar);
                     AlarmUtil.setAlarm(getApplicationContext(), alarmIntent, reminderId, reminderObj, mCalendar1);
-                    Log.i("date", DateAndTimeUtil.toStringReadableDate(mCalendar1));
-                    Log.i("time", DateAndTimeUtil.toStringReadableTime(mCalendar1, getApplicationContext()));
+//                    Log.i("date", DateAndTimeUtil.toStringReadableDate(mCalendar1));
+//                    Log.i("time", DateAndTimeUtil.toStringReadableTime(mCalendar1, getApplicationContext()));
+                }else{
+                    AlarmUtil.cancelAlarm(getApplicationContext(), alarmIntent, reminderId);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

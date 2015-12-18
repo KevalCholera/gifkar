@@ -97,6 +97,7 @@ public class Constants {
         public static final int EVENT_REFER = 25;
         public static final int EVENT_EMAIL_DETAILS = 26;
         public static final int EVENT_ADD_REMINDER = 27;
+        public static final int EVENT_COUNTRY_LIST = 28;
     }
 
     public class ErrorCode {

@@ -14,12 +14,24 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.smartsense.gifkar.adapter.CountryCodeAdapter;
+import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
+import com.smartsense.gifkar.utill.DataRequest;
+import com.smartsense.gifkar.utill.JsonErrorShow;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.HashMap;
+import java.util.Map;
+
+public class ForgotPasswordActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
+        Response.ErrorListener {
     EditText etEmail, etCountryCode, etMobileNo;
     Button btForgot;
     ImageView btBack;
@@ -52,10 +64,14 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnForgot:
-                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT));
+                if (etMobileNo.length() != 0 ||etEmail.length() != 0) {
+                    doForgot("mobile",etMobileNo.getText().toString());
+                }else {
+
+                }
                 break;
             case R.id.etForgotCountryCode:
-                openCountryPopup();
+                getCountryList();
                 break;
             case R.id.btActionBarBack:
                 finish();
@@ -64,7 +80,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         }
     }
 
-    public void openCountryPopup() {
+    public void openCountryPopup(JSONObject response1) {
         String tempary = "{\n" +
                 "\t\"eventId\": 123,\n" +
                 "\t\"errorCode\": 0,\n" +
@@ -110,6 +126,64 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void doForgot(String device, String email) {
+        final String tag = "forgotpassword";
+        String url = Constants.BASE_URL + "/user/requestResetPassword";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_LOGIN));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        params.put("flag", device);
+        params.put("value", email);
+        CommonUtil.showProgressDialog(this, "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+    public void getCountryList() {
+        final String tag = "countryList";
+        String url = Constants.BASE_URL + "/mobile/country/get/?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_COUNTRY_LIST);
+        CommonUtil.showProgressDialog(this, "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        CommonUtil.alertBox(getApplicationContext(), "", getResources().getString(R.string.nointernet_try_again_msg));
+        CommonUtil.cancelProgressDialog();
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        CommonUtil.cancelProgressDialog();
+        if (response != null) {
+            try {
+                if (response.getInt("status") == Constants.STATUS_SUCCESS) {
+                    switch (Integer.valueOf(response.getString("eventId"))) {
+                        case Constants.Events.EVENT_FORGOT_PASS:
+                            if (response.optJSONObject("data").has("otp")) {
+                                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT));
+                            } else
+                                CommonUtil.alertBox(this, "", response.optString("message"));
+                            break;
+                        case Constants.Events.EVENT_COUNTRY_LIST:
+                            openCountryPopup(response);
+                            break;
+                    }
+                } else {
+                    JsonErrorShow.jsonErrorShow(response, this);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
 }

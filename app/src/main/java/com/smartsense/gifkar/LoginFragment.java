@@ -178,10 +178,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
 
     public void doLogin(String email, String passsword) {
         final String tag = "login";
-        String url = Constants.BASE_URL + "login";
+        String url = Constants.BASE_URL + "/mobile/user/login";
         Map<String, String> params = new HashMap<String, String>();
-        params.put("event_id", String.valueOf(Constants.Events.EVENT_LOGIN));
-        params.put("email_id", email);
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_LOGIN));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        params.put("username", email);
         params.put("password", passsword);
         CommonUtil.showProgressDialog(getActivity(), "Wait...");
         Log.d("login Params", params.toString());
@@ -191,18 +192,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
 
     }
 
-    public void doForgot(String email) {
-        final String tag = "forgotpassword";
-        String url = Constants.BASE_URL + "forgotpassword";
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("event_id", String.valueOf(Constants.Events.EVENT_FORGOT_PASS));
-        params.put("email_id", email);
-        CommonUtil.showProgressDialog(getActivity(), "Wait...");
-        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
-        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
-
-    }
 
 
     private GoogleApiClient buildGoogleApiClient() {
@@ -287,9 +276,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                 startActivity(new Intent(getActivity(), ForgotPasswordActivity.class));
                 break;
             case R.id.btnLogin:
-                CommonUtil.showProgressDialog(getActivity(), "Wait...");
-                CommonUtil.closeKeyboard(getActivity());
-
                 String password = etInputPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(emailId)) {
                     etInputemail.setError(getString(R.string.wrn_em));
