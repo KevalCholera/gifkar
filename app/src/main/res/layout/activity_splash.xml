@@ -1,7 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/giftkar_17_12_1"
     android:scaleType="centerCrop">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_marginRight="@dimen/margin_5"
+        android:layout_height="match_parent">
 
-</ImageView>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/margin_5"
+        android:background="@drawable/gift1" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_margin="@dimen/margin_5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            android:background="@drawable/gift2" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="50dp"
+            android:layout_margin="@dimen/margin_5"
+            android:visibility="invisible"
+            android:layout_height="50dp"
+            android:background="@drawable/gift3" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="50dp"
+            android:layout_margin="@dimen/margin_5"
+            android:visibility="invisible"
+            android:layout_height="50dp"
+            android:background="@drawable/gift4" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_margin="@dimen/margin_5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="invisible"
+            android:background="@drawable/gift5" />
+    </LinearLayout>
+</RelativeLayout>
