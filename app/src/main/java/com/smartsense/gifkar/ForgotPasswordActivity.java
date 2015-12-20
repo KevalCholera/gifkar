@@ -18,6 +18,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.CountryCodeAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
@@ -36,6 +37,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     Button btForgot;
     ImageView btBack;
     AlertDialog alert;
+    Boolean checkCountry = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,28 +52,66 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         btBack.setOnClickListener(this);
         titleTextView.setText(getResources().getString(R.string.screen_forgot));
         getSupportActionBar().setCustomView(v);
-
-
         etEmail = (EditText) findViewById(R.id.etForgotEmailId);
+        etMobileNo = (EditText) findViewById(R.id.etForgotMobileNo);
+        etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                    // TODO: the editText has just been left
+                    if (etEmail.length() != 0)
+                        etMobileNo.setText("");
+            }
+        });
+
         etCountryCode = (EditText) findViewById(R.id.etForgotCountryCode);
         etCountryCode.setOnClickListener(this);
-        etMobileNo = (EditText) findViewById(R.id.etForgotMobileNo);
+        etMobileNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                    // TODO: the editText has just been left
+                    if (etMobileNo.length() != 0)
+                        etEmail.setText("");
+            }
+        });
         btForgot = (Button) findViewById(R.id.btnForgot);
         btForgot.setOnClickListener(this);
+//        getCountryList(checkCountry);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnForgot:
-                if (etMobileNo.length() != 0 ||etEmail.length() != 0) {
-                    doForgot("mobile",etMobileNo.getText().toString());
-                }else {
-
+                if (etMobileNo.length() != 0 || etEmail.length() != 0) {
+                    if (etMobileNo.length() != 0) {
+                        if (!(etMobileNo.length() >= 8 && etMobileNo.length() <= 13))
+                            etMobileNo.setError(getString(R.string.wrn_valid_mno));
+                        else
+                            doForgot("mobile", etMobileNo.getText().toString());
+                    } else {
+                        if (!CommonUtil.isValidEmail(etEmail.getText().toString()))
+                            etEmail.setError(getString(R.string.wrn_em));
+                        else
+                            doForgot("email", etEmail.getText().toString());
+                    }
+                } else {
+                    CommonUtil.alertBox(this, "", "Please Enter Email or Mobile No.");
+                    startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT));
                 }
                 break;
             case R.id.etForgotCountryCode:
-                getCountryList();
+                if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_COUNTRY_LIST, "").equalsIgnoreCase("")) {
+                    checkCountry = true;
+                    getCountryList(checkCountry);
+                } else {
+                    try {
+                        openCountryPopup(new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_COUNTRY_LIST, "")));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
             case R.id.btActionBarBack:
                 finish();
@@ -105,23 +145,29 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
             View dialog = inflater.inflate(R.layout.dialog_city_select, null);
             ListView list_view = (ListView) dialog.findViewById(R.id.list_view);
+            if (response.getJSONObject("data").getJSONArray("countries").length() == 0) {
+                CommonUtil.alertBox(this, "", "Country Code Not Found Please Try Again.");
+            } else {
+                etCountryCode.setText(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
+                etCountryCode.setTag(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("id"));
+                CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(this, response.getJSONObject("data").getJSONArray("countries"), true);
+                list_view.setAdapter(countryCodeAdapter);
 
-            CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(this, response.getJSONObject("data").getJSONArray("countries"), true);
-            list_view.setAdapter(countryCodeAdapter);
+                list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
 
-            list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
+                        JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
+                        etCountryCode.setText(getCodeObj.optString("code"));
+                        etCountryCode.setTag(getCodeObj.optString("id"));
+                        alert.dismiss();
 
-                    JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
-                    etCountryCode.setText(getCodeObj.optString("code"));
-                    alert.dismiss();
-
-                }
-            });
-            alertDialogs.setView(dialog);
-            alertDialogs.setCancelable(false);
-            alert = alertDialogs.create();
-            alert.show();
+                    }
+                });
+                alertDialogs.setView(dialog);
+                alertDialogs.setCancelable(false);
+                alert = alertDialogs.create();
+                alert.show();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,24 +175,27 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     }
 
 
-    public void doForgot(String device, String email) {
+    public void doForgot(String device, String value) {
         final String tag = "forgotpassword";
         String url = Constants.BASE_URL + "/user/requestResetPassword";
         Map<String, String> params = new HashMap<String, String>();
-        params.put("eventId", String.valueOf(Constants.Events.EVENT_LOGIN));
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_FORGOT_PASS));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         params.put("flag", device);
-        params.put("value", email);
+        params.put("value", value);
         CommonUtil.showProgressDialog(this, "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
 
-    public void getCountryList() {
+    public void getCountryList(Boolean check) {
         final String tag = "countryList";
         String url = Constants.BASE_URL + "/mobile/country/get/?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_COUNTRY_LIST);
-        CommonUtil.showProgressDialog(this, "Wait...");
+        if (check) {
+            checkCountry = false;
+            CommonUtil.showProgressDialog(this, "Wait...");
+        }
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
@@ -154,7 +203,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-        CommonUtil.alertBox(getApplicationContext(), "", getResources().getString(R.string.nointernet_try_again_msg));
+        CommonUtil.alertBox(ForgotPasswordActivity.this, "", getResources().getString(R.string.nointernet_try_again_msg));
         CommonUtil.cancelProgressDialog();
     }
 
@@ -167,12 +216,15 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_FORGOT_PASS:
                             if (response.optJSONObject("data").has("otp")) {
-                                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT));
+                                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")).putExtra("mobile_no", response.optJSONObject("data").optString("otp")).putExtra("country_code", response.optJSONObject("data").optString("otp")));
                             } else
                                 CommonUtil.alertBox(this, "", response.optString("message"));
                             break;
                         case Constants.Events.EVENT_COUNTRY_LIST:
-                            openCountryPopup(response);
+                            if (checkCountry)
+                                openCountryPopup(response);
+                            else
+                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());
                             break;
                     }
                 } else {

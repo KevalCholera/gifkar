@@ -22,6 +22,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.CountryCodeAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
@@ -43,6 +44,8 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
     AlertDialog alert;
     Boolean isEmailVerified = false;
     Boolean isMnoVerified = false;
+    Boolean checkCountry = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_signup, container, false);
@@ -61,6 +64,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
         tvTerms = (TextView) view.findViewById(R.id.tvSignupTerms);
         tvTerms.setOnClickListener(this);
         cbTerms = (CheckBox) view.findViewById(R.id.rbSignupTerms);
+        //        getCountryList(checkCountry);
         return view;
     }
 
@@ -72,7 +76,16 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                 doSignUp();
                 break;
             case R.id.etSignUpCountryCode:
-                getCountryList();
+                if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_COUNTRY_LIST, "").equalsIgnoreCase("")) {
+                    checkCountry = true;
+                    getCountryList(checkCountry);
+                } else {
+                    try {
+                        openCountryPopup(new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_COUNTRY_LIST, "")));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
                 break;
             case R.id.tvSignupTerms:
                 startActivity(new Intent(getActivity(), TermsandCondtionsActivity.class));
@@ -109,42 +122,50 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
 
             View dialog = inflater.inflate(R.layout.dialog_city_select, null);
             ListView list_view = (ListView) dialog.findViewById(R.id.list_view);
+            if (response.getJSONObject("data").getJSONArray("countries").length() == 0) {
+                CommonUtil.alertBox(getActivity(), "", "Country Code Not Found Please Try Again.");
+            } else {
+                etCountryCode.setText(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
+                etCountryCode.setTag(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("id"));
+                CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(getActivity(), response.getJSONObject("data").getJSONArray("countries"), true);
+                list_view.setAdapter(countryCodeAdapter);
 
-            CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(getActivity(), response.getJSONObject("data").getJSONArray("countries"), true);
-            list_view.setAdapter(countryCodeAdapter);
+                list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
 
-            list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
+                        JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
+                        etCountryCode.setText(getCodeObj.optString("code"));
+                        etCountryCode.setTag(getCodeObj.optString("id"));
+                        alert.dismiss();
 
-                    JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
-                    etCountryCode.setText(getCodeObj.optString("code"));
-                    etCountryCode.setTag(getCodeObj.optString("id"));
-                    alert.dismiss();
-
-                }
-            });
-            alertDialogs.setView(dialog);
-            alertDialogs.setCancelable(false);
-            alert = alertDialogs.create();
-            alert.show();
+                    }
+                });
+                alertDialogs.setView(dialog);
+                alertDialogs.setCancelable(false);
+                alert = alertDialogs.create();
+                alert.show();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void getCountryList() {
+    public void getCountryList(Boolean check) {
         final String tag = "countryList";
         String url = Constants.BASE_URL + "/mobile/country/get/?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_COUNTRY_LIST);
-        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        if (check) {
+            checkCountry = false;
+            CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        }
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
 
-    public void checkMobileEmail(String device,String value) {
+    public void checkMobileEmail(String device, String value) {
         final String tag = "countryList";
-        String url = Constants.BASE_URL + "/mobile/user/checkAvailability/?defaultToken=" + Constants.DEFAULT_TOKEN + "&value="+value+"&checkType="+device+"&eventId=" + String.valueOf(Constants.Events.EVENT_EMAIL_CHECK);
+        String url = Constants.BASE_URL + "/mobile/user/checkAvailability/?defaultToken=" + Constants.DEFAULT_TOKEN + "&value=" + value + "&checkType=" + device + "&eventId=" + String.valueOf(Constants.Events.EVENT_EMAIL_CHECK);
         CommonUtil.showProgressDialog(getActivity(), "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -216,8 +237,8 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                             openCountryPopup(response);
                             break;
                         case Constants.Events.EVENT_EMAIL_CHECK:
-                            isEmailVerified=true;
-                            isMnoVerified=true;
+                            isEmailVerified = true;
+                            isMnoVerified = true;
                             break;
                     }
                 } else {

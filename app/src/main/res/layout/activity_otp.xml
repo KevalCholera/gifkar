@@ -44,7 +44,9 @@
                 android:layout_margin="@dimen/margin_5"
                 android:background="@drawable/edittext_skyborder"
                 android:ems="10"
+                android:gravity="center"
                 android:fontFamily="normal"
+                android:maxLength="1"
                 android:padding="@dimen/padding_8" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceEditText
@@ -54,6 +56,8 @@
                 android:layout_margin="@dimen/margin_5"
                 android:background="@drawable/edittext_skyborder"
                 android:ems="10"
+                android:gravity="center"
+                android:maxLength="1"
                 android:fontFamily="normal"
                 android:padding="@dimen/padding_8" />
 
@@ -64,6 +68,8 @@
                 android:layout_margin="@dimen/margin_5"
                 android:background="@drawable/edittext_skyborder"
                 android:ems="10"
+                android:maxLength="1"
+                android:gravity="center"
                 android:fontFamily="normal"
                 android:padding="@dimen/padding_8" />
 
@@ -74,6 +80,8 @@
                 android:layout_margin="@dimen/margin_5"
                 android:background="@drawable/edittext_skyborder"
                 android:ems="10"
+                android:gravity="center"
+                android:maxLength="1"
                 android:fontFamily="normal"
                 android:padding="@dimen/padding_8" />
 
@@ -125,5 +133,18 @@
                 android:text="@string/otp_editno"
                 android:textColor="@color/mainColor" />
         </LinearLayout>
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tvOtpCountDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:fontFamily="normal"
+            android:padding="@dimen/padding_8"
+            android:text="59 seconds remaining"
+            android:visibility="gone"
+            android:textColor="@color/mainColor" />
     </LinearLayout>
 </ScrollView>

@@ -18,6 +18,8 @@ public class Constants {
     public static final String COD = "2";
     public static final String SCREEN = "screen";
     public static final String DEFAULT_TOKEN = "Uxl5lRYZHwx2jDpVsUoANJtRK5fNffzRewwbQjjd";
+    public static final String OTP = "otp";
+    public static final String MOBILENO = "mobile_no";
     // public static final String BASE_URL =
     // "http://ywtest.cloudapp.net:8080/SupremeCab";
 
@@ -45,6 +47,7 @@ public class Constants {
         public static final String PREF_ADDRESS_ID = "address_id";
         public static final String PREF_ISWAITING_SMS = "iswaiting_sms";
         public static final String PREF_ISOTP_VERIFIED = "isotp_verified";
+        public static final String PREF_COUNTRY_LIST = "country_list";
     }
 
     public class NavigationItems {
@@ -98,6 +101,7 @@ public class Constants {
         public static final int EVENT_EMAIL_DETAILS = 26;
         public static final int EVENT_ADD_REMINDER = 27;
         public static final int EVENT_COUNTRY_LIST = 28;
+        public static final int EVENT_SEND_OTP = 29;
     }
 
     public class ErrorCode {
