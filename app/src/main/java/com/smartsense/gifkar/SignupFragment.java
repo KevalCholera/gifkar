@@ -99,25 +99,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
     }
 
     public void openCountryPopup(JSONObject response) {
-        String tempary = "{\n" +
-                "\t\"eventId\": 123,\n" +
-                "\t\"errorCode\": 0,\n" +
-                "\t\"status\": 200,\n" +
-                "\t\"message\": \"country list.\",\n" +
-                "\t\"data\": {\n" +
-                "\t\t\"countries\": [{\n" +
-                "\t\t\t\"id\": \"18\",\n" +
-                "\t\t\t\"name\": \"India\",\n" +
-                "\t\t\t\"code\": \"+92\"\n" +
-                "\t\t}, {\n" +
-                "\t\t\t\"id\": \"19\",\n" +
-                "\t\t\t\"name\": \"Pakistan\",\n" +
-                "\t\t\t\"code\": \"+93\"\n" +
-                "\t\t}]\n" +
-                "\t}\n" +
-                "}";
-        try {
-            JSONObject response1 = new JSONObject(tempary);
+        try{
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(getActivity());
             LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -128,6 +110,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
             } else {
                 etCountryCode.setText(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
                 etCountryCode.setTag(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("id"));
+
                 CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(getActivity(), response.getJSONObject("data").getJSONArray("countries"), true);
                 list_view.setAdapter(countryCodeAdapter);
 
@@ -159,7 +142,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
             checkCountry = false;
             CommonUtil.showProgressDialog(getActivity(), "Wait...");
         }
-        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null, this, this);
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
@@ -167,17 +150,17 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
     public void getTest() {
         final String tag = "countryList";
         String url = Constants.BASE_URL + "/test";
-        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null, this, this);
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
 
 
-    public void checkMobileEmail(String device, String value) {
+    public void checkMobileEmail(String device, String value,int eventId) {
         final String tag = "countryList";
         String url = Constants.BASE_URL + "/mobile/user/checkAvailability/?defaultToken=" + Constants.DEFAULT_TOKEN + "&value=" + value + "&checkType=" + device + "&eventId=" + String.valueOf(Constants.Events.EVENT_EMAIL_CHECK);
         CommonUtil.showProgressDialog(getActivity(), "Wait...");
-        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null, this, this);
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
@@ -203,10 +186,10 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
             etConPass.setError(getString(R.string.wrn_match));
         } else if (!cbTerms.isChecked()) {
             CommonUtil.alertBox(getActivity(), "", "Please check Terms & Conditions to Continue.");
-        } else if (!isEmailVerified) {
-            CommonUtil.alertBox(getActivity(), "", "Email already exists.");
-        } else if (!isMnoVerified) {
-            CommonUtil.alertBox(getActivity(), "", "Mobile already exists.");
+//        } else if (!isEmailVerified) {
+//            CommonUtil.alertBox(getActivity(), "", "Email already exists.");
+//        } else if (!isMnoVerified) {
+//            CommonUtil.alertBox(getActivity(), "", "Mobile already exists.");
         } else {
             final String tag = "Signup";
             String url = Constants.BASE_URL + "/mobile/user/signup";
@@ -220,10 +203,10 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
             params.put("eventId", String.valueOf(Constants.Events.EVENT_SIGNUP));
             params.put("defaultToken", Constants.DEFAULT_TOKEN);
             Log.i("params", params.toString());
-//            CommonUtil.showProgressDialog(this, "Wait...");
-//            DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
-//            loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//            GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+            CommonUtil.showProgressDialog(getActivity(), "Wait...");
+            DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+            loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
         }
     }
 
@@ -241,7 +224,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_SIGNUP:
-                            startActivity(new Intent(getActivity(), OTPActivity.class));
+//                            startActivity(new Intent(getActivity(), OTPActivity.class));
                             break;
                         case Constants.Events.EVENT_COUNTRY_LIST:
                             openCountryPopup(response);

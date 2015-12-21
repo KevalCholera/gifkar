@@ -27,6 +27,7 @@ public class DataRequest extends Request<JSONObject> {
 	public DataRequest(int method, String url, Map<String, String> params, Listener<JSONObject> reponseListener,
 			ErrorListener errorListener) {
 		super(method, url, errorListener);
+		Log.i("url", url);
 		this.listener = reponseListener;
 		this.params = params;
 		this.errorListener = errorListener;

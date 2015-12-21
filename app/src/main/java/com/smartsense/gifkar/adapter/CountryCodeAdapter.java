@@ -5,6 +5,7 @@ package com.smartsense.gifkar.adapter;
  */
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public class CountryCodeAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         JSONObject testJson = dataArray.optJSONObject(position);
+        Log.i("array", testJson.toString());
         if(check)
         holder.tvCountryCode.setText(testJson.optString("code") + " " + testJson.optString("name"));
         else

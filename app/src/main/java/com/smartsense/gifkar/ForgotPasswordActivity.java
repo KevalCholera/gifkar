@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -183,6 +184,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         params.put("flag", device);
         params.put("value", value);
+        Log.d("forgot Params", params.toString());
         CommonUtil.showProgressDialog(this, "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -191,12 +193,12 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
     public void getCountryList(Boolean check) {
         final String tag = "countryList";
-        String url = Constants.BASE_URL + "/mobile/country/get/?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_COUNTRY_LIST);
+        String url = Constants.BASE_URL + "/mobile/country/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_COUNTRY_LIST);
         if (check) {
             checkCountry = false;
             CommonUtil.showProgressDialog(this, "Wait...");
         }
-        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null, this, this);
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
