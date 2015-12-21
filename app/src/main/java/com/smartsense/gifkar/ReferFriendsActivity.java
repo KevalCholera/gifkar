@@ -4,15 +4,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ReferFriendsActivity extends AppCompatActivity implements View.OnClickListener {
+public class ReferFriendsActivity extends Fragment implements View.OnClickListener {
     ImageView btBack;
     LinearLayout llReferMsg;
     private LinearLayout llReferFB;
@@ -21,42 +23,39 @@ public class ReferFriendsActivity extends AppCompatActivity implements View.OnCl
     private LinearLayout llReferGPlus;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.action_bar_center, null);
-        TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
-        titleTextView.setText(getResources().getString(R.string.screen_notification));
-        btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
-        btBack.setOnClickListener(this);
-        getSupportActionBar().setCustomView(v);
-        setContentView(R.layout.activity_refer_friends);
-        llReferMsg = (LinearLayout) findViewById(R.id.llReferMsg);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = (View) inflater.inflate(R.layout.activity_refer_friends, container, false);
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
+        TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
+        actionBarTitle.setText(getResources().getString(R.string.screen_refer));
+        ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
+        btFilter.setVisibility(View.INVISIBLE);
+        ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
+        btSearch.setVisibility(View.INVISIBLE);
+        llReferMsg = (LinearLayout) view.findViewById(R.id.llReferMsg);
         llReferMsg.setOnClickListener(this);
-        llReferFB = (LinearLayout) findViewById(R.id.llReferFB);
+        llReferFB = (LinearLayout) view.findViewById(R.id.llReferFB);
         llReferFB.setOnClickListener(this);
-        llReferGmail = (LinearLayout) findViewById(R.id.llReferGMAIL);
+        llReferGmail = (LinearLayout) view.findViewById(R.id.llReferGMAIL);
         llReferGmail.setOnClickListener(this);
-        llReferGPlus = (LinearLayout) findViewById(R.id.llReferGPlus);
+        llReferGPlus = (LinearLayout) view.findViewById(R.id.llReferGPlus);
         llReferGPlus.setOnClickListener(this);
-        llReferWhats = (LinearLayout) findViewById(R.id.llReferWhatsApp);
+        llReferWhats = (LinearLayout) view.findViewById(R.id.llReferWhatsApp);
         llReferWhats.setOnClickListener(this);
-
+        return view;
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btActionBarBack:
-                finish();
-                break;
+//            case R.id.btActionBarBack:
+//                finish();
+//                break;
             case R.id.llReferWhatsApp:
                 if (isAppInstalled("com.whatsapp")) {
                     share("com.whatsapp");
                 } else {
-                    Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                    Toast.makeText(getActivity(), "WhatsApp not Installed", Toast.LENGTH_SHORT)
                             .show();
                 }
                 break;
@@ -65,7 +64,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements View.OnCl
                 if (isAppInstalled("com.android.mms")) {
                     share("com.android.mms");
                 } else {
-                    Toast.makeText(this, "WhatsApp not Installed", Toast.LENGTH_SHORT)
+                    Toast.makeText(getActivity(), "Message not Installed", Toast.LENGTH_SHORT)
                             .show();
                 }
 
@@ -74,7 +73,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements View.OnCl
                 if (isAppInstalled("com.google.android.apps.plus")) {
                     share("com.google.android.apps.plus");
                 } else {
-                    Toast.makeText(this, "Google + not Installed", Toast.LENGTH_SHORT)
+                    Toast.makeText(getActivity(), "Google + not Installed", Toast.LENGTH_SHORT)
                             .show();
                 }
                 break;
@@ -82,7 +81,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements View.OnCl
                 if (isAppInstalled("com.google.android.gm")) {
                     share("com.google.android.gm");
                 } else {
-                    Toast.makeText(this, "Gmail not Installed", Toast.LENGTH_SHORT)
+                    Toast.makeText(getActivity(), "Gmail not Installed", Toast.LENGTH_SHORT)
                             .show();
                 }
                 break;
@@ -91,7 +90,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements View.OnCl
                 if (isAppInstalled("com.facebook.katana")) {
                     share("com.facebook.katana");
                 } else {
-                    Toast.makeText(this, "Facebook not Installed", Toast.LENGTH_SHORT)
+                    Toast.makeText(getActivity(), "Facebook not Installed", Toast.LENGTH_SHORT)
                             .show();
                 }
                 break;
@@ -106,7 +105,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements View.OnCl
     }
 
     private boolean isAppInstalled(String packageName) {
-        PackageManager pm = this.getPackageManager();
+        PackageManager pm = getActivity().getPackageManager();
         boolean installed = false;
         try {
             pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
@@ -124,7 +123,7 @@ public class ReferFriendsActivity extends AppCompatActivity implements View.OnCl
             intent.setAction(Intent.ACTION_SEND);
             intent.setPackage("com.facebook.katana");
             intent.setType("text/plain");
-            intent.putExtra( Intent.EXTRA_TEXT, getResources().getString(R.string.share_msg));
+            intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_msg));
             startActivity(intent);
         } else {
             Intent waIntent = new Intent(Intent.ACTION_SEND);

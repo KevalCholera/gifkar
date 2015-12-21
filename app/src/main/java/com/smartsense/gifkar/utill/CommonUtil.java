@@ -22,6 +22,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -72,6 +73,10 @@ public class CommonUtil {
 
     static public ActionBar getActionBar(Activity a) {
         return ((AppCompatActivity) a).getSupportActionBar();
+    }
+
+    static public Toolbar getToolBar(Activity a) {
+        return (Toolbar) ((AppCompatActivity) a).getSupportActionBar().getCustomView();
     }
 
     public static boolean isInternet(Context context) {

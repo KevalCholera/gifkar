@@ -64,7 +64,8 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
         tvTerms = (TextView) view.findViewById(R.id.tvSignupTerms);
         tvTerms.setOnClickListener(this);
         cbTerms = (CheckBox) view.findViewById(R.id.rbSignupTerms);
-        //        getCountryList(checkCountry);
+//        getCountryList(checkCountry);
+        getTest();
         return view;
     }
 
@@ -97,7 +98,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
         }
     }
 
-    public void openCountryPopup(JSONObject response1) {
+    public void openCountryPopup(JSONObject response) {
         String tempary = "{\n" +
                 "\t\"eventId\": 123,\n" +
                 "\t\"errorCode\": 0,\n" +
@@ -116,7 +117,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                 "\t}\n" +
                 "}";
         try {
-            JSONObject response = new JSONObject(tempary);
+            JSONObject response1 = new JSONObject(tempary);
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(getActivity());
             LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -153,7 +154,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
 
     public void getCountryList(Boolean check) {
         final String tag = "countryList";
-        String url = Constants.BASE_URL + "/mobile/country/get/?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_COUNTRY_LIST);
+        String url = Constants.BASE_URL + "/mobile/country/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_COUNTRY_LIST);
         if (check) {
             checkCountry = false;
             CommonUtil.showProgressDialog(getActivity(), "Wait...");
@@ -162,6 +163,15 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
+
+    public void getTest() {
+        final String tag = "countryList";
+        String url = Constants.BASE_URL + "/test";
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
 
     public void checkMobileEmail(String device, String value) {
         final String tag = "countryList";

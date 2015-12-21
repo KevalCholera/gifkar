@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -45,12 +46,13 @@ public class GifkarActivity extends AppCompatActivity
         setContentView(R.layout.activity_gifkar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_gifkar);
         actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
-        actionBarTitle.setText("Prahlad Nagar,380015");
+//        actionBarTitle.setText("Prahlad Nagar,380015");
+        setSupportActionBar(toolbar);
         btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
         btFilter.setOnClickListener(this);
         btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
         btSearch.setOnClickListener(this);
-        setSupportActionBar(toolbar);
+
 //        if (getSupportActionBar() != null)
 //            getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_action_home));
 
@@ -114,7 +116,8 @@ public class GifkarActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            drawer.openDrawer(GravityCompat.START);
+//            super.onBackPressed();
         }
     }
 
@@ -281,9 +284,11 @@ public class GifkarActivity extends AppCompatActivity
 //            iv_image.setColorFilter(getResources().getColor(R.color.iconcolor));
 
             if (position == Constants.NavigationItems.NAV_NOTIFICATIONS) {
+                convertView.setOnClickListener(this);
                 tvCount.setVisibility(View.VISIBLE);
                 tvCount.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_DJ_WALLET, "0"));
             } else if (position == Constants.NavigationItems.NAV_MY_CART) {
+                convertView.setOnClickListener(this);
                 try {
                     if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, "") != "") {
                         JSONArray productArray = new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
@@ -300,12 +305,16 @@ public class GifkarActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
 
+            } else if (position == Constants.NavigationItems.NAV_SETTING) {
+                convertView.setVisibility(View.INVISIBLE);
             } else {
                 if (mNavTitles[position].equalsIgnoreCase("empty")) {
                     tvTitle.setVisibility(View.GONE);
                     iv_image.setVisibility(View.GONE);
                     viewLine.setVisibility(View.VISIBLE);
+
                 } else {
+                    convertView.setOnClickListener(this);
                     viewLine.setVisibility(View.GONE);
                     tvTitle.setVisibility(View.VISIBLE);
                     iv_image.setVisibility(View.VISIBLE);
@@ -313,7 +322,7 @@ public class GifkarActivity extends AppCompatActivity
                 tvCount.setVisibility(View.INVISIBLE);
             }
 
-            convertView.setOnClickListener(this);
+
             convertView.setTag(position);
 
             return convertView;
@@ -333,10 +342,11 @@ public class GifkarActivity extends AppCompatActivity
             case Constants.NavigationItems.NAV_LOGIN:
 //                setbackpress(0);
 //                fragmentcall(c, new CategoryFragment(), fm);
+                c.startActivity(new Intent(c, StartActivity.class));
                 break;
             case Constants.NavigationItems.NAV_HOME:
 //                setbackpress(0);
-//                fragmentcall(c, new CategoryFragment(), fm);
+                fragmentcall(c, new ShopListFragment(), fm);
                 break;
             case Constants.NavigationItems.NAV_MY_CART:
                 c.startActivity(new Intent(c, MyCartActivity.class));
@@ -351,7 +361,8 @@ public class GifkarActivity extends AppCompatActivity
 
             case Constants.NavigationItems.NAV_MY_ORDERS:
 //                setbackpress(2);
-                c.startActivity(new Intent(c, MyOrdersActivity.class));
+//                c.startActivity(new Intent(c, MyOrdersActivity.class));
+                fragmentcall(c, new MyOrdersActivity(), fm);
                 break;
 
             case Constants.NavigationItems.NAV_MY_ADDRESSES:
@@ -366,15 +377,15 @@ public class GifkarActivity extends AppCompatActivity
 //                }
                 break;
             case Constants.NavigationItems.NAV_MY_REMINDERS:
-                c.startActivity(new Intent(c, MyRemindersActivity.class));
+//                c.startActivity(new Intent(c, MyRemindersActivity.class));
 ////                managebackpress();
 //                setbackpress(2);
-//                fragmentcall(c, new OfferFragment(), fm);
+                fragmentcall(c, new MyRemindersActivity(), fm);
                 break;
             case Constants.NavigationItems.NAV_NOTIFICATIONS:
-                c.startActivity(new Intent(c, NotificationActivity.class));
+//                c.startActivity(new Intent(c, NotificationActivity.class));
 //                if (flag) {
-//                    fragmentcall(c, new ReferEarnFragment(), fm);
+                    fragmentcall(c, new NotificationActivity(), fm);
 ////                    managebackpress();
 //                    setbackpress(3);
 //                } else {
@@ -382,7 +393,8 @@ public class GifkarActivity extends AppCompatActivity
 //                }
                 break;
             case Constants.NavigationItems.NAV_REFER_FRIEND:
-                c.startActivity(new Intent(c, ReferFriendsActivity.class));
+//                c.startActivity(new Intent(c, ReferFriendsActivity.class));
+                fragmentcall(c, new ReferFriendsActivity(), fm);
 
 //                if (flag) {
 //                    setbackpress(2);
@@ -392,7 +404,8 @@ public class GifkarActivity extends AppCompatActivity
 //                }
                 break;
             case Constants.NavigationItems.NAV_ABOUT_US:
-                c.startActivity(new Intent(c, AboutUsActivity.class));
+//                c.startActivity(new Intent(c, AboutUsActivity.class));
+                fragmentcall(c, new AboutUsActivity(), fm);
 //                if (flag) {
 //                    setbackpress(2);
 //                    c.startActivity(new Intent(c, AvailAddressActivity.class).putExtra("intent", false));
@@ -401,7 +414,8 @@ public class GifkarActivity extends AppCompatActivity
 //                }
                 break;
             case Constants.NavigationItems.NAV_FEED_US:
-                c.startActivity(new Intent(c, FeedUsActivity.class));
+                fragmentcall(c, new FeedUsActivity(), fm);
+//                c.startActivity(new Intent(c, FeedUsActivity.class));
 //                if (flag) {
 //                    setbackpress(2);
 //                    c.startActivity(new Intent(c, AvailAddressActivity.class).putExtra("intent", false));
@@ -447,5 +461,11 @@ public class GifkarActivity extends AppCompatActivity
         }
         DrawerLayout drawer = (DrawerLayout) c.findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+
+    public void fragmentcall(Activity c, Fragment frg, FragmentManager fm) {
+
+        fm.beginTransaction().replace(R.id.fragment_container, frg).commit();
+
     }
 }
