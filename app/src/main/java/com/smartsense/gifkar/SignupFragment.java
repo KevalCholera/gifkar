@@ -52,7 +52,32 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
         etFirstName = (EditText) view.findViewById(R.id.etSignUpFirstName);
         etLastName = (EditText) view.findViewById(R.id.etSignUpLastName);
         etMobileNo = (EditText) view.findViewById(R.id.etSignUpMobileNo);
+        etMobileNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                    isMnoVerified = false;
+                if (etMobileNo.length() != 0) {
+                    etMobileNo.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    checkMobileEmail("mobile", etMobileNo.getText().toString(), Constants.Events.EVENT_MOBILE_CHECK);
+                }
+
+            }
+        });
         etEmail = (EditText) view.findViewById(R.id.etSignUpEmailId);
+        etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                    // TODO: the editText has just been left
+                    isEmailVerified = false;
+                if (etEmail.length() != 0) {
+                    etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                    checkMobileEmail("email", etEmail.getText().toString(), Constants.Events.EVENT_EMAIL_CHECK);
+                }
+            }
+        });
+
         etPass = (EditText) view.findViewById(R.id.etSignUpPassword);
         etConPass = (EditText) view.findViewById(R.id.etSignUpConfirmPassword);
         etCountryCode = (EditText) view.findViewById(R.id.etSignUpCountryCode);
@@ -64,8 +89,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
         tvTerms = (TextView) view.findViewById(R.id.tvSignupTerms);
         tvTerms.setOnClickListener(this);
         cbTerms = (CheckBox) view.findViewById(R.id.rbSignupTerms);
-//        getCountryList(checkCountry);
-        getTest();
+        getCountryList(checkCountry);
         return view;
     }
 
@@ -99,7 +123,8 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
     }
 
     public void openCountryPopup(JSONObject response) {
-        try{
+        try {
+
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(getActivity());
             LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -108,7 +133,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
             if (response.getJSONObject("data").getJSONArray("countries").length() == 0) {
                 CommonUtil.alertBox(getActivity(), "", "Country Code Not Found Please Try Again.");
             } else {
-                etCountryCode.setText(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
+                etCountryCode.setText("+" + response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
                 etCountryCode.setTag(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("id"));
 
                 CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(getActivity(), response.getJSONObject("data").getJSONArray("countries"), true);
@@ -118,7 +143,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                     public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
 
                         JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
-                        etCountryCode.setText(getCodeObj.optString("code"));
+                        etCountryCode.setText("+" + getCodeObj.optString("code"));
                         etCountryCode.setTag(getCodeObj.optString("id"));
                         alert.dismiss();
 
@@ -147,19 +172,10 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
 
-    public void getTest() {
+    public void checkMobileEmail(String device, String value, int eventId) {
         final String tag = "countryList";
-        String url = Constants.BASE_URL + "/test";
-        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
-        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
-    }
-
-
-    public void checkMobileEmail(String device, String value,int eventId) {
-        final String tag = "countryList";
-        String url = Constants.BASE_URL + "/mobile/user/checkAvailability/?defaultToken=" + Constants.DEFAULT_TOKEN + "&value=" + value + "&checkType=" + device + "&eventId=" + String.valueOf(Constants.Events.EVENT_EMAIL_CHECK);
-        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        String url = Constants.BASE_URL + "/mobile/user/checkAvailability?defaultToken=" + Constants.DEFAULT_TOKEN + "&value=" + value + "&checkType=" + device + "&eventId=" + String.valueOf(eventId);
+//        CommonUtil.showProgressDialog(getActivity(), "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
@@ -186,10 +202,10 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
             etConPass.setError(getString(R.string.wrn_match));
         } else if (!cbTerms.isChecked()) {
             CommonUtil.alertBox(getActivity(), "", "Please check Terms & Conditions to Continue.");
-//        } else if (!isEmailVerified) {
-//            CommonUtil.alertBox(getActivity(), "", "Email already exists.");
-//        } else if (!isMnoVerified) {
-//            CommonUtil.alertBox(getActivity(), "", "Mobile already exists.");
+        } else if (!isEmailVerified) {
+            CommonUtil.alertBox(getActivity(), "", "Email already exists.");
+        } else if (!isMnoVerified) {
+            CommonUtil.alertBox(getActivity(), "", "Mobile already exists.");
         } else {
             final String tag = "Signup";
             String url = Constants.BASE_URL + "/mobile/user/signup";
@@ -216,6 +232,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
         CommonUtil.cancelProgressDialog();
     }
 
+
     @Override
     public void onResponse(JSONObject response) {
         CommonUtil.cancelProgressDialog();
@@ -224,24 +241,54 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_SIGNUP:
-//                            startActivity(new Intent(getActivity(), OTPActivity.class));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").optString("userId"));
+                            SharedPreferenceUtil.save();
+                            startActivity(new Intent(getActivity(), OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")));
                             break;
                         case Constants.Events.EVENT_COUNTRY_LIST:
-                            openCountryPopup(response);
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());
+                            SharedPreferenceUtil.save();
+                            if (response.getJSONObject("data").getJSONArray("countries").length() != 0) {
+                                etCountryCode.setText("+" + response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
+                                etCountryCode.setTag(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("id"));
+                            }
+                            if (checkCountry)
+                                openCountryPopup(response);
                             break;
                         case Constants.Events.EVENT_EMAIL_CHECK:
+                            etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verified, 0);
                             isEmailVerified = true;
+                            break;
+                        case Constants.Events.EVENT_MOBILE_CHECK:
+                            etMobileNo.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verified, 0);
                             isMnoVerified = true;
                             break;
                     }
                 } else {
-                    JsonErrorShow.jsonErrorShow(response, getActivity());
+                    switch (Integer.valueOf(response.getString("eventId"))) {
+                        case Constants.Events.EVENT_EMAIL_CHECK:
+                            etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.unverified, 0);
+                            isEmailVerified = false;
+                            break;
+                        case Constants.Events.EVENT_MOBILE_CHECK:
+                            etMobileNo.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.unverified, 0);
+                            isMnoVerified = false;
+                            break;
+                        default:
+                            JsonErrorShow.jsonErrorShow(response, getActivity());
+                    }
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+    }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_COUNTRY_LIST);
+        SharedPreferenceUtil.save();
     }
 }

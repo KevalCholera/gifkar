@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataRequest;
@@ -73,8 +75,8 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         });
         btOTP = (Button) findViewById(R.id.btnOTP);
         btOTP.setOnClickListener(this);
-        countryCode = getIntent().getStringExtra("country_code");
-        mobileNo = getIntent().getStringExtra("mobile_no");
+        countryCode = getIntent().getStringExtra("code");
+        mobileNo = getIntent().getStringExtra("mobile");
         otp = getIntent().getStringExtra(Constants.OTP);
         tvOtpNo.setText("Please Enter the SMS code that you have received on " + countryCode + " " + mobileNo);
     }
@@ -86,6 +88,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                 startActivity(new Intent(this, MobileNoActivity.class));
                 break;
             case R.id.tvOtpResend:
+                tvResend.requestFocus();
                 doResendOTP();
                 break;
             case R.id.btnOTP:
@@ -98,15 +101,32 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+
+    public void doVerifyOTP(String otp) {
+        final String tag = "VerifyOTP";
+        String url = Constants.BASE_URL + "/mobile/user/verifyOtp";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_SEND_OTP));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        params.put("userId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_ID, ""));
+        params.put("otp", otp);
+        Log.i("params", params.toString());
+        CommonUtil.showProgressDialog(this, "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
     public void doResendOTP() {
         final String tag = "resendOTP";
-        String url = Constants.BASE_URL + "mobile/user/resendOtp";
+        String url = Constants.BASE_URL + "/mobile/user/resendOtp";
         Map<String, String> params = new HashMap<String, String>();
         params.put("eventId", String.valueOf(Constants.Events.EVENT_RESEND_OTP));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         params.put("mobile", mobileNo);
-        params.put("countryCode", countryCode);
+        params.put("countryCode",  countryCode.substring(1));
         CommonUtil.showProgressDialog(this, "Wait...");
+        Log.i("params", params.toString());
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
@@ -117,10 +137,8 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         if (etOne.getText().toString().equalsIgnoreCase("") || etTwo.getText().toString().equalsIgnoreCase("") || etThree.getText().toString().equalsIgnoreCase("") || etFour.getText().toString().equalsIgnoreCase("")) {
             CommonUtil.alertBox(this, "", "Please Enter OTP.");
         } else if (verify.equalsIgnoreCase(otp))
-            if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT) {
-                startActivity(new Intent(this, ChangePasswordActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_OTP));
-            } else
-                startActivity(new Intent(this, CitySelectActivity.class));
+            doVerifyOTP(verify);
+
         else
             CommonUtil.alertBox(this, "", "OTP does not matched.");
     }
@@ -144,6 +162,13 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_COUNTRY_LIST);
+        SharedPreferenceUtil.save();
+    }
+
+    @Override
     public void onErrorResponse(VolleyError volleyError) {
         CommonUtil.alertBox(this, "", getResources().getString(R.string.nointernet_try_again_msg));
         CommonUtil.cancelProgressDialog();
@@ -157,7 +182,17 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_RESEND_OTP:
+                            etOne.setText("");
+                            etTwo.setText("");
+                            etThree.setText("");
+                            etFour.setText("");
                             coundDownStart();
+                            break;
+                        case Constants.Events.EVENT_SEND_OTP:
+                            if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT) {
+                                startActivity(new Intent(this, ChangePasswordActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_OTP));
+                            } else
+                                startActivity(new Intent(this, CitySelectActivity.class));
                             break;
                     }
                 } else {

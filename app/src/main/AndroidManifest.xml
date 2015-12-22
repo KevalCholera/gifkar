@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.smartsense.gifkar">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -30,11 +32,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".GifkarActivity"
@@ -108,10 +106,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!--<activity-->
-            <!--android:name=".MyOrdersActivity"-->
-            <!--android:label="@string/screen_order"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="stateHidden" />-->
+        <!--android:name=".MyOrdersActivity"-->
+        <!--android:label="@string/screen_order"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="stateHidden" />-->
         <activity
             android:name=".AddAddressActivity"
             android:label="@string/screen_add_address"
@@ -123,10 +121,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!--<activity-->
-            <!--android:name=".MyRemindersActivity"-->
-            <!--android:label="@string/screen_my_reminders"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="stateHidden" />-->
+        <!--android:name=".MyRemindersActivity"-->
+        <!--android:label="@string/screen_my_reminders"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="stateHidden" />-->
         <activity
             android:name=".AddRemindersActivity"
             android:label="@string/screen_add_reminder"
@@ -138,25 +136,25 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!--<activity-->
-            <!--android:name=".NotificationActivity"-->
-            <!--android:label="@string/screen_notification"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="stateHidden" />-->
+        <!--android:name=".NotificationActivity"-->
+        <!--android:label="@string/screen_notification"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="stateHidden" />-->
         <!--<activity-->
-            <!--android:name=".ReferFriendsActivity"-->
-            <!--android:label="@string/screen_refer"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="stateHidden" />-->
+        <!--android:name=".ReferFriendsActivity"-->
+        <!--android:label="@string/screen_refer"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="stateHidden" />-->
         <!--<activity-->
-            <!--android:name=".AboutUsActivity"-->
-            <!--android:label="@string/screen_about"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="stateHidden" />-->
+        <!--android:name=".AboutUsActivity"-->
+        <!--android:label="@string/screen_about"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="stateHidden" />-->
         <!--<activity-->
-            <!--android:name=".FeedUsActivity"-->
-            <!--android:label="@string/screen_feed"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="stateHidden" />-->
+        <!--android:name=".FeedUsActivity"-->
+        <!--android:label="@string/screen_feed"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="stateHidden" />-->
         <activity
             android:name=".SuggestNewShopActivity"
             android:label="@string/screen_suggest"
@@ -166,7 +164,13 @@
             android:name=".CitySelectActivity"
             android:label="@string/screen_city"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ShopFilterActivity"
             android:label="@string/filter"

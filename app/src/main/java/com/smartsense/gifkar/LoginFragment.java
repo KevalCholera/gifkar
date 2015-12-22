@@ -109,7 +109,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         tvSkip.setOnClickListener(this);
         // Login Button
         btnLogin = (Button) view.findViewById(R.id.btnLogin);
-//        btnLogin.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
         //Google Sign in button
         mSignInButton = (Button) view.findViewById(R.id.sign_in_button);
 //        mSignInButton.setOnClickListener(this);
@@ -123,6 +123,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
 //            }
 //        });
         LoginManager.getInstance().registerCallback(callbackManager, callback);
+//        doTest();
         return view;
     }
 
@@ -485,8 +486,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
 
     public void doTest() {
         final String tag = "test";
-        String url = "https://gifkar.cloudapp.net/test";
-        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
+        String url = "https://gifkar.cloudapp.net/mobile/test";
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
 

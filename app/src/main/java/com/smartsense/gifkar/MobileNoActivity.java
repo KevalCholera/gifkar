@@ -58,7 +58,14 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
         etMobileNo = (EditText) findViewById(R.id.etEnterMobileNo);
         btSend = (Button) findViewById(R.id.btnSend);
         btSend.setOnClickListener(this);
-        //        getCountryList(checkCountry);
+        getCountryList(checkCountry);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_COUNTRY_LIST);
+        SharedPreferenceUtil.save();
     }
 
     @Override
@@ -86,26 +93,8 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    public void openCountryPopup(JSONObject response1) {
-        String tempary = "{\n" +
-                "\t\"eventId\": 123,\n" +
-                "\t\"errorCode\": 0,\n" +
-                "\t\"status\": 200,\n" +
-                "\t\"message\": \"country list.\",\n" +
-                "\t\"data\": {\n" +
-                "\t\t\"countries\": [{\n" +
-                "\t\t\t\"id\": \"18\",\n" +
-                "\t\t\t\"name\": \"India\",\n" +
-                "\t\t\t\"code\": \"+92\"\n" +
-                "\t\t}, {\n" +
-                "\t\t\t\"id\": \"19\",\n" +
-                "\t\t\t\"name\": \"Pakistan\",\n" +
-                "\t\t\t\"code\": \"+93\"\n" +
-                "\t\t}]\n" +
-                "\t}\n" +
-                "}";
+    public void openCountryPopup(JSONObject response) {
         try {
-            JSONObject response = new JSONObject(tempary);
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -114,7 +103,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
             if (response.getJSONObject("data").getJSONArray("countries").length() == 0) {
                 CommonUtil.alertBox(this, "", "Country Code Not Found Please Try Again.");
             } else {
-                etCountryCode.setText(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
+                etCountryCode.setText("+" + response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
                 etCountryCode.setTag(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("id"));
                 CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(this, response.getJSONObject("data").getJSONArray("countries"), true);
                 list_view.setAdapter(countryCodeAdapter);
@@ -123,7 +112,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
                     public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
 
                         JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
-                        etCountryCode.setText(getCodeObj.optString("code"));
+                        etCountryCode.setText("+" + getCodeObj.optString("code"));
                         etCountryCode.setTag(getCodeObj.optString("id"));
                         alert.dismiss();
 
@@ -186,13 +175,18 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (response.getInt("eventId")) {
                         case Constants.Events.EVENT_SEND_OTP:
-                            startActivity(new Intent(this, OTPActivity.class));
+                            startActivity(new Intent(this, OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code",etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")));
                             break;
                         case Constants.Events.EVENT_COUNTRY_LIST:
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());
+                            SharedPreferenceUtil.save();
+                            if (response.getJSONObject("data").getJSONArray("countries").length() != 0) {
+                                etCountryCode.setText("+" + response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
+                                etCountryCode.setTag(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("id"));
+                            }
                             if (checkCountry)
                                 openCountryPopup(response);
-                            else
-                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());
+
                             break;
                     }
                 } else {
