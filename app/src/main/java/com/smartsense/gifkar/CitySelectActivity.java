@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -28,6 +31,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.CityAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
@@ -38,6 +42,10 @@ import com.smartsense.gifkar.utill.LocationSettingsHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class CitySelectActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
         Response.ErrorListener {
@@ -87,14 +95,17 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
 //                        setListViewHeightBasedOnChildren(lvCity);
                     } else {
                         //select area
-//                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_NAME, getCityObj.optString("area_name"));
-//                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_ID, getCityObj.optString("area_id"));
-//                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_NAME, tempCityObj.optString("city_name"));
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_NAME, getCityObj.optString("name"));
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_ID, getCityObj.optString("id"));
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_PIN_CODE, getCityObj.optString("pincode"));
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_ID, tempCityObj.optString("city_id"));
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_NAME, tempCityObj.optString("name"));
+                        SharedPreferenceUtil.save();
                         flagMode = true;
-                        Log.i("getCity", getCityObj.toString());
+//                        Log.i("getCity", getCityObj.toString());
                         startActivity(new Intent(CitySelectActivity.this, GifkarActivity.class));
+                        finish();
                     }
-//                    SharedPreferenceUtil.save();
                     lvCity.setAdapter(cityAdapter);
                     etCitySearch.setText("");
                 } catch (Exception e) {
@@ -107,6 +118,7 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
         etCitySearch.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) { // TODO Auto-generated method stub
                 if (s != "") {
+
                     cityAdapter.getFilter().filter(s.toString());
                 }
             }
@@ -154,6 +166,64 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
 
     public void cityFill(JSONObject address) {
         try {
+            String temp = "{\n" +
+                    "\t\"eventId\": \"1\",\n" +
+                    "\t\"errorCode\": 0,\n" +
+                    "\t\"status\": 200,\n" +
+                    "\t\"message\": \"city list with areas.\",\n" +
+                    "\t\"data\": {\n" +
+                    "\t\t\"cities\": [{\n" +
+                    "\t\t\t\"id\": \"1\",\n" +
+                    "\t\t\t\"name\": \"Ahmedabad\",\n" +
+                    "\t\t\t\"areas\": [{\n" +
+                    "\t\t\t\t\"id\": \"1\",\n" +
+                    "\t\t\t\t\"name\": \"Memnagar\",\n" +
+                    "\t\t\t\t\"pincode\": \"380001\",\n" +
+                    "\t\t\t\t\"city_id\": \"1\"\n" +
+                    "\t\t\t}, {\n" +
+                    "\t\t\t\t\"id\": \"2\",\n" +
+                    "\t\t\t\t\"name\": \"Prahlad nagar\",\n" +
+                    "\t\t\t\t\"pincode\": \"380005\",\n" +
+                    "\t\t\t\t\"city_id\": \"1\"\n" +
+                    "\t\t\t}, {\n" +
+                    "\t\t\t\t\"id\": \"5\",\n" +
+                    "\t\t\t\t\"name\": \"sattelite\",\n" +
+                    "\t\t\t\t\"pincode\": \"380006\",\n" +
+                    "\t\t\t\t\"city_id\": \"1\"\n" +
+                    "\t\t\t}]\n" +
+                    "\t\t}, {\n" +
+                    "\t\t\t\"id\": \"3\",\n" +
+                    "\t\t\t\"name\": \"Surat\",\n" +
+                    "\t\t\t\"areas\": [{\n" +
+                    "\t\t\t\t\"id\": \"3\",\n" +
+                    "\t\t\t\t\"name\": \"kapodra\",\n" +
+                    "\t\t\t\t\"pincode\": \"350001\",\n" +
+                    "\t\t\t\t\"city_id\": \"3\"\n" +
+                    "\t\t\t}, {\n" +
+                    "\t\t\t\t\"id\": \"4\",\n" +
+                    "\t\t\t\t\"name\": \"katargaam\",\n" +
+                    "\t\t\t\t\"pincode\": \"350002\",\n" +
+                    "\t\t\t\t\"city_id\": \"3\"\n" +
+                    "\t\t\t}]\n" +
+                    "\t\t}, {\n" +
+                    "\t\t\t\"id\": \"5\",\n" +
+                    "\t\t\t\"name\": \"Pune\",\n" +
+                    "\t\t\t\"areas\": [{\n" +
+                    "\t\t\t\t\"id\": \"6\",\n" +
+                    "\t\t\t\t\"name\": \"Balewadi\",\n" +
+                    "\t\t\t\t\"pincode\": \"650001\",\n" +
+                    "\t\t\t\t\"city_id\": \"5\"\n" +
+                    "\t\t\t}, {\n" +
+                    "\t\t\t\t\"id\": \"7\",\n" +
+                    "\t\t\t\t\"name\": \"hinjewadi\",\n" +
+                    "\t\t\t\t\"pincode\": \"650002\",\n" +
+                    "\t\t\t\t\"city_id\": \"5\"\n" +
+                    "\t\t\t}]\n" +
+                    "\t\t}]\n" +
+                    "\n" +
+                    "\t}\n" +
+                    "}";
+            JSONObject tempObj = new JSONObject(temp);
             cityAdapter = new CityAdapter(this, address.getJSONObject("data").getJSONArray("cities"), true);
             lvCity.setAdapter(cityAdapter);
         } catch (JSONException e) {
@@ -163,38 +233,25 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
 
 
     public void getPinCode() {
-        locationFinderService = new LocationFinderService(this);
-        Location location = locationFinderService.getLastKnownLocation();
-        if (location != null) {
-            String url = "http://ws.geonames.org/findNearbyPostalCodesJSON?formatted=true&lat=" + location.getLatitude()
-                    + "&lng=" + location.getLongitude() + "&username=comeback4you";
-            Log.i("url", url);
-            DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null,
-                    new Response.Listener<JSONObject>() {
+        CommonUtil.showProgressDialog(this, "Wait...");
+        LocationFinderService.LocationResult locationResult = new LocationFinderService.LocationResult() {
+            @Override
+            public void gotLocation(Location location) {
+                //Got the location!
+                if (location != null) {
+                    String url = "http://ws.geonames.org/findNearbyPostalCodesJSON?formatted=true&lat=" + location.getLatitude()
+                            + "&lng=" + location.getLongitude() + "&username=comeback4you";
+                    new GetLocationAsync(location.getLatitude(), location.getLongitude()).execute();
 
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            pin_code = response.optJSONArray("postalCodes").optJSONObject(0)
-                                    .optString("postalCode");
-                            Log.e("Volley Request", pin_code);
-                        }
-
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    CommonUtil.cancelProgressDialog();
-                    Log.e("Volley Request Error", "Error");
-                }
-
-            });
-            loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0,
-                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            GifkarApp.getInstance().addToRequestQueue(loginRequest, "volley");
-        } else {
+                } else {
 //            getPinCode();
-            CommonUtil.alertBox(this, "", "Location not found.");
-        }
+                    CommonUtil.alertBox(CitySelectActivity.this, "", "Location not found.");
+                }
+            }
+        };
+        LocationFinderService myLocation = new LocationFinderService();
+        myLocation.getLocation(this, locationResult);
+
     }
 
     public void getCityList() {
@@ -208,7 +265,15 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-        CommonUtil.alertBox(this, "", getResources().getString(R.string.nointernet_try_again_msg));
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Network Problem!");
+        alert.setMessage(getResources().getString(R.string.internet_error));
+        alert.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                getCityList();
+            }
+        });
+        alert.show();
         CommonUtil.cancelProgressDialog();
     }
 
@@ -239,8 +304,12 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
             case LocationSettingsHelper.REQUEST_CHECK_SETTINGS:
                 switch (resultCode) {
                     case Activity.RESULT_OK:
-                        if (!checkPermission()) {
-                            requestPermission();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (!checkPermission()) {
+                                requestPermission();
+                            } else {
+                                getPinCode();
+                            }
                         } else {
                             getPinCode();
                         }
@@ -311,4 +380,102 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                 break;
         }
     }
+
+
+    private class GetLocationAsync extends AsyncTask<String, Void, String> {
+        double x, y;
+        StringBuilder str;
+        private List<Address> addresses;
+
+        public GetLocationAsync(double latitude, double longitude) {
+            x = latitude;
+            y = longitude;
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                Geocoder geocoder = new Geocoder(CitySelectActivity.this, Locale.ENGLISH);
+                addresses = geocoder.getFromLocation(x, y, 1);
+                str = new StringBuilder();
+                if (geocoder.isPresent()) {
+                    Address returnAddress = addresses.get(0);
+
+                    String localityString = returnAddress.getLocality();
+                    String city = returnAddress.getCountryName();
+                    String region_code = returnAddress.getCountryCode();
+                    String zipcode = returnAddress.getPostalCode();
+
+                    str.append(localityString + "");
+                    str.append(city + "" + region_code + "");
+                    str.append(zipcode + "");
+                    // Log.e("addresses", addresses.toString());
+                } else {
+                }
+            } catch (IOException e) {
+                // Log.e("tag", e.getMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                if (addresses.get(0).getPostalCode() == null) {
+                    String url = "http://ws.geonames.org/findNearbyPostalCodesJSON?formatted=true&lat=" + x
+                            + "&lng=" + y + "&username=comeback4you";
+                    Log.i("url", url);
+                    DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null,
+                            new Response.Listener<JSONObject>() {
+
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    pin_code = response.optJSONArray("postalCodes").optJSONObject(0)
+                                            .optString("postalCode");
+                                    Log.e("Volley Request", pin_code);
+                                }
+
+                            }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            CommonUtil.cancelProgressDialog();
+                            Log.e("Volley Request Error", "Error");
+                        }
+
+                    });
+                    loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0,
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    GifkarApp.getInstance().addToRequestQueue(loginRequest, "volley");
+                } else {
+                    Log.i("Location", "" + addresses.get(0).getPostalCode());
+                    pin_code = addresses.get(0).getPostalCode();
+                }
+
+
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                CommonUtil.cancelProgressDialog();
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+
+        }
+    }
+
 }

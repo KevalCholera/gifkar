@@ -112,8 +112,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         btnLogin.setOnClickListener(this);
         //Google Sign in button
         mSignInButton = (Button) view.findViewById(R.id.sign_in_button);
-//        mSignInButton.setOnClickListener(this);
-
+        mSignInButton.setOnClickListener(this);
+//
         Button loginButton = (Button) view.findViewById(R.id.fb_login_button);
 //        loginButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -190,9 +190,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
-
     }
-
 
 
     private GoogleApiClient buildGoogleApiClient() {
@@ -258,22 +256,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         String emailId = etInputemail.getText().toString();
         switch (view.getId()) {
             case R.id.tvLoginForgotPwd:
-//                CommonUtil.closeKeyboard(getActivity());
-//                if (!CommonUtil.isInternet(getActivity()))
-//                    CommonUtil.alertBox(getActivity(), "Error", getResources().getString(R.string.nointernet_try_again_msg));
-//                else {
-//                    if (TextUtils.isEmpty(emailId)) {
-//                        etInputemail.setError(getString(R.string.wrn_em));
-//                    } else if (!CommonUtil.isValidEmail(emailId)) {
-//                        etInputemail.setError(getString(R.string.wrn_email));
-//                    } else {
-//                        try {
-//                            doForgot(emailId);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
                 startActivity(new Intent(getActivity(), ForgotPasswordActivity.class));
                 break;
             case R.id.btnLogin:
@@ -307,7 +289,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                 }
                 break;
             case R.id.tvLoginSkip:
-                startActivity(new Intent(getActivity(), GifkarActivity.class));
+                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))
+                    startActivity(new Intent(getActivity(), GifkarActivity.class));
+                else
+                    startActivity(new Intent(getActivity(), CitySelectActivity.class));
             default:
         }
 
@@ -341,9 +326,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                 // Successfully retrieved ID Token
                 googlePlusLogout();
 //                doSignup1(username, Constants.GOOGLE, email, result, email);
+                doLoginwithSocial("google",result);
 //            public void doSignup1(String name, String flag, String authenticatedId, String token) {
 
             } else {
+                Log.e(TAG, "Error retrieving ID token.");
                 // There was some error getting the ID Token
                 // ...
             }
@@ -396,7 +383,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-
+        CommonUtil.alertBox(getActivity(), "", getResources().getString(R.string.nointernet_try_again_msg));
+        CommonUtil.cancelProgressDialog();
     }
 
     @Override
@@ -407,31 +395,23 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_LOGIN:
-                            if (response.getJSONArray("data").getJSONObject(0).getString("is_verify").equals("0")) {
-                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONArray("data").getJSONObject(0).getString("user_id"));
-                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_MNO, response.getJSONArray("data").getJSONObject(0).getString("mobile_no"));
-
-                                SharedPreferenceUtil.save();
-//                                startActivity(new Intent(getBaseContext(), OTPActivity.class).putExtra("flag", false));
-//                                finish();
-                            } else {
-                                loginResponse(response);
-                            }
-                            break;
-                        case Constants.Events.EVENT_FORGOT_PASS:
-                            CommonUtil.alertBox(getActivity(), "Success", response.optString("message"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
+                            SharedPreferenceUtil.save();
+                            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))
+                                startActivity(new Intent(getActivity(), GifkarActivity.class));
+                            else
+                                startActivity(new Intent(getActivity(), CitySelectActivity.class));
+                            getActivity().finish();
                             break;
                         case Constants.Events.EVENT_SIGNUP:
-                            if (response.getJSONArray("data").getJSONObject(0).getString("is_verify").equals("0")) {
-                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONArray("data").getJSONObject(0).getString("user_id"));
-                                SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_MNO);
-                                SharedPreferenceUtil.save();
-//                                startActivity(new Intent(getBaseContext(), OTPActivity.class).putExtra("flag", false));
-//                                finish();
-                            } else {
-                                loginResponse(response);
-                            }
-//                            CommonUtil.alertBox(this, "Success", response.optString("message"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
+                            SharedPreferenceUtil.save();
+                            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))
+                                startActivity(new Intent(getActivity(), GifkarActivity.class));
+                            else
+                                startActivity(new Intent(getActivity(), CitySelectActivity.class));
+                            getActivity().finish();
                             break;
                     }
                 } else {
@@ -444,44 +424,19 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
     }
 
 
-    public void loginResponse(JSONObject response) {
-        try {
-            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONArray("data").getJSONObject(0).getString("id"));
-            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_EMAIL, response.getJSONArray("data").getJSONObject(0).getString("email"));
-            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_MNO, response.getJSONArray("data").getJSONObject(0).getString("mobile"));
-            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_FULLNAME, response.getJSONArray("data").getJSONObject(0).getString("name"));
-            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_REFER_CODE, response.getJSONArray("data").getJSONObject(0).getString("referCode"));
-            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_PROIMG, response.getJSONArray("data").getJSONObject(0).getString("profileimage"));
-            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_REFER, response.getJSONArray("data").getJSONObject(0).getString("hasrefered"));
-            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_REFER_MSG, response.getJSONArray("data").getJSONObject(0).getString("referMessage"));
-            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_PASS, response.getJSONArray("data").getJSONObject(0).getString("password"));
-            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_DJ_WALLET, response.getJSONArray("data").getJSONObject(0).getString("wallet_amount"));
-            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getString("token"));
-            SharedPreferenceUtil.save();
-//            if (getIntent().getBooleanExtra("check", true))
-//                startActivity(new Intent(getBaseContext(), DeliveryJunction.class));
-//                finish();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void doSignup1(String name, String flag, String authenticatedId, String token, String email) {
-        final String tag = "doSignup1";
-        String url = Constants.BASE_URL + "authenticateUser";
+    public void doLoginwithSocial(String socialMediaType, String token) {
+        final String tag = "doLoginwithSocial";
+        String url = Constants.BASE_URL + "/mobile/user/loginBySocialMedia";
         Map<String, String> params = new HashMap<String, String>();
-        params.put("name", name);
-        params.put("flag", flag);
-        params.put("authenticatedId", authenticatedId);
-        params.put("email", email);
-        params.put("token", token);
-        params.put("event_id", String.valueOf(Constants.Events.EVENT_SIGNUP));
+        params.put("socialMediaType", socialMediaType);
+        params.put("accessToken", token);
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_SIGNUP));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
         CommonUtil.showProgressDialog(getActivity(), "Wait...");
         Log.d("params", params.toString());
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
-
     }
 
     public void doTest() {

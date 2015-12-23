@@ -65,8 +65,7 @@
                 android:focusable="false"
                 android:fontFamily="normal"
                 android:gravity="center"
-                android:padding="@dimen/padding_8"
-                android:text="+1" />
+                android:padding="@dimen/padding_8" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceEditText
                 android:id="@+id/etSignUpMobileNo"
@@ -161,12 +160,12 @@
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:id="@+id/tvSignupSkip"
             android:layout_width="match_parent"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/margin_20"
-            android:padding="@dimen/padding_8"
             android:fontFamily="normal"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
             android:text="@string/skip"
             android:textColor="@color/mainColor" />
 

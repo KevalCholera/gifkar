@@ -116,7 +116,10 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                 startActivity(new Intent(getActivity(), TermsandCondtionsActivity.class));
                 break;
             case R.id.tvSignupSkip:
-                startActivity(new Intent(getActivity(), GifkarActivity.class));
+                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))
+                    startActivity(new Intent(getActivity(), GifkarActivity.class));
+                else
+                    startActivity(new Intent(getActivity(), CitySelectActivity.class));
                 break;
             default:
         }
@@ -186,6 +189,8 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
             etFirstName.setError(getString(R.string.wrn_fname));
         } else if (TextUtils.isEmpty(etLastName.getText().toString())) {
             etLastName.setError(getString(R.string.wrn_lname));
+        } else if (TextUtils.isEmpty(etCountryCode.getText().toString())) {
+            CommonUtil.alertBox(getActivity(), "", "Please Select Country Code.");
         } else if (TextUtils.isEmpty(etMobileNo.getText().toString())) {
             etMobileNo.setError(getString(R.string.wrn_mno));
         } else if (!(etMobileNo.length() >= 8 && etMobileNo.length() <= 13)) {

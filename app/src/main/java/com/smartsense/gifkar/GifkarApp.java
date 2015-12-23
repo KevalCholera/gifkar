@@ -92,6 +92,7 @@ public class GifkarApp extends Application {
             // Get the raw resource, which contains the keystore with
             // your trusted certificates (root and any intermediate certs)
             InputStream in = GifkarApp.getInstance().getResources().openRawResource(R.raw.gifkar);
+//            InputStream in = GifkarApp.getInstance().getResources().openRawResource(R.raw.local);
             try {
                 // Initialize the keystore with the provided trusted certificates
                 // Provide the password of the keystore

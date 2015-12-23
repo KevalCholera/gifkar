@@ -13,7 +13,9 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.LocationSettingsHelper;
 
 
@@ -30,7 +32,7 @@ public class SplashActivity extends AppCompatActivity implements AnimationListen
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }else{
+        } else {
             View decorView = getWindow().getDecorView();
 // Hide the status bar.
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -52,11 +54,11 @@ public class SplashActivity extends AppCompatActivity implements AnimationListen
         an3 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.top);
         an4 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.top);
         an5 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.top);
-        an1.setAnimationListener(this);
-        an2.setAnimationListener(this);
-        an3.setAnimationListener(this);
-        an4.setAnimationListener(this);
-        an5.setAnimationListener(this);
+//        an1.setAnimationListener(this);
+//        an2.setAnimationListener(this);
+//        an3.setAnimationListener(this);
+//        an4.setAnimationListener(this);
+//        an5.setAnimationListener(this);
 
         an6 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out);
 //        if (CommonUtil.isGPS(getApplicationContext())) {
@@ -104,11 +106,15 @@ public class SplashActivity extends AppCompatActivity implements AnimationListen
             @Override
             public void run() {
                 try {
-                    Thread.sleep(10000);
-//                    if (SharedPreferenceUtil.getBoolean(Constants.PrefKeys.PREF_ACCESS_TOKEN, false))
+                    Thread.sleep(5000);
                     if (CommonUtil.isInternet(SplashActivity.this)) {
-//                        startActivity(new Intent(getBaseContext(), GifkarActivity.class));
-                        startActivity(new Intent(getBaseContext(), StartActivity.class));
+                        if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
+                            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))
+                                startActivity(new Intent(getBaseContext(), GifkarActivity.class));
+                            else
+                                startActivity(new Intent(getBaseContext(), CitySelectActivity.class));
+                        else
+                            startActivity(new Intent(getBaseContext(), StartActivity.class));
                     } else
                         startActivity(new Intent(getBaseContext(), NoInternetConnection.class));
                     finish();

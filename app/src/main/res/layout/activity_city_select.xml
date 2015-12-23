@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_25"
+        android:layout_margin="@dimen/margin_16"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -25,24 +25,26 @@
             android:id="@+id/etCitySearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_5"
+            android:paddingLeft="@dimen/padding_5"
             android:background="@drawable/edittext_round_white"
             android:drawableRight="@drawable/ic_search"
             android:fontFamily="normal"
             android:hint="@string/delivery_hint"
-            android:padding="@dimen/padding_8" />
+            android:textSize="@dimen/text_16"
+            android:padding="@dimen/padding_2" />
 
     </LinearLayout>
 
     <ListView
         android:id="@+id/lvCity"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/margin_25"
-        android:layout_marginLeft="@dimen/margin_25"
-        android:layout_marginRight="@dimen/margin_25"
+        android:layout_height="120dp"
         android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginRight="@dimen/margin_20"
         android:background="@color/textcolorwhite" />
 
     <LinearLayout
@@ -51,7 +53,7 @@
         android:layout_height="wrap_content"
         android:background="@color/city_auto_location"
         android:gravity="center_vertical|center_horizontal"
-        android:padding="@dimen/padding_8">
+        android:padding="@dimen/padding_2">
 
         <com.smartsense.gifkar.utill.CircleImageView1
             android:layout_width="50dp"
@@ -71,7 +73,7 @@
                 android:padding="@dimen/padding_2"
                 android:text="@string/search_nearby"
                 android:textColor="@color/mainColor"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                 android:layout_width="wrap_content"
@@ -79,7 +81,7 @@
                 android:fontFamily="normal"
                 android:padding="@dimen/padding_2"
                 android:text="@string/to_get_it"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -89,11 +91,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="@dimen/margin_20"
         android:fontFamily="normal"
-
         android:gravity="center"
-        android:padding="@dimen/padding_8"
+        android:padding="@dimen/padding_5"
         android:text="@string/city_bottom" />
 
     <View

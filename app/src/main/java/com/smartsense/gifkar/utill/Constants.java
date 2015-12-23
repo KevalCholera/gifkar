@@ -7,6 +7,7 @@ public class Constants {
     public static final int STATUS_CHECK = 201;
     public static final String DB_PATH = "/data/data/com.smartsense.gifkar/databases/";
     public static final String BASE_URL = "https://gifkar.cloudapp.net";
+//    public static final String BASE_URL = "https://192.168.1.113";
     public static final String BASE_IMAGE_URL = "http://104.43.15.1:8025";
     public static final String PRO_TITLE = "Please Wait";
     public static final String PRO_LIST = "Syncing Process Running...";
@@ -48,6 +49,7 @@ public class Constants {
         public static final String PREF_ISWAITING_SMS = "iswaiting_sms";
         public static final String PREF_ISOTP_VERIFIED = "isotp_verified";
         public static final String PREF_COUNTRY_LIST = "country_list";
+        public static final String PREF_AREA_PIN_CODE = "area_pin_code";
     }
 
     public class NavigationItems {
@@ -66,7 +68,8 @@ public class Constants {
         public static final int NAV_ABOUT_US = 10;
         public static final int NAV_FEED_US = 11;
         public static final int NAV_SETTING = 12;
-        public static final int NAV_LOGOUT = 13;
+        public static final int NAV_LOGOUT = 12;
+
 
 
     }
@@ -103,6 +106,7 @@ public class Constants {
         public static final int EVENT_COUNTRY_LIST = 28;
         public static final int EVENT_SEND_OTP = 29;
         public static final int EVENT_MOBILE_CHECK = 30;
+        public static final int EVENT_USER_DETAIL = 31;
     }
 
     public class ErrorCode {

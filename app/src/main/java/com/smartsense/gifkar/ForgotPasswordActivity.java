@@ -199,10 +199,12 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                         case Constants.Events.EVENT_FORGOT_PASS:
                             if (response.optJSONObject("data").has("otp")) {
 //                                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")).putExtra("mobile_no", response.optJSONObject("data").optString("otp")).putExtra("country_code", response.optJSONObject("data").optString("otp")));
-                                startActivity(new Intent(this, OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")));
+                                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")));
                             } else
                                 CommonUtil.alertBox(this, "", response.optString("message"));
                             break;
+
+
                         case Constants.Events.EVENT_COUNTRY_LIST:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());
                             SharedPreferenceUtil.save();

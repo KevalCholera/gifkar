@@ -26,35 +26,49 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.mpt.storage.SharedPreferenceUtil;
+import com.smartsense.gifkar.utill.CircleImageView;
+import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
+import com.smartsense.gifkar.utill.DataRequest;
+import com.smartsense.gifkar.utill.JsonErrorShow;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class GifkarActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-    TextView actionBarTitle;
-    ImageView btSearch, btFilter;
+public class GifkarActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
+        Response.ErrorListener {
+    private TextView actionBarTitle;
+    private ImageView btSearch, btFilter;
     private static FragmentManager fm;
-    ListView lvNavList;
+    private ListView lvNavList;
     private LinearLayout llHeadProfile;
     private LinearLayout llHeadAddress;
+    private CircleImageView ivHeadImage;
+    private ImageLoader imageLoader;
+    private TextView tVHeadName;
+    private TextView tVHeadMobileNo;
+    private TextView tvHeadAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gifkar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_gifkar);
+        imageLoader = GifkarApp.getInstance().getDiskImageLoader();
         actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
-//        actionBarTitle.setText("Prahlad Nagar,380015");
+        actionBarTitle.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
         setSupportActionBar(toolbar);
         btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
         btFilter.setOnClickListener(this);
         btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
         btSearch.setOnClickListener(this);
-
-//        if (getSupportActionBar() != null)
-//            getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_action_home));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -63,7 +77,7 @@ public class GifkarActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+//        navigationView.setNavigationItemSelectedListener(this);
         View header = LayoutInflater.from(this).inflate(R.layout.acitivity_drawer, null);
         navigationView.addHeaderView(header);
         fm = getSupportFragmentManager();
@@ -71,9 +85,15 @@ public class GifkarActivity extends AppCompatActivity
         llHeadProfile.setOnClickListener(this);
         llHeadAddress = (LinearLayout) header.findViewById(R.id.llHeadAddress);
         llHeadAddress.setOnClickListener(this);
+        ivHeadImage = (CircleImageView) header.findViewById(R.id.ivHeadImage);
+        ivHeadImage.setDefaultImageResId(R.drawable.ic_user);
+        tvHeadAddress = (TextView) header.findViewById(R.id.tvHeadAddress);
+        tVHeadName = (TextView) header.findViewById(R.id.tVHeadName);
+        tVHeadMobileNo = (TextView) header.findViewById(R.id.tVHeadMobileNo);
         lvNavList = (ListView) header.findViewById(R.id.lvHeadList);
         setHeader(GifkarActivity.this);
-
+        if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_USER_FULLNAME))
+            getUserDetail();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ShopListFragment()).commit();
 
     }
@@ -83,6 +103,10 @@ public class GifkarActivity extends AppCompatActivity
         NavigationAdapter adp = new NavigationAdapter(a, fm);
         lvNavList.setAdapter(adp);
         setListViewHeightBasedOnChildren(lvNavList);
+        tvHeadAddress.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
+        tVHeadMobileNo.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_MNO, ""));
+        tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, ""));
+        ivHeadImage.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imageLoader);
 //        iv_profile_img_header.setDefaultImageResId(R.drawable.ic_men_user2);
 //        iv_profile_img_header.setImageUrl(Constants.BASE_IMAGE_URL + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imgLoader);
 //        tv_header_name.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, "WelCome"));
@@ -144,7 +168,6 @@ public class GifkarActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.gifkar, menu);
         return false;
     }
@@ -155,40 +178,12 @@ public class GifkarActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camara) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
 
     public class NavigationAdapter extends BaseAdapter implements View.OnClickListener {
 
@@ -208,22 +203,18 @@ public class GifkarActivity extends AppCompatActivity
 
 
         public void getList() {
-
-            if (0 == 1) {
+            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
                 //user is login and display sign out btn
-                mNavTitles = new String[]{"Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Setting", "Sign Out"};
+                mNavTitles = new String[]{"Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Sign Out", "Setting"};
                 mIcons = new int[]{R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
-                        R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_setting, R.drawable.ic_logout};
+                        R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_logout, R.drawable.ic_setting};
 
             } else {
                 //user not logged in display sign in btn
                 mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Setting"};
                 mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
                         R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_setting};
-
             }
-
-
         }
 
         /*
@@ -385,7 +376,7 @@ public class GifkarActivity extends AppCompatActivity
             case Constants.NavigationItems.NAV_NOTIFICATIONS:
 //                c.startActivity(new Intent(c, NotificationActivity.class));
 //                if (flag) {
-                    fragmentcall(c, new NotificationActivity(), fm);
+                fragmentcall(c, new NotificationActivity(), fm);
 ////                    managebackpress();
 //                    setbackpress(3);
 //                } else {
@@ -423,14 +414,14 @@ public class GifkarActivity extends AppCompatActivity
 //                    gotosignin(c);
 //                }
                 break;
-            case Constants.NavigationItems.NAV_SETTING:
+//            case Constants.NavigationItems.NAV_SETTING:
 //                if (flag) {
 //                    setbackpress(2);
 //                    c.startActivity(new Intent(c, AvailAddressActivity.class).putExtra("intent", false));
 //                } else {
 //                    gotosignin(c);
 //                }
-                break;
+//                break;
             case Constants.NavigationItems.NAV_LOGOUT:
 //                if (flag) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(c);
@@ -439,7 +430,8 @@ public class GifkarActivity extends AppCompatActivity
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //Do something here where "ok" clicked
-
+                        SharedPreferenceUtil.clear();
+                        SharedPreferenceUtil.save();
 //                            gotosignout(c);
                     }
                 });
@@ -467,5 +459,46 @@ public class GifkarActivity extends AppCompatActivity
 
         fm.beginTransaction().replace(R.id.fragment_container, frg).commit();
 
+    }
+
+    public void getUserDetail() {
+        final String tag = "userDetail";
+        String url = Constants.BASE_URL + "/mobile/user/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_USER_DETAIL) + "&userToken=" + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "");
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        CommonUtil.alertBox(this, "", getResources().getString(R.string.nointernet_try_again_msg));
+        CommonUtil.cancelProgressDialog();
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        CommonUtil.cancelProgressDialog();
+        if (response != null) {
+            try {
+                if (response.getInt("status") == Constants.STATUS_SUCCESS) {
+                    switch (Integer.valueOf(response.getString("eventId"))) {
+                        case Constants.Events.EVENT_USER_DETAIL:
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_FULLNAME, response.optJSONObject("data").optJSONObject("userDetails").optString("firstName") + " " + response.optJSONObject("data").optJSONObject("userDetails").optString("lastName"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_EMAIL, response.optJSONObject("data").optJSONObject("userDetails").optString("email"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_MNO, response.optJSONObject("data").optJSONObject("userDetails").optString("mobile"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_PROIMG, response.optJSONObject("data").optJSONObject("userDetails").optString("image"));
+                            SharedPreferenceUtil.save();
+                            tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, ""));
+                            ivHeadImage.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imageLoader);
+                            tVHeadMobileNo.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_MNO, ""));
+                            break;
+                    }
+                } else {
+                    JsonErrorShow.jsonErrorShow(response, this);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

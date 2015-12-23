@@ -1,95 +1,135 @@
 package com.smartsense.gifkar.utill;
 
-import android.app.Service;
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.IBinder;
 
-import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class LocationFinderService extends Service implements LocationListener {
+public class LocationFinderService {
+    Timer timer1;
+    LocationManager lm;
+    LocationResult locationResult;
+    boolean gps_enabled = false;
+    boolean network_enabled = false;
 
-    protected LocationManager locationManager;
-    Location location;
-    boolean isGPSEnabled = false;
+    public boolean getLocation(Context context, LocationResult result) {
+        //I use LocationResult callback class to pass location value from MyLocation to user code.
+        locationResult = result;
+        if (lm == null)
+            lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-    // flag for network status
-    boolean isNetworkEnabled = false;
-    // flag for GPS status
-    boolean canGetLocation = false;
-
-    double latitude; // latitude
-    double longitude; // longitude
-
-    public LocationFinderService(Context context) {
-        locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-        getLastKnownLocation();
-
-    }
-
-    public boolean isGPSAvilabel(String provider) {
-        return locationManager.isProviderEnabled(provider);
-    }
-
-    public Location getLastKnownLocation1() {
+        //exceptions will be thrown if provider is not permitted.
         try {
-            return locationManager.getLastKnownLocation
-                    (LocationManager.PASSIVE_PROVIDER);
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception ex) {
+        }
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception ex) {
+        }
+
+        //don't start listeners if no provider is enabled
+        if (!gps_enabled && !network_enabled)
+            return false;
+        try {
+            if (gps_enabled)
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListenerGps);
+            if (network_enabled)
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListenerNetwork);
         } catch (SecurityException e) {
             e.printStackTrace();
-            return null;
         }
+        timer1 = new Timer();
+        timer1.schedule(new GetLastLocation(), 20000);
+        return true;
     }
 
-    public Location getLastKnownLocation() {
-        List<String> providers = locationManager.getProviders(true);
-        Location bestLocation = null;
-        for (String provider : providers) {
+    LocationListener locationListenerGps = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            timer1.cancel();
+            locationResult.gotLocation(location);
             try {
-
-                Location l = locationManager.getLastKnownLocation(provider);
-                if (l == null) {
-                    continue;
-                }
-                if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                    // Found best last known location: %s", l);
-                    bestLocation = l;
-                }
+                lm.removeUpdates(this);
+                lm.removeUpdates(locationListenerNetwork);
             } catch (SecurityException e) {
                 e.printStackTrace();
             }
-//
-
-
         }
 
-        return bestLocation;
+        public void onProviderDisabled(String provider) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    };
+
+    LocationListener locationListenerNetwork = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            timer1.cancel();
+            locationResult.gotLocation(location);
+            try {
+                lm.removeUpdates(this);
+                lm.removeUpdates(locationListenerGps);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void onProviderDisabled(String provider) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+    };
+
+    class GetLastLocation extends TimerTask {
+        @Override
+        public void run() {
+            try {
+                lm.removeUpdates(locationListenerGps);
+                lm.removeUpdates(locationListenerNetwork);
+
+                Location net_loc = null, gps_loc = null;
+                if (gps_enabled)
+                    gps_loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (network_enabled)
+                    net_loc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+                //if there are both values use the latest one
+                if (gps_loc != null && net_loc != null) {
+                    if (gps_loc.getTime() > net_loc.getTime())
+                        locationResult.gotLocation(gps_loc);
+                    else
+                        locationResult.gotLocation(net_loc);
+                    return;
+                }
+
+                if (gps_loc != null) {
+                    locationResult.gotLocation(gps_loc);
+                    return;
+                }
+                if (net_loc != null) {
+                    locationResult.gotLocation(net_loc);
+                    return;
+                }
+                locationResult.gotLocation(null);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-
+    public static abstract class LocationResult {
+        public abstract void gotLocation(Location location);
     }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
-    @Override
-    public IBinder onBind(Intent arg0) {
-        return null;
-    }
-
 }

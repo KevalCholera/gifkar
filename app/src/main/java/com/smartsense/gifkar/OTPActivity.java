@@ -182,13 +182,16 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_RESEND_OTP:
-                            etOne.setText("");
                             etTwo.setText("");
                             etThree.setText("");
                             etFour.setText("");
+                            etOne.setText("");
+                            otp=response.optJSONObject("data").optString("otp");
                             coundDownStart();
                             break;
                         case Constants.Events.EVENT_SEND_OTP:
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
+                            SharedPreferenceUtil.save();
                             if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT) {
                                 startActivity(new Intent(this, ChangePasswordActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_OTP));
                             } else
