@@ -249,7 +249,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         Log.d(TAG, currentUser.getDisplayName());
         Log.d(TAG, email + urlImage);
 
-        String token = null;
+        
 //        final String SCOPES = "https://www.googleapis.com/auth/plus.login ";
         final String SCOPES = "https://www.googleapis.com/auth/userinfo.email";
 
