@@ -4,40 +4,54 @@ package com.smartsense.gifkar;
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.NewFeatureAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataBaseHelper;
+import com.smartsense.gifkar.utill.DataRequest;
+import com.smartsense.gifkar.utill.JsonErrorShow;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ShopListFragment extends Fragment implements ViewPager.OnPageChangeListener {
+public class ShopListFragment extends Fragment implements ViewPager.OnPageChangeListener, Response.Listener<JSONObject>,
+        Response.ErrorListener {
 
 
     ViewPager viewPager;
     TabLayout tabLayout;
     private Handler handler;
     View newFeaturesView;
-
+    TextView tvGreetText;
 
     public ShopListFragment() {
         // Required empty public constructor
@@ -52,20 +66,22 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         handler = new Handler();
 
         newFeaturesView = (View) rootView.findViewById(R.id.newfeaturesView);
-
+        tvGreetText = (TextView) rootView.findViewById(R.id.tvGreetText);
 //        FrameLayout fm = (FrameLayout) rootView.findViewById(R.id.fl_category);
         int height = getResources().getDisplayMetrics().heightPixels;
-//        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) newFeaturesView.getLayoutParams();
-//        params.height = (int) (height / 3.5);
-//        newFeaturesView.setLayoutParams(params);
-        setReference(newFeaturesView);
-
+        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) newFeaturesView.getLayoutParams();
+        params.height = (int) (height / 3.5);
+        newFeaturesView.setLayoutParams(params);
+//        setReference();
+        getBanner();
+        getBottom();
+        getShopList();
         // tablayout and viewpager of category
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager_main);
         tabLayout = (TabLayout) rootView.findViewById(R.id.tabs_main);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.tab_idicator));
         tabLayout.setTabTextColors(getResources().getColor(R.color.tab_normal_text), getResources().getColor(R.color.tab_idicator));
-        setupViewPager(viewPager);
+
 
 
         return rootView;
@@ -73,21 +89,21 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
 
     DataBaseHelper dbHelper;
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager(JSONArray category) {
         dbHelper = new DataBaseHelper(getActivity());
         Adapter adapter = new Adapter(getChildFragmentManager());
-        String tempary = "{ \"eventId\" : 123, \n" +
-                "\"errorCode\":0,\n" +
-                " \"status\":200,\n" +
-                " \"message\":\"Category List.\", \n" +
-                "\"data\":{\"categories\":[{\"id\":\"1\",\"name\":\"Cakes\",\"shops\":[{\"id\":\"3\",\"name\":\"Raju japan1\",\"image\":\"shopImage1446635108.jpg\",\"cutOffTime\":\"12\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"0\",\"rating\":4.25,\"opensAt\":\"00:15:00\",\"closesAt\":\"20:30:00\",\"deliveryFrom\":\"00:00:00\",\"deliveryTo\":\"01:15:00\",\"remoteArea\":true,\"tags\":[{\"name\":\"tag1\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"1\"}},{\"name\":\"tag2\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"2\"}},{\"name\":\"Backery\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"3\"}}]},{\"id\":\"9\",\"name\":\"Shop\",\"image\":\"shopImage1446306375.png\",\"cutOffTime\":\"0\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"2\",\"name\":\"Sweets\",\"shops\":[{\"id\":\"9\",\"name\":\"Shop\",\"image\":\"shopImage1446306375.png\",\"cutOffTime\":\"0\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"3\",\"name\":\"Flowers\",\"shops\":[{\"id\":\"3\",\"name\":\"Raju japan1\",\"image\":\"shopImage1446635108.jpg\",\"cutOffTime\":\"12\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"0\",\"rating\":4.25,\"opensAt\":\"00:15:00\",\"closesAt\":\"20:30:00\",\"deliveryFrom\":\"00:00:00\",\"deliveryTo\":\"01:15:00\",\"remoteArea\":true,\"tags\":[{\"name\":\"tag1\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"1\"}},{\"name\":\"tag2\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"2\"}},{\"name\":\"Backery\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"3\"}}]},{\"id\":\"9\",\"name\":\"Shop\",\"image\":\"shopImage1446306375.png\",\"cutOffTime\":\"0\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"4\",\"name\":\"Backery\",\"shops\":[{\"id\":\"9\",\"name\":\"Shop\",\"image\":\"shopImage1446306375.png\",\"cutOffTime\":\"0\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"5\",\"name\":\"Indian\",\"shops\":[{\"id\":\"3\",\"name\":\"Raju japan1\",\"image\":\"shopImage1446635108.jpg\",\"cutOffTime\":\"12\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"0\",\"rating\":4.25,\"opensAt\":\"00:15:00\",\"closesAt\":\"20:30:00\",\"deliveryFrom\":\"00:00:00\",\"deliveryTo\":\"01:15:00\",\"remoteArea\":true,\"tags\":[{\"name\":\"tag1\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"1\"}},{\"name\":\"tag2\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"2\"}},{\"name\":\"Backery\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"3\"}}]},{\"id\":\"9\",\"name\":\"Shop\",\"image\":\"shopImage1446306375.png\",\"cutOffTime\":\"0\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"6\",\"name\":\"Italian\",\"shops\":[{\"id\":\"3\",\"name\":\"Raju japan1\",\"image\":\"shopImage1446635108.jpg\",\"cutOffTime\":\"12\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"0\",\"rating\":4.25,\"opensAt\":\"00:15:00\",\"closesAt\":\"20:30:00\",\"deliveryFrom\":\"00:00:00\",\"deliveryTo\":\"01:15:00\",\"remoteArea\":true,\"tags\":[{\"name\":\"tag1\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"1\"}},{\"name\":\"tag2\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"2\"}},{\"name\":\"Backery\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"3\"}}]}]}]}}\n";
+//        String tempary = "{ \"eventId\" : 123, \n" +
+//                "\"errorCode\":0,\n" +
+//                " \"status\":200,\n" +
+//                " \"message\":\"Category List.\", \n" +
+//                "\"data\":{\"categories\":[{\"id\":\"1\",\"name\":\"Cakes\",\"shops\":[{\"id\":\"3\",\"name\":\"Raju japan1\",\"image\":\"shopImage1446635108.jpg\",\"cutOffTime\":\"12\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"0\",\"rating\":4.25,\"opensAt\":\"00:15:00\",\"closesAt\":\"20:30:00\",\"deliveryFrom\":\"00:00:00\",\"deliveryTo\":\"01:15:00\",\"remoteArea\":true,\"tags\":[{\"name\":\"tag1\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"1\"}},{\"name\":\"tag2\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"2\"}},{\"name\":\"Backery\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"3\"}}]},{\"id\":\"9\",\"name\":\"Shop\",\"image\":\"shopImage1446306375.png\",\"cutOffTime\":\"0\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"2\",\"name\":\"Sweets\",\"shops\":[{\"id\":\"9\",\"name\":\"Shop\",\"image\":\"shopImage1446306375.png\",\"cutOffTime\":\"0\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"3\",\"name\":\"Flowers\",\"shops\":[{\"id\":\"3\",\"name\":\"Raju japan1\",\"image\":\"shopImage1446635108.jpg\",\"cutOffTime\":\"12\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"0\",\"rating\":4.25,\"opensAt\":\"00:15:00\",\"closesAt\":\"20:30:00\",\"deliveryFrom\":\"00:00:00\",\"deliveryTo\":\"01:15:00\",\"remoteArea\":true,\"tags\":[{\"name\":\"tag1\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"1\"}},{\"name\":\"tag2\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"2\"}},{\"name\":\"Backery\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"3\"}}]},{\"id\":\"9\",\"name\":\"Shop\",\"image\":\"shopImage1446306375.png\",\"cutOffTime\":\"0\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"4\",\"name\":\"Backery\",\"shops\":[{\"id\":\"9\",\"name\":\"Shop\",\"image\":\"shopImage1446306375.png\",\"cutOffTime\":\"0\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"5\",\"name\":\"Indian\",\"shops\":[{\"id\":\"3\",\"name\":\"Raju japan1\",\"image\":\"shopImage1446635108.jpg\",\"cutOffTime\":\"12\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"0\",\"rating\":4.25,\"opensAt\":\"00:15:00\",\"closesAt\":\"20:30:00\",\"deliveryFrom\":\"00:00:00\",\"deliveryTo\":\"01:15:00\",\"remoteArea\":true,\"tags\":[{\"name\":\"tag1\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"1\"}},{\"name\":\"tag2\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"2\"}},{\"name\":\"Backery\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"3\"}}]},{\"id\":\"9\",\"name\":\"Shop\",\"image\":\"shopImage1446306375.png\",\"cutOffTime\":\"0\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"1\",\"rating\":null,\"opensAt\":null,\"closesAt\":null,\"deliveryFrom\":null,\"deliveryTo\":null,\"remoteArea\":true,\"tags\":[]}]},{\"id\":\"6\",\"name\":\"Italian\",\"shops\":[{\"id\":\"3\",\"name\":\"Raju japan1\",\"image\":\"shopImage1446635108.jpg\",\"cutOffTime\":\"12\",\"minOrder\":\"12\",\"midnightDeliveryStatus\":\"1\",\"sameDayDeliveryStatus\":\"0\",\"rating\":4.25,\"opensAt\":\"00:15:00\",\"closesAt\":\"20:30:00\",\"deliveryFrom\":\"00:00:00\",\"deliveryTo\":\"01:15:00\",\"remoteArea\":true,\"tags\":[{\"name\":\"tag1\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"1\"}},{\"name\":\"tag2\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"2\"}},{\"name\":\"Backery\",\"pivot\":{\"shop_id\":\"3\",\"tag_id\":\"3\"}}]}]}]}}\n";
         try {
-            JSONObject response = new JSONObject(tempary);
-            JSONArray category = response.optJSONObject("data").optJSONArray("categories");
+//            JSONObject response = new JSONObject(tempary);
+//            JSONArray category = response.optJSONObject("data").optJSONArray("categories");
             insertItemInCart(adapter, category);
             viewPager.setAdapter(adapter);
             tabLayout.setupWithViewPager(viewPager);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -191,9 +207,9 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     int position = 0;
     Integer[] mImageResources = {R.mipmap.one, R.mipmap.two, R.mipmap.three, R.mipmap.four};
 
-    public void setReference(View view) {
-        intro_images = (ViewPager) view.findViewById(R.id.pager_introduction);
-        pager_indicator = (LinearLayout) view.findViewById(R.id.viewPagerCountDots);
+    public void setReference(final JSONArray mImageResources) {
+        intro_images = (ViewPager) newFeaturesView.findViewById(R.id.pager_introduction);
+        pager_indicator = (LinearLayout) newFeaturesView.findViewById(R.id.viewPagerCountDots);
 
         mAdapter = new NewFeatureAdapter(getActivity(), mImageResources);
         intro_images.setAdapter(mAdapter);
@@ -202,7 +218,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         intro_images.setOnPageChangeListener(this);
         runnable = new Runnable() {
             public void run() {
-                if (position >= mImageResources.length) {
+                if (position >= mImageResources.length()) {
                     position = 0;
                 } else {
                     position = position + 1;
@@ -249,6 +265,71 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     public void onResume() {
         super.onResume();
         handler.postDelayed(runnable, 3000);
+    }
+
+    public void getBanner() {
+        final String tag = "EVENT_FEATURE";
+        String url = Constants.BASE_URL + "/mobile/banners/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_FEATURE);
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+    public void getBottom() {
+        final String tag = "EVENT_BOTTOM";
+        String url = Constants.BASE_URL + "/mobile/footerNote/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_BOTTOM);
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+    public void getShopList() {
+        final String tag = "EVENT_SHOPLIST";
+        String url = Constants.BASE_URL + "/mobile/shop/getByCategory";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("areaId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_ID, "") );
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_SHOPLIST));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        Log.i("params", params.toString());
+        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        CommonUtil.alertBox(getActivity(), "", getResources().getString(R.string.nointernet_try_again_msg));
+        CommonUtil.cancelProgressDialog();
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        CommonUtil.cancelProgressDialog();
+        if (response != null) {
+            try {
+                if (response.getInt("status") == Constants.STATUS_SUCCESS) {
+                    switch (Integer.valueOf(response.getString("eventId"))) {
+                        case Constants.Events.EVENT_FEATURE:
+                            setReference(response.optJSONObject("data").optJSONArray("banners"));
+                            break;
+                        case Constants.Events.EVENT_BOTTOM:
+                            tvGreetText.setText(response.optJSONObject("data").optJSONObject("footerNote").optString("message"));
+                            break;
+                        case Constants.Events.EVENT_SHOPLIST:
+                            setupViewPager(response.optJSONObject("data").optJSONArray("categories"));
+                            break;
+
+
+                    }
+                } else {
+                    JsonErrorShow.jsonErrorShow(response, getActivity());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

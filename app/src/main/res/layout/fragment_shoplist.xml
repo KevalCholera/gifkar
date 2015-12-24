@@ -46,15 +46,16 @@
     <!--android:visibility="visible">-->
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/newfeaturesView"
+        android:id="@+id/collapsing_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/detail_backdrop_height"
+        android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+            android:id="@+id/newfeaturesView"
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/detail_backdrop_height"
             app:contentScrim="#80A8005B"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"

@@ -104,14 +104,9 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         lvNavList.setAdapter(adp);
         setListViewHeightBasedOnChildren(lvNavList);
         tvHeadAddress.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
-        tVHeadMobileNo.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_MNO, ""));
-        tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, ""));
+        tVHeadMobileNo.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_EMAIL, ""));
+        tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, "WelCome"));
         ivHeadImage.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imageLoader);
-//        iv_profile_img_header.setDefaultImageResId(R.drawable.ic_men_user2);
-//        iv_profile_img_header.setImageUrl(Constants.BASE_IMAGE_URL + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imgLoader);
-//        tv_header_name.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, "WelCome"));
-//        tv_header_email.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_EMAIL, ""));
-
     }
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -208,10 +203,10 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
             mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Sign Out", "Setting"};
             mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
                     R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_logout, R.drawable.ic_setting};
-            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
-
-            } else {
-            }
+//            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+//
+//            } else {
+//            }
 //                //user not logged in display sign in btn
 //                mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Setting"};
 //                mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,

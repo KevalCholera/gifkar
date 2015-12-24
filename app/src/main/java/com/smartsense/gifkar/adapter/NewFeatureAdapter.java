@@ -9,24 +9,28 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.smartsense.gifkar.GifkarApp;
 import com.smartsense.gifkar.R;
+import com.smartsense.gifkar.utill.Constants;
+
+import org.json.JSONArray;
 
 
 public class NewFeatureAdapter extends PagerAdapter {
 
     private Context mContext;
-    private Integer[] mResources;
+    private JSONArray mResources;
     ImageLoader imgLoader = GifkarApp.getInstance().getDiskImageLoader();
 
-    public NewFeatureAdapter(Context mContext, Integer[] mResources) {
+    public NewFeatureAdapter(Context mContext, JSONArray mResources) {
         this.mContext = mContext;
         this.mResources = mResources;
     }
 
     @Override
     public int getCount() {
-        return mResources.length;
+        return mResources.length();
     }
 
     @Override
@@ -39,12 +43,12 @@ public class NewFeatureAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View itemView = LayoutInflater.from(mContext).inflate(R.layout.element_new_features, container, false);
 
-//        NetworkImageView imageView = (NetworkImageView) itemView.findViewById(R.id.img_pager_item);
-        ImageView imageView = (ImageView) itemView.findViewById(R.id.img_pager_item);
+        NetworkImageView imageView = (NetworkImageView) itemView.findViewById(R.id.img_pager_item);
+//        ImageView imageView = (ImageView) itemView.findViewById(R.id.img_pager_item);
 //        imageView.setDefaultImageResId(R.drawable.normal_hori_bg);
-
-        imageView.setImageResource(mResources[position]);
-//        imageView.setImageUrl(mResources[position], imgLoader);
+//        imageView.setImageResource(mResources[position]);
+//        Constants.BASE_URL+"/images/bannerImages/"+
+        imageView.setImageUrl(mResources.optJSONObject(position).optString("image"), imgLoader);
 
         container.addView(itemView);
 
