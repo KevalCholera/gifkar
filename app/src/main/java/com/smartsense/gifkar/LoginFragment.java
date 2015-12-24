@@ -251,7 +251,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
 
 
 //        final String SCOPES = "https://www.googleapis.com/auth/plus.login ";
-        final String SCOPES = "https://www.googleapis.com/auth/userinfo.email";
+//        final String SCOPES = "https://www.googleapis.com/auth/userinfo.email";
 
 
         new GetIdTokenTask().execute(email, username);
