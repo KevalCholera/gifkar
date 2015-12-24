@@ -45,6 +45,7 @@
                 android:background="@drawable/edittext_skyborder"
                 android:ems="10"
                 android:gravity="center"
+                android:inputType="number"
                 android:fontFamily="normal"
                 android:maxLength="1"
                 android:padding="@dimen/padding_8" />
@@ -59,6 +60,7 @@
                 android:gravity="center"
                 android:maxLength="1"
                 android:fontFamily="normal"
+                android:inputType="number"
                 android:padding="@dimen/padding_8" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceEditText
@@ -68,6 +70,7 @@
                 android:layout_margin="@dimen/margin_5"
                 android:background="@drawable/edittext_skyborder"
                 android:ems="10"
+                android:inputType="number"
                 android:maxLength="1"
                 android:gravity="center"
                 android:fontFamily="normal"
@@ -80,6 +83,7 @@
                 android:layout_margin="@dimen/margin_5"
                 android:background="@drawable/edittext_skyborder"
                 android:ems="10"
+                android:inputType="number"
                 android:gravity="center"
                 android:maxLength="1"
                 android:fontFamily="normal"

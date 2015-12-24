@@ -238,23 +238,23 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         Log.i(TAG, "onConnected");
         mShouldResolve = false;
 
-        Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+//        Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
         final String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-
-        String personPhoto = currentUser.getImage().getUrl();
-        String urlImage = personPhoto.substring(0, personPhoto.lastIndexOf("=") + 1) + "200";
-
-        //Toast.makeText(this,"log In",Toast.LENGTH_LONG).show();
-        String username = currentUser.getDisplayName();
-        Log.d(TAG, currentUser.getDisplayName());
-        Log.d(TAG, email + urlImage);
+//
+//        String personPhoto = currentUser.getImage().getUrl();
+//        String urlImage = personPhoto.substring(0, personPhoto.lastIndexOf("=") + 1) + "200";
+//
+//        //Toast.makeText(this,"log In",Toast.LENGTH_LONG).show();
+//        String username = currentUser.getDisplayName();
+//        Log.d(TAG, currentUser.getDisplayName());
+//        Log.d(TAG, email + urlImage);
 
 
 //        final String SCOPES = "https://www.googleapis.com/auth/plus.login ";
 //        final String SCOPES = "https://www.googleapis.com/auth/userinfo.email";
 
-
-        new GetIdTokenTask().execute(email, username);
+        new GetIdTokenTask().execute(email);
+//        new GetIdTokenTask().execute();
     }
 
     @Override
@@ -323,7 +323,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         @Override
         protected String doInBackground(String... params) {
             email = params[0];
-            username = params[1];
+//            username = params[1];
             String scopes = "oauth2:profile email";
             //            String scopes = "audience:server:client_id:" + SERVER_CLIENT_ID; // Not the app's client ID.
             try {
@@ -413,13 +413,17 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_LOGIN:
-                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
-                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
-                            SharedPreferenceUtil.save();
-                            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))
-                                startActivity(new Intent(getActivity(), GifkarActivity.class));
-                            else
-                                startActivity(new Intent(getActivity(), CitySelectActivity.class));
+                            if (response.getJSONObject("data").has("isVerified")) {
+                                startActivity(new Intent(getActivity(), MobileNoActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_LOGIN));
+                            } else {
+                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
+                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
+                                SharedPreferenceUtil.save();
+                                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))
+                                    startActivity(new Intent(getActivity(), GifkarActivity.class));
+                                else
+                                    startActivity(new Intent(getActivity(), CitySelectActivity.class));
+                            }
                             getActivity().finish();
                             break;
                         case Constants.Events.EVENT_SIGNUP:

@@ -33,7 +33,8 @@
                 android:id="@+id/tVHeadName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="normal"
+                android:fontFamily="bold"
+                android:textSize="@dimen/text_16"
                 android:paddingTop="@dimen/nav_header_vertical_spacing"
                 android:text="Ronak Thacker" />
 
@@ -41,6 +42,7 @@
                 android:id="@+id/tVHeadMobileNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="14sp"
                 android:fontFamily="normal"
                 android:text="thackerronak@gmail.com"
                 android:textColor="@android:color/white" />

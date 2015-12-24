@@ -50,6 +50,7 @@ public class Constants {
         public static final String PREF_ISOTP_VERIFIED = "isotp_verified";
         public static final String PREF_COUNTRY_LIST = "country_list";
         public static final String PREF_AREA_PIN_CODE = "area_pin_code";
+        public static final String PREF_USER_INFO = "user_info";
     }
 
     public class NavigationItems {
@@ -122,6 +123,7 @@ public class Constants {
         public static final int SCREEN_FORGOT = 2;
         public static final int SCREEN_MYADDRESS = 3;
         public static final int SCREEN_MYREMINDER = 4;
+        public static final int SCREEN_LOGIN = 5;
     }
 
 

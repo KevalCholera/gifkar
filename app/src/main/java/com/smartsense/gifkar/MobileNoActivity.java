@@ -49,7 +49,10 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.action_bar_center, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
-        titleTextView.setText(getResources().getString(R.string.screen_enter));
+        if (getIntent().getIntExtra(Constants.SCREEN, 0) == Constants.ScreenCode.SCREEN_LOGIN)
+            titleTextView.setText(getResources().getString(R.string.screen_change_mno));
+        else
+            titleTextView.setText(getResources().getString(R.string.screen_enter));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
@@ -72,7 +75,15 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSend:
-
+                if (TextUtils.isEmpty(etCountryCode.getText().toString())) {
+                    CommonUtil.alertBox(this, "", "Please Select Country Code.");
+                } else if (TextUtils.isEmpty(etMobileNo.getText().toString())) {
+                    etMobileNo.setError(getString(R.string.wrn_mno));
+                } else if (!(etMobileNo.length() >= 8 && etMobileNo.length() <= 13)) {
+                    etMobileNo.setError(getString(R.string.wrn_valid_mno));
+                } else {
+                    doSendOTP();
+                }
                 break;
             case R.id.etEnterCountryCode:
                 if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_COUNTRY_LIST, "").equalsIgnoreCase("")) {
@@ -130,23 +141,18 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void doSendOTP() {
-        if (TextUtils.isEmpty(etMobileNo.getText().toString())) {
-            etMobileNo.setError(getString(R.string.wrn_mno));
-        } else if (!(etMobileNo.length() >= 8 && etMobileNo.length() <= 13)) {
-            etMobileNo.setError(getString(R.string.wrn_valid_mno));
-        } else {
-            final String tag = "resendOTP";
-            String url = Constants.BASE_URL + "mobile/user/resendOtp";
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("eventId", String.valueOf(Constants.Events.EVENT_SEND_OTP));
-            params.put("defaultToken", Constants.DEFAULT_TOKEN);
-            params.put("mobile", etMobileNo.getText().toString());
-            params.put("countryCode", (String) etCountryCode.getTag());
-            CommonUtil.showProgressDialog(this, "Wait...");
-            DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
-            loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-            GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
-        }
+        final String tag = "resendOTP";
+        String url = Constants.BASE_URL + "mobile/user/resendOtp";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_SEND_OTP));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        params.put("mobile", etMobileNo.getText().toString());
+        params.put("countryCode", (String) etCountryCode.getTag());
+        CommonUtil.showProgressDialog(this, "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+
     }
 
     public void getCountryList(Boolean check) {
@@ -175,7 +181,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (response.getInt("eventId")) {
                         case Constants.Events.EVENT_SEND_OTP:
-                            startActivity(new Intent(this, OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code",etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")));
+                            startActivity(new Intent(this, OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")));
                             break;
                         case Constants.Events.EVENT_COUNTRY_LIST:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());
@@ -196,7 +202,6 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
                 e.printStackTrace();
             }
         }
-
 
     }
 }

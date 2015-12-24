@@ -2,6 +2,7 @@
     <string name="app_name">Gifkar</string>
     <string name="screen_forgot">Forgot Password</string>
     <string name="screen_otp">Enter SMS Code</string>
+    <string name="screen_change_mno">Change Mobile Number</string>
     <string name="screen_enter">Change Mobile Number</string>
     <string name="screen_change">Change Password</string>
     <string name="screen_new_pass">New Password</string>

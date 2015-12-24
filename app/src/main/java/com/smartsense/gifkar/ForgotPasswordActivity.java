@@ -93,7 +93,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                             doForgot("mobile", etMobileNo.getText().toString());
                     } else {
                         if (!CommonUtil.isValidEmail(etEmail.getText().toString()))
-                            etEmail.setError(getString(R.string.wrn_em));
+                            etEmail.setError(getString(R.string.wrn_email));
                         else
                             doForgot("email", etEmail.getText().toString());
                     }
@@ -199,6 +199,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                         case Constants.Events.EVENT_FORGOT_PASS:
                             if (response.optJSONObject("data").has("otp")) {
 //                                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")).putExtra("mobile_no", response.optJSONObject("data").optString("otp")).putExtra("country_code", response.optJSONObject("data").optString("otp")));
+                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").optString("userId"));
+                                SharedPreferenceUtil.save();
                                 startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")));
                             } else
                                 CommonUtil.alertBox(this, "", response.optString("message"));

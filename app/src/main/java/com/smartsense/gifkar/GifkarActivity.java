@@ -203,13 +203,15 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
 
 
         public void getList() {
-//            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+
             //user is login and display sign out btn
             mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Sign Out", "Setting"};
             mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
                     R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_logout, R.drawable.ic_setting};
+            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
 
-//            } else {
+            } else {
+            }
 //                //user not logged in display sign in btn
 //                mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Setting"};
 //                mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
@@ -297,14 +299,17 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                 }
             } else if (position == Constants.NavigationItems.NAV_LOGIN) {
                 if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+                    tvTitle.setVisibility(View.GONE);
+                    iv_image.setVisibility(View.GONE);
                     convertView.setVisibility(View.GONE);
                 }
             } else if (position == Constants.NavigationItems.NAV_LOGOUT) {
-                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
-                    convertView.setVisibility(View.INVISIBLE);
+                if (!SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+                    tvTitle.setVisibility(View.GONE);
+                    iv_image.setVisibility(View.GONE);
+                    convertView.setVisibility(View.GONE);
                 }
-            }
-            else if (position == Constants.NavigationItems.NAV_SETTING) {
+            } else if (position == Constants.NavigationItems.NAV_SETTING) {
                 convertView.setVisibility(View.INVISIBLE);
             } else {
                 if (mNavTitles[position].equalsIgnoreCase("empty")) {
@@ -494,7 +499,8 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_FULLNAME, response.optJSONObject("data").optJSONObject("userDetails").optString("firstName") + " " + response.optJSONObject("data").optJSONObject("userDetails").optString("lastName"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_EMAIL, response.optJSONObject("data").optJSONObject("userDetails").optString("email"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_MNO, response.optJSONObject("data").optJSONObject("userDetails").optString("mobile"));
-                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_PROIMG, response.optJSONObject("data").optJSONObject("userDetails").optString("image"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_PROIMG, Constants.BASE_URL + "/images/users/" + response.optJSONObject("data").optJSONObject("userDetails").optString("image"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_INFO, response.optJSONObject("data").toString());
                             SharedPreferenceUtil.save();
                             tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, ""));
                             ivHeadImage.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imageLoader);
