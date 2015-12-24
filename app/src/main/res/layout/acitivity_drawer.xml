@@ -13,7 +13,6 @@
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        
         android:orientation="horizontal">
 
         <com.smartsense.gifkar.utill.CircleImageView
