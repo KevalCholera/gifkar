@@ -141,8 +141,12 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.llAutoSeletCity:
                 if (CommonUtil.isGPS(getApplicationContext())) {
-                    if (!checkPermission()) {
-                        requestPermission();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (!checkPermission()) {
+                            requestPermission();
+                        } else {
+                            getPinCode();
+                        }
                     } else {
                         getPinCode();
                     }

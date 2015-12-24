@@ -67,7 +67,7 @@ public class Constants {
         public static final int NAV_REFER_FRIEND = 9;
         public static final int NAV_ABOUT_US = 10;
         public static final int NAV_FEED_US = 11;
-        public static final int NAV_SETTING = 12;
+        public static final int NAV_SETTING = 13;
         public static final int NAV_LOGOUT = 12;
 
 

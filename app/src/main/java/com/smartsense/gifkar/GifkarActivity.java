@@ -92,7 +92,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         tVHeadMobileNo = (TextView) header.findViewById(R.id.tVHeadMobileNo);
         lvNavList = (ListView) header.findViewById(R.id.lvHeadList);
         setHeader(GifkarActivity.this);
-        if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_USER_FULLNAME))
+        if (!SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_USER_FULLNAME))
             getUserDetail();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ShopListFragment()).commit();
 
@@ -203,18 +203,18 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
 
 
         public void getList() {
-            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
-                //user is login and display sign out btn
-                mNavTitles = new String[]{"Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Sign Out", "Setting"};
-                mIcons = new int[]{R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
-                        R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_logout, R.drawable.ic_setting};
+//            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+            //user is login and display sign out btn
+            mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Sign Out", "Setting"};
+            mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
+                    R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_logout, R.drawable.ic_setting};
 
-            } else {
-                //user not logged in display sign in btn
-                mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Setting"};
-                mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
-                        R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_setting};
-            }
+//            } else {
+//                //user not logged in display sign in btn
+//                mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Setting"};
+//                mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
+//                        R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_setting};
+//            }
         }
 
         /*
@@ -295,8 +295,16 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-            } else if (position == Constants.NavigationItems.NAV_SETTING) {
+            } else if (position == Constants.NavigationItems.NAV_LOGIN) {
+                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+                    convertView.setVisibility(View.GONE);
+                }
+            } else if (position == Constants.NavigationItems.NAV_LOGOUT) {
+                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+                    convertView.setVisibility(View.INVISIBLE);
+                }
+            }
+            else if (position == Constants.NavigationItems.NAV_SETTING) {
                 convertView.setVisibility(View.INVISIBLE);
             } else {
                 if (mNavTitles[position].equalsIgnoreCase("empty")) {

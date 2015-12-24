@@ -1,15 +1,21 @@
 package com.smartsense.gifkar;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -19,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -31,7 +38,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.GoogleAuthException;
@@ -53,15 +59,16 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class LoginFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, Response.Listener<JSONObject>, Response.ErrorListener, View.OnClickListener {
+    private static final int PERMISSION_REQUEST_CODE = 1;
 
-
-    private CallbackManager callbackManager;
+    public static CallbackManager callbackManager;
 
     private Button btnLogin;
 
@@ -115,13 +122,13 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         mSignInButton.setOnClickListener(this);
 //
         Button loginButton = (Button) view.findViewById(R.id.fb_login_button);
-//        loginButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //Login with facebook on clicking custom button
-//                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email"));
-//            }
-//        });
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Login with facebook on clicking custom button
+                LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("public_profile", "email"));
+            }
+        });
         LoginManager.getInstance().registerCallback(callbackManager, callback);
 //        doTest();
         return view;
@@ -130,9 +137,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
     private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
-            AccessToken accessToken = loginResult.getAccessToken();
-            Profile profile = Profile.getCurrentProfile();
-//            displayMessage(profile);
+            Log.d("All requested data", "success");
             GraphRequest request = GraphRequest.newMeRequest(
                     loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                         @Override
@@ -146,6 +151,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                                 Log.d("All requested data", me.toString());
                                 try {
                                     String accessToken = AccessToken.getCurrentAccessToken().getToken();
+                                    doLoginwithSocial("facebook", accessToken);
                                     Log.d("accessToken", accessToken);
                                     // Logout immediately after fetching data
                                     LoginManager.getInstance().logOut();
@@ -283,9 +289,21 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                 if (!CommonUtil.isInternet(getActivity()))
                     CommonUtil.alertBox(getActivity(), "Error", getResources().getString(R.string.nointernet_try_again_msg));
                 else {
-                    mGoogleApiClient = buildGoogleApiClient();
-                    mShouldResolve = true;
-                    mGoogleApiClient.connect();
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (!checkPermission()) {
+                            requestPermission();
+                        } else {
+                            mGoogleApiClient = buildGoogleApiClient();
+                            mShouldResolve = true;
+                            mGoogleApiClient.connect();
+                        }
+                    } else {
+                        mGoogleApiClient = buildGoogleApiClient();
+                        mShouldResolve = true;
+                        mGoogleApiClient.connect();
+                    }
+
                 }
                 break;
             case R.id.tvLoginSkip:
@@ -326,7 +344,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                 // Successfully retrieved ID Token
                 googlePlusLogout();
 //                doSignup1(username, Constants.GOOGLE, email, result, email);
-                doLoginwithSocial("google",result);
+                doLoginwithSocial("google", result);
 //            public void doSignup1(String name, String flag, String authenticatedId, String token) {
 
             } else {
@@ -464,5 +482,65 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
             Log.e(TAG, "printHashKey()", e);
         }
     }
+
+
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.GET_ACCOUNTS);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    private void requestPermission() {
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.GET_ACCOUNTS)) {
+
+            showMessageOKCancel("You need to allow access to Get Account",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                requestPermissions(new String[]{android.Manifest.permission.GET_ACCOUNTS},
+                                        PERMISSION_REQUEST_CODE);
+                            }
+                        }
+                    });
+
+        } else {
+
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.GET_ACCOUNTS}, PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mGoogleApiClient = buildGoogleApiClient();
+                    mShouldResolve = true;
+                    mGoogleApiClient.connect();
+                } else {
+                    Toast.makeText(getActivity(), "Permission Denied, You cannot access get account.", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
 
 }
