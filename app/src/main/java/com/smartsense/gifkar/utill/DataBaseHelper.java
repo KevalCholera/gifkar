@@ -16,6 +16,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SHOP_ID = "shop_id";
     public static final String COLUMN_SHOP_NAME = "shop_name";
     public static final String COLUMN_SHOP_IMAGE = "shop_image";
+    public static final String COLUMN_SHOP_IMAGE_THUMB = "shop_image_thumb";
     public static final String COLUMN_CUT_OF_TIME = "cut_of_time";
     public static final String COLUMN_MIN_ORDER = "min_order";
     public static final String COLUMN_MID_NIGHT_DEL = "mid_night_delivery";
@@ -54,6 +55,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + COLUMN_SHOP_ID + " integer, "
             + COLUMN_SHOP_NAME + " text,  "
             + COLUMN_SHOP_IMAGE + " text,  "
+            + COLUMN_SHOP_IMAGE_THUMB + " text,  "
             + COLUMN_CUT_OF_TIME + " text,  "
             + COLUMN_MIN_ORDER + " text,  "
             + COLUMN_MID_NIGHT_DEL + " text,  "

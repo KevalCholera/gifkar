@@ -79,16 +79,16 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
     private static final int STATE_IN_PROGRESS = 2;
     TextView tvLoginForgotPwd;
 
-    private static final int RC_SIGN_IN = 0;
+    public static final int RC_SIGN_IN = 0;
 
     /* Client used to interact with Google APIs. */
-    private GoogleApiClient mGoogleApiClient;
+    public static GoogleApiClient mGoogleApiClient;
 
     /* Is there a ConnectionResult resolution in progress? */
-    private boolean mIsResolving = false;
+    public static boolean mIsResolving = false;
 
     /* Should we automatically resolve ConnectionResults when possible? */
-    private boolean mShouldResolve = false;
+    public static boolean mShouldResolve = false;
 
     private Button mSignInButton;
     private TextView mStatus;
@@ -104,7 +104,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
 
         FacebookSdk.sdkInitialize(getActivity());
         callbackManager = CallbackManager.Factory.create();
-
+//        printHashKey(getActivity());
         // Input Email and Password field
         etInputemail = (EditText) view.findViewById(R.id.etLoginEmailId);
         etInputPassword = (EditText) view.findViewById(R.id.etLoginPassword);

@@ -72,7 +72,20 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                CommonUtil.closeKeyboard(GifkarActivity.this);
+                setHeader(GifkarActivity.this);
+            }
+        };
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -92,9 +105,10 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         tVHeadMobileNo = (TextView) header.findViewById(R.id.tVHeadMobileNo);
         lvNavList = (ListView) header.findViewById(R.id.lvHeadList);
         setHeader(GifkarActivity.this);
-        if (!SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_USER_FULLNAME))
+        if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
             getUserDetail();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ShopListFragment()).commit();
+
 
     }
 
@@ -297,12 +311,16 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                     tvTitle.setVisibility(View.GONE);
                     iv_image.setVisibility(View.GONE);
                     convertView.setVisibility(View.GONE);
+                } else {
+                    convertView.setOnClickListener(this);
                 }
             } else if (position == Constants.NavigationItems.NAV_LOGOUT) {
                 if (!SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
                     tvTitle.setVisibility(View.GONE);
                     iv_image.setVisibility(View.GONE);
                     convertView.setVisibility(View.GONE);
+                } else {
+                    convertView.setOnClickListener(this);
                 }
             } else if (position == Constants.NavigationItems.NAV_SETTING) {
                 convertView.setVisibility(View.INVISIBLE);
@@ -438,7 +456,13 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //Do something here where "ok" clicked
-                        SharedPreferenceUtil.clear();
+//                        SharedPreferenceUtil.clear();
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_ID);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_FULLNAME);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_EMAIL);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_MNO);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_ACCESS_TOKEN);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_PROIMG);
                         SharedPreferenceUtil.save();
 //                            gotosignout(c);
                     }

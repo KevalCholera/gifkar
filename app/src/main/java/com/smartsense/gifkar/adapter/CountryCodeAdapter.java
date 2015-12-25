@@ -64,7 +64,7 @@ public class CountryCodeAdapter extends BaseAdapter {
         JSONObject testJson = dataArray.optJSONObject(position);
         Log.i("array", testJson.toString());
         if(check)
-        holder.tvCountryCode.setText(testJson.optString("code") + " " + testJson.optString("name"));
+        holder.tvCountryCode.setText("+"+testJson.optString("code") + " " + testJson.optString("name"));
         else
             holder.tvCountryCode.setText(testJson.optString("name"));
 

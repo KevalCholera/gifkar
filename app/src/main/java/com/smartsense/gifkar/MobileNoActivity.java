@@ -142,7 +142,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
 
     public void doSendOTP() {
         final String tag = "resendOTP";
-        String url = Constants.BASE_URL + "mobile/user/resendOtp";
+        String url = Constants.BASE_URL + "/mobile/user/resendOtp";
         Map<String, String> params = new HashMap<String, String>();
         params.put("eventId", String.valueOf(Constants.Events.EVENT_SEND_OTP));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
@@ -157,12 +157,12 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
 
     public void getCountryList(Boolean check) {
         final String tag = "countryList";
-        String url = Constants.BASE_URL + "/mobile/country/get/?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_COUNTRY_LIST);
+        String url = Constants.BASE_URL + "/mobile/country/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_COUNTRY_LIST);
         if (check) {
             checkCountry = false;
             CommonUtil.showProgressDialog(this, "Wait...");
         }
-        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, null, this, this);
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
@@ -182,6 +182,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
                     switch (response.getInt("eventId")) {
                         case Constants.Events.EVENT_SEND_OTP:
                             startActivity(new Intent(this, OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")));
+                            finish();
                             break;
                         case Constants.Events.EVENT_COUNTRY_LIST:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());

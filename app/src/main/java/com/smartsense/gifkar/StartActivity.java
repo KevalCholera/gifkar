@@ -1,5 +1,6 @@
 package com.smartsense.gifkar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ public class StartActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }else{
+        } else {
             View decorView = getWindow().getDecorView();
 // Hide the status bar.
             int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -75,6 +76,14 @@ public class StartActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        LoginFragment.callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LoginFragment.RC_SIGN_IN) {
+            // If the error resolution was not successful we should not resolve further.
+            if (resultCode != Activity.RESULT_OK) {
+                LoginFragment.mShouldResolve = false;          }
+
+            LoginFragment.mIsResolving = false;
+            LoginFragment.mGoogleApiClient.connect();
+        } else
+            LoginFragment.callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }

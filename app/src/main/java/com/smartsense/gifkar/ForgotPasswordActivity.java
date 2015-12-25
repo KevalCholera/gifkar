@@ -197,11 +197,12 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_FORGOT_PASS:
-                            if (response.optJSONObject("data").has("otp")) {
+                            if (response.optJSONObject("data").has("userToken")) {
 //                                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")).putExtra("mobile_no", response.optJSONObject("data").optString("otp")).putExtra("country_code", response.optJSONObject("data").optString("otp")));
                                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").optString("userId"));
+//                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").optString("userToken"));
                                 SharedPreferenceUtil.save();
-                                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")));
+                                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("userToken")));
                             } else
                                 CommonUtil.alertBox(this, "", response.optString("message"));
                             break;

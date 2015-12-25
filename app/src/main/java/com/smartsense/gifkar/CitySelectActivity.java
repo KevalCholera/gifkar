@@ -170,64 +170,64 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
 
     public void cityFill(JSONObject address) {
         try {
-            String temp = "{\n" +
-                    "\t\"eventId\": \"1\",\n" +
-                    "\t\"errorCode\": 0,\n" +
-                    "\t\"status\": 200,\n" +
-                    "\t\"message\": \"city list with areas.\",\n" +
-                    "\t\"data\": {\n" +
-                    "\t\t\"cities\": [{\n" +
-                    "\t\t\t\"id\": \"1\",\n" +
-                    "\t\t\t\"name\": \"Ahmedabad\",\n" +
-                    "\t\t\t\"areas\": [{\n" +
-                    "\t\t\t\t\"id\": \"1\",\n" +
-                    "\t\t\t\t\"name\": \"Memnagar\",\n" +
-                    "\t\t\t\t\"pincode\": \"380001\",\n" +
-                    "\t\t\t\t\"city_id\": \"1\"\n" +
-                    "\t\t\t}, {\n" +
-                    "\t\t\t\t\"id\": \"2\",\n" +
-                    "\t\t\t\t\"name\": \"Prahlad nagar\",\n" +
-                    "\t\t\t\t\"pincode\": \"380005\",\n" +
-                    "\t\t\t\t\"city_id\": \"1\"\n" +
-                    "\t\t\t}, {\n" +
-                    "\t\t\t\t\"id\": \"5\",\n" +
-                    "\t\t\t\t\"name\": \"sattelite\",\n" +
-                    "\t\t\t\t\"pincode\": \"380006\",\n" +
-                    "\t\t\t\t\"city_id\": \"1\"\n" +
-                    "\t\t\t}]\n" +
-                    "\t\t}, {\n" +
-                    "\t\t\t\"id\": \"3\",\n" +
-                    "\t\t\t\"name\": \"Surat\",\n" +
-                    "\t\t\t\"areas\": [{\n" +
-                    "\t\t\t\t\"id\": \"3\",\n" +
-                    "\t\t\t\t\"name\": \"kapodra\",\n" +
-                    "\t\t\t\t\"pincode\": \"350001\",\n" +
-                    "\t\t\t\t\"city_id\": \"3\"\n" +
-                    "\t\t\t}, {\n" +
-                    "\t\t\t\t\"id\": \"4\",\n" +
-                    "\t\t\t\t\"name\": \"katargaam\",\n" +
-                    "\t\t\t\t\"pincode\": \"350002\",\n" +
-                    "\t\t\t\t\"city_id\": \"3\"\n" +
-                    "\t\t\t}]\n" +
-                    "\t\t}, {\n" +
-                    "\t\t\t\"id\": \"5\",\n" +
-                    "\t\t\t\"name\": \"Pune\",\n" +
-                    "\t\t\t\"areas\": [{\n" +
-                    "\t\t\t\t\"id\": \"6\",\n" +
-                    "\t\t\t\t\"name\": \"Balewadi\",\n" +
-                    "\t\t\t\t\"pincode\": \"650001\",\n" +
-                    "\t\t\t\t\"city_id\": \"5\"\n" +
-                    "\t\t\t}, {\n" +
-                    "\t\t\t\t\"id\": \"7\",\n" +
-                    "\t\t\t\t\"name\": \"hinjewadi\",\n" +
-                    "\t\t\t\t\"pincode\": \"650002\",\n" +
-                    "\t\t\t\t\"city_id\": \"5\"\n" +
-                    "\t\t\t}]\n" +
-                    "\t\t}]\n" +
-                    "\n" +
-                    "\t}\n" +
-                    "}";
-            JSONObject tempObj = new JSONObject(temp);
+//            String temp = "{\n" +
+//                    "\t\"eventId\": \"1\",\n" +
+//                    "\t\"errorCode\": 0,\n" +
+//                    "\t\"status\": 200,\n" +
+//                    "\t\"message\": \"city list with areas.\",\n" +
+//                    "\t\"data\": {\n" +
+//                    "\t\t\"cities\": [{\n" +
+//                    "\t\t\t\"id\": \"1\",\n" +
+//                    "\t\t\t\"name\": \"Ahmedabad\",\n" +
+//                    "\t\t\t\"areas\": [{\n" +
+//                    "\t\t\t\t\"id\": \"1\",\n" +
+//                    "\t\t\t\t\"name\": \"Memnagar\",\n" +
+//                    "\t\t\t\t\"pincode\": \"380001\",\n" +
+//                    "\t\t\t\t\"city_id\": \"1\"\n" +
+//                    "\t\t\t}, {\n" +
+//                    "\t\t\t\t\"id\": \"2\",\n" +
+//                    "\t\t\t\t\"name\": \"Prahlad nagar\",\n" +
+//                    "\t\t\t\t\"pincode\": \"380005\",\n" +
+//                    "\t\t\t\t\"city_id\": \"1\"\n" +
+//                    "\t\t\t}, {\n" +
+//                    "\t\t\t\t\"id\": \"5\",\n" +
+//                    "\t\t\t\t\"name\": \"sattelite\",\n" +
+//                    "\t\t\t\t\"pincode\": \"380006\",\n" +
+//                    "\t\t\t\t\"city_id\": \"1\"\n" +
+//                    "\t\t\t}]\n" +
+//                    "\t\t}, {\n" +
+//                    "\t\t\t\"id\": \"3\",\n" +
+//                    "\t\t\t\"name\": \"Surat\",\n" +
+//                    "\t\t\t\"areas\": [{\n" +
+//                    "\t\t\t\t\"id\": \"3\",\n" +
+//                    "\t\t\t\t\"name\": \"kapodra\",\n" +
+//                    "\t\t\t\t\"pincode\": \"350001\",\n" +
+//                    "\t\t\t\t\"city_id\": \"3\"\n" +
+//                    "\t\t\t}, {\n" +
+//                    "\t\t\t\t\"id\": \"4\",\n" +
+//                    "\t\t\t\t\"name\": \"katargaam\",\n" +
+//                    "\t\t\t\t\"pincode\": \"350002\",\n" +
+//                    "\t\t\t\t\"city_id\": \"3\"\n" +
+//                    "\t\t\t}]\n" +
+//                    "\t\t}, {\n" +
+//                    "\t\t\t\"id\": \"5\",\n" +
+//                    "\t\t\t\"name\": \"Pune\",\n" +
+//                    "\t\t\t\"areas\": [{\n" +
+//                    "\t\t\t\t\"id\": \"6\",\n" +
+//                    "\t\t\t\t\"name\": \"Balewadi\",\n" +
+//                    "\t\t\t\t\"pincode\": \"650001\",\n" +
+//                    "\t\t\t\t\"city_id\": \"5\"\n" +
+//                    "\t\t\t}, {\n" +
+//                    "\t\t\t\t\"id\": \"7\",\n" +
+//                    "\t\t\t\t\"name\": \"hinjewadi\",\n" +
+//                    "\t\t\t\t\"pincode\": \"650002\",\n" +
+//                    "\t\t\t\t\"city_id\": \"5\"\n" +
+//                    "\t\t\t}]\n" +
+//                    "\t\t}]\n" +
+//                    "\n" +
+//                    "\t}\n" +
+//                    "}";
+//            JSONObject tempObj = new JSONObject(temp);
             cityAdapter = new CityAdapter(this, address.getJSONObject("data").getJSONArray("cities"), true);
             lvCity.setAdapter(cityAdapter);
         } catch (JSONException e) {
@@ -267,6 +267,15 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
 
+    public void getArea() {
+        final String tag = "area";
+        String url = Constants.BASE_URL + "/mobile/area/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_PINCODE)+ "&pincode=" + pin_code;
+        CommonUtil.showProgressDialog(this, "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
     @Override
     public void onErrorResponse(VolleyError volleyError) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -291,6 +300,15 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                         case Constants.Events.EVENT_CITY:
                             cityObj = response;
                             cityFill(cityObj);
+                            break;
+                        case Constants.Events.EVENT_PINCODE:
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_NAME, response.getJSONObject("data").getJSONObject("area").optString("name"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_ID, response.getJSONObject("data").getJSONObject("area").optString("id"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_PIN_CODE, response.getJSONObject("data").getJSONObject("area").optString("pincode"));
+//                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_ID, tempCityObj.optString("city_id"));
+//                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_NAME, tempCityObj.optString("name"));
+                            SharedPreferenceUtil.save();
+                            startActivity(new Intent(CitySelectActivity.this, GifkarActivity.class));
                             break;
                     }
                 } else {
@@ -446,6 +464,7 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                                 public void onResponse(JSONObject response) {
                                     pin_code = response.optJSONArray("postalCodes").optJSONObject(0)
                                             .optString("postalCode");
+                                    getArea();
                                     Log.e("Volley Request", pin_code);
                                 }
 
@@ -464,6 +483,7 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                 } else {
                     Log.i("Location", "" + addresses.get(0).getPostalCode());
                     pin_code = addresses.get(0).getPostalCode();
+                    getArea();
                 }
 
 

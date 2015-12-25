@@ -36,7 +36,8 @@ import com.smartsense.gifkar.utill.SimpleDividerItemDecoration;
 public class ShopFragment extends Fragment {
 
     //    static JSONArray jsonArray;
-    static RecyclerView rv;
+    static RecyclerView recyclerView
+            ;
     DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
     CommonUtil commonUtil = new CommonUtil();
 
@@ -51,31 +52,31 @@ public class ShopFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rv = (RecyclerView) inflater.inflate(R.layout.fragment_shop, container, false);
-        rv.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_shop, container, false);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         try {
 //            jsonArray = new JSONArray(getArguments().getString("ID"));
             Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_SHOP + "  WHERE " + DataBaseHelper.COLUMN_CATEGORY_ID + " = '"
                     + getArguments().getString("ID") + "'");
-            rv.setLayoutManager(new LinearLayoutManager(rv.getContext()));
+            recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
             if (cursor.getCount() > 0) {
-                rv.setAdapter(new ShopListAdapter(getActivity(), cursor));
+                recyclerView.setAdapter(new ShopListAdapter(getActivity(), cursor));
             }
-//            rv.setAdapter(new ProductGridAdapter(getActivity(), jsonArray, true));
+//
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        rv.addOnItemTouchListener(
+        recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
 //                        Log.i("ShopID", String.valueOf());
-                        startActivity(new Intent(getActivity(), ProductListActivity.class).putExtra("ShopID",(Integer)view.getTag()));
+                        startActivity(new Intent(getActivity(), ProductListActivity.class).putExtra("ShopID", (Integer) view.getTag()));
                     }
                 })
         );
-        return rv;
+        return recyclerView;
     }
 
 

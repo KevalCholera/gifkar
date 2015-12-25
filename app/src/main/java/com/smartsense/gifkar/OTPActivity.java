@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,7 +33,7 @@ import java.util.Map;
 public class OTPActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
         Response.ErrorListener {
     TextView tvOtpNo, tvResend, tvEditNum;
-    String countryCode = "", mobileNo = "", otp = "", verify = "";
+    String countryCode = "", mobileNo = "", verify = "";
     EditText etOne, etTwo, etThree, etFour;
     Button btOTP;
     private ImageView btBack;
@@ -64,7 +65,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         etFour.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                if ((event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.KEYCODE_ENTER) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
                     otpCheck();
@@ -77,7 +78,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         btOTP.setOnClickListener(this);
         countryCode = getIntent().getStringExtra("code");
         mobileNo = getIntent().getStringExtra("mobile");
-        otp = getIntent().getStringExtra(Constants.OTP);
+//        otp = getIntent().getStringExtra(Constants.OTP);
         tvOtpNo.setText("Please Enter the SMS code that you have received on " + countryCode + " " + mobileNo);
     }
 
@@ -124,7 +125,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         params.put("eventId", String.valueOf(Constants.Events.EVENT_RESEND_OTP));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         params.put("mobile", mobileNo);
-        params.put("countryCode",  countryCode.substring(1));
+        params.put("countryCode", countryCode.substring(1));
         CommonUtil.showProgressDialog(this, "Wait...");
         Log.i("params", params.toString());
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
@@ -136,11 +137,12 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         verify = etOne.getText().toString() + "" + etTwo.getText().toString() + "" + etThree.getText().toString() + "" + etFour.getText().toString();
         if (etOne.getText().toString().equalsIgnoreCase("") || etTwo.getText().toString().equalsIgnoreCase("") || etThree.getText().toString().equalsIgnoreCase("") || etFour.getText().toString().equalsIgnoreCase("")) {
             CommonUtil.alertBox(this, "", "Please Enter OTP.");
-        } else if (verify.equalsIgnoreCase(otp))
+        } else
+//        if (verify.equalsIgnoreCase(otp))
             doVerifyOTP(verify);
 
-        else
-            CommonUtil.alertBox(this, "", "OTP does not matched.");
+//        else
+//            CommonUtil.alertBox(this, "", "OTP does not matched.");
     }
 
     public void coundDownStart() {
@@ -186,7 +188,9 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                             etThree.setText("");
                             etFour.setText("");
                             etOne.setText("");
-                            otp=response.optJSONObject("data").optString("otp");
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
+                            SharedPreferenceUtil.save();
+//                            otp=response.optJSONObject("data").optString("userToken");
                             coundDownStart();
                             break;
                         case Constants.Events.EVENT_SEND_OTP:

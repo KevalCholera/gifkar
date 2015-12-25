@@ -124,7 +124,8 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                         ContentValues values = new ContentValues();
                         values.put(DataBaseHelper.COLUMN_SHOP_ID, prodJson.optString("id"));
                         values.put(DataBaseHelper.COLUMN_SHOP_NAME, prodJson.optString("name"));
-                        values.put(DataBaseHelper.COLUMN_SHOP_IMAGE, prodJson.optString("image"));
+                        values.put(DataBaseHelper.COLUMN_SHOP_IMAGE, Constants.BASE_URL+"/images/shops/"+prodJson.optString("image"));
+                        values.put(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB, Constants.BASE_URL+"/images/shops/thumbs/"+prodJson.optString("image"));
                         values.put(DataBaseHelper.COLUMN_CUT_OF_TIME, prodJson.optString("cutOffTime"));
                         values.put(DataBaseHelper.COLUMN_MIN_ORDER, prodJson.optString("minOrder"));
                         values.put(DataBaseHelper.COLUMN_MID_NIGHT_DEL, prodJson.optString("midnightDeliveryStatus"));
@@ -231,7 +232,6 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     }
 
     private void setUiPageViewController() {
-
         dotsCount = mAdapter.getCount();
         dots = new ImageView[dotsCount];
 

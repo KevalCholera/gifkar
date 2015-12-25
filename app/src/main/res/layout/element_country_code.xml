@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:padding="@dimen/padding_8">
+    android:orientation="horizontal">
 
 
     <com.smartsense.gifkar.textstyleutil.TypefaceTextView
 
-        android:fontFamily="normal"
+        android:id="@+id/tvCountryCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_margin="@dimen/margin_10"
+        android:fontFamily="normal"
         android:gravity="left"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="+91 India"
         android:padding="@dimen/padding_8"
-        android:layout_margin="@dimen/margin_20"
-        android:id="@+id/tvCountryCode" />
+        android:text="+91 India"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 </LinearLayout>

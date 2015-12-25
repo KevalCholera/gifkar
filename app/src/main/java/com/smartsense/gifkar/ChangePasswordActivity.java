@@ -82,7 +82,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
 
     public void doPassword(String oldPass, String newPass) {
         final String tag = "doPasswordSet";
-        String url = Constants.BASE_URL + "/user/update";
+        String url = Constants.BASE_URL + "/mobile/user/update";
         Map<String, String> params = new HashMap<String, String>();
         params.put("eventId", String.valueOf(Constants.Events.EVENT_FORGOT_PASS));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
