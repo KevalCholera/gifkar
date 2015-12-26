@@ -53,7 +53,7 @@
                 android:fontFamily="normal"
                 android:padding="@dimen/padding_2"
                 android:text="@string/date"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                 android:id="@+id/tvMyReminderElementTime"
@@ -66,7 +66,7 @@
                 android:fontFamily="normal"
                 android:hint="@string/time"
                 android:padding="@dimen/padding_2"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 

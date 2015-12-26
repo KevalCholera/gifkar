@@ -42,6 +42,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GifkarActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
         Response.ErrorListener {
     private TextView actionBarTitle;
@@ -457,13 +460,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //Do something here where "ok" clicked
 //                        SharedPreferenceUtil.clear();
-                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_ID);
-                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_FULLNAME);
-                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_EMAIL);
-                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_MNO);
-                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_ACCESS_TOKEN);
-                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_PROIMG);
-                        SharedPreferenceUtil.save();
+                        doLogout();
 //                            gotosignout(c);
                     }
                 });
@@ -501,9 +498,24 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
 
+
+    public void doLogout() {
+        final String tag = "logout";
+        String url = Constants.BASE_URL + "/mobile/user/logout";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_SIGN_OUT));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
+        Log.i("params", params.toString());
+//        CommonUtil.showProgressDialog(GifkarApp.getInstance(), "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-        CommonUtil.alertBox(this, "", getResources().getString(R.string.nointernet_try_again_msg));
+//        CommonUtil.alertBox(GifkarActivity.this, "", getResources().getString(R.string.nointernet_try_again_msg));
         CommonUtil.cancelProgressDialog();
     }
 
@@ -524,6 +536,17 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                             tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, ""));
                             ivHeadImage.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imageLoader);
                             tVHeadMobileNo.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_MNO, ""));
+                            break;
+                        case Constants.Events.EVENT_SIGN_OUT:
+//                            CommonUtil.alertBox(GifkarApp.getInstance(),"", "Logout Sucessfully");
+//                            Toast.makeText(this,"Logout Sucessfully",Toast.LENGTH_SHORT).show();
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_ID);
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_FULLNAME);
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_EMAIL);
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_MNO);
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_ACCESS_TOKEN);
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_PROIMG);
+                            SharedPreferenceUtil.save();
                             break;
                     }
                 } else {

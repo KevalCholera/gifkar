@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,27 +57,53 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         getSupportActionBar().setCustomView(v);
         etEmail = (EditText) findViewById(R.id.etForgotEmailId);
         etMobileNo = (EditText) findViewById(R.id.etForgotMobileNo);
-        etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus)
-                    // TODO: the editText has just been left
-                    if (etEmail.length() != 0)
-                        etMobileNo.setText("");
+//        etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (!hasFocus)
+//                    // TODO: the editText has just been left
+//
+//            }
+//        });
+        etEmail.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (etEmail.length() != 0)
+                    etMobileNo.setText("");
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
 
         etCountryCode = (EditText) findViewById(R.id.etForgotCountryCode);
         etCountryCode.setOnClickListener(this);
-        etMobileNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus)
-                    // TODO: the editText has just been left
-                    if (etMobileNo.length() != 0)
-                        etEmail.setText("");
+//        etMobileNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (!hasFocus)
+//                    // TODO: the editText has just been left
+//                    if (etMobileNo.length() != 0)
+//                        etEmail.setText("");
+//            }
+//        });
+        etMobileNo.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                if (etMobileNo.length() != 0)
+                    etEmail.setText("");
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
         });
+
         btForgot = (Button) findViewById(R.id.btnForgot);
         btForgot.setOnClickListener(this);
         getCountryList(checkCountry);
@@ -122,7 +150,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     }
 
     public void openCountryPopup(JSONObject response) {
-        try{
+        try {
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -131,7 +159,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
             if (response.getJSONObject("data").getJSONArray("countries").length() == 0) {
                 CommonUtil.alertBox(this, "", "Country Code Not Found Please Try Again.");
             } else {
-                etCountryCode.setText("+"+response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
+                etCountryCode.setText("+" + response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
                 etCountryCode.setTag(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("id"));
                 CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(this, response.getJSONObject("data").getJSONArray("countries"), true);
                 list_view.setAdapter(countryCodeAdapter);
@@ -139,7 +167,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                 list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
                         JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
-                        etCountryCode.setText("+"+getCodeObj.optString("code"));
+                        etCountryCode.setText("+" + getCodeObj.optString("code"));
                         etCountryCode.setTag(getCodeObj.optString("id"));
                         alert.dismiss();
                     }
@@ -202,7 +230,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").optString("userId"));
 //                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").optString("userToken"));
                                 SharedPreferenceUtil.save();
-                                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("userToken")));
+                                startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra("tag", (String) etCountryCode.getTag()));
                             } else
                                 CommonUtil.alertBox(this, "", response.optString("message"));
                             break;
@@ -212,7 +240,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());
                             SharedPreferenceUtil.save();
                             if (response.getJSONObject("data").getJSONArray("countries").length() != 0) {
-                                etCountryCode.setText("+"+response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
+                                etCountryCode.setText("+" + response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("code"));
                                 etCountryCode.setTag(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("id"));
                             }
                             if (checkCountry)

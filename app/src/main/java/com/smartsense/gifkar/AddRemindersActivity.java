@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -49,7 +48,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
     EditText etMyReminderAddDate, etMyReminderAddTime, etMyReminderName, etMyReminderAddRelation, etMyReminderAddRelationType, etMyReminderAddDescription;
     Button btnAddReminder;
     ImageView btBack;
-    SwitchCompat switchMyReminder;
+//    SwitchCompat switchMyReminder;
     JSONObject reminderObj;
     RadioButton rbMyReminder1Day, rbMyReminder2Day, rbMyReminder1Hour;
     private Calendar mCalendar;
@@ -85,7 +84,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
         rbMyReminder2Day.setTag(Constants.ScreenReminderCode.TWO_DAY);
         rbMyReminder1Hour = (RadioButton) findViewById(R.id.rbMyReminder1Hour);
         rbMyReminder1Hour.setTag(Constants.ScreenReminderCode.ONE_HOUR);
-        switchMyReminder = (SwitchCompat) findViewById(R.id.switchMyReminder);
+//        switchMyReminder = (SwitchCompat) findViewById(R.id.switchMyReminder);
         etMyReminderAddDate = (EditText) findViewById(R.id.etMyReminderAddDate);
         etMyReminderAddDate.setOnClickListener(this);
         etMyReminderAddTime = (EditText) findViewById(R.id.etMyReminderAddTime);
@@ -216,7 +215,8 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
             int selectedId = rbMyReminderGroup.getCheckedRadioButtonId();
             RadioButton rB = (RadioButton) findViewById(selectedId);
             int alertTime = (int) rB.getTag();
-            int isActive = switchMyReminder.isChecked() ? 1 : 0;
+//            int isActive = switchMyReminder.isChecked() ? 1 : 0;
+            int isActive =0;
             final String tag = "ReminderAdd";
             String url;
             Map<String, String> params = new HashMap<String, String>();
@@ -243,7 +243,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
             try {
                 Intent alarmIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
                 int reminderId = 0;
-                if (switchMyReminder.isChecked()) {
+//                if (switchMyReminder.isChecked()) {
                     JSONObject reminderObj = new JSONObject();
                     reminderObj.put("name", etMyReminderName.getText().toString());
                     reminderObj.put("relation", etMyReminderAddRelation.getText().toString());
@@ -266,9 +266,9 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                     AlarmUtil.setAlarm(getApplicationContext(), alarmIntent, reminderId, reminderObj, mCalendar1);
 //                    Log.i("date", DateAndTimeUtil.toStringReadableDate(mCalendar1));
 //                    Log.i("time", DateAndTimeUtil.toStringReadableTime(mCalendar1, getApplicationContext()));
-                }else{
-                    AlarmUtil.cancelAlarm(getApplicationContext(), alarmIntent, reminderId);
-                }
+//                }else{
+//                    AlarmUtil.cancelAlarm(getApplicationContext(), alarmIntent, reminderId);
+//                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

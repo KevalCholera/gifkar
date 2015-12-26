@@ -12,7 +12,7 @@
         <LinearLayout
             android:id="@+id/llSuggestShop"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:background="@color/activity_bg"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -44,12 +44,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_25"
             android:layout_marginRight="@dimen/margin_25"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <com.smartsense.gifkar.utill.CircleImageView1
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_margin="@dimen/margin_5"
                 android:src="@drawable/star" />
 
@@ -72,7 +72,7 @@
                         android:padding="@dimen/padding_16"
                         android:text="@string/rate_us"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                          />
 
                     <ImageView
@@ -98,12 +98,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_25"
             android:layout_marginRight="@dimen/margin_25"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <com.smartsense.gifkar.utill.CircleImageView1
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_margin="@dimen/margin_5"
                 android:src="@drawable/mail" />
 
@@ -126,7 +126,7 @@
                         android:padding="@dimen/padding_16"
                         android:text="@string/email_us"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="24sp"/>
+                        android:textSize="20sp"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -148,12 +148,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_25"
             android:layout_marginRight="@dimen/margin_25"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <com.smartsense.gifkar.utill.CircleImageView1
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_margin="@dimen/margin_5"
                 android:src="@drawable/contact_us" />
 
@@ -177,7 +177,7 @@
                         android:padding="@dimen/padding_16"
                         android:text="@string/contact_us"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="24sp" />
+                        android:textSize="20sp" />
 
                     <ImageView
                         android:layout_width="wrap_content"

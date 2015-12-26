@@ -4,12 +4,14 @@ package com.smartsense.gifkar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.smartsense.gifkar.adapter.MyRemindersAdapter;
 
@@ -34,6 +36,9 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
 //        btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
 //        btBack.setOnClickListener(this);
 //        getSupportActionBar().setCustomView(v);
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
+        TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
+        actionBarTitle.setText(getResources().getString(R.string.screen_my_reminders));
         llReminder = (LinearLayout) view.findViewById(R.id.llMyReminders);
         llReminder.setOnClickListener(this);
         lvMyReminder = (ListView) view.findViewById(R.id.lvMyReminders);

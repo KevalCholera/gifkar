@@ -49,19 +49,22 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.action_bar_center, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
-        if (getIntent().getIntExtra(Constants.SCREEN, 0) == Constants.ScreenCode.SCREEN_LOGIN)
-            titleTextView.setText(getResources().getString(R.string.screen_change_mno));
-        else
-            titleTextView.setText(getResources().getString(R.string.screen_enter));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         etCountryCode = (EditText) findViewById(R.id.etEnterCountryCode);
         etCountryCode.setOnClickListener(this);
         etMobileNo = (EditText) findViewById(R.id.etEnterMobileNo);
+        if (getIntent().getIntExtra(Constants.SCREEN, 0) == Constants.ScreenCode.SCREEN_LOGIN)
+            titleTextView.setText(getResources().getString(R.string.screen_enter));
+        else{
+            titleTextView.setText(getResources().getString(R.string.screen_change_mno));
+            etMobileNo.setText(getIntent().getStringExtra("no"));
+            etCountryCode.setText(getIntent().getStringExtra("code"));
+            etCountryCode.setTag(getIntent().getStringExtra("tag"));}
         btSend = (Button) findViewById(R.id.btnSend);
         btSend.setOnClickListener(this);
-        getCountryList(checkCountry);
+//        getCountryList(checkCountry);
     }
 
     @Override
@@ -144,8 +147,9 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
         final String tag = "resendOTP";
         String url = Constants.BASE_URL + "/mobile/user/resendOtp";
         Map<String, String> params = new HashMap<String, String>();
-        params.put("eventId", String.valueOf(Constants.Events.EVENT_SEND_OTP));
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_RESEND_OTP));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        params.put("userId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_ID, ""));
         params.put("mobile", etMobileNo.getText().toString());
         params.put("countryCode", (String) etCountryCode.getTag());
         CommonUtil.showProgressDialog(this, "Wait...");
@@ -159,7 +163,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
         final String tag = "countryList";
         String url = Constants.BASE_URL + "/mobile/country/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_COUNTRY_LIST);
         if (check) {
-            checkCountry = false;
+//            checkCountry = false;
             CommonUtil.showProgressDialog(this, "Wait...");
         }
         DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
@@ -180,8 +184,10 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
             try {
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (response.getInt("eventId")) {
-                        case Constants.Events.EVENT_SEND_OTP:
-                            startActivity(new Intent(this, OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")));
+                        case Constants.Events.EVENT_RESEND_OTP:
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
+                            SharedPreferenceUtil.save();
+                            startActivity(new Intent(this, OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra("tag", (String) etCountryCode.getTag()));
                             finish();
                             break;
                         case Constants.Events.EVENT_COUNTRY_LIST:

@@ -19,9 +19,11 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -47,7 +49,6 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
 import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
@@ -111,6 +112,18 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         // Forgot Password
         tvLoginForgotPwd = (TextView) view.findViewById(R.id.tvLoginForgotPwd);
         tvLoginForgotPwd.setOnClickListener(this);
+        tvLoginForgotPwd.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.KEYCODE_ENTER) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    doLogin(etInputemail.getText().toString(), etInputPassword.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
         //skip
         tvSkip = (TextView) view.findViewById(R.id.tvLoginSkip);
         tvSkip.setOnClickListener(this);
@@ -183,19 +196,31 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
     };
 
 
-    public void doLogin(String email, String passsword) {
-        final String tag = "login";
-        String url = Constants.BASE_URL + "/mobile/user/login";
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("eventId", String.valueOf(Constants.Events.EVENT_LOGIN));
-        params.put("defaultToken", Constants.DEFAULT_TOKEN);
-        params.put("username", email);
-        params.put("password", passsword);
-        CommonUtil.showProgressDialog(getActivity(), "Wait...");
-        Log.d("login Params", params.toString());
-        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
-        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    public void doLogin(String emailId, String password) {
+        if (TextUtils.isEmpty(emailId)) {
+            etInputemail.setError(getString(R.string.wrn_em_mo));
+        } else if (TextUtils.isEmpty(password)) {
+            etInputPassword.setError(getString(R.string.wrn_pwd));
+        } else if (password.length() < 5) {
+            etInputPassword.setError(getString(R.string.wrn_pwd_len));
+        } else {
+            if (!CommonUtil.isInternet(getActivity()))
+                CommonUtil.alertBox(getActivity(), "Error", getResources().getString(R.string.nointernet_try_again_msg));
+            else {
+                final String tag = "login";
+                String url = Constants.BASE_URL + "/mobile/user/login";
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("eventId", String.valueOf(Constants.Events.EVENT_LOGIN));
+                params.put("defaultToken", Constants.DEFAULT_TOKEN);
+                params.put("username", emailId);
+                params.put("password", password);
+                CommonUtil.showProgressDialog(getActivity(), "Wait...");
+                Log.d("login Params", params.toString());
+                DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+                loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+            }
+        }
     }
 
 
@@ -221,7 +246,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
             if (resultCode != Activity.RESULT_OK) {
                 mShouldResolve = false;
             }
-
             mIsResolving = false;
             mGoogleApiClient.connect();
         } else {
@@ -266,24 +290,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                 break;
             case R.id.btnLogin:
                 String password = etInputPassword.getText().toString().trim();
-                if (TextUtils.isEmpty(emailId)) {
-                    etInputemail.setError(getString(R.string.wrn_em));
-                } else if (!CommonUtil.isValidEmail(emailId)) {
-                    etInputemail.setError(getString(R.string.wrn_email));
-                } else if (TextUtils.isEmpty(password)) {
-                    etInputPassword.setError(getString(R.string.wrn_pwd));
-                } else if (password.length() < 6) {
-                    etInputPassword.setError(getString(R.string.wrn_pwd_len));
-                } else {
-                    try {
-                        if (!CommonUtil.isInternet(getActivity()))
-                            CommonUtil.alertBox(getActivity(), "Error", getResources().getString(R.string.nointernet_try_again_msg));
-                        else
-                            doLogin(emailId, password);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+                doLogin(emailId, password);
                 break;
             case R.id.sign_in_button:
                 if (!CommonUtil.isInternet(getActivity()))
@@ -414,6 +421,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_LOGIN:
                             if (response.getJSONObject("data").has("isVerified")) {
+                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
+                                SharedPreferenceUtil.save();
                                 startActivity(new Intent(getActivity(), MobileNoActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_LOGIN));
                             } else {
                                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
@@ -423,8 +432,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                                     startActivity(new Intent(getActivity(), GifkarActivity.class));
                                 else
                                     startActivity(new Intent(getActivity(), CitySelectActivity.class));
+                                getActivity().finish();
                             }
-                            getActivity().finish();
                             break;
                         case Constants.Events.EVENT_SIGNUP:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));

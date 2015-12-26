@@ -33,7 +33,7 @@ import java.util.Map;
 public class OTPActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
         Response.ErrorListener {
     TextView tvOtpNo, tvResend, tvEditNum;
-    String countryCode = "", mobileNo = "", verify = "";
+    String countryCode = "", mobileNo = "", verify = "",countryCodeTag="";
     EditText etOne, etTwo, etThree, etFour;
     Button btOTP;
     private ImageView btBack;
@@ -78,7 +78,10 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         btOTP.setOnClickListener(this);
         countryCode = getIntent().getStringExtra("code");
         mobileNo = getIntent().getStringExtra("mobile");
+        countryCodeTag=getIntent().getStringExtra("tag");
 //        otp = getIntent().getStringExtra(Constants.OTP);
+        if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT)
+            tvEditNum.setVisibility(View.GONE);
         tvOtpNo.setText("Please Enter the SMS code that you have received on " + countryCode + " " + mobileNo);
     }
 
@@ -86,7 +89,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvOtpEditNumber:
-                startActivity(new Intent(this, MobileNoActivity.class));
+                startActivity(new Intent(this, MobileNoActivity.class).putExtra("no",mobileNo).putExtra("code", countryCode).putExtra("tag",countryCodeTag));
                 break;
             case R.id.tvOtpResend:
                 tvResend.requestFocus();
@@ -124,6 +127,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         Map<String, String> params = new HashMap<String, String>();
         params.put("eventId", String.valueOf(Constants.Events.EVENT_RESEND_OTP));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        params.put("userId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_ID, ""));
         params.put("mobile", mobileNo);
         params.put("countryCode", countryCode.substring(1));
         CommonUtil.showProgressDialog(this, "Wait...");
@@ -188,7 +192,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                             etThree.setText("");
                             etFour.setText("");
                             etOne.setText("");
-                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
                             SharedPreferenceUtil.save();
 //                            otp=response.optJSONObject("data").optString("userToken");
                             coundDownStart();

@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,9 +65,15 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_shoplist, container, false);
         handler = new Handler();
-
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
+        TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
+        actionBarTitle.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
         newFeaturesView = (View) rootView.findViewById(R.id.newfeaturesView);
         tvGreetText = (TextView) rootView.findViewById(R.id.tvGreetText);
+        ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
+        btFilter.setVisibility(View.VISIBLE);
+        ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
+        btSearch.setVisibility(View.VISIBLE);
 //        FrameLayout fm = (FrameLayout) rootView.findViewById(R.id.fl_category);
         int height = getResources().getDisplayMetrics().heightPixels;
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) newFeaturesView.getLayoutParams();
@@ -81,7 +88,6 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         tabLayout = (TabLayout) rootView.findViewById(R.id.tabs_main);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.tab_idicator));
         tabLayout.setTabTextColors(getResources().getColor(R.color.tab_normal_text), getResources().getColor(R.color.tab_idicator));
-
 
 
         return rootView;
@@ -124,8 +130,8 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                         ContentValues values = new ContentValues();
                         values.put(DataBaseHelper.COLUMN_SHOP_ID, prodJson.optString("id"));
                         values.put(DataBaseHelper.COLUMN_SHOP_NAME, prodJson.optString("name"));
-                        values.put(DataBaseHelper.COLUMN_SHOP_IMAGE, Constants.BASE_URL+"/images/shops/"+prodJson.optString("image"));
-                        values.put(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB, Constants.BASE_URL+"/images/shops/thumbs/"+prodJson.optString("image"));
+                        values.put(DataBaseHelper.COLUMN_SHOP_IMAGE, Constants.BASE_URL + "/images/shops/" + prodJson.optString("image"));
+                        values.put(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB, Constants.BASE_URL + "/images/shops/thumbs/" + prodJson.optString("image"));
                         values.put(DataBaseHelper.COLUMN_CUT_OF_TIME, prodJson.optString("cutOffTime"));
                         values.put(DataBaseHelper.COLUMN_MIN_ORDER, prodJson.optString("minOrder"));
                         values.put(DataBaseHelper.COLUMN_MID_NIGHT_DEL, prodJson.optString("midnightDeliveryStatus"));
@@ -287,7 +293,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         final String tag = "EVENT_SHOPLIST";
         String url = Constants.BASE_URL + "/mobile/shop/getByCategory";
         Map<String, String> params = new HashMap<String, String>();
-        params.put("areaId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_ID, "") );
+        params.put("areaId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_ID, ""));
         params.put("eventId", String.valueOf(Constants.Events.EVENT_SHOPLIST));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         Log.i("params", params.toString());
@@ -315,7 +321,8 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                             setReference(response.optJSONObject("data").optJSONArray("banners"));
                             break;
                         case Constants.Events.EVENT_BOTTOM:
-                            tvGreetText.setText(response.optJSONObject("data").optJSONObject("footerNote").optString("message"));
+                            if (response.optJSONObject("data").has("footerNote"))
+                                tvGreetText.setText(response.optJSONObject("data").optJSONObject("footerNote").optString("message"));
                             break;
                         case Constants.Events.EVENT_SHOPLIST:
                             setupViewPager(response.optJSONObject("data").optJSONArray("categories"));

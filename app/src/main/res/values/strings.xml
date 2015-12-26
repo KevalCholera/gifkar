@@ -2,8 +2,8 @@
     <string name="app_name">Gifkar</string>
     <string name="screen_forgot">Forgot Password</string>
     <string name="screen_otp">Enter SMS Code</string>
-    <string name="screen_change_mno">Change Mobile Number</string>
-    <string name="screen_enter">Change Mobile Number</string>
+    <string name="screen_change_mno">Edit Mobile Number</string>
+    <string name="screen_enter">Enter Mobile Number</string>
     <string name="screen_change">Change Password</string>
     <string name="screen_new_pass">New Password</string>
     <string name="screen_profile">Profile</string>
@@ -32,9 +32,10 @@
     <string name="status_revoke_access">Revoked access</string>
     <string name="status_revoke_access_error">Error revoking access: %s</string>
     <string name="signed_in_as">Signed in as %s</string>
-
+    <string name="wrn_pwd_len">Password must contains at least 5 char</string>
     <string name="wrn_pwd">Enter password</string>
     <string name="wrn_promo">Enter promo code</string>
+    <string name="wrn_em_mo">Enter valid Email Id or Mobile No</string>
     <string name="wrn_em">Enter email id</string>
     <string name="wrn_email">Enter valid email id </string>
     <string name="wrn_repwd">Enter re password</string>
@@ -68,7 +69,7 @@
     <string name="register">Register</string>
     <string name="select_area">Select your Area</string>
     <string name="select_city">Select your City</string>
-    <string name="wrn_pwd_len">Password length should be more then 6</string>
+    <!--<string name="wrn_pwd_len">Password length should be more then 6</string>-->
     <string name="total_quntity">0</string>
     <string name="user_available">User is Already Exists</string>
     <string name="shop_for">Shop for</string>

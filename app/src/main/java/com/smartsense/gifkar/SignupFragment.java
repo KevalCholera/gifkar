@@ -55,28 +55,36 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
         etMobileNo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus)
+                etMobileNo.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                if (!hasFocus) {
                     isMnoVerified = false;
-                if (etMobileNo.length() != 0) {
-                    etMobileNo.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                    checkMobileEmail("mobile", etMobileNo.getText().toString(), Constants.Events.EVENT_MOBILE_CHECK);
+                    if (etMobileNo.length() != 0) {
+                        if ((etMobileNo.length() >= 8 && etMobileNo.length() <= 13)) {
+                            checkMobileEmail("mobile", etMobileNo.getText().toString(), Constants.Events.EVENT_MOBILE_CHECK);
+                        }
+                    }
                 }
 
             }
         });
         etEmail = (EditText) view.findViewById(R.id.etSignUpEmailId);
         etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus)
-                    // TODO: the editText has just been left
-                    isEmailVerified = false;
-                if (etEmail.length() != 0) {
-                    etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                    checkMobileEmail("email", etEmail.getText().toString(), Constants.Events.EVENT_EMAIL_CHECK);
-                }
-            }
-        });
+                                             @Override
+                                             public void onFocusChange(View v, boolean hasFocus) {
+                                                 etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+                                                 if (!hasFocus) {
+                                                     // TODO: the editText has just been left
+                                                     isEmailVerified = false;
+                                                     if (etEmail.length() != 0) {
+                                                         if (CommonUtil.isValidEmail(etEmail.getText().toString())) {
+                                                             checkMobileEmail("email", etEmail.getText().toString(), Constants.Events.EVENT_EMAIL_CHECK);
+                                                         }
+                                                     }
+                                                 }
+                                             }
+                                         }
+
+        );
 
         etPass = (EditText) view.findViewById(R.id.etSignUpPassword);
         etConPass = (EditText) view.findViewById(R.id.etSignUpConfirmPassword);
@@ -90,11 +98,15 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
         tvTerms.setOnClickListener(this);
         cbTerms = (CheckBox) view.findViewById(R.id.rbSignupTerms);
         getCountryList(checkCountry);
+
         return view;
     }
 
     @Override
     public void onClick(View view) {
+        CommonUtil.closeKeyboard(getActivity());
+        etMobileNo.clearFocus();
+        etEmail.clearFocus();
         switch (view.getId()) {
             case R.id.btnSignup:
 //                startActivity(new Intent(getActivity(), OTPActivity.class));
@@ -203,14 +215,16 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
             etPass.setError(getString(R.string.wrn_pwd));
         } else if (TextUtils.isEmpty(etConPass.getText().toString())) {
             etConPass.setError(getString(R.string.wrn_repwd));
+        } else if (etPass.length() < 5){
+            etPass.setError(getString(R.string.wrn_pwd_len));
         } else if (!TextUtils.equals(etPass.getText().toString(), etConPass.getText().toString())) {
             etConPass.setError(getString(R.string.wrn_match));
         } else if (!cbTerms.isChecked()) {
             CommonUtil.alertBox(getActivity(), "", "Please check Terms & Conditions to Continue.");
-        } else if (!isEmailVerified) {
-            CommonUtil.alertBox(getActivity(), "", "Email already exists.");
         } else if (!isMnoVerified) {
             CommonUtil.alertBox(getActivity(), "", "Mobile already exists.");
+        } else if (!isEmailVerified) {
+            CommonUtil.alertBox(getActivity(), "", "Email already exists.");
         } else {
             final String tag = "Signup";
             String url = Constants.BASE_URL + "/mobile/user/signup";
@@ -248,7 +262,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                         case Constants.Events.EVENT_SIGNUP:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").optString("userId"));
                             SharedPreferenceUtil.save();
-                            startActivity(new Intent(getActivity(), OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra(Constants.OTP, response.optJSONObject("data").optString("otp")));
+                            startActivity(new Intent(getActivity(), OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra("tag", (String) etCountryCode.getTag()));
                             break;
                         case Constants.Events.EVENT_COUNTRY_LIST:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());

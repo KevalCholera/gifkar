@@ -118,7 +118,10 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_FORGOT_PASS:
                             CommonUtil.alertBox(this, "", "Your Password Successfully Changed.");
-                            startActivity(new Intent(this, GifkarActivity.class));
+                            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))
+                                startActivity(new Intent(this, GifkarActivity.class));
+                            else
+                                startActivity(new Intent(this, CitySelectActivity.class));
                             finish();
                             break;
                     }
