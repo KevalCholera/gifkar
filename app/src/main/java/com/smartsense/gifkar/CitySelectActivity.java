@@ -98,7 +98,7 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_NAME, getCityObj.optString("name"));
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_ID, getCityObj.optString("id"));
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_PIN_CODE, getCityObj.optString("pincode"));
-                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_ID, tempCityObj.optString("city_id"));
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_ID, tempCityObj.optString("id"));
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_NAME, tempCityObj.optString("name"));
                         SharedPreferenceUtil.save();
                         flagMode = true;
@@ -305,7 +305,7 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_NAME, response.getJSONObject("data").getJSONObject("area").optString("name"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_ID, response.getJSONObject("data").getJSONObject("area").optString("id"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_PIN_CODE, response.getJSONObject("data").getJSONObject("area").optString("pincode"));
-//                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_ID, tempCityObj.optString("city_id"));
+//                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_ID, tempCityObj.optString("id"));
 //                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_NAME, tempCityObj.optString("name"));
                             SharedPreferenceUtil.save();
                             startActivity(new Intent(CitySelectActivity.this, GifkarActivity.class));

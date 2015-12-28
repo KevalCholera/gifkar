@@ -35,7 +35,8 @@
             android:background="@drawable/edittext_round"
             android:ems="10"
             android:fontFamily="normal"
-            android:hint="@string/reception_name"
+            android:hint="@string/reception_no"
+            android:inputType="number"
             android:padding="@dimen/padding_8"
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />

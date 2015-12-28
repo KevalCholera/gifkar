@@ -150,13 +150,13 @@
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
 
-            <!--<android.support.v7.widget.SwitchCompat-->
-                <!--android:id="@+id/switchMyReminder"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--app:showText="true"-->
-                <!--android:layout_margin="@dimen/margin_5" />-->
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switchMyReminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_margin="@dimen/margin_5" />
         </LinearLayout>
 
         <RadioGroup

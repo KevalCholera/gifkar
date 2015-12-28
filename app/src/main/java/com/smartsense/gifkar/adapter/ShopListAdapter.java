@@ -7,13 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.smartsense.gifkar.GifkarApp;
 import com.smartsense.gifkar.R;
-import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
 /**
@@ -44,6 +44,8 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
                 TextView tvShopListMinOrder;
                 TextView tvShopListDeliveryTime;
                 TextView tvShopListRating;
+                TextView tvShopListTag;
+                ImageView ivShopListMidNight;
                 NetworkImageView ivShopListImage;
 
                 tvShopListRating = (TextView) view.findViewById(R.id.tvShopListRating);
@@ -51,17 +53,25 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
                 tvShopListMinOrder = (TextView) view.findViewById(R.id.tvShopListMinOrder);
                 tvShopListDeliveryTime = (TextView) view.findViewById(R.id.tvShopListDeliveryTime);
                 tvShopListShopName = (TextView) view.findViewById(R.id.tvShopListShopName);
+                tvShopListTag = (TextView) view.findViewById(R.id.tvShopListTag);
+                ivShopListMidNight = (ImageView) view.findViewById(R.id.ivShopListMidNight);
                 ivShopListImage = (NetworkImageView) view.findViewById(R.id.ivShopListImage);
 
-                tvShopListRating.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING)));
-                tvShopListCutofTime.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CUT_OF_TIME)));
-                tvShopListDeliveryTime.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_FROM)) + " to " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_TO)));
+                if (cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_MID_NIGHT_DEL)).equalsIgnoreCase("1")) {
+                    ivShopListMidNight.setVisibility(View.VISIBLE);
+                } else {
+                    ivShopListMidNight.setVisibility(View.GONE);
+                }
+//                tvShopListRating.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING))==null ? "0" : cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING)));
+                tvShopListCutofTime.setText("Cut of Time: " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CUT_OF_TIME)) + "hours");
+                tvShopListDeliveryTime.setText("Delivery Time: " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_FROM)) + " to " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_TO)));
                 tvShopListShopName.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_NAME)));
-                tvShopListMinOrder.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_MIN_ORDER)));
-                view.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_ID)));
+                tvShopListMinOrder.setText("Minimum Order: \u20B9 " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_MIN_ORDER)));
+                tvShopListTag.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_TAGS)));
 //              ivShopListImage.setDefaultImageResId(R.drawable.ic_gifkar_logo);
+//                Constants.BASE_URL + "/images/shops/thumbs/" +
                 ivShopListImage.setImageUrl(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB)), imageLoader);
-
+                view.setTag(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_ID)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CATEGORY_ID)));
             }
         };
     }

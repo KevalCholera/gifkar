@@ -110,8 +110,8 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         setHeader(GifkarActivity.this);
         if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
             getUserDetail();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new ShopListFragment()).commit();
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShopListFragment()).commit();
+//        fm.beginTransaction().replace(R.id.fragment_container, frg).commit();
 
     }
 

@@ -179,7 +179,7 @@ public class CommonUtil {
         // TODO Auto-generated method stub
         Boolean check = false;
         try {
-            sqLiteDatabase = dbHelper.getReadableDatabase();
+            sqLiteDatabase = dbHelper.getWritableDatabase();
             sqLiteDatabase.execSQL(sqlQuery);
             check = true;
         } catch (Exception e) {

@@ -5,9 +5,11 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -22,6 +24,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.mpt.storage.SharedPreferenceUtil;
@@ -30,6 +34,7 @@ import com.smartsense.gifkar.receivers.AlarmReceiver;
 import com.smartsense.gifkar.utill.AlarmUtil;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
+import com.smartsense.gifkar.utill.DataRequest;
 import com.smartsense.gifkar.utill.DateAndTimeUtil;
 import com.smartsense.gifkar.utill.JsonErrorShow;
 
@@ -48,7 +53,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
     EditText etMyReminderAddDate, etMyReminderAddTime, etMyReminderName, etMyReminderAddRelation, etMyReminderAddRelationType, etMyReminderAddDescription;
     Button btnAddReminder;
     ImageView btBack;
-//    SwitchCompat switchMyReminder;
+    SwitchCompat switchMyReminder;
     JSONObject reminderObj;
     RadioButton rbMyReminder1Day, rbMyReminder2Day, rbMyReminder1Hour;
     private Calendar mCalendar;
@@ -84,7 +89,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
         rbMyReminder2Day.setTag(Constants.ScreenReminderCode.TWO_DAY);
         rbMyReminder1Hour = (RadioButton) findViewById(R.id.rbMyReminder1Hour);
         rbMyReminder1Hour.setTag(Constants.ScreenReminderCode.ONE_HOUR);
-//        switchMyReminder = (SwitchCompat) findViewById(R.id.switchMyReminder);
+        switchMyReminder = (SwitchCompat) findViewById(R.id.switchMyReminder);
         etMyReminderAddDate = (EditText) findViewById(R.id.etMyReminderAddDate);
         etMyReminderAddDate.setOnClickListener(this);
         etMyReminderAddTime = (EditText) findViewById(R.id.etMyReminderAddTime);
@@ -104,8 +109,8 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                 String[] parts = reminderObj.optString("reminderDate").split(" ");
                 etMyReminderAddDate.setText(parts[0]);
                 etMyReminderAddTime.setText(parts[1]);
-                etMyReminderAddRelationType.setText(reminderObj.optJSONObject("occasion").optString("name"));
-                etMyReminderAddRelationType.setTag(reminderObj.optJSONObject("occasion").optString("id"));
+//                etMyReminderAddRelationType.setText(reminderObj.optJSONObject("occasion").optString("name"));
+//                etMyReminderAddRelationType.setTag(reminderObj.optJSONObject("occasion").optString("id"));
                 etMyReminderAddRelation.setText(reminderObj.optString("relation"));
                 etMyReminderName.setText(reminderObj.optString("name"));
                 etMyReminderAddDescription.setText(reminderObj.optString("description"));
@@ -215,15 +220,15 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
             int selectedId = rbMyReminderGroup.getCheckedRadioButtonId();
             RadioButton rB = (RadioButton) findViewById(selectedId);
             int alertTime = (int) rB.getTag();
-//            int isActive = switchMyReminder.isChecked() ? 1 : 0;
-            int isActive =0;
+            int isActive = switchMyReminder.isChecked() ? 1 : 0;
+//            int isActive =0;
             final String tag = "ReminderAdd";
             String url;
             Map<String, String> params = new HashMap<String, String>();
             if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_MYREMINDER) {
                 url = Constants.BASE_URL + "/mobile/reminder/update";
                 params.put("reminderId", reminderObj.optString("id"));
-                params.put("eventId", String.valueOf(Constants.Events.EVENT_ADD_REMINDER));
+                params.put("eventId", String.valueOf(Constants.Events.EVENT_UPDATE_REMINDER));
             }else {
                 url = Constants.BASE_URL + "/mobile/reminder/create";
                 params.put("eventId", String.valueOf(Constants.Events.EVENT_ADD_REMINDER));
@@ -272,10 +277,10 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-//            CommonUtil.showProgressDialog(this, "Wait...");
-//            DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
-//            loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//            GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+            CommonUtil.showProgressDialog(this, "Wait...");
+            DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+            loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
         }
 
     }
@@ -291,10 +296,28 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
         CommonUtil.cancelProgressDialog();
         if (response != null) {
             try {
+                android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_ADD_REMINDER:
-
+                            alert.setTitle("Success!");
+                            alert.setMessage("Reminder Successfully Added.");
+                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    finish();
+                                }
+                            });
+                            alert.show();
+                            break;
+                        case Constants.Events.EVENT_UPDATE_REMINDER:
+                            alert.setTitle("Success!");
+                            alert.setMessage("Reminder Successfully Updated.");
+                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    finish();
+                                }
+                            });
+                            alert.show();
                             break;
                     }
                 } else {

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?><!--  res/drawable/rounded_edittext.xml -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-
+    android:padding="10dp"
     android:shape="rectangle">
-    <solid android:color="@color/tab_idicator" />
+    <solid android:color="@color/textcolorwhite" />
+    <stroke android:color="@color/activity_bg" android:width="2dp"/>
     <corners
         android:bottomLeftRadius="@dimen/corner_radius"
         android:bottomRightRadius="@dimen/corner_radius"

@@ -33,11 +33,12 @@ import com.smartsense.gifkar.utill.DataBaseHelper;
 import com.smartsense.gifkar.utill.RecyclerItemClickListener;
 import com.smartsense.gifkar.utill.SimpleDividerItemDecoration;
 
+import java.util.StringTokenizer;
+
 public class ShopFragment extends Fragment {
 
     //    static JSONArray jsonArray;
-    static RecyclerView recyclerView
-            ;
+    static RecyclerView recyclerView;
     DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
     CommonUtil commonUtil = new CommonUtil();
 
@@ -72,7 +73,10 @@ public class ShopFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
 //                        Log.i("ShopID", String.valueOf());
-                        startActivity(new Intent(getActivity(), ProductListActivity.class).putExtra("ShopID", (Integer) view.getTag()));
+                        String str = (String) view.getTag();
+//                        String[] separated = str.split(" ");
+                        StringTokenizer st = new StringTokenizer(str, " ");
+                        startActivity(new Intent(getActivity(), ProductListActivity.class).putExtra("ShopID", st.nextToken()).putExtra("categoryId", st.nextToken()));
                     }
                 })
         );

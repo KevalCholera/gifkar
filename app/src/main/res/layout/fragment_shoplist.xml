@@ -23,6 +23,7 @@
         android:background="@color/colorPrimary"
         android:fontFamily="normal"
         android:gravity="center"
+        android:singleLine="true"
         android:padding="@dimen/padding_10"
         android:text="@string/greet_text_main"
         android:textColor="@color/textcolorwhite"
@@ -88,10 +89,10 @@
         android:id="@+id/viewpager_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="15dp"
 
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="55dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <!--</LinearLayout>-->

@@ -51,7 +51,9 @@
     <string name="wrn_mno">Enter Mobile No</string>
     <string name="wrn_rco">Enter Refer Code</string>
     <string name="wrn_valid_mno">Enter valid Mobile No</string>
-
+    <string name="wrn_flat">Enter Flat No</string>
+    <string name="wrn_street">Enter Street Name</string>
+    <string name="wrn_land">Enter Landmark</string>
 
     <string name="login">Login</string>
     <string name="signup">Register</string>
@@ -243,13 +245,16 @@
     <string name="noh">No Order History</string>
     <string name="emapty_active_order">Looks like don\'t have any on going orders.</string>
     <string name="emapty_past_order">Looks like don\'t have any on past orders.</string>
+    <string name="emapty_address">Looks like don\'t have any address.</string>
     <string name="emapty_cart_gift">Why don\'t you Gift someone today?</string>
     <string name="emapty_cart">Opps! Cart seems empty.</string>
     <string name="btStartGift">START GIFTING</string>
     <string name="reception_name">Reception Name</string>
+    <string name="wrn_reception_name">Enter Reception Name</string>
     <string name="notificaton_name">Notification Name</string>
     <string name="landmark">Landmark</string>
     <string name="reception_no">Reception Mobile No.</string>
+    <string name="wrn_reception_no">Enter Reception Mobile No.</string>
     <string name="info">Info</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
@@ -343,4 +348,6 @@
     <string name="cancel">CANCEL</string>
     <string name="send">SEND</string>
     <string name="title_activity_maps">Map</string>
+    <string name="nodelivery">No Delivery Addresses</string>
+    <string name="noreminder">No Reminders</string>
 </resources>

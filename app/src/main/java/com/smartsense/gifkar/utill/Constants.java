@@ -111,6 +111,10 @@ public class Constants {
         public static final int EVENT_BOTTOM = 32;
         public static final int EVENT_SHOPLIST = 33;
         public static final int EVENT_PINCODE = 34;
+        public static final int EVENT_PRODLIST = 35;
+        public static final int EVENT_GET_REMINDER = 36;
+        public static final int EVENT_UPDATE_REMINDER = 37;
+        public static final int EVENT_DEL_REMINDER = 38;
     }
 
     public class ErrorCode {

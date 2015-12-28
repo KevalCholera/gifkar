@@ -29,6 +29,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_REMOTE_DELIVERY = "remote_delivery";
     public static final String COLUMN_CATEGORY_ID = "category_id";
     public static final String COLUMN_CATEGORY_NAME = "category_name";
+    public static final String COLUMN_TAGS = "tags";
     private static final int DATABASE_VERSION = 1;
 
     public static final String COLUMN_PROD_ID = "productId";
@@ -66,6 +67,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             + COLUMN_CLOSE_AT + " text,  "
             + COLUMN_DELIVERY_TO + " text,  "
             + COLUMN_DELIVERY_FROM + " text,  "
+            + COLUMN_TAGS + " text,  "
             + COLUMN_CATEGORY_ID + " integer,  "
             + COLUMN_CATEGORY_NAME + " text  "
             + ");";

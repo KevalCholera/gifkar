@@ -6,37 +6,78 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/llMyReminders"
+        android:id="@+id/llNoReminder"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/activity_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_25"
-            android:layout_weight="1"
-            android:capitalize="sentences"
-            android:fontFamily="normal"
-            android:text="@string/screen_add_reminder"
-            android:textColor="@android:color/black"
-            android:textSize="20dp" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="@dimen/margin_20"
-            android:background="@drawable/ic_action_plus" />
+            android:background="@drawable/clock" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:fontFamily="normal"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="@string/noreminder"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:fontFamily="normal"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="@string/emapty_address" />
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+            android:id="@+id/btnReminder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@color/mainColor"
+            android:fontFamily="normal"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="ADD REMINDER"
+            android:textColor="@color/textcolorwhite"
+            android:textSize="@dimen/text_size_20" />
 
     </LinearLayout>
 
-
-    <ListView
-        android:id="@+id/lvMyReminders"
+    <LinearLayout
+        android:id="@+id/llMyReminders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_16"></ListView>
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            android:id="@+id/tvMyReminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/activity_bg"
+            android:drawableRight="@drawable/ic_action_plus"
+            android:fontFamily="normal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/padding_8"
+            android:text="@string/screen_add_reminder"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
+
+        <ListView
+            android:id="@+id/lvMyReminders"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_16"></ListView>
+    </LinearLayout>
 </LinearLayout>

@@ -1,29 +1,27 @@
 package com.smartsense.gifkar.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.smartsense.gifkar.GifkarApp;
 import com.smartsense.gifkar.R;
-import com.smartsense.gifkar.utill.Constants;
 
 import org.json.JSONArray;
 
 
 public class NewFeatureAdapter extends PagerAdapter {
 
-    private Context mContext;
+    private Activity mContext;
     private JSONArray mResources;
     ImageLoader imgLoader = GifkarApp.getInstance().getDiskImageLoader();
 
-    public NewFeatureAdapter(Context mContext, JSONArray mResources) {
+    public NewFeatureAdapter(Activity mContext, JSONArray mResources) {
         this.mContext = mContext;
         this.mResources = mResources;
     }

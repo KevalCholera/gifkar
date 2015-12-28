@@ -33,8 +33,9 @@ public class JsonErrorShow {
                 diloagMsgShow(a, msg);
                 break;
             case Constants.ErrorCode.SERVER_ERROR:
-                a.startActivity(new Intent(a, GifkarActivity.class));
-                a.finish();
+//                a.startActivity(new Intent(a, GifkarActivity.class));
+//                a.finish();
+                diloagMsgShow(a, msg);
                 break;
 //            case Constants.ErrorCode.UNVERIFIED:
 //                diloagMsgShow(a, msg);

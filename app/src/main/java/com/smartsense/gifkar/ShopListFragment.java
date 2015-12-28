@@ -127,6 +127,12 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                 if (catJson.has("shops")) {
                     for (int j = 0; j < catJson.optJSONArray("shops").length(); j++) {
                         JSONObject prodJson = catJson.optJSONArray("shops").optJSONObject(j);
+                        String str = "";
+                        if (prodJson.optJSONArray("tags").length() > 0) {
+                            for (int l = 0; l < prodJson.optJSONArray("tags").length(); l++) {
+                                str = str + ((l == 0 ? "" : ", ") + prodJson.optJSONArray("tags").optJSONObject(l).opt("name"));
+                            }
+                        }
                         ContentValues values = new ContentValues();
                         values.put(DataBaseHelper.COLUMN_SHOP_ID, prodJson.optString("id"));
                         values.put(DataBaseHelper.COLUMN_SHOP_NAME, prodJson.optString("name"));
@@ -142,6 +148,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                         values.put(DataBaseHelper.COLUMN_DELIVERY_FROM, prodJson.optString("deliveryFrom"));
                         values.put(DataBaseHelper.COLUMN_DELIVERY_TO, prodJson.optString("deliveryTo"));
                         values.put(DataBaseHelper.COLUMN_REMOTE_DELIVERY, prodJson.optString("remoteArea"));
+                        values.put(DataBaseHelper.COLUMN_TAGS, str.toString());
                         values.put(DataBaseHelper.COLUMN_CATEGORY_ID, catJson.optString("id"));
                         values.put(DataBaseHelper.COLUMN_CATEGORY_NAME, catJson.optString("name"));
                         commonUtil.insert(dbHelper, DataBaseHelper.TABLE_SHOP, values);
