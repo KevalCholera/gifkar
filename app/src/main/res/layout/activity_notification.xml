@@ -19,12 +19,12 @@
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10"
+            android:layout_margin="@dimen/margin_5"
             android:fontFamily="normal"
             android:gravity="center"
             android:padding="@dimen/padding_8"
             android:text="@string/notification_msg"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_16"
             android:textStyle="bold" />
 
     </LinearLayout>

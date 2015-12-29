@@ -3,20 +3,19 @@ package com.smartsense.gifkar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Checkout2Activity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView btBack;
-    LinearLayout llChackout2DelAddress;
+    TextView llChackout2DelAddress;
     private TextView tvCheckoutTotal;
     private TextView tvCheckoutPayable;
     private TextView tvCheckoutShipping;
@@ -42,8 +41,8 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_checkout2);
-        llChackout2DelAddress= (LinearLayout) v.findViewById(R.id.llChackout2DelAddress);
-        llChackout2DelAddress.setOnClickListener(this);
+        tvChackout2DelAddress= (TextView) v.findViewById(R.id.tvChackout2DelAddress);
+//        tvChackout2DelAddress.setOnClickListener(this);
         tvChackout2DelAddress= (TextView) findViewById(R.id.tvChackout2DelAddress);
         tvCheckoutTotal = (TextView) findViewById(R.id.tvChackout2Total);
         tvCheckoutPayable = (TextView) findViewById(R.id.tvChackout2Payable);
@@ -93,7 +92,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
             case R.id.btActionBarBack:
                 finish();
                 break;
-            case R.id.llChackout2DelAddress:
+            case R.id.tvChackout2DelAddress:
                 startActivity(new Intent(this, MyAddressActivity.class));
                 break;
             default:

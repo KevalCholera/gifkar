@@ -228,6 +228,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
             if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_MYREMINDER) {
                 url = Constants.BASE_URL + "/mobile/reminder/update";
                 params.put("reminderId", reminderObj.optString("id"));
+                params.put("flag", "all");
                 params.put("eventId", String.valueOf(Constants.Events.EVENT_UPDATE_REMINDER));
             }else {
                 url = Constants.BASE_URL + "/mobile/reminder/create";

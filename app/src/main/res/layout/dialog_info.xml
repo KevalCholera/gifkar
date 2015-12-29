@@ -1,34 +1,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/llMyAddress"
+
+    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@color/activity_bg"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:fontFamily="normal"
+        android:padding="@dimen/padding_16"
+        android:text="@string/info"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16dp" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_25"
-            android:layout_weight="1"
-            android:fontFamily="normal"
-            android:text="@string/info"
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
-
-    </LinearLayout>
 
     <com.smartsense.gifkar.textstyleutil.TypefaceTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_25"
         android:fontFamily="normal"
-        android:text="@string/greet_text_main" />
+        android:text="@string/greet_text_main"
+        android:textSize="@dimen/text_12" />
 </LinearLayout>

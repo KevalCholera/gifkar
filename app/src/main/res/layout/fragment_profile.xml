@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-
     android:padding="@dimen/margin_5">
 
     <LinearLayout
@@ -26,22 +25,23 @@
                 android:layout_margin="@dimen/margin_5"
                 android:background="@drawable/edittext_round"
                 android:ems="10"
+                android:enabled="false"
                 android:fontFamily="normal"
                 android:hint="@string/email1"
-                android:padding="@dimen/padding_8"
+                android:padding="@dimen/padding_5"
                 android:textColorHighlight="@android:color/white"
-                android:textColorHint="@color/edittext_hint_color" />
+                android:textColorHint="@color/edittext_hint_color"
+                android:textSize="@dimen/text_16" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-                android:fontFamily="normal"
                 android:id="@+id/tVProfileVerified"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginTop="5dp"
+                android:layout_gravity="right|center_vertical"
                 android:layout_marginRight="8dp"
-                android:drawablePadding="@dimen/padding_2"
                 android:drawableLeft="@drawable/unverified"
+                android:drawablePadding="@dimen/padding_2"
+                android:fontFamily="normal"
                 android:gravity="center"
                 android:text="Unverified"
                 android:textColor="@color/red" />
@@ -64,9 +64,10 @@
                 android:ems="10"
                 android:fontFamily="normal"
                 android:hint="@string/full_name"
-                android:padding="@dimen/padding_8"
+                android:padding="@dimen/padding_5"
                 android:textColorHighlight="@android:color/white"
-                android:textColorHint="@color/edittext_hint_color" />
+                android:textColorHint="@color/edittext_hint_color"
+                android:textSize="@dimen/text_16" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceEditText
                 android:id="@+id/etProfileLastName"
@@ -78,9 +79,10 @@
                 android:ems="10"
                 android:fontFamily="normal"
                 android:hint="@string/last_name"
-                android:padding="@dimen/padding_8"
+                android:padding="@dimen/padding_5"
                 android:textColorHighlight="@android:color/white"
-                android:textColorHint="@color/edittext_hint_color" />
+                android:textColorHint="@color/edittext_hint_color"
+                android:textSize="@dimen/text_16" />
         </LinearLayout>
 
         <com.smartsense.gifkar.textstyleutil.TypefaceEditText
@@ -91,10 +93,13 @@
             android:background="@drawable/edittext_round"
             android:ems="10"
             android:fontFamily="normal"
+            android:clickable="true"
+            android:focusable="false"
             android:hint="@string/dob"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
         <RadioGroup
             android:id="@+id/rbProfileGroup"
@@ -107,14 +112,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="normal"
-                android:text="Male" />
+                android:padding="@dimen/padding_5"
+                android:text="Male"
+                android:checked="true"
+                android:textSize="@dimen/text_16" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceRadioButton
                 android:id="@+id/rbProfileFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="normal"
-                android:text="Female" />
+                android:padding="@dimen/padding_5"
+                android:text="Female"
+                android:textSize="@dimen/text_16" />
         </RadioGroup>
 
         <com.smartsense.gifkar.textstyleutil.TypefaceButton
@@ -126,9 +136,9 @@
             android:fontFamily="normal"
             android:text="@string/update"
             android:textColor="@color/textcolorwhite"
-            android:textSize="@dimen/text_size_20" />
+            android:textSize="@dimen/text_16" />
 
 
-</LinearLayout>
+    </LinearLayout>
 
 </ScrollView>

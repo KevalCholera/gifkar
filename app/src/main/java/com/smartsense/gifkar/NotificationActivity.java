@@ -1,22 +1,40 @@
 package com.smartsense.gifkar;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.smartsense.gifkar.adapter.NotificationAdapter;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.mpt.storage.SharedPreferenceUtil;
+import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.Constants;
+import com.smartsense.gifkar.utill.DataRequest;
+import com.smartsense.gifkar.utill.JsonErrorShow;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class NotificationActivity extends Fragment implements View.OnClickListener {
+import java.util.HashMap;
+import java.util.Map;
+
+public class NotificationActivity extends Fragment implements View.OnClickListener, Response.Listener<JSONObject>,
+        Response.ErrorListener {
     ImageView btBack;
     private LinearLayout llNotification;
     private ListView lvNotification;
@@ -33,13 +51,14 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
         btSearch.setVisibility(View.INVISIBLE);
         lvNotification = (ListView) view.findViewById(R.id.lvNotification);
         llNotification = (LinearLayout) view.findViewById(R.id.llNotification);
-        String temp = "{ \"eventId\" : 123,   \"errorCode\" : 0,   \"status\" : 200,   \"message\" : \"Address list.\", \"data\" :  { \"deliveryAddresses\" : [ { \"recipientName\" : \"raju bhai\",  \"recipientContact\" : \"98989898\", \"address\" : \"titanium city center\",  \"landmark\" : \"sachin tower\", \"isActive\" : \"1\",   \"area\" : { \"id\" : \"1\",   \"name\" : \"Prahlad nagar\" } },  { \"recipientName\" : \"raju bhai\",   \"recipientContact\" : \"98989898\",  \"address\" : \"titanium city center\",    \"landmark\" : \"sachin tower\",  \"isActive\" : \"1\",  \"area\" : { \"id\" : \"1\" , \"name\" : \"Prahlad nagar\" } } ] } }";
-        try {
-            JSONObject notification = new JSONObject(temp);
-            notificationFill(notification);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        getNotification();
+//        String temp = "{ \"eventId\" : 123,   \"errorCode\" : 0,   \"status\" : 200,   \"message\" : \"Address list.\", \"data\" :  { \"deliveryAddresses\" : [ { \"recipientName\" : \"raju bhai\",  \"recipientContact\" : \"98989898\", \"address\" : \"titanium city center\",  \"landmark\" : \"sachin tower\", \"isActive\" : \"1\",   \"area\" : { \"id\" : \"1\",   \"name\" : \"Prahlad nagar\" } },  { \"recipientName\" : \"raju bhai\",   \"recipientContact\" : \"98989898\",  \"address\" : \"titanium city center\",    \"landmark\" : \"sachin tower\",  \"isActive\" : \"1\",  \"area\" : { \"id\" : \"1\" , \"name\" : \"Prahlad nagar\" } } ] } }";
+//        try {
+//            JSONObject notification = new JSONObject(temp);
+//            notificationFill(notification);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
         return  view;
     }
 
@@ -63,4 +82,153 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
         }
 
     }
+
+    public void deleteNotification(String id) {
+        final String tag = "delreminder";
+        String url = Constants.BASE_URL + "/mobile/userNotification/delete";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("userNotificationId", id);
+        params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_DEL_REMINDER));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        Log.i("params", params.toString());
+        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+    public void getNotification() {
+        final String tag = "notification";
+        String url = Constants.BASE_URL + "/mobile/userNotification/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&userToken=" + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "") + "&eventId=" + String.valueOf(Constants.Events.EVENT_GET_NOTIFICATION);
+        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        CommonUtil.alertBox(getActivity(), "", getResources().getString(R.string.nointernet_try_again_msg));
+        CommonUtil.cancelProgressDialog();
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        CommonUtil.cancelProgressDialog();
+        if (response != null) {
+            try {
+                if (response.getInt("status") == Constants.STATUS_SUCCESS) {
+                    switch (Integer.valueOf(response.getString("eventId"))) {
+                        case Constants.Events.EVENT_GET_REMINDER:
+                            notificationFill(response);
+                            break;
+                        case Constants.Events.EVENT_DEL_REMINDER:
+                            getNotification();
+                            break;
+                    }
+                } else {
+                    JsonErrorShow.jsonErrorShow(response, getActivity());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public class NotificationAdapter extends BaseAdapter implements View.OnClickListener {
+        JSONArray dataArray;
+        private LayoutInflater inflater;
+        Activity activity;
+
+        public NotificationAdapter(Activity activity, JSONArray dataArray, Boolean check) {
+            this.activity = activity;
+            this.dataArray = dataArray;
+            inflater = LayoutInflater.from(activity);
+        }
+
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return dataArray.length();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return dataArray.optJSONObject(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup parent) {
+            final ViewHolder holder;
+            if (view == null) {
+                holder = new ViewHolder();
+                view = inflater.inflate(R.layout.element_my_address, parent, false);
+                // TODO Auto-generated method stub
+                holder.tvTitle = (TextView) view.findViewById(R.id.tvMyAddressElementName);
+                holder.tvDec = (TextView) view.findViewById(R.id.tvMyAddressElementNo);
+                holder.ivDelete = (ImageView) view.findViewById(R.id.ivMyAddressElementAddressDelete);
+                view.setTag(holder);
+            } else {
+                holder = (ViewHolder) view.getTag();
+            }
+            JSONObject notificationObj = dataArray.optJSONObject(position);
+            if (notificationObj.optString("isSeen").equals("0"))
+                view.setBackgroundColor(activity.getResources().getColor(R.color.activity_bg));
+            else
+                view.setBackgroundColor(activity.getResources().getColor(R.color.textcolorwhite));
+            holder.tvTitle.setText(notificationObj.optJSONObject("notification").optString("subject"));
+            holder.tvDec.setText(notificationObj.optJSONObject("notification").optString("message"));
+            holder.ivDelete.setOnClickListener(this);
+            holder.ivDelete.setTag(notificationObj.toString());
+            return view;
+        }
+
+        class ViewHolder {
+            TextView tvTitle;
+            TextView tvDec;
+            ImageView ivDelete;
+        }
+
+        @Override
+        public void onClick(final View view) {
+            switch (view.getId()) {
+                case R.id.ivMyAddressElementAddressDelete:
+                    AlertDialog.Builder alertbox = new AlertDialog.Builder(activity);
+                    alertbox.setCancelable(true);
+                    alertbox.setMessage("Are you sure you want to delete ?");
+                    alertbox.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            JSONObject objReminder = null;
+                            try {
+                                objReminder = new JSONObject((String) view.getTag());
+                                deleteNotification(objReminder.optString("id"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    });
+                    alertbox.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+
+                        }
+                    });
+                    alertbox.show();
+                    break;
+            }
+        }
+
+    }
+
 }

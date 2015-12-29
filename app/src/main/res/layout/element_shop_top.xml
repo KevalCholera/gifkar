@@ -32,7 +32,7 @@
                 android:layout_margin="@dimen/margin_5"
                 android:text="4.4"
                 android:gravity="center"
-                android:textSize="@dimen/text_18"
+                android:textSize="@dimen/text_16"
                 android:textColor="@color/textcolorwhite"
                 android:fontFamily="normal" />
 
@@ -45,7 +45,8 @@
                 android:text="RATINGS"
                 android:gravity="center"
                 android:textColor="@color/textcolorwhite"
-                android:drawablePadding="@dimen/padding_left_8"
+                android:padding="@dimen/padding_5"
+                android:textSize="@dimen/text_16"
                 android:drawableLeft="@drawable/ic_cart" />
         </LinearLayout>
 
@@ -70,7 +71,7 @@
                 android:text="11"
                 android:gravity="center"
                 android:textColor="@color/textcolorwhite"
-                android:textSize="@dimen/text_18"
+                android:textSize="@dimen/text_16"
                 android:fontFamily="normal" />
 
 
@@ -81,6 +82,7 @@
                 android:fontFamily="normal"
                 android:text="RATINGS"
                 android:gravity="center"
+                android:textSize="@dimen/text_16"
                 android:textColor="@color/textcolorwhite"
                 android:drawablePadding="@dimen/padding_left_8"
                 android:drawableLeft="@drawable/address_edit" />

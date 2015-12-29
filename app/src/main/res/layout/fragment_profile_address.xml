@@ -23,9 +23,10 @@
             android:ems="10"
             android:fontFamily="normal"
             android:hint="@string/flat"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
 
         <com.smartsense.gifkar.textstyleutil.TypefaceEditText
@@ -37,9 +38,10 @@
             android:ems="10"
             android:fontFamily="normal"
             android:hint="@string/street"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
 
         <com.smartsense.gifkar.textstyleutil.TypefaceEditText
@@ -51,9 +53,10 @@
             android:ems="10"
             android:fontFamily="normal"
             android:hint="@string/area"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceEditText
             android:id="@+id/etProfileCity"
@@ -64,9 +67,13 @@
             android:ems="10"
             android:fontFamily="normal"
             android:hint="@string/city"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
+            android:focusable="false"
+            android:clickable="true"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:drawableRight="@drawable/down_arrow"
+            android:textSize="@dimen/text_16" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceEditText
             android:id="@+id/etProfileCountry"
@@ -77,9 +84,13 @@
             android:ems="10"
             android:fontFamily="normal"
             android:hint="@string/country"
-            android:padding="@dimen/padding_8"
+            android:clickable="true"
+            android:drawableRight="@drawable/down_arrow"
+            android:focusable="false"
+            android:padding="@dimen/padding_5"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceEditText
             android:id="@+id/etProfilePinCode"
@@ -90,9 +101,11 @@
             android:ems="10"
             android:fontFamily="normal"
             android:hint="@string/pin"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
+            android:inputType="number"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceButton
             android:id="@+id/btnProfileAddAddress"
@@ -102,8 +115,9 @@
             android:background="@color/mainColor"
             android:fontFamily="normal"
             android:text="@string/add_address"
+            android:padding="@dimen/padding_5"
             android:textColor="@color/textcolorwhite"
-            android:textSize="@dimen/text_size_20" />
+            android:textSize="@dimen/text_16" />
 
 
     </LinearLayout>

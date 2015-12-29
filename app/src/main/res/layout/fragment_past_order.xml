@@ -19,12 +19,12 @@
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10"
+            android:layout_margin="@dimen/margin_5"
             android:fontFamily="normal"
             android:gravity="center"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_16"
             android:text="@string/noh"
-            android:textSize="20sp"
             android:textStyle="bold" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -32,21 +32,22 @@
             android:layout_height="wrap_content"
             android:fontFamily="normal"
             android:gravity="center"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_12"
             android:text="@string/emapty_past_order" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceButton
             android:id="@+id/btnPastStartGifiting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10"
+            android:layout_margin="@dimen/margin_5"
             android:background="@color/mainColor"
             android:fontFamily="normal"
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
             android:text="@string/btStartGift"
             android:textColor="@color/textcolorwhite"
-            android:textSize="@dimen/text_size_20" />
+            android:textSize="@dimen/text_16" />
 
     </LinearLayout>
 
@@ -54,7 +55,6 @@
         android:id="@+id/lvPastOrders"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </LinearLayout>
 

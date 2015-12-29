@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -74,7 +73,7 @@
             android:padding="@dimen/padding_8"
             android:text="@string/screen_add_address"
             android:textColor="@android:color/black"
-            android:textSize="20dp" />
+            android:textSize="16dp" />
 
         <ListView
             android:id="@+id/lvMyAddress"

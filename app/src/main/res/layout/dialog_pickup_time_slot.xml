@@ -5,32 +5,26 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/llMyAddress"
+
+    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:background="@color/mainColor"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:fontFamily="normal"
+        android:padding="@dimen/padding_16"
+        android:text="@string/pickup_time"
+        android:textColor="@color/textcolorwhite"
+        android:textSize="16dp" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_25"
-            android:layout_weight="1"
-            android:fontFamily="normal"
-            android:text="@string/pickup_time"
-            android:textColor="@color/textcolorwhite"
-            android:textSize="20dp" />
-
-    </LinearLayout>
 
     <com.smartsense.gifkar.textstyleutil.TypefaceTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_25"
         android:fontFamily="normal"
-        android:text="Today - 16 Nov 2015" />
+        android:padding="@dimen/padding_5"
+        android:text="Today - 16 Nov 2015"
+        android:textSize="@dimen/text_12" />
 
     <View
         android:layout_width="match_parent"
@@ -43,8 +37,10 @@
         android:layout_margin="@dimen/margin_25"
         android:fontFamily="normal"
         android:gravity="center"
+        android:padding="@dimen/padding_5"
         android:text="Select a delivery time"
-        android:textColor="@color/textcolorblack" />
+        android:textColor="@color/textcolorblack"
+        android:textSize="@dimen/text_16" />
 
     <RadioGroup
         android:id="@+id/rgPickUp"
@@ -54,29 +50,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/activity_bg"
         android:gravity="right"
         android:orientation="horizontal">
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:id="@+id/tvPickupCancel"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/margin_10"
-            android:gravity="center_vertical"
-            android:padding="@dimen/padding_10"
             android:fontFamily="normal"
+            android:gravity="center_vertical|right"
+            android:padding="@dimen/padding_16"
             android:text="CANCEL" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:id="@+id/tvPickupSet"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:layout_marginRight="@dimen/margin_10"
-            android:padding="@dimen/padding_10"
             android:fontFamily="normal"
+            android:gravity="center_vertical|right"
+            android:padding="@dimen/padding_16"
             android:text="SET" />
     </LinearLayout>
 </LinearLayout>

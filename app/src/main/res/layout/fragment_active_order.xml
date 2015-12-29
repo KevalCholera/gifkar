@@ -19,12 +19,12 @@
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10"
+            android:layout_margin="@dimen/margin_5"
             android:fontFamily="normal"
             android:gravity="center"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
             android:text="@string/noh"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_16"
             android:textStyle="bold" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -32,17 +32,17 @@
             android:layout_height="wrap_content"
             android:fontFamily="normal"
             android:gravity="center"
-            android:padding="@dimen/padding_8"
-            android:text="@string/emapty_active_order" />
+            android:padding="@dimen/padding_5"
+            android:text="@string/emapty_active_order"
+            android:textSize="@dimen/text_12" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceButton
             android:id="@+id/btnActiveStartGifiting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10"
+            android:layout_margin="@dimen/margin_5"
             android:background="@color/mainColor"
             android:fontFamily="normal"
-
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
             android:text="@string/btStartGift"

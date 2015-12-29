@@ -15,18 +15,19 @@
         android:fontFamily="normal"
         android:text="@string/your_order"
         android:textColor="@color/colorPrimary"
-        android:textSize="20dp" />
+        android:textSize="16dp" />
 
 
     <com.smartsense.gifkar.textstyleutil.TypefaceEditText
         android:id="@+id/etEmailDialogEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_20"
+        android:layout_margin="@dimen/margin_10"
         android:background="@drawable/edittext_round"
         android:fontFamily="normal"
         android:hint="@string/email1"
-        android:padding="@dimen/padding_16"
+        android:padding="@dimen/padding_5"
+        android:textSize="@dimen/text_16"
         android:textColorHighlight="@android:color/white"
         android:textColorHint="@color/edittext_hint_color" />
 
@@ -34,7 +35,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_20"
+        android:layout_margin="@dimen/margin_10"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -45,6 +46,7 @@
             android:layout_weight="1"
             android:background="@color/mainColor"
             android:text="@string/send"
+            android:textSize="@dimen/text_16"
             android:textColor="@color/textcolorwhite" />
 
         <View
@@ -59,6 +61,7 @@
             android:layout_weight="1"
             android:background="@color/mainColor"
             android:text="@string/cancel"
+            android:textSize="@dimen/text_16"
             android:textColor="@color/textcolorwhite" />
     </LinearLayout>
 </LinearLayout>

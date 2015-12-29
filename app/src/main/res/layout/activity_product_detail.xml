@@ -47,7 +47,7 @@
                 android:fontFamily="normal"
                 android:text="@string/prod_name"
                 android:textStyle="bold"
-                android:textSize="@dimen/text_18" />
+                android:textSize="@dimen/text_16" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                 android:id="@+id/tvProdDetailRs"
@@ -82,6 +82,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:text="@string/total_quntity"
+                android:textSize="@dimen/text_16"
                 android:textColor="@color/textcolorblack" />
 
             <ImageButton
@@ -129,6 +130,7 @@
                     android:gravity="right"
                     android:padding="@dimen/padding_8"
                     android:text="@string/unit_name"
+                    android:textSize="@dimen/text_16"
                     android:textColor="@color/colorPrimary" />
 
                 <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -137,6 +139,7 @@
                     android:fontFamily="normal"
                     android:gravity="right"
                     android:padding="@dimen/padding_8"
+                    android:textSize="@dimen/text_16"
                     android:text="@string/description"
                     android:textColor="@color/colorPrimary" />
 
@@ -153,11 +156,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="normal"
+                    android:textSize="@dimen/text_16"
                     android:padding="@dimen/padding_8"
                     android:text="@string/prod_name" />
 
                 <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                     android:id="@+id/tvProdDetailDes"
+                    android:textSize="@dimen/text_16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="normal"
@@ -170,88 +175,68 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/llProdDetailBottom"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
         android:background="@color/colorPrimary"
         android:gravity="center"
         android:orientation="horizontal"
         android:translationZ="10000dp">
 
-        <LinearLayout
+
+        <RelativeLayout
             android:id="@+id/llProdDetailCart"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:clickable="true"
             android:background="@color/colorPrimary"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/padding_8">
+            android:visibility="visible">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:visibility="visible">
-
-                <TextView
-                    android:id="@+id/tvTotalQtyProduct"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="@dimen/padding_5"
-                    android:drawableRight="@drawable/ic_cart_large"
-                    android:gravity="center"
-                    android:padding="@dimen/padding_5"
-                    android:textColor="@color/textcolorwhite"
-                    android:textSize="@dimen/text_16" />
-
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-                    android:id="@+id/tvProdDetailCartCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@id/tvTotalQtyProduct"
-                    android:layout_alignTop="@id/tvTotalQtyProduct"
-                    android:background="@drawable/badge_circle"
-                    android:fontFamily="normal"
-                    android:text="10"
-                    android:textColor="@color/mainColor"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <TextView
                 android:id="@+id/tvProdDetailCartRs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_10"
-                android:fontFamily="normal"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/padding_5"
+                android:drawableLeft="@drawable/ic_cart_large"
+                android:drawablePadding="@dimen/padding_16"
                 android:gravity="center"
+                android:padding="@dimen/padding_5"
                 android:text="100"
                 android:textColor="@color/textcolorwhite"
                 android:textSize="@dimen/text_16" />
 
-        </LinearLayout>
+            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                android:id="@+id/tvProdDetailCartCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tvProdDetailCartRs"
+                android:layout_alignTop="@id/tvProdDetailCartRs"
+                android:layout_marginLeft="@dimen/margin_25"
+                android:background="@drawable/badge_circle"
+                android:fontFamily="bold"
+                android:text="10"
+                android:textColor="@color/mainColor"
+                android:textSize="16sp" />
+        </RelativeLayout>
 
-        <LinearLayout
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceButton
             android:id="@+id/llProdDetailCheckOut"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
+            android:drawableRight="@drawable/ic_right_arrow"
+            android:fontFamily="normal"
             android:gravity="center"
-            android:orientation="vertical">
+            android:text="@string/checkout"
+            android:textColor="@color/textcolorwhite"
+            android:textSize="@dimen/text_16" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableRight="@drawable/ic_right_arrow"
-                android:fontFamily="normal"
-                android:gravity="center"
-                android:text="@string/checkout"
-                android:textColor="@color/textcolorwhite"
-                android:textSize="@dimen/text_16" />
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

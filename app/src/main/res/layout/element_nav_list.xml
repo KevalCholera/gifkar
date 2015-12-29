@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/margin_5"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="@dimen/padding_5">
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/iv_menuicon_drawer"
@@ -16,24 +15,26 @@
         android:src="@drawable/ic_login" />
 
     <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-        android:fontFamily="normal"
         android:id="@+id/tv_menuname_drawer"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/left_margin"
         android:layout_marginStart="@dimen/left_margin"
         android:layout_weight="2"
+        android:fontFamily="normal"
+        android:gravity="center_vertical"
         android:padding="@dimen/padding_8"
-        android:text="@string/mobile" />
+        android:text="@string/mobile"
+        android:textSize="@dimen/text_12" />
 
     <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-        android:fontFamily="normal"
         android:id="@+id/tv_menucount_drawer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/left_margin"
         android:layout_marginRight="@dimen/left_margin"
         android:background="@drawable/button_blue_back"
+        android:fontFamily="normal"
         android:padding="@dimen/padding_8"
         android:text="1"
         android:textColor="@android:color/white"
@@ -43,8 +44,8 @@
         android:id="@+id/viewLine"
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_weight="1"
         android:layout_margin="@dimen/margin_10"
-        android:visibility="gone"
-        android:background="@color/activity_bg" />
+        android:layout_weight="1"
+        android:background="@color/activity_bg"
+        android:visibility="gone" />
 </LinearLayout>

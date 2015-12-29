@@ -44,7 +44,7 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
     Button btnReminder;
     LinearLayout llMyReminder, llNoMyReminder;
     private ImageView btBack, btInfo;
-
+    Fragment fragment = this;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.activity_my_reminders, container, false);
@@ -153,7 +153,7 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
                             myReminderFill(response);
                             break;
                         case Constants.Events.EVENT_DEL_REMINDER:
-//                            getReminder();
+                            getReminder();
                             break;
                     }
                 } else {
@@ -272,7 +272,7 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
                     alertbox.show();
                     break;
                 case R.id.ivMyReminderElementEdit:
-                    activity.startActivity(new Intent(activity, AddRemindersActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_MYREMINDER).putExtra("Reminder", (String) view.getTag()));
+                    fragment.startActivityForResult(new Intent(activity, AddRemindersActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_MYREMINDER).putExtra("Reminder", (String) view.getTag()),0);
                     break;
             }
         }

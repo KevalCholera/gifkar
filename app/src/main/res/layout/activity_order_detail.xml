@@ -29,7 +29,7 @@
                     android:fontFamily="bold"
                     android:padding="@dimen/padding_8"
                     android:text="@string/order_no"
-                    android:textSize="16dp" />
+                    android:textSize="@dimen/text_14" />
 
                 <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                     android:id="@+id/tvOrderDetailDateTime"
@@ -62,7 +62,7 @@
                 android:padding="@dimen/padding_2"
                 android:text="@string/receiver_info"
                 android:textColor="@color/mainColor"
-                android:textSize="20dp" />
+                android:textSize="@dimen/text_16" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                 android:id="@+id/tvOrderDetailAddress"
@@ -112,7 +112,7 @@
                         android:padding="@dimen/padding_2"
                         android:text="@string/shop_name"
                         android:textColor="@color/black"
-                        android:textSize="20dp" />
+                        android:textSize="@dimen/text_16" />
 
                     <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                         android:id="@+id/tvOrderElementOrderStatus"
@@ -121,7 +121,7 @@
                         android:fontFamily="normal"
                         android:padding="@dimen/padding_2"
                         android:text="@string/delivery_status"
-                        android:textSize="16dp" />
+                        android:textSize="12dp" />
                 </LinearLayout>
 
                 <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -132,7 +132,7 @@
                     android:fontFamily="normal"
                     android:gravity="right"
                     android:text="@string/items"
-                    android:textSize="16dp" />
+                    android:textSize="12dp" />
 
             </LinearLayout>
 
@@ -151,6 +151,7 @@
                     android:background="@drawable/borderwhite"
                     android:drawableTop="@drawable/accepted_unfill"
                     android:gravity="center"
+                    android:textSize="@dimen/text_12"
                     android:text="ACCEPTED" />
 
                 <ImageView
@@ -160,6 +161,7 @@
                     android:layout_marginLeft="-18dp"
                     android:layout_marginRight="-18dp"
                     android:layout_weight="1"
+                    android:textSize="@dimen/text_12"
                     android:background="@drawable/dashline" />
 
                 <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -169,6 +171,7 @@
                     android:background="@drawable/borderwhite"
                     android:drawableTop="@drawable/in_progress_unfill"
                     android:gravity="center"
+                    android:textSize="@dimen/text_12"
                     android:text="IN PROCESS" />
 
 
@@ -198,6 +201,7 @@
             android:id="@+id/lvOrderDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:layout_margin="10dp" />
 
         <LinearLayout
@@ -215,7 +219,7 @@
                 android:padding="@dimen/padding_2"
                 android:text="@string/sender_info"
                 android:textColor="@color/mainColor"
-                android:textSize="20dp" />
+                android:textSize="@dimen/text_16" />
 
             <LinearLayout
                 android:layout_width="match_parent"

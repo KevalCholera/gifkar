@@ -179,7 +179,6 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
                         case Constants.Events.EVENT_DEL_ADDRESS:
                             getAddress();
                             break;
-
                     }
                 } else {
                     JsonErrorShow.jsonErrorShow(response, this);
@@ -299,7 +298,7 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
                     alertbox.show();
                     break;
                 case R.id.ivMyAddressElementAddressEdit:
-                    activity.startActivity(new Intent(activity, AddAddressActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_MYADDRESS).putExtra("Address", (String) view.getTag()));
+                    activity.startActivityForResult(new Intent(activity, AddAddressActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_MYADDRESS).putExtra("Address", (String) view.getTag()),0);
                     break;
             }
         }

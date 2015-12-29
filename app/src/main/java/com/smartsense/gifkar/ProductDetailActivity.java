@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -28,7 +29,8 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     private TextView tvProdQty;
     private TextView tvProdDetailCartCount;
     private TextView tvProdDetailCartRs;
-    private LinearLayout llProdDetailCart, llProdDetailCheckOut;
+    private Button  llProdDetailCheckOut;
+    RelativeLayout llProdDetailCart;
     DataBaseHelper dbHelper;
     CommonUtil commonUtil = new CommonUtil();
     @Override
@@ -58,9 +60,9 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         ibProdMinus.setOnClickListener(this);
         tvProdDetailCartCount= (TextView) findViewById(R.id.tvProdDetailCartCount);
         tvProdDetailCartRs= (TextView) findViewById(R.id.tvProdDetailCartRs);
-        llProdDetailCart =(LinearLayout) findViewById(R.id.llProdDetailCart);
+        llProdDetailCart =(RelativeLayout) findViewById(R.id.llProdDetailCart);
         llProdDetailCart.setOnClickListener(this);
-        llProdDetailCheckOut =(LinearLayout) findViewById(R.id.llProdDetailCheckOut);
+        llProdDetailCheckOut =(Button) findViewById(R.id.llProdDetailCheckOut);
         llProdDetailCheckOut.setOnClickListener(this);
 
         Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM "+ DataBaseHelper.TABLE_PRODUCT+"  WHERE "+DataBaseHelper.COLUMN_PROD_DETAIL_ID+" = '"

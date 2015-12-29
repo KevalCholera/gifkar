@@ -13,8 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -45,8 +47,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     private TabLayout tabLayout;
     DataBaseHelper dbHelper;
     CommonUtil commonUtil = new CommonUtil();
-    private LinearLayout llProdCheckOut;
-    private LinearLayout llProdCart;
+    private Button llProdCheckOut;
+    private RelativeLayout llProdCart;
     private static TextView tvProdCartRs;
     private static TextView tvProdCartCount;
     private static LinearLayout llProdBottom;
@@ -81,10 +83,10 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         tabLayout.setTabTextColors(getResources().getColor(R.color.tab_normal_text), getResources().getColor(R.color.tab_idicator));
         tvProdCartCount = (TextView) findViewById(R.id.tvProdListCartCount);
         tvProdCartRs = (TextView) findViewById(R.id.tvProdListCartRs);
-        llProdCart = (LinearLayout) findViewById(R.id.llProdListCart);
+        llProdCart = (RelativeLayout) findViewById(R.id.llProdListCart);
         llProdCart.setOnClickListener(this);
         llProdBottom = (LinearLayout) findViewById(R.id.llProdListBottom);
-        llProdCheckOut = (LinearLayout) findViewById(R.id.llProdListCheckOut);
+        llProdCheckOut = (Button) findViewById(R.id.llProdListCheckOut);
         llProdCheckOut.setOnClickListener(this);
         getProductList(getIntent().getStringExtra("ShopID"),getIntent().getStringExtra("categoryId"));
         getCartItem();

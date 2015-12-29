@@ -9,18 +9,18 @@
     <LinearLayout
         android:id="@+id/llMyAddress"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:background="@color/activity_bg"
         android:gravity="center_vertical"
-        android:padding="@dimen/padding_10"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_10">
 
         <ImageView
             android:id="@+id/ivReviewUser"
             android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginLeft="@dimen/margin_10"
-            android:background="@drawable/ic_user"
-            android:layout_height="50dp" />
+            android:background="@drawable/ic_user" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:id="@+id/tvReviewUserName"
@@ -32,7 +32,7 @@
             android:fontFamily="normal"
             android:text="@string/review_user"
             android:textColor="@color/mainColor"
-            android:textSize="20dp" />
+            android:textSize="16dp" />
 
     </LinearLayout>
 
@@ -60,7 +60,8 @@
             android:hint="@string/write_review"
             android:padding="@dimen/padding_10"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_12" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceButton
             android:id="@+id/btnReviewAdd"
@@ -71,7 +72,7 @@
             android:fontFamily="normal"
             android:text="@string/submit"
             android:textColor="@color/textcolorwhite"
-            android:textSize="@dimen/text_size_20" />
+            android:textSize="@dimen/text_16" />
     </LinearLayout>
 
 </LinearLayout>

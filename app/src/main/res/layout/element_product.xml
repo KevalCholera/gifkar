@@ -14,7 +14,7 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_weight="1"
@@ -27,10 +27,11 @@
             android:layout_height="wrap_content"
             android:fontFamily="normal"
             android:paddingBottom="@dimen/padding_8"
+            android:layout_marginTop="@dimen/margin_5"
             android:singleLine="true"
             android:text="Shop Name"
             android:textColor="@color/textcolor"
-            android:textSize="@dimen/text_12"
+            android:textSize="@dimen/text_16"
             android:textStyle="bold" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -40,7 +41,7 @@
             android:fontFamily="normal"
             android:text="Eggless"
             android:textColor="@color/textcolor"
-            android:textSize="@dimen/text_10" />
+            android:textSize="@dimen/text_12" />
 
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -50,7 +51,7 @@
             android:fontFamily="normal"
             android:text="Delivery Time : 10:00AM to 5:00PM"
             android:textColor="@color/textcolor"
-            android:textSize="@dimen/text_10" />
+            android:textSize="@dimen/text_12" />
 
 
     </LinearLayout>
@@ -71,10 +72,11 @@
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                 android:id="@+id/tvProdElementRs"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:fontFamily="normal"
+                android:textSize="@dimen/text_16"
                 android:text="\u20B9 100" />
 
             <ImageButton
@@ -101,8 +103,9 @@
             <TextView
                 android:id="@+id/tvProdElementQty"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:gravity="center"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:text="@string/total_quntity"

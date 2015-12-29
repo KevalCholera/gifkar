@@ -17,7 +17,7 @@
             android:layout_gravity="center"
             android:layout_margin="2dp"
             android:fontFamily="normal"
-
+            android:textSize="@dimen/text_16"
             android:padding="@dimen/padding_8"
             android:text="@string/otp_head"
             android:textColor="@color/mainColor" />
@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:fontFamily="normal"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_12"
             android:text="@string/forgot_text" />
 
         <LinearLayout
@@ -104,8 +105,7 @@
             android:fontFamily="normal"
             android:text="@string/done"
             android:textColor="@color/textcolorwhite"
-            android:textSize="@dimen/text_size_20" />
-
+            android:textSize="@dimen/text_16" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -118,7 +118,8 @@
                 android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:fontFamily="normal"
-                android:padding="@dimen/padding_8"
+                android:padding="@dimen/padding_5"
+                android:textSize="@dimen/text_12"
                 android:text="@string/otp_resend"
                 android:textColor="@color/mainColor" />
 
@@ -137,7 +138,8 @@
                 android:layout_weight="1"
                 android:fontFamily="normal"
                 android:gravity="right"
-                android:padding="@dimen/padding_8"
+                android:padding="@dimen/padding_5"
+                android:textSize="@dimen/text_12"
                 android:text="@string/otp_editno"
                 android:textColor="@color/mainColor" />
         </LinearLayout>

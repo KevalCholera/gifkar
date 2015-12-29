@@ -31,7 +31,7 @@
             android:singleLine="true"
             android:text="Product Name"
             android:textColor="@color/textcolor"
-            android:textSize="@dimen/text_12"
+            android:textSize="@dimen/text_14"
             android:textStyle="bold" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -41,7 +41,7 @@
             android:fontFamily="normal"
             android:text="Eggless"
             android:textColor="@color/textcolor"
-            android:textSize="@dimen/text_10" />
+            android:textSize="@dimen/text_12" />
 
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -51,7 +51,7 @@
             android:fontFamily="normal"
             android:text="Delivery Time : 10:00AM to 5:00PM"
             android:textColor="@color/textcolor"
-            android:textSize="@dimen/text_10" />
+            android:textSize="@dimen/text_12" />
 
 
     </LinearLayout>
@@ -68,10 +68,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="@dimen/padding_10"
             android:fontFamily="normal"
             android:textColor="@color/mainColor"
             android:gravity="center_vertical|bottom"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_16"
             android:text="\u20B9 100" />
 
     </LinearLayout>

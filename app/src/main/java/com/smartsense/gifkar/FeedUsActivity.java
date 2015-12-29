@@ -18,7 +18,8 @@ import com.smartsense.gifkar.utill.CommonUtil;
 public class FeedUsActivity extends Fragment implements View.OnClickListener {
 
     private ImageView btBack;
-    private LinearLayout llRateUs, llEmailUs, llContactUs, llSuggestShop;
+    private LinearLayout llRateUs, llEmailUs, llContactUs;
+    TextView llSuggestShop;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class FeedUsActivity extends Fragment implements View.OnClickListener {
         llRateUs.setOnClickListener(this);
         llEmailUs = (LinearLayout) view.findViewById(R.id.llEmailUs);
         llEmailUs.setOnClickListener(this);
-        llSuggestShop = (LinearLayout) view.findViewById(R.id.llSuggestShop);
+        llSuggestShop = (TextView) view.findViewById(R.id.llSuggestShop);
         llSuggestShop.setOnClickListener(this);
         return view;
     }

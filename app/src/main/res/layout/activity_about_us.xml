@@ -12,10 +12,11 @@
         <LinearLayout
             android:id="@+id/llMyReminders"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@color/activity_bg"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_16">
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                 android:layout_width="0dp"
@@ -26,7 +27,7 @@
                 android:fontFamily="normal"
                 android:text="@string/version_app"
                 android:textColor="@android:color/black"
-                android:textSize="20dp" />
+                android:textSize="@dimen/text_16" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                 android:layout_width="0dp"
@@ -37,7 +38,7 @@
                 android:gravity="right|center_vertical"
                 android:text="@string/app_ver"
                 android:textColor="@android:color/black"
-                android:textSize="20dp" />
+                android:textSize="@dimen/text_16" />
 
         </LinearLayout>
 
@@ -54,10 +55,9 @@
             <com.smartsense.gifkar.utill.CircleImageView1
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-
+                android:layout_marginBottom="@dimen/margin_5"
                 android:layout_marginLeft="@dimen/margin_5"
                 android:layout_marginRight="@dimen/margin_5"
-                android:layout_marginBottom="@dimen/margin_5"
                 android:layout_marginTop="@dimen/margin_10"
                 android:src="@drawable/star" />
 
@@ -75,12 +75,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"
-                        android:fontFamily="normal"
                         android:layout_weight="1"
+                        android:fontFamily="normal"
                         android:padding="@dimen/padding_16"
                         android:text="@string/app_name"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/text_14"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -100,7 +100,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="normal"
-                    android:text="@string/large" />
+                    android:text="@string/large"
+                    android:textSize="@dimen/text_12" />
             </LinearLayout>
         </LinearLayout>
 
@@ -134,12 +135,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"
-                        android:fontFamily="normal"
                         android:layout_weight="1"
+                        android:fontFamily="normal"
                         android:padding="@dimen/padding_16"
                         android:text="@string/help"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/text_14"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -186,12 +187,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"
-                        android:fontFamily="normal"
                         android:layout_weight="1"
+                        android:fontFamily="normal"
                         android:padding="@dimen/padding_16"
                         android:text="@string/faq"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
+                        android:textSize="@dimen/text_14"
+
                         android:textStyle="bold" />
 
                     <ImageView

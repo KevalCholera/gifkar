@@ -19,6 +19,7 @@ public class DateAndTimeUtil {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
     private static final SimpleDateFormat WEEK_DAYS_FORMAT = new SimpleDateFormat("EEEE", Locale.getDefault());
     private static final SimpleDateFormat SHORT_WEEK_DAYS_FORMAT = new SimpleDateFormat("E", Locale.getDefault());
+    private static final SimpleDateFormat DATE_FORMAT_My = new SimpleDateFormat("y-M-d", Locale.getDefault());
 
     public static String toStringTime(Calendar calendar) {
         return TIME_FORMAT.format(calendar.getTime());
@@ -26,6 +27,10 @@ public class DateAndTimeUtil {
 
     public static String toStringDate(Calendar calendar) {
         return DATE_FORMAT.format(calendar.getTime());
+    }
+
+    public static String toStringDateMy(Calendar calendar) {
+        return DATE_FORMAT_My.format(calendar.getTime());
     }
 
     public static String toStringReadableDate(Calendar calendar) {

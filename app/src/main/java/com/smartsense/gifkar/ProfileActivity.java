@@ -13,12 +13,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.utill.CircleImageView;
+import com.smartsense.gifkar.utill.Constants;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     ImageView btBack;
-    TextView tvName,tvMobile,tvVerified;
+    TextView tvName, tvMobile, tvVerified;
     CircleImageView ivProfileImage;
+    ImageLoader imageLoader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,11 +40,35 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
-        tvMobile=(TextView) findViewById(R.id.tVProfileMobileNo);
-        tvName=(TextView) findViewById(R.id.tvProfileName);
-        tvVerified=(TextView) findViewById(R.id.tVProfileVerified);
-        ivProfileImage=(CircleImageView) findViewById(R.id.ivProfileImage);
+        tvMobile = (TextView) findViewById(R.id.tVProfileMobileNo);
+        tvName = (TextView) findViewById(R.id.tvProfileName);
+        tvVerified = (TextView) findViewById(R.id.tVProfileVerified);
+        ivProfileImage = (CircleImageView) findViewById(R.id.ivProfileImage);
+        imageLoader = GifkarApp.getInstance().getDiskImageLoader();
+        try {
+            JSONObject userInfo = new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_INFO, ""));
+            userInfo=userInfo.optJSONObject("userDetails");
+            ivProfileImage.setImageUrl(Constants.BASE_URL + "/images/users/" + userInfo.optString("image"), imageLoader);
+            tvName.setText(userInfo.optString("firstName") + " " + userInfo.optString("lastName"));
+            tvMobile.setText(userInfo.optString("mobile"));
+            if (userInfo.optString("mobile").equalsIgnoreCase("")){
+                tvVerified.setVisibility(View.GONE);
+                tvMobile.setVisibility(View.GONE);}
+            else
+                tvMobile.setText(userInfo.optString("mobile"));
 
+            if (userInfo.optString("isMobileVerified").equalsIgnoreCase("1")) {
+                tvVerified.setText("Verified");
+                tvVerified.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verified, 0);
+            } else {
+                tvVerified.setText("Unverified");
+                tvVerified.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.unverified, 0);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("PROFILE"));
         tabLayout.addTab(tabLayout.newTab().setText("ADDRESS"));
@@ -80,7 +112,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public class ProfilePagerAdapter extends FragmentPagerAdapter {
 
         final int TAB_COUNT = 3;
-        private String[] tabtitles = new String[]{"PROFILE", "ADDRESS","CHANGE PASSWORD"};
+        private String[] tabtitles = new String[]{"PROFILE", "ADDRESS", "CHANGE PASSWORD"};
         private Context context;
 
         public ProfilePagerAdapter(FragmentManager fm, Context context) {

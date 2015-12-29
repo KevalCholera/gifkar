@@ -44,6 +44,7 @@
     <string name="wrn_change_match">Please change password</string>
     <string name="wrn_oldmatch">Old Password didn\'t match</string>
     <string name="wrn_name">Enter Name</string>
+    <string name="wrn_dob">Enter DOB</string>
     <string name="wrn_fname">Enter First Name</string>
     <string name="wrn_lname">Enter Last Name</string>
     <string name="wrn_desc">Enter Description</string>
@@ -238,7 +239,7 @@
     <string name="area">Area Name</string>
     <string name="city">City Name</string>
     <string name="country">Country Name</string>
-    <string name="pin">Pin Code*</string>
+    <string name="pin">Pin Code</string>
 
 
     <string name="dob">Enter Date of Birth</string>
@@ -350,4 +351,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="nodelivery">No Delivery Addresses</string>
     <string name="noreminder">No Reminders</string>
+    <string name="wrn_pincode">Enter Pincode</string>
+    <string name="wrn_country">Enter Country</string>
+    <string name="wrn_area">Enter Area</string>
 </resources>

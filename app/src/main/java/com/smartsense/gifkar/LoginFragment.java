@@ -93,7 +93,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
 
     private Button mSignInButton;
     private TextView mStatus;
-
+    Fragment fragment = this;
     EditText etInputemail;
     EditText etInputPassword;
     TextView tvSkip;

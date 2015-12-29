@@ -5,28 +5,17 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        android:id="@+id/tvChackout1ShopName"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:background="@color/activity_bg"
+        android:fontFamily="normal"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-            android:id="@+id/tvChackout1ShopName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_25"
-            android:layout_weight="1"
-            android:capitalize="sentences"
-            android:fontFamily="normal"
-            android:text="@string/shop_name"
-            android:textColor="@android:color/black"
-            android:textSize="20dp" />
-
-
-
-    </LinearLayout>
+        android:padding="@dimen/text_16"
+        android:text="@string/shop_name"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/text_16" />
 
 
     <ListView
@@ -59,7 +48,8 @@
                 android:layout_weight="1"
                 android:fontFamily="normal"
                 android:text="@string/total"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_12" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                 android:id="@+id/tvChackout1Total"
@@ -70,7 +60,8 @@
                 android:fontFamily="normal"
                 android:gravity="right"
                 android:text="\u20B9 200"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_12" />
         </LinearLayout>
 
         <LinearLayout
@@ -86,7 +77,8 @@
                 android:layout_weight="1"
                 android:fontFamily="normal"
                 android:text="@string/shipping"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_12" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                 android:id="@+id/tvChackout1Shipping"
@@ -97,7 +89,8 @@
                 android:fontFamily="normal"
                 android:gravity="right"
                 android:text="\u20B9 200"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_12" />
         </LinearLayout>
 
         <LinearLayout
@@ -114,6 +107,7 @@
                 android:fontFamily="normal"
                 android:text="@string/payable"
                 android:textColor="@android:color/black"
+                android:textSize="@dimen/text_14"
                 android:textStyle="bold" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -126,6 +120,7 @@
                 android:gravity="right"
                 android:text="\u20B9 200"
                 android:textColor="@android:color/black"
+                android:textSize="@dimen/text_14"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -133,14 +128,14 @@
             android:id="@+id/btnContinueCheckout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_20"
             android:layout_marginLeft="@dimen/margin_20"
             android:layout_marginRight="@dimen/margin_20"
-            android:layout_marginBottom="@dimen/margin_20"
             android:background="@color/mainColor"
             android:fontFamily="normal"
             android:text="@string/continue_checkout"
             android:textColor="@color/textcolorwhite"
-            android:textSize="@dimen/text_size_20" />
+            android:textSize="@dimen/text_16" />
 
     </LinearLayout>
 </LinearLayout>

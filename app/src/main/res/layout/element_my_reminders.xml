@@ -23,7 +23,7 @@
             android:paddingLeft="@dimen/padding_10"
             android:text="@string/name"
             android:textColor="@color/mainColor"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:id="@+id/tvMyReminderElementType"
@@ -33,7 +33,7 @@
             android:paddingTop="@dimen/padding_2"
             android:paddingLeft="@dimen/padding_10"
             android:text="@string/relationship"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="fill_parent"

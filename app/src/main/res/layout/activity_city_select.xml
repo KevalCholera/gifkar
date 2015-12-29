@@ -55,14 +55,15 @@
         android:gravity="center_vertical|center_horizontal"
         android:padding="@dimen/padding_2">
 
-        <com.smartsense.gifkar.utill.CircleImageView1
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="@dimen/margin_5"
-            android:src="@drawable/ic_location" />
+            android:background="@drawable/ic_location" />
 
         <LinearLayout
             android:layout_width="wrap_content"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -73,15 +74,16 @@
                 android:padding="@dimen/padding_2"
                 android:text="@string/search_nearby"
                 android:textColor="@color/mainColor"
-                android:textSize="16sp" />
+                android:textSize="@dimen/text_14" />
 
             <com.smartsense.gifkar.textstyleutil.TypefaceTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="normal"
                 android:padding="@dimen/padding_2"
+                android:gravity="center_horizontal|center_vertical"
                 android:text="@string/to_get_it"
-                android:textSize="14sp" />
+                android:textSize="@dimen/text_12" />
         </LinearLayout>
 
     </LinearLayout>
@@ -93,6 +95,7 @@
         android:layout_gravity="bottom"
         android:fontFamily="normal"
         android:gravity="center"
+        android:textSize="@dimen/text_14"
         android:padding="@dimen/padding_5"
         android:text="@string/city_bottom" />
 

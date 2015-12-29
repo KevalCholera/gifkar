@@ -9,33 +9,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+
+        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:id="@+id/llSuggestShop"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:background="@color/activity_bg"
+            android:capitalize="sentences"
+            android:drawableRight="@drawable/ic_action_plus"
+            android:fontFamily="normal"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_25"
-                android:layout_weight="1"
-                android:capitalize="sentences"
-                android:fontFamily="normal"
-                android:text="@string/suggest_new_shop"
-                android:textColor="@android:color/black"
-                android:textSize="20dp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="@dimen/margin_20"
-                android:background="@drawable/ic_action_plus" />
-
-        </LinearLayout>
+            android:padding="@dimen/padding_16"
+            android:text="@string/suggest_new_shop"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_16" />
 
 
         <LinearLayout
@@ -67,13 +54,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"
-                        android:fontFamily="normal"
                         android:layout_weight="1"
+                        android:fontFamily="normal"
                         android:padding="@dimen/padding_16"
                         android:text="@string/rate_us"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"
-                         />
+                        android:textSize="@dimen/text_14" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -121,12 +107,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"
-                        android:fontFamily="normal"
                         android:layout_weight="1"
+                        android:fontFamily="normal"
                         android:padding="@dimen/padding_16"
                         android:text="@string/email_us"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20sp"/>
+                        android:textSize="@dimen/text_14" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -172,12 +158,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"
-                        android:fontFamily="normal"
                         android:layout_weight="1"
+                        android:fontFamily="normal"
                         android:padding="@dimen/padding_16"
                         android:text="@string/contact_us"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/text_14" />
 
                     <ImageView
                         android:layout_width="wrap_content"

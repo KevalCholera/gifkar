@@ -21,14 +21,15 @@
             android:fontFamily="normal"
             android:text="@string/reception_name"
             android:padding="@dimen/padding_2"
+
             android:textColor="@color/mainColor"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:id="@+id/tvMyAddressElementNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:fontFamily="normal"
             android:padding="@dimen/padding_2"
             android:text="@string/reception_no" />
@@ -38,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="normal"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:padding="@dimen/padding_2"
             android:text="@string/flat" />
 
@@ -50,7 +51,7 @@
             android:layout_marginBottom="@dimen/margin_10"
             android:fontFamily="normal"
             android:padding="@dimen/padding_2"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:hint="@string/street" />
     </LinearLayout>
 

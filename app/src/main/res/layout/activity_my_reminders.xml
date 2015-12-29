@@ -36,6 +36,7 @@
             android:layout_marginTop="@dimen/margin_10"
             android:fontFamily="normal"
             android:gravity="center"
+            android:textSize="16sp"
             android:padding="@dimen/padding_8"
             android:text="@string/emapty_address" />
 
@@ -50,7 +51,7 @@
             android:paddingRight="35dp"
             android:text="ADD REMINDER"
             android:textColor="@color/textcolorwhite"
-            android:textSize="@dimen/text_size_20" />
+            android:textSize="@dimen/text_16" />
 
     </LinearLayout>
 

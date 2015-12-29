@@ -16,6 +16,7 @@
         android:fontFamily="normal"
         android:hint="@string/search"
         android:padding="@dimen/padding_8"
+        android:textSize="@dimen/text_16"
         android:textColorHighlight="@android:color/white"
         android:textColorHint="@color/edittext_hint_color" />
 
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="Looking for something ?"
             android:fontFamily="bold"
-            android:textSize="@dimen/text_size_20"
+            android:textSize="@dimen/text_16"
             android:gravity="center"
             android:padding="@dimen/padding_8" />
     </LinearLayout>

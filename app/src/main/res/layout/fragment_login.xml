@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-
     android:padding="@dimen/margin_5">
 
     <LinearLayout
@@ -21,11 +20,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_5"
             android:background="@drawable/edittext_round"
-            android:ems="10"
             android:fontFamily="normal"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_16"
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
 
@@ -40,7 +39,8 @@
             android:fontFamily="normal"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_16"
             android:textColorHint="@color/edittext_hint_color" />
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
@@ -49,7 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:fontFamily="normal"
-            android:padding="@dimen/padding_8"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_12"
             android:text="@string/forgot_password_hint"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/forgot_pass_textcolor"
@@ -65,15 +66,17 @@
             android:fontFamily="normal"
             android:text="@string/sign_in"
             android:textColor="@color/textcolorwhite"
-            android:textSize="@dimen/text_size_20" />
+            android:textSize="@dimen/text_16" />
 
 
         <com.smartsense.gifkar.textstyleutil.TypefaceTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/margin_20"
+            android:layout_margin="@dimen/margin_10"
             android:fontFamily="normal"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_12"
             android:text="@string/social_account"
             android:textColor="@color/forgot_pass_textcolor" />
 
@@ -94,9 +97,11 @@
             android:background="@color/facebookbackcolor"
             android:drawableLeft="@drawable/fb"
             android:drawableStart="@drawable/fb"
+            android:layout_margin="@dimen/margin_5"
             android:fontFamily="normal"
             android:maxHeight="50dp"
             android:paddingRight="@dimen/padding_10"
+            android:textSize="@dimen/text_12"
             android:text="@string/fb_signup"
             android:textColor="@android:color/white" />
 
@@ -106,8 +111,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxHeight="50dp"
+            android:textSize="@dimen/text_12"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_margin="@dimen/margin_5"
             android:background="@color/googlebackcolor"
             android:drawableLeft="@drawable/gplus"
             android:drawableStart="@drawable/gplus"
@@ -124,8 +130,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/margin_20"
-            android:padding="@dimen/padding_8"
+            android:layout_margin="@dimen/margin_10"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_12"
             android:gravity="center"
             android:fontFamily="normal"
             android:text="@string/skip"
@@ -133,9 +140,8 @@
 
 
         <View
-
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            android:layout_height="20dp" />
     </LinearLayout>
 
 </ScrollView>
