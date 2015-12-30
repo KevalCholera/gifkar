@@ -76,7 +76,7 @@ public class ShopFragment extends Fragment {
                         String str = (String) view.getTag();
 //                        String[] separated = str.split(" ");
                         StringTokenizer st = new StringTokenizer(str, " ");
-                        startActivity(new Intent(getActivity(), ProductListActivity.class).putExtra("ShopID", st.nextToken()).putExtra("categoryId", st.nextToken()));
+                        startActivity(new Intent(getActivity(), ProductListActivity.class).putExtra("ShopID", st.nextToken()).putExtra("categoryId", st.nextToken()).putExtra("shopName", st.nextToken()));
                     }
                 })
         );

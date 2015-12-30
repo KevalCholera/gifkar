@@ -59,7 +59,7 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
-        return  view;
+        return view;
     }
 
     @Override
@@ -75,24 +75,47 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
     public void notificationFill(JSONObject notification) {
         NotificationAdapter notificationAdapter = null;
         try {
-            notificationAdapter = new NotificationAdapter(getActivity(), notification.getJSONObject("data").getJSONArray("notifications"), true);
-            lvNotification.setAdapter(notificationAdapter);
+            if (notification.getJSONObject("data").getJSONArray("notifications").length() > 0) {
+                lvNotification.setVisibility(View.VISIBLE);
+                llNotification.setVisibility(View.GONE);
+                notificationAdapter = new NotificationAdapter(getActivity(), notification.getJSONObject("data").getJSONArray("notifications"), true);
+                lvNotification.setAdapter(notificationAdapter);
+            } else {
+                lvNotification.setVisibility(View.GONE);
+                llNotification.setVisibility(View.VISIBLE);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
 
+
     public void deleteNotification(String id) {
-        final String tag = "delreminder";
+        final String tag = "delNotification";
         String url = Constants.BASE_URL + "/mobile/userNotification/delete";
         Map<String, String> params = new HashMap<String, String>();
         params.put("userNotificationId", id);
         params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
-        params.put("eventId", String.valueOf(Constants.Events.EVENT_DEL_REMINDER));
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_DEL_NOTIFICATION));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         Log.i("params", params.toString());
         CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+    public void seenNotification() {
+        final String tag = "seenNotification";
+        String url = Constants.BASE_URL + "/mobile/userNotification/update";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("isSeen", "all");
+        params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_SEEN_NOTIFICATION));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        Log.i("params", params.toString());
+//        CommonUtil.showProgressDialog(getActivity(), "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
@@ -121,10 +144,11 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
             try {
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
-                        case Constants.Events.EVENT_GET_REMINDER:
+                        case Constants.Events.EVENT_GET_NOTIFICATION:
                             notificationFill(response);
+                            seenNotification();
                             break;
-                        case Constants.Events.EVENT_DEL_REMINDER:
+                        case Constants.Events.EVENT_DEL_NOTIFICATION:
                             getNotification();
                             break;
                     }
@@ -171,11 +195,11 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
             final ViewHolder holder;
             if (view == null) {
                 holder = new ViewHolder();
-                view = inflater.inflate(R.layout.element_my_address, parent, false);
+                view = inflater.inflate(R.layout.element_notification, parent, false);
                 // TODO Auto-generated method stub
-                holder.tvTitle = (TextView) view.findViewById(R.id.tvMyAddressElementName);
-                holder.tvDec = (TextView) view.findViewById(R.id.tvMyAddressElementNo);
-                holder.ivDelete = (ImageView) view.findViewById(R.id.ivMyAddressElementAddressDelete);
+                holder.tvTitle = (TextView) view.findViewById(R.id.tvNotificationElementName);
+                holder.tvDec = (TextView) view.findViewById(R.id.tvNotificationElementNo);
+                holder.ivDelete = (ImageView) view.findViewById(R.id.ivNotificationElementDelete);
                 view.setTag(holder);
             } else {
                 holder = (ViewHolder) view.getTag();
@@ -185,8 +209,10 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
                 view.setBackgroundColor(activity.getResources().getColor(R.color.activity_bg));
             else
                 view.setBackgroundColor(activity.getResources().getColor(R.color.textcolorwhite));
+//            if (!notificationObj.optString("notification").equalsIgnoreCase(null)) {
             holder.tvTitle.setText(notificationObj.optJSONObject("notification").optString("subject"));
             holder.tvDec.setText(notificationObj.optJSONObject("notification").optString("message"));
+//            }
             holder.ivDelete.setOnClickListener(this);
             holder.ivDelete.setTag(notificationObj.toString());
             return view;
@@ -201,7 +227,7 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
         @Override
         public void onClick(final View view) {
             switch (view.getId()) {
-                case R.id.ivMyAddressElementAddressDelete:
+                case R.id.ivNotificationElementDelete:
                     AlertDialog.Builder alertbox = new AlertDialog.Builder(activity);
                     alertbox.setCancelable(true);
                     alertbox.setMessage("Are you sure you want to delete ?");

@@ -67,6 +67,7 @@
         app:tabMaxWidth="0dp"
         app:tabGravity="fill"
         app:tabMode="fixed"
+
         app:tabIndicatorColor="@color/colorPrimary"
         app:tabSelectedTextColor="@color/your_selected_text_color"
         app:tabTextColor="@color/your_unselected_text_color" />

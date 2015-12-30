@@ -77,7 +77,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
             etArea.setText(addressObj.optJSONObject("area").optString("name"));
             etPincode.setText(addressObj.optJSONObject("area").optString("name"));
             etNo.setText(addressObj.optString("recipientContact"));
-            etStreet.setText(addressObj.optString(""));
+            etStreet.setText(addressObj.optString("companyName"));
             etFlatNo.setText(addressObj.optString("address"));
             etName.setText(addressObj.optString("recipientName"));
             etLandmark.setText(addressObj.optString("landmark"));
@@ -125,7 +125,8 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         }
         params.put("recipientName", etName.getText().toString());
         params.put("recipientContact", etNo.getText().toString());
-        params.put("address", etFlatNo.getText().toString() + " " + etStreet.getText().toString());
+        params.put("address", etFlatNo.getText().toString());
+        params.put("companyName", etStreet.getText().toString());
         params.put("landmark", etLandmark.getText().toString());
         params.put("areaId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_ID, ""));
         params.put("cityId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CITY_ID, ""));

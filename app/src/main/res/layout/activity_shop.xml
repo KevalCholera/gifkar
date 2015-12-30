@@ -73,7 +73,7 @@
             <com.smartsense.gifkar.textstyleutil.TypefaceTabLayout
                 android:id="@+id/tabs_shop"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="70dp"
                 android:background="@drawable/tab_color_selector"
                 android:elevation="6dp"
                 android:fontFamily="normal"
@@ -82,6 +82,7 @@
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabMaxWidth="0dp"
+
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@android:color/black"
                 app:tabTextColor="@color/your_unselected_text_color" />

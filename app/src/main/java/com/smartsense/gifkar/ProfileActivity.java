@@ -48,6 +48,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         try {
             JSONObject userInfo = new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_INFO, ""));
             userInfo=userInfo.optJSONObject("userDetails");
+//            Constants.BASE_URL + "/images/users/" +
             ivProfileImage.setImageUrl(Constants.BASE_URL + "/images/users/" + userInfo.optString("image"), imageLoader);
             tvName.setText(userInfo.optString("firstName") + " " + userInfo.optString("lastName"));
             tvMobile.setText(userInfo.optString("mobile"));

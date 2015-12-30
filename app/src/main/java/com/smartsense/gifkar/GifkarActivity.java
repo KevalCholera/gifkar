@@ -168,7 +168,10 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(new Intent(this, OrderDetailActivity.class));
                 break;
             case R.id.llHeadProfile:
-                startActivity(new Intent(this, ProfileActivity.class));
+                if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "").equalsIgnoreCase(""))
+                    startActivity(new Intent(this, StartActivity.class));
+                else
+                    startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case R.id.llHeadAddress:
                 startActivity(new Intent(this, CitySelectActivity.class));
@@ -357,111 +360,58 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
 
     public void navigationButtonclick(final Activity c, View v, FragmentManager fm) {
         int position = (int) v.getTag();
-//        boolean flag = checkuserid();
+        Boolean check = false;
+        if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "").equalsIgnoreCase("")) {
+            if (position == Constants.NavigationItems.NAV_MY_ADDRESSES | position == Constants.NavigationItems.NAV_MY_REMINDERS | position == Constants.NavigationItems.NAV_MY_ORDERS | position == Constants.NavigationItems.NAV_NOTIFICATIONS) {
+                check = true;
+            } else {
+                check = false;
+            }
+        }
         switch (position) {
             case Constants.NavigationItems.NAV_LOGIN:
-//                setbackpress(0);
-//                fragmentcall(c, new CategoryFragment(), fm);
                 c.startActivity(new Intent(c, StartActivity.class));
                 break;
             case Constants.NavigationItems.NAV_HOME:
-//                setbackpress(0);
-                fragmentcall(c, new ShopListFragment(), fm);
+                fragmentCall(c, new ShopListFragment(), fm, check);
                 break;
             case Constants.NavigationItems.NAV_MY_CART:
                 c.startActivity(new Intent(c, MyCartActivity.class));
-//                if (flag) {
-//                    setbackpress(3);
-//                    fragmentcall(c, new DJWalletFragment(), fm);
-//
-//                } else {
-//                    gotosignin(c);
-//                }
                 break;
-
             case Constants.NavigationItems.NAV_MY_ORDERS:
-//                setbackpress(2);
-//                c.startActivity(new Intent(c, MyOrdersActivity.class));
-                fragmentcall(c, new MyOrdersActivity(), fm);
+                fragmentCall(c, new MyOrdersActivity(), fm, check);
                 break;
-
             case Constants.NavigationItems.NAV_MY_ADDRESSES:
-                c.startActivity(new Intent(c, MyAddressActivity.class));
-//                if (flag) {
-////                    managebackpress();
-//                    setbackpress(3);
-//                    fragmentcall(c, new OrderFragment(), fm);
-//
-//                } else {
-//                    gotosignin(c);
-//                }
+                if (check)
+                    c.startActivity(new Intent(c, StartActivity.class));
+                else
+                    c.startActivity(new Intent(c, MyAddressActivity.class));
                 break;
             case Constants.NavigationItems.NAV_MY_REMINDERS:
-//                c.startActivity(new Intent(c, MyRemindersActivity.class));
-////                managebackpress();
-//                setbackpress(2);
-                fragmentcall(c, new MyRemindersActivity(), fm);
+                fragmentCall(c, new MyRemindersActivity(), fm, check);
                 break;
             case Constants.NavigationItems.NAV_NOTIFICATIONS:
-//                c.startActivity(new Intent(c, NotificationActivity.class));
-//                if (flag) {
-                fragmentcall(c, new NotificationActivity(), fm);
-////                    managebackpress();
-//                    setbackpress(3);
-//                } else {
-//                    gotosignin(c);
-//                }
+                fragmentCall(c, new NotificationActivity(), fm, check);
                 break;
             case Constants.NavigationItems.NAV_REFER_FRIEND:
-//                c.startActivity(new Intent(c, ReferFriendsActivity.class));
-                fragmentcall(c, new ReferFriendsActivity(), fm);
-
-//                if (flag) {
-//                    setbackpress(2);
-//                    c.startActivity(new Intent(c, AvailAddressActivity.class).putExtra("intent", false));
-//                } else {
-//                    gotosignin(c);
-//                }
+                fragmentCall(c, new ReferFriendsActivity(), fm, check);
                 break;
             case Constants.NavigationItems.NAV_ABOUT_US:
-//                c.startActivity(new Intent(c, AboutUsActivity.class));
-                fragmentcall(c, new AboutUsActivity(), fm);
-//                if (flag) {
-//                    setbackpress(2);
-//                    c.startActivity(new Intent(c, AvailAddressActivity.class).putExtra("intent", false));
-//                } else {
-//                    gotosignin(c);
-//                }
+                fragmentCall(c, new AboutUsActivity(), fm, check);
                 break;
             case Constants.NavigationItems.NAV_FEED_US:
-                fragmentcall(c, new FeedUsActivity(), fm);
-//                c.startActivity(new Intent(c, FeedUsActivity.class));
-//                if (flag) {
-//                    setbackpress(2);
-//                    c.startActivity(new Intent(c, AvailAddressActivity.class).putExtra("intent", false));
-//                } else {
-//                    gotosignin(c);
-//                }
+                fragmentCall(c, new FeedUsActivity(), fm, check);
                 break;
 //            case Constants.NavigationItems.NAV_SETTING:
-//                if (flag) {
-//                    setbackpress(2);
-//                    c.startActivity(new Intent(c, AvailAddressActivity.class).putExtra("intent", false));
-//                } else {
-//                    gotosignin(c);
-//                }
 //                break;
             case Constants.NavigationItems.NAV_LOGOUT:
-//                if (flag) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(c);
                 alert.setTitle("Confirm!");
                 alert.setMessage("are you sure you want to sign out?");
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //Do something here where "ok" clicked
-//                        SharedPreferenceUtil.clear();
                         doLogout();
-//                            gotosignout(c);
                     }
                 });
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -471,22 +421,20 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 });
                 alert.show();
-
-
-//                } else {
-////                    gotosignin(c);
-//                }
                 break;
             default:
-                Log.d("Navigation Drawer", String.valueOf(position));
+                fragmentCall(c, new ShopListFragment(), fm, check);
+
         }
         DrawerLayout drawer = (DrawerLayout) c.findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
 
-    public void fragmentcall(Activity c, Fragment frg, FragmentManager fm) {
-
-        fm.beginTransaction().replace(R.id.fragment_container, frg).commit();
+    public void fragmentCall(Activity c, Fragment frg, FragmentManager fm, Boolean check) {
+        if (check)
+            c.startActivity(new Intent(c, StartActivity.class));
+        else
+            fm.beginTransaction().replace(R.id.fragment_container, frg).commit();
 
     }
 
@@ -546,6 +494,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                             SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_MNO);
                             SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_ACCESS_TOKEN);
                             SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_PROIMG);
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_INFO);
                             SharedPreferenceUtil.save();
                             break;
                     }

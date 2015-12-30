@@ -148,7 +148,8 @@
                     android:id="@+id/tvOrderAccepted"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/borderwhite"
+                    android:background="@android:color/transparent"
+                    android:translationZ="10000dp"
                     android:drawableTop="@drawable/accepted_unfill"
                     android:gravity="center"
                     android:textSize="@dimen/text_12"
@@ -158,7 +159,7 @@
                     android:layout_width="0dp"
                     android:layout_height="6dp"
                     android:layout_marginBottom="6dp"
-                    android:layout_marginLeft="-18dp"
+                    android:layout_marginLeft="-14dp"
                     android:layout_marginRight="-18dp"
                     android:layout_weight="1"
                     android:textSize="@dimen/text_12"
@@ -168,7 +169,7 @@
                     android:id="@+id/tvOrderProcess"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/borderwhite"
+                    android:background="@android:color/transparent"
                     android:drawableTop="@drawable/in_progress_unfill"
                     android:gravity="center"
                     android:textSize="@dimen/text_12"
@@ -201,7 +202,7 @@
             android:id="@+id/lvOrderDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_margin="10dp" />
 
         <LinearLayout

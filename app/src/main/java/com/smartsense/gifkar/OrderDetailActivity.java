@@ -13,16 +13,26 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.CheckoutAdapter;
+import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
-import com.smartsense.gifkar.utill.DataBaseHelper;
+import com.smartsense.gifkar.utill.DataRequest;
+import com.smartsense.gifkar.utill.DateAndTimeUtil;
+import com.smartsense.gifkar.utill.JsonErrorShow;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-public class OrderDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class OrderDetailActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
+        Response.ErrorListener {
 
     private ImageView btBack;
     private NetworkImageView ivShopListImage;
@@ -44,6 +54,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
     private Button btEmail;
     private EditText etEmail;
     private AlertDialog alert;
+    ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +69,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_order_detail);
+        ivShopListImage = (NetworkImageView) findViewById(R.id.ivShopListImage);
         tvOrderDetailOrderNo = (TextView) findViewById(R.id.tvOrderDetailOrderNo);
         tvOrderDetailDateTime = (TextView) findViewById(R.id.tvOrderDetailDateTime);
         tvOrderDetailAddress = (TextView) findViewById(R.id.tvOrderDetailAddress);
@@ -66,32 +78,31 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         tvOrderElementDetails = (TextView) findViewById(R.id.tvOrderElementDetails);
         tvOrderDetailName = (TextView) findViewById(R.id.tvOrderDetailName);
         tvOrderDetailNo = (TextView) findViewById(R.id.tvOrderDetailNo);
-        tvOrderCompleted= (TextView) findViewById(R.id.tvOrderCompleted);
-        tvOrderAccepted= (TextView) findViewById(R.id.tvOrderAccepted);
-        tvOrderProcess= (TextView) findViewById(R.id.tvOrderProcess);
+        tvOrderCompleted = (TextView) findViewById(R.id.tvOrderCompleted);
+        tvOrderAccepted = (TextView) findViewById(R.id.tvOrderAccepted);
+        tvOrderProcess = (TextView) findViewById(R.id.tvOrderProcess);
         btProdDetailEmail = (Button) findViewById(R.id.btProdDetailEmail);
         btProdDetailEmail.setOnClickListener(this);
         btProdDetailCall = (Button) findViewById(R.id.btProdDetailCall);
         ivShopListImage = (NetworkImageView) findViewById(R.id.ivShopListImage);
         lvOrderDetail = (ListView) findViewById(R.id.lvOrderDetail);
-        try {
-            JSONArray productArray = new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
-            checkoutFill(productArray);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        getOrderDetail("1");
+//        getOrderDetail(getIntent().getStringExtra("id"));
     }
 
-    public void checkoutFill(JSONArray productCartArray) {
-        CheckoutAdapter checkoutAdapter = null;
+    public void orderDetailFill(JSONObject response) {
         try {
-            double totalAmount = 0;
-            for (int i = 0; i < productCartArray.length(); i++) {
-                totalAmount += (productCartArray.optJSONObject(i).optDouble(DataBaseHelper.COLUMN_PROD_PRICE) * productCartArray.optJSONObject(i).optDouble("quantity"));
-            }
-//            tvCheckoutTotal.setText("" + totalAmount);
-            checkoutAdapter = new CheckoutAdapter(this, productCartArray, true);
+            tvOrderDetailOrderNo.setText("Order ID : " + response.optString("orderNo"));
+            tvOrderDetailDateTime.setText(DateAndTimeUtil.myDateAndTime(response.optString("createdAt")));
+            tvOrderDetailAddress.setText("Name : " + response.optJSONObject("deliveryAddress").optString("recipientName") + "\nMobile No. : " + response.optJSONObject("deliveryAddress").optString("recipientContact") + "\nAddress : " + response.optJSONObject("deliveryAddress").optString("address") + " " + response.optJSONObject("deliveryAddress").optString("landmark") + " " + response.optJSONObject("deliveryAddress").optString("area") + " " + response.optJSONObject("deliveryAddress").optString("city") + " " + response.optJSONObject("deliveryAddress").optString("pincode"));
+            tvOrderElementShopName.setText(response.optString("shopName"));
+            ivShopListImage.setImageUrl(Constants.BASE_URL + "/images/shops/thumbs/" +response.optString("shopImage"), imageLoader);
+            tvOrderElementOrderStatus.setText("Your Order is " + response.optString("orderStatus"));
+            tvOrderElementDetails.setText(response.optJSONArray("products").length() + " Items");
+            tvOrderDetailName.setText("Name : " + response.optJSONObject("sender").optString("firstName") + " " + response.optJSONObject("sender").optString("lastName"));
+            tvOrderDetailOrderNo.setText("Mobile No. : " + response.optString("mobile"));
+            JSONArray productCartArray = response.optJSONArray("products");
+            CheckoutAdapter checkoutAdapter = new CheckoutAdapter(this, productCartArray, true);
             lvOrderDetail.setAdapter(checkoutAdapter);
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,15 +146,54 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
             View dialog = inflater.inflate(R.layout.dialog_email_details, null);
             alertDialogs.setView(dialog);
 //            alertDialogs.setCancelable(false);
-            etEmail=(EditText) dialog.findViewById(R.id.etEmailDialogEmail);
-            btEmail=(Button) dialog.findViewById(R.id.btEmailDialogSend);
+            etEmail = (EditText) dialog.findViewById(R.id.etEmailDialogEmail);
+            btEmail = (Button) dialog.findViewById(R.id.btEmailDialogSend);
             btEmail.setOnClickListener(this);
-            btCancel=(Button) dialog.findViewById(R.id.btEmailDialogCancel);
+            btCancel = (Button) dialog.findViewById(R.id.btEmailDialogCancel);
             btCancel.setOnClickListener(this);
             alert = alertDialogs.create();
             alert.show();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public void getOrderDetail(String orderId) {
+        final String tag = "getOrder";
+        String url = Constants.BASE_URL + "/mobile/orderDetail/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&orderDetailId=" + orderId + "&userToken=" + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "") + "&eventId=" + String.valueOf(Constants.Events.EVENT_ORDER_DETAIL);
+        CommonUtil.showProgressDialog(this, "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        CommonUtil.alertBox(this, "", getResources().getString(R.string.nointernet_try_again_msg));
+        CommonUtil.cancelProgressDialog();
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        CommonUtil.cancelProgressDialog();
+        if (response != null) {
+            try {
+                if (response.getInt("status") == Constants.STATUS_SUCCESS) {
+                    switch (Integer.valueOf(response.getString("eventId"))) {
+                        case Constants.Events.EVENT_ORDER_DETAIL:
+                            orderDetailFill(response.getJSONObject("data").optJSONObject("orderDetails"));
+                            break;
+                        case Constants.Events.EVENT_DEL_ADDRESS:
+
+                            break;
+                    }
+                } else {
+                    JsonErrorShow.jsonErrorShow(response, this);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

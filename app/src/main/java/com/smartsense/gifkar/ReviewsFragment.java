@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.smartsense.gifkar.utill.CircleImageView;
@@ -22,12 +21,12 @@ public class ReviewsFragment extends Fragment implements View.OnClickListener {
     private EditText etReviewAdd;
     private Button btAddReview;
     private Rating rbReview;
-    private LinearLayout llShopReview;
+    private TextView llShopReview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_reviews, container, false);
-        llShopReview = (LinearLayout) view.findViewById(R.id.llShopReview);
+        llShopReview = (TextView) view.findViewById(R.id.llShopReview);
         llShopReview.setOnClickListener(this);
         return view;
     }

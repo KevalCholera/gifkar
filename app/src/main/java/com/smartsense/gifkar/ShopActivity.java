@@ -71,14 +71,18 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-        setupTabIcons();
+
+        TextView tab = (TextView) LayoutInflater.from(this).inflate(R.layout.element_tab, null);
+        tab.setText("CONTACT");
+        tab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_pencil, 0, 0);
+        tabLayout.getTabAt(0).setCustomView(tab);
+        tab = (TextView) LayoutInflater.from(this).inflate(R.layout.element_tab, null);
+        tab.setText("REVIEWS");
+        tab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_pencil, 0, 0);
+        tabLayout.getTabAt(1).setCustomView(tab);
 
     }
-    private int[] imageResId = { R.drawable.ic_pencil, R.drawable.ic_pencil };
-    private void setupTabIcons() {
-        tabLayout.getTabAt(0).setIcon(imageResId[0]);
-        tabLayout.getTabAt(1).setIcon(imageResId[1]);
-    }
+
 
     @Override
     public void onClick(View view) {

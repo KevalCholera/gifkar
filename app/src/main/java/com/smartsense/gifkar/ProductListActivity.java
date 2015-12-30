@@ -64,7 +64,6 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.action_bar_prod, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
-        titleTextView.setText(getResources().getString(R.string.shop_name));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
         btFilter = (ImageView) v.findViewById(R.id.btActionBarfilter);
@@ -88,6 +87,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         llProdBottom = (LinearLayout) findViewById(R.id.llProdListBottom);
         llProdCheckOut = (Button) findViewById(R.id.llProdListCheckOut);
         llProdCheckOut.setOnClickListener(this);
+        titleTextView.setText(getIntent().getStringExtra("shopName"));
         getProductList(getIntent().getStringExtra("ShopID"),getIntent().getStringExtra("categoryId"));
         getCartItem();
     }

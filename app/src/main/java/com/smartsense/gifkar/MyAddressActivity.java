@@ -252,7 +252,7 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
             JSONObject addressObj = dataArray.optJSONObject(position);
             holder.tvName.setText(addressObj.optString("recipientName"));
             holder.tvNo.setText(addressObj.optString("recipientContact"));
-            holder.tvStreet.setText(addressObj.optString("address") + " " + addressObj.optString("address") + " " + addressObj.optString("landmark"));
+            holder.tvStreet.setText(addressObj.optString("address") + " " + addressObj.optString("companyName") + " " + addressObj.optString("landmark"));
             holder.tvCity.setText(addressObj.optJSONObject("area").optString("name") + "," + addressObj.optJSONObject("area").optString("name") + " " + addressObj.optJSONObject("area").optString("name"));
             holder.ivDelete.setOnClickListener(this);
             holder.ivDelete.setTag(addressObj.toString());

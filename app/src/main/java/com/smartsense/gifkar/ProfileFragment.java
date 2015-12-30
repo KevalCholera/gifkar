@@ -54,6 +54,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
         etDob.setOnClickListener(this);
         etEmail = (EditText) view.findViewById(R.id.etProfileEmail);
         tVProfileVerified = (TextView) view.findViewById(R.id.tVProfileVerified);
+        tVProfileVerified.setOnClickListener(this);
         rbGroup = (RadioGroup) view.findViewById(R.id.rbProfileGroup);
         rbMale = (RadioButton) view.findViewById(R.id.rbProfileMale);
         rbMale.setTag("m");
@@ -63,9 +64,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
         btnProfileUpdate.setOnClickListener(this);
         try {
             JSONObject userInfo = new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_INFO, ""));
-            userInfo=userInfo.optJSONObject("userDetails");
+            userInfo = userInfo.optJSONObject("userDetails");
             etEmail.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_EMAIL, ""));
-
             if (userInfo.optString("isEmailVerified").equalsIgnoreCase("1")) {
                 tVProfileVerified.setText("Verified");
                 tVProfileVerified.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verified, 0);
@@ -73,7 +73,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
                 tVProfileVerified.setText("Unverified");
                 tVProfileVerified.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.unverified, 0);
             }
-
             etFirstName.setText(userInfo.optString("firstName"));
             etLastName.setText(userInfo.optString("lastName"));
             etDob.setText(userInfo.optString("dob"));
@@ -81,10 +80,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM", Locale.ENGLISH);
                 mCalendar.setTime(sdf.parse(userInfo.optString("dob")));
             }
-            if (userInfo.optString("gender").equalsIgnoreCase("m"))
+            if (userInfo.optString("gender").equalsIgnoreCase("m")) {
                 rbMale.setChecked(true);
-            else
+                rbFemale.setChecked(false);
+            } else {
                 rbFemale.setChecked(true);
+                rbMale.setChecked(false);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -99,6 +101,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
                 break;
             case R.id.etProfileDob:
                 datePicker();
+                break;
+            case R.id.tVProfileVerified:
                 break;
             default:
         }
@@ -175,6 +179,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
                         case Constants.Events.EVENT_USER_DETAIL:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.optJSONObject("data").toString());
                             SharedPreferenceUtil.save();
+
                             break;
                     }
                 } else {

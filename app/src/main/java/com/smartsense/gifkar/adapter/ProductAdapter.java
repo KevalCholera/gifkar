@@ -77,6 +77,7 @@ public class ProductAdapter extends CursorAdapter {
         ibProdElementPlus.setTag(tvProdElementQty);
         ibProdElementMinus.setTag(tvProdElementQty);
         ibProdElementNext.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
+        view.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
 //         ivProdPhoto.setImageBitmap(CommonUtil.decodeFromBitmap(cursor.getString(cursor
 //                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_IMAGE))));
 

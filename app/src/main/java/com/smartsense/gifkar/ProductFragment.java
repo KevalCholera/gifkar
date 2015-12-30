@@ -16,12 +16,14 @@
 
 package com.smartsense.gifkar;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.smartsense.gifkar.adapter.ProductAdapter;
@@ -55,6 +57,13 @@ public class ProductFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
+//                JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
+                startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("ProdDEID", (Integer) view.getTag()));
+
+            }
+        });
         return view;
     }
 

@@ -117,6 +117,10 @@ public class Constants {
         public static final int EVENT_DEL_REMINDER = 38;
         public static final int EVENT_GET_NOTIFICATION = 39;
         public static final int PROFILE_UPDATE = 40;
+        public static final int EVENT_DEL_NOTIFICATION = 41;
+        public static final int EVENT_SEEN_NOTIFICATION = 42;
+        public static final int EVENT_ORDER_HISTORY = 43;
+        public static final int EVENT_ORDER_DETAIL = 44;
     }
 
     public class ErrorCode {
