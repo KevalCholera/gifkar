@@ -51,6 +51,9 @@ public class Constants {
         public static final String PREF_COUNTRY_LIST = "country_list";
         public static final String PREF_AREA_PIN_CODE = "area_pin_code";
         public static final String PREF_USER_INFO = "user_info";
+        public static final String SHOP_NAME = "shop_name";
+        public static final String SHOP_ID = "shop_id";
+        public static final String OCCASIONS = "occasions";
     }
 
     public class NavigationItems {
@@ -121,7 +124,10 @@ public class Constants {
         public static final int EVENT_SEEN_NOTIFICATION = 42;
         public static final int EVENT_ORDER_HISTORY = 43;
         public static final int EVENT_ORDER_DETAIL = 44;
+        public static final int EVENT_GET_OCCASION = 45;
+        public static final int EVENT_GET_TIMESLOT = 46;
     }
+
 
     public class ErrorCode {
         public static final int INVALID_CREDENTIALS = 1003;

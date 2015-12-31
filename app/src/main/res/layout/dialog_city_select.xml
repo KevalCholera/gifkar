@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:id="@+id/tvCityDialogHead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

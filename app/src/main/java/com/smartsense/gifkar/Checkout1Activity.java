@@ -46,12 +46,12 @@ public class Checkout1Activity extends AppCompatActivity implements View.OnClick
         tvCheckoutPayable = (TextView) findViewById(R.id.tvChackout1Payable);
         tvCheckoutShipping = (TextView) findViewById(R.id.tvChackout1Shipping);
         tvCheckoutShopName = (TextView) findViewById(R.id.tvChackout1ShopName);
-        btCheckout=(Button) findViewById(R.id.btnContinueCheckout);
+        tvCheckoutShopName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_NAME, ""));
+        btCheckout = (Button) findViewById(R.id.btnContinueCheckout);
         btCheckout.setOnClickListener(this);
         try {
             JSONArray productArray = new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
             checkoutFill(productArray);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -61,10 +61,13 @@ public class Checkout1Activity extends AppCompatActivity implements View.OnClick
         CheckoutAdapter checkoutAdapter = null;
         try {
             double totalAmount = 0;
+            double shipping = 0;
             for (int i = 0; i < productCartArray.length(); i++) {
                 totalAmount += (productCartArray.optJSONObject(i).optDouble(DataBaseHelper.COLUMN_PROD_PRICE) * productCartArray.optJSONObject(i).optDouble("quantity"));
             }
-            tvCheckoutTotal.setText("" + totalAmount);
+            tvCheckoutTotal.setText("\u20B9" + totalAmount);
+            tvCheckoutShipping.setText("\u20B9" + shipping);
+            tvCheckoutPayable.setText("\u20B9" + (shipping + totalAmount));
             checkoutAdapter = new CheckoutAdapter(this, productCartArray, true);
             lvCheckout1.setAdapter(checkoutAdapter);
         } catch (Exception e) {
@@ -76,11 +79,8 @@ public class Checkout1Activity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btnSend:
-                startActivity(new Intent(this, OTPActivity.class));
-                break;
             case R.id.btnContinueCheckout:
-                startActivity(new Intent(this, Checkout2Activity.class));
+                startActivity(new Intent(this, Checkout2Activity.class).putExtra("ship", tvCheckoutShipping.getText().toString()).putExtra("total", tvCheckoutTotal.getText().toString()).putExtra("pay", tvCheckoutPayable.getText().toString()));
                 break;
             case R.id.btActionBarBack:
                 finish();

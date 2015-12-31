@@ -2,6 +2,7 @@ package com.smartsense.gifkar;
 
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
@@ -74,21 +75,35 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         btFilter.setVisibility(View.VISIBLE);
         ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
         btSearch.setVisibility(View.VISIBLE);
+
+        btFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), ShopFilterActivity.class));
+            }
+        });
+        btSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), SearchActivity.class).putExtra("id", Adapter.mFragmentID.get(tabLayout.getSelectedTabPosition())));
+            }
+        });
+
 //        FrameLayout fm = (FrameLayout) rootView.findViewById(R.id.fl_category);
         int height = getResources().getDisplayMetrics().heightPixels;
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) newFeaturesView.getLayoutParams();
         params.height = (int) (height / 3.5);
         newFeaturesView.setLayoutParams(params);
 //        setReference();
-        getBanner();
-        getBottom();
-        getShopList();
         // tablayout and viewpager of category
         viewPager = (ViewPager) rootView.findViewById(R.id.viewpager_main);
         tabLayout = (TabLayout) rootView.findViewById(R.id.tabs_main);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.tab_idicator));
         tabLayout.setTabTextColors(getResources().getColor(R.color.tab_normal_text), getResources().getColor(R.color.tab_idicator));
 
+        getBanner();
+        getBottom();
+        getShopList();
 
         return rootView;
     }
@@ -109,6 +124,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
             insertItemInCart(adapter, category);
             viewPager.setAdapter(adapter);
             tabLayout.setupWithViewPager(viewPager);
+            CommonUtil.cancelProgressDialog();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -184,8 +200,8 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
 
     static class Adapter extends FragmentPagerAdapter {
         //        private final List<Fragment> mFragments = new ArrayList<>();
-        private final List<String> mFragmentTitles = new ArrayList<>();
-        private final List<String> mFragmentID = new ArrayList<>();
+         static List<String> mFragmentTitles = new ArrayList<>();
+         static List<String> mFragmentID = new ArrayList<>();
 
         public Adapter(FragmentManager fm) {
             super(fm);
@@ -278,6 +294,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     public void onResume() {
         super.onResume();
         handler.postDelayed(runnable, 3000);
+        CommonUtil.cancelProgressDialog();
     }
 
     public void getBanner() {
@@ -319,7 +336,6 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
 
     @Override
     public void onResponse(JSONObject response) {
-        CommonUtil.cancelProgressDialog();
         if (response != null) {
             try {
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {

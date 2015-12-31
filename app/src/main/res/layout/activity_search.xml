@@ -5,7 +5,7 @@
     android:background="@color/textcolorwhite"
     android:orientation="vertical">
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceAutoTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,11 +13,11 @@
         android:background="@drawable/edittext_round"
         android:drawableRight="@drawable/ic_search"
         android:ems="10"
+        android:gravity="center_vertical"
         android:fontFamily="normal"
         android:hint="@string/search"
         android:padding="@dimen/padding_8"
         android:textSize="@dimen/text_16"
-        android:textColorHighlight="@android:color/white"
         android:textColorHint="@color/edittext_hint_color" />
 
     <LinearLayout
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/looking_for_something" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Looking for something ?"
@@ -43,10 +43,10 @@
             android:padding="@dimen/padding_8" />
     </LinearLayout>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/lvSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/etSearch" />
+        android:layout_below="@id/etSearch" />
 
 </RelativeLayout>

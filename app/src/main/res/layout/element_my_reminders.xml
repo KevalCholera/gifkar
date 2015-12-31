@@ -13,7 +13,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/tvMyReminderElementName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:textColor="@color/mainColor"
             android:textSize="16sp" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/tvMyReminderElementType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
 
             android:orientation="horizontal">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvMyReminderElementDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                 android:text="@string/date"
                 android:textSize="14sp" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvMyReminderElementTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_16"
@@ -18,7 +18,7 @@
         android:textSize="16dp" />
 
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+    <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
         android:id="@+id/etEmailDialogEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

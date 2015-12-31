@@ -27,8 +27,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.ShopListAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 import com.smartsense.gifkar.utill.RecyclerItemClickListener;
 import com.smartsense.gifkar.utill.SimpleDividerItemDecoration;
@@ -76,7 +78,11 @@ public class ShopFragment extends Fragment {
                         String str = (String) view.getTag();
 //                        String[] separated = str.split(" ");
                         StringTokenizer st = new StringTokenizer(str, " ");
-                        startActivity(new Intent(getActivity(), ProductListActivity.class).putExtra("ShopID", st.nextToken()).putExtra("categoryId", st.nextToken()).putExtra("shopName", st.nextToken()));
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_ID, st.nextToken());
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CATEGORY_ID, st.nextToken());
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_NAME, st.nextToken());
+                        SharedPreferenceUtil.save();
+                        startActivity(new Intent(getActivity(), ProductListActivity.class));
                     }
                 })
         );

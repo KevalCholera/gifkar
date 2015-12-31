@@ -87,8 +87,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         llProdBottom = (LinearLayout) findViewById(R.id.llProdListBottom);
         llProdCheckOut = (Button) findViewById(R.id.llProdListCheckOut);
         llProdCheckOut.setOnClickListener(this);
-        titleTextView.setText(getIntent().getStringExtra("shopName"));
-        getProductList(getIntent().getStringExtra("ShopID"),getIntent().getStringExtra("categoryId"));
+        titleTextView.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_NAME,""));
+        getProductList(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_ID, ""),SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CATEGORY_ID, ""));
         getCartItem();
     }
 

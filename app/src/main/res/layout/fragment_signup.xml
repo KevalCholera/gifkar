@@ -20,7 +20,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
                 android:id="@+id/etSignUpFirstName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                 android:textColorHighlight="@android:color/white"
                 android:textColorHint="@color/edittext_hint_color" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
                 android:id="@+id/etSignUpLastName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
                 android:id="@+id/etSignUpCountryCode"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:padding="@dimen/padding_5"
                 android:textSize="@dimen/text_16" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
                 android:id="@+id/etSignUpMobileNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                 android:textColorHint="@color/edittext_hint_color" />
         </LinearLayout>
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etSignUpEmailId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
             android:textColorHint="@color/edittext_hint_color" />
 
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etSignUpPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
             android:textSize="@dimen/text_16"
             android:textColorHint="@color/edittext_hint_color" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etSignUpConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,7 +137,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceCheckBox
+            <com.smartsense.gifkar.textstyleUtil.TypefaceCheckBox
                 android:id="@+id/rbSignupTerms"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -147,7 +147,7 @@
                 android:textSize="@dimen/text_12"
                 android:text="@string/accept" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvSignupTerms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                 android:text="@string/terms" />
         </LinearLayout>
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/btnSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -169,7 +169,7 @@
             android:textSize="@dimen/text_16" />
 
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/tvSignupSkip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

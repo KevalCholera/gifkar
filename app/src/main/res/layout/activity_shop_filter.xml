@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/activity_bg"
@@ -50,7 +50,7 @@
             android:button="@android:color/transparent" />
     </LinearLayout>
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceButton
+    <com.smartsense.gifkar.textstyleUtil.TypefaceButton
         android:id="@+id/btnShopApplyFilter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

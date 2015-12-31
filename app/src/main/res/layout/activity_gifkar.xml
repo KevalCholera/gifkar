@@ -62,7 +62,7 @@
             android:background="@color/activity_bg"
             android:orientation="horizontal">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:fontFamily="normal"
                 android:id="@+id/tvHeadPrivacy"
                 android:layout_width="0dp"
@@ -80,7 +80,7 @@
                 android:layout_margin="@dimen/margin_5"
                 android:background="@android:color/darker_gray" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:fontFamily="normal"
                 android:id="@+id/tvHeadTerms"
                 android:layout_width="0dp"

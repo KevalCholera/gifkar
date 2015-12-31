@@ -22,10 +22,10 @@ public class DateAndTimeUtil {
     private static final SimpleDateFormat DATE_FORMAT_My = new SimpleDateFormat("y-M-d", Locale.getDefault());
     private static final SimpleDateFormat MY_DATE_AND_TIME_FORMAT_INPUT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
     private static final SimpleDateFormat MY_DATE_AND_TIME_FORMAT_OUTPUT = new SimpleDateFormat("dd MMM yyyy | hh:mm tt", Locale.getDefault());
+    private static final SimpleDateFormat MY_DATE_AND_TIME_FORMAT_TIMESLOT = new SimpleDateFormat("dd MM yyyy", Locale.getDefault());
     public static String toStringTime(Calendar calendar) {
         return TIME_FORMAT.format(calendar.getTime());
     }
-
     public static String toStringDate(Calendar calendar) {
         return DATE_FORMAT.format(calendar.getTime());
     }
@@ -37,7 +37,9 @@ public class DateAndTimeUtil {
     public static String toStringReadableDate(Calendar calendar) {
         return READABLE_DATE_FORMAT.format(calendar.getTime());
     }
-
+    public static String getTimeSlotDate(Calendar calendar) {
+        return MY_DATE_AND_TIME_FORMAT_TIMESLOT.format(calendar.getTime());
+    }
     public static String toStringReadableTime(Calendar calendar, Context context) {
         if (DateFormat.is24HourFormat(context)) {
             return READABLE_TIME_24_FORMAT.format(calendar.getTime());

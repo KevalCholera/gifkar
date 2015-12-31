@@ -11,7 +11,7 @@
         android:layout_margin="@dimen/margin_25"
         android:orientation="vertical">
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etNewShopName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etNewShopAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etNewShopArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
             android:textColorHint="@color/edittext_hint_color" />
 
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etNewShopCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etNewShopPin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             android:textColorHint="@color/edittext_hint_color" />
 
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etNewShopWeblink"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
             android:textColorHint="@color/edittext_hint_color" />
 
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etNewShopEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/btnNewShopAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

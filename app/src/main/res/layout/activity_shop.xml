@@ -70,7 +70,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTabLayout
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTabLayout
                 android:id="@+id/tabs_shop"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
@@ -98,7 +98,7 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceButton
+    <com.smartsense.gifkar.textstyleUtil.TypefaceButton
         android:id="@+id/btReport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

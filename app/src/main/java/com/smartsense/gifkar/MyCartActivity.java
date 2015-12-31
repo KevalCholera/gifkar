@@ -61,6 +61,7 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
         llChackout.setOnClickListener(this);
         lvMyCart=(ListView) findViewById(R.id.lvCart);
         tvCartShopName=(TextView) findViewById(R.id.tvCartShopName);
+        tvCartShopName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_NAME, ""));
         tvCartTotalRs=(TextView) findViewById(R.id.tvCartTotalRs);
 
 

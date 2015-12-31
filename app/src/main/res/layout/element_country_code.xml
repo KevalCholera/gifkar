@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
 
         android:id="@+id/tvCountryCode"
         android:layout_width="match_parent"

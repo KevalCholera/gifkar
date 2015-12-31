@@ -12,14 +12,14 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/address_empty" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_10"
@@ -31,7 +31,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="normal"
@@ -40,7 +40,7 @@
             android:padding="@dimen/padding_8"
             android:text="@string/emapty_address" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/btnAddAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         android:visibility="visible"
         android:orientation="vertical">
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/tvMyAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

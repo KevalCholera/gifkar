@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvProdDetailName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 android:textStyle="bold"
                 android:textSize="@dimen/text_16" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvProdDetailRs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                     android:textSize="@dimen/text_16"
                     android:textColor="@color/colorPrimary" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="normal"
@@ -151,7 +151,7 @@
                 android:layout_weight="2"
                 android:orientation="vertical">
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvProdDetailUnitName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
                     android:padding="@dimen/padding_8"
                     android:text="@string/prod_name" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvProdDetailDes"
                     android:textSize="@dimen/text_16"
                     android:layout_width="match_parent"
@@ -209,7 +209,7 @@
                 android:textColor="@color/textcolorwhite"
                 android:textSize="@dimen/text_16" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvProdDetailCartCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -224,7 +224,7 @@
         </RelativeLayout>
 
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/llProdDetailCheckOut"
             android:layout_width="0dp"
             android:layout_height="match_parent"

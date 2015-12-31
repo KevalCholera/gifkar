@@ -14,7 +14,7 @@
         android:layout_margin="@dimen/margin_25"
         android:orientation="vertical">
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyAddressAddName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyAddressAddNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyAddressAddFlatNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:textColorHint="@color/edittext_hint_color" />
 
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyAddressAddStreet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyAddressAddLandmark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
             android:textColorHint="@color/edittext_hint_color" />
 
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyAddressAddArea"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
             android:textColorHint="@color/black" />
 
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyAddressAddPinCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/black" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/btnMyAddressAddAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

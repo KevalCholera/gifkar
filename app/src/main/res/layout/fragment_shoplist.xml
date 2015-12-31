@@ -14,7 +14,7 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent">-->
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:id="@+id/tvGreetText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
     </android.support.design.widget.AppBarLayout>
     <!--</FrameLayout>-->
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTabLayout
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTabLayout
         android:id="@+id/tabs_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

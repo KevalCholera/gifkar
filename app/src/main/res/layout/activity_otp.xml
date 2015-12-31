@@ -11,7 +11,7 @@
         android:layout_margin="@dimen/margin_25"
         android:orientation="vertical">
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -22,7 +22,7 @@
             android:text="@string/otp_head"
             android:textColor="@color/mainColor" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/tvOtpNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:layout_margin="@dimen/margin_5"
             android:gravity="center">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
                 android:id="@+id/etOTPOne"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:maxLength="1"
                 android:padding="@dimen/padding_8" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
                 android:id="@+id/etOTPTwo"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                 android:inputType="number"
                 android:padding="@dimen/padding_8" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
                 android:id="@+id/etOTPThree"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                 android:fontFamily="normal"
                 android:padding="@dimen/padding_8" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+            <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
                 android:id="@+id/etOTPFour"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
 
         </LinearLayout>
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/btnOTP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvOtpResend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
                 android:layout_weight="1"></View>
 
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvOtpEditNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
                 android:textColor="@color/mainColor" />
         </LinearLayout>
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/tvOtpCountDown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

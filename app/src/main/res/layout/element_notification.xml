@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/tvNotificationElementName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
             android:textColor="@color/mainColor"
             android:textSize="16sp" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/tvNotificationElementNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

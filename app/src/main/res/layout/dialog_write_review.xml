@@ -22,7 +22,7 @@
             android:layout_marginLeft="@dimen/margin_10"
             android:background="@drawable/ic_user" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/tvReviewUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etReviewAdd"
             android:layout_width="match_parent"
             android:layout_height="100dp"
@@ -63,7 +63,7 @@
             android:textColorHint="@color/edittext_hint_color"
             android:textSize="@dimen/text_12" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/btnReviewAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

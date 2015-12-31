@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/activity_bg"
@@ -98,7 +98,7 @@
             android:textColor="@color/mainColor"
             android:textSize="@dimen/text_12" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etReportErrorDes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
             android:textColorHint="@color/edittext_hint_color"
             android:textSize="@dimen/text_12" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/btnReportError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

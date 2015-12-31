@@ -12,8 +12,8 @@ import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.imageutil.BitmapCache;
 import com.smartsense.gifkar.imageutil.BitmapUtil;
 import com.smartsense.gifkar.imageutil.DiskBitmapCache;
-import com.smartsense.gifkar.textstyleutil.CooperHewittExtractor;
-import com.smartsense.gifkar.textstyleutil.TypefaceManager;
+import com.smartsense.gifkar.textstyleUtil.CooperHewittExtractor;
+import com.smartsense.gifkar.textstyleUtil.TypefaceManager;
 
 import java.io.InputStream;
 import java.security.KeyStore;

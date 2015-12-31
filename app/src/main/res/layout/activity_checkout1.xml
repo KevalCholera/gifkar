@@ -5,7 +5,7 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:id="@+id/tvChackout1ShopName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/padding_10">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_25"
@@ -51,7 +51,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_12" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvChackout1Total"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/padding_10">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_25"
@@ -80,7 +80,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_12" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvChackout1Shipping"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                 android:layout_weight="1"
                 android:fontFamily="normal"
                 android:gravity="right"
-                android:text="\u20B9 200"
+                android:text="\u20B9 0"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_12" />
         </LinearLayout>
@@ -99,7 +99,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/padding_10">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_25"
@@ -110,7 +110,7 @@
                 android:textSize="@dimen/text_14"
                 android:textStyle="bold" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvChackout1Payable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,13 +118,13 @@
                 android:layout_weight="1"
                 android:fontFamily="normal"
                 android:gravity="right"
-                android:text="\u20B9 200"
+                android:text="\u20B9 0"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_14"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/btnContinueCheckout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

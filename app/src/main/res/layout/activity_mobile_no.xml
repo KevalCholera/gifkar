@@ -8,7 +8,7 @@
     android:padding="@dimen/activity_vertical_margin"
     tools:context="com.smartsense.gifkar.ForgotPasswordActivity">
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
@@ -24,7 +24,7 @@
         android:layout_marginBottom="@dimen/margin_10"
         android:gravity="center_vertical">
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etEnterCountryCode"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
             android:textSize="@dimen/text_16"
              />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etEnterMobileNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
             android:textColorHint="@color/edittext_hint_color" />
     </LinearLayout>
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceButton
+    <com.smartsense.gifkar.textstyleUtil.TypefaceButton
         android:id="@+id/btnSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

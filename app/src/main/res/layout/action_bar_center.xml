@@ -16,7 +16,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/back_arrow" />
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:id="@+id/actionBarTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

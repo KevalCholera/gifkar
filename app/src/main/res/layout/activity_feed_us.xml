@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/llSuggestShop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             android:drawableRight="@drawable/ic_action_plus"
             android:fontFamily="normal"
             android:gravity="center_vertical"
-            android:padding="@dimen/padding_16"
+            android:padding="@dimen/padding_8"
             android:text="@string/suggest_new_shop"
             android:textColor="@android:color/black"
             android:textSize="@dimen/text_16" />
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"
@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"
@@ -154,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"

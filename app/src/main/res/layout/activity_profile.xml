@@ -26,7 +26,7 @@
             android:gravity="right"
             android:orientation="vertical">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:fontFamily="normal"
                 android:id="@+id/tvProfileName"
                 android:layout_width="match_parent"
@@ -42,7 +42,7 @@
 
                 android:orientation="horizontal">
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:fontFamily="normal"
                     android:id="@+id/tVProfileMobileNo"
                     android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
                     android:textSize="@dimen/text_12"
                     android:textColor="@android:color/black" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:fontFamily="normal"
                     android:id="@+id/tVProfileVerified"
                     android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
     </LinearLayout>
 
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

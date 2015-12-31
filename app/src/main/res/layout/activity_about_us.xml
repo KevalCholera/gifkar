@@ -18,7 +18,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/padding_16">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_25"
@@ -29,7 +29,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_16" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/margin_25"
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"
@@ -96,7 +96,7 @@
                     android:layout_marginBottom="@dimen/margin_5"
                     android:background="@color/activity_bg" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="normal"
@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"
@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_5"

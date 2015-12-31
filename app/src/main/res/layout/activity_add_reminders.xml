@@ -33,7 +33,7 @@
                     android:layout_marginBottom="@dimen/margin_10"
                     android:background="@drawable/calendar" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+                <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
                     android:id="@+id/etMyReminderAddDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                     android:layout_marginBottom="@dimen/margin_10"
                     android:background="@drawable/clock" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+                <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
                     android:id="@+id/etMyReminderAddTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             </LinearLayout>
         </LinearLayout>
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyReminderName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
             android:textSize="@dimen/text_16" />
 
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyReminderAddRelation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
             android:textColorHint="@color/edittext_hint_color"
             android:textSize="@dimen/text_16" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyReminderAddRelationType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
             android:padding="@dimen/padding_5"
             android:textSize="@dimen/text_16" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceEditText
+        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyReminderAddDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
@@ -173,7 +173,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceRadioButton
+            <com.smartsense.gifkar.textstyleUtil.TypefaceRadioButton
                 android:id="@+id/rbMyReminder1Day"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
                 android:text="1 Day Before"
                 android:textSize="@dimen/text_12" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceRadioButton
+            <com.smartsense.gifkar.textstyleUtil.TypefaceRadioButton
                 android:id="@+id/rbMyReminder2Day"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -192,7 +192,7 @@
                 android:text="2 Day Before"
                 android:textSize="@dimen/text_12" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceRadioButton
+            <com.smartsense.gifkar.textstyleUtil.TypefaceRadioButton
                 android:id="@+id/rbMyReminder1Hour"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -202,7 +202,7 @@
                 android:textSize="@dimen/text_12" />
         </RadioGroup>
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceButton
+        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/btnMyReminderAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -213,7 +213,7 @@
             android:textColor="@color/textcolorwhite"
             android:textSize="@dimen/text_16" />
 
-        <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|bottom"

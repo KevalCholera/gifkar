@@ -1,21 +1,32 @@
 package com.smartsense.gifkar;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener{
+import com.smartsense.gifkar.adapter.ShopListAdapter;
+import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.DataBaseHelper;
+
+public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView btBack;
-    private AutoCompleteTextView acSearch;
-    private ListView lvSearch;
+    private EditText etSearch;
+    private RecyclerView lvSearch;
     private LinearLayout llSearch;
+    DataBaseHelper dbHelper = new DataBaseHelper(SearchActivity.this);
+    CommonUtil commonUtil = new CommonUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +41,40 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_search);
-        acSearch=(AutoCompleteTextView) findViewById(R.id.etSearch);
-        lvSearch=(ListView) findViewById(R.id.lvSearch);
-        llSearch=(LinearLayout) findViewById(R.id.llSearch);
+        etSearch = (EditText) findViewById(R.id.etSearch);
+        lvSearch = (RecyclerView) findViewById(R.id.lvSearch);
+        lvSearch.setLayoutManager(new LinearLayoutManager(lvSearch.getContext()));
+        llSearch = (LinearLayout) findViewById(R.id.llSearch);
+        lvSearch.setVisibility(View.GONE);
+        llSearch.setVisibility(View.VISIBLE);
+        Log.i("id", "" + getIntent().getStringExtra("id"));
+        etSearch.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s, int start, int before, int count) { // TODO Auto-generated method stub
+                if (s != "") {
+                    Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_SHOP + "  WHERE " + DataBaseHelper.COLUMN_CATEGORY_ID + " = '"
+                            + getIntent().getStringExtra("id") + "' AND (" + DataBaseHelper.COLUMN_SHOP_NAME + " like '" + s.toString() + "%' OR " + DataBaseHelper.COLUMN_TAGS + " like '%" + s.toString() + "%')");
+                    if (cursor.getCount() > 0) {
+                        lvSearch.setVisibility(View.VISIBLE);
+                        llSearch.setVisibility(View.GONE);
+                        lvSearch.setAdapter(new ShopListAdapter(SearchActivity.this, cursor));
+//                        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
+                    } else {
 
+                    }
+                    s.toString();
+                } else {
+                    lvSearch.setVisibility(View.GONE);
+                    llSearch.setVisibility(View.VISIBLE);
+                }
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
     @Override

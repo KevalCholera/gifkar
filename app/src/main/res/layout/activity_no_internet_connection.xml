@@ -17,7 +17,7 @@
         android:padding="@dimen/padding_20"
         android:src="@drawable/check_network" />
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="bold"
@@ -25,7 +25,7 @@
         android:text="@string/nointernet_msg"
         android:textSize="@dimen/text_16" />
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -35,7 +35,7 @@
         android:textSize="@dimen/text_12" />
 
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceButton
+    <com.smartsense.gifkar.textstyleUtil.TypefaceButton
         android:id="@+id/btn_retry_noconnection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -69,9 +69,9 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         actionBarTitle.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
         setSupportActionBar(toolbar);
         btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
-        btFilter.setOnClickListener(this);
+//        btFilter.setOnClickListener(this);
         btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
-        btSearch.setOnClickListener(this);
+//        btSearch.setOnClickListener(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -376,16 +376,19 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                 fragmentCall(c, new ShopListFragment(), fm, check);
                 break;
             case Constants.NavigationItems.NAV_MY_CART:
+                fragmentCall(c, new ShopListFragment(), fm, check);
                 c.startActivity(new Intent(c, MyCartActivity.class));
                 break;
             case Constants.NavigationItems.NAV_MY_ORDERS:
                 fragmentCall(c, new MyOrdersActivity(), fm, check);
                 break;
             case Constants.NavigationItems.NAV_MY_ADDRESSES:
+                fragmentCall(c, new ShopListFragment(), fm, check);
                 if (check)
                     c.startActivity(new Intent(c, StartActivity.class));
                 else
                     c.startActivity(new Intent(c, MyAddressActivity.class));
+
                 break;
             case Constants.NavigationItems.NAV_MY_REMINDERS:
                 fragmentCall(c, new MyRemindersActivity(), fm, check);
@@ -459,6 +462,12 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+    @Override
+    public  void onResume(){
+        super.onResume();
+        CommonUtil.cancelProgressDialog();
     }
 
     @Override

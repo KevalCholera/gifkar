@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
 
-    <com.smartsense.gifkar.textstyleutil.TypefaceTabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.smartsense.gifkar.textstyleUtil.TypefaceTabLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

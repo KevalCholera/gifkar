@@ -21,7 +21,7 @@
                 android:orientation="horizontal">
 
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvOrderDetailOrderNo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
                     android:text="@string/order_no"
                     android:textSize="@dimen/text_14" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvOrderDetailDateTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:orientation="vertical"
             android:padding="@dimen/padding_20">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="bold"
@@ -64,7 +64,7 @@
                 android:textColor="@color/mainColor"
                 android:textSize="@dimen/text_16" />
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvOrderDetailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                         android:id="@+id/tvOrderElementShopName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_16" />
 
-                    <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                         android:id="@+id/tvOrderElementOrderStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                         android:textSize="12dp" />
                 </LinearLayout>
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvOrderElementDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -144,7 +144,7 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/padding_10">
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvOrderAccepted"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
                     android:textSize="@dimen/text_12"
                     android:background="@drawable/dashline" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvOrderProcess"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/dashline" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvOrderCompleted"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -213,7 +213,7 @@
             android:orientation="vertical"
             android:padding="@dimen/padding_20">
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="bold"
@@ -227,7 +227,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvOrderDetailName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -237,7 +237,7 @@
                     android:text="@string/name"
                     android:textSize="12dp" />
 
-                <com.smartsense.gifkar.textstyleutil.TypefaceTextView
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvOrderDetailNo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -264,7 +264,7 @@
             android:translationZ="10000dp">
 
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceButton
+            <com.smartsense.gifkar.textstyleUtil.TypefaceButton
                 android:id="@+id/btProdDetailEmail"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -279,7 +279,7 @@
                 android:textSize="@dimen/text_16" />
 
 
-            <com.smartsense.gifkar.textstyleutil.TypefaceButton
+            <com.smartsense.gifkar.textstyleUtil.TypefaceButton
                 android:id="@+id/btProdDetailCall"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
