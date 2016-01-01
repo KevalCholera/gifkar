@@ -47,14 +47,11 @@ import java.util.Map;
  */
 public class ShopListFragment extends Fragment implements ViewPager.OnPageChangeListener, Response.Listener<JSONObject>,
         Response.ErrorListener {
-
-
     ViewPager viewPager;
     TabLayout tabLayout;
     private Handler handler;
     View newFeaturesView;
     TextView tvGreetText;
-
     public ShopListFragment() {
         // Required empty public constructor
 
@@ -70,22 +67,24 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
         actionBarTitle.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
         newFeaturesView = (View) rootView.findViewById(R.id.newfeaturesView);
+//        newFeaturesView.setEnabled(false);
+        CommonUtil.disableView(newFeaturesView);
         tvGreetText = (TextView) rootView.findViewById(R.id.tvGreetText);
         ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
         btFilter.setVisibility(View.VISIBLE);
         ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
         btSearch.setVisibility(View.VISIBLE);
 
-        btFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getActivity(), ShopFilterActivity.class));
-            }
-        });
+//        btFilter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                fragment.startActivityForResult(new Intent(getActivity(), ShopFilterActivity.class), 2);
+//            }
+//        });
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), SearchActivity.class).putExtra("id", Adapter.mFragmentID.get(tabLayout.getSelectedTabPosition())));
+                startActivity(new Intent(getActivity(), SearchShopActivity.class).putExtra("id", Adapter.mFragmentID.get(tabLayout.getSelectedTabPosition())));
             }
         });
 
@@ -136,8 +135,10 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     public void insertItemInCart(Adapter adapter, JSONArray category) {
         try {
 //            SQLiteDatabase db;
-//            db = dbHelper.getReadableDatabase();
+//            db = dbHelper.getWritableDatabase();
+//            db.execSQL("DELETE FROM " + DataBaseHelper.TABLE_SHOP);
             commonUtil.execSQL(dbHelper, "DELETE FROM " + DataBaseHelper.TABLE_SHOP);
+//            db.close();
             for (int i = 0; i < category.length(); i++) {
                 JSONObject catJson = category.optJSONObject(i);
                 if (catJson.has("shops")) {
@@ -153,7 +154,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                         values.put(DataBaseHelper.COLUMN_SHOP_ID, prodJson.optString("id"));
                         values.put(DataBaseHelper.COLUMN_SHOP_NAME, prodJson.optString("name"));
                         values.put(DataBaseHelper.COLUMN_SHOP_IMAGE, Constants.BASE_URL + "/images/shops/" + prodJson.optString("image"));
-                        values.put(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB, Constants.BASE_URL + "/images/shops/thumbs/" + prodJson.optString("image"));
+                        values.put(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB, Constants.BASE_URL + "/images/shops/" + prodJson.optString("image"));
                         values.put(DataBaseHelper.COLUMN_CUT_OF_TIME, prodJson.optString("cutOffTime"));
                         values.put(DataBaseHelper.COLUMN_MIN_ORDER, prodJson.optString("minOrder"));
                         values.put(DataBaseHelper.COLUMN_MID_NIGHT_DEL, prodJson.optString("midnightDeliveryStatus"));
@@ -200,8 +201,8 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
 
     static class Adapter extends FragmentPagerAdapter {
         //        private final List<Fragment> mFragments = new ArrayList<>();
-         static List<String> mFragmentTitles = new ArrayList<>();
-         static List<String> mFragmentID = new ArrayList<>();
+        static List<String> mFragmentTitles = new ArrayList<>();
+        static List<String> mFragmentID = new ArrayList<>();
 
         public Adapter(FragmentManager fm) {
             super(fm);
@@ -214,7 +215,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
 
         @Override
         public Fragment getItem(int position) {
-            return ShopFragment.newInstance(mFragmentID.get(position));
+            return ShopFragment.newInstance(mFragmentID.get(position), mFragmentTitles.get(position));
         }
 
         @Override
@@ -232,7 +233,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     private LinearLayout pager_indicator;
     private int dotsCount;
     private ImageView[] dots;
-    private NewFeatureAdapter mAdapter;
+    private NewFeatureAdapter newFeatureAdapter;
     Runnable runnable;
     int position = 0;
     Integer[] mImageResources = {R.mipmap.one, R.mipmap.two, R.mipmap.three, R.mipmap.four};
@@ -240,9 +241,9 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     public void setReference(final JSONArray mImageResources) {
         intro_images = (ViewPager) newFeaturesView.findViewById(R.id.pager_introduction);
         pager_indicator = (LinearLayout) newFeaturesView.findViewById(R.id.viewPagerCountDots);
-
-        mAdapter = new NewFeatureAdapter(getActivity(), mImageResources);
-        intro_images.setAdapter(mAdapter);
+        dotsCount = mImageResources.length();
+        newFeatureAdapter = new NewFeatureAdapter(getActivity(), mImageResources);
+        intro_images.setAdapter(newFeatureAdapter);
         intro_images.setCurrentItem(0);
 
         intro_images.setOnPageChangeListener(this);
@@ -261,13 +262,12 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     }
 
     private void setUiPageViewController() {
-        dotsCount = mAdapter.getCount();
+//        dotsCount = newFeatureAdapter.getCount();
         dots = new ImageView[dotsCount];
 
-        for (int i = 0; i < dotsCount; i++) {
+        for (int i = 0; i < dots.length; i++) {
             dots[i] = new ImageView(getActivity());
-            dots[i].setImageDrawable(getResources().getDrawable(R.drawable.nonselecteditem_dot));
-
+            dots[i].setImageResource(R.drawable.nonselecteditem_dot);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
@@ -278,7 +278,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
             pager_indicator.addView(dots[i], params);
         }
 
-        dots[0].setImageDrawable(getResources().getDrawable(R.drawable.selecteditem_dot));
+        dots[0].setImageResource(R.drawable.selecteditem_dot);
     }
 
 
@@ -361,5 +361,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
             }
         }
     }
+
+
 
 }

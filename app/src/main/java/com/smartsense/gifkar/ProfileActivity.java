@@ -49,6 +49,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             JSONObject userInfo = new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_INFO, ""));
             userInfo=userInfo.optJSONObject("userDetails");
 //            Constants.BASE_URL + "/images/users/" +
+            ivProfileImage.setDefaultImageResId(R.drawable.ic_user);
             ivProfileImage.setImageUrl(Constants.BASE_URL + "/images/users/" + userInfo.optString("image"), imageLoader);
             tvName.setText(userInfo.optString("firstName") + " " + userInfo.optString("lastName"));
             tvMobile.setText(userInfo.optString("mobile"));
@@ -60,9 +61,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             if (userInfo.optString("isMobileVerified").equalsIgnoreCase("1")) {
                 tvVerified.setText("Verified");
+                tvVerified.setTextColor(getResources().getColor(R.color.black));
                 tvVerified.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verified, 0);
             } else {
                 tvVerified.setText("Unverified");
+                tvVerified.setTextColor(getResources().getColor(R.color.red));
                 tvVerified.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.unverified, 0);
             }
 

@@ -12,8 +12,10 @@ import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.mpt.storage.SharedPreferenceUtil;
+import com.smartsense.gifkar.GifkarApp;
 import com.smartsense.gifkar.MyCartActivity;
 import com.smartsense.gifkar.ProductDetailActivity;
 import com.smartsense.gifkar.ProductListActivity;
@@ -37,13 +39,14 @@ public class ProductAdapter extends CursorAdapter {
     JSONObject productObj;
     Context context;
     Boolean checkCart;
+    ImageLoader imageLoader= GifkarApp.getInstance().getDiskImageLoader();
 
-    public ProductAdapter(Context context, Cursor productCursor, DataBaseHelper dbHelper,Boolean checkCart) {
+    public ProductAdapter(Context context, Cursor productCursor, DataBaseHelper dbHelper, Boolean checkCart) {
         super(context, productCursor, 0);
         this.productCursor = productCursor;
         this.dbHelper = dbHelper;
-        this.context=context;
-        this.checkCart=checkCart;
+        this.context = context;
+        this.checkCart = checkCart;
         getCartItem();
     }
 
@@ -78,8 +81,9 @@ public class ProductAdapter extends CursorAdapter {
         ibProdElementMinus.setTag(tvProdElementQty);
         ibProdElementNext.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
         view.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
-//         ivProdPhoto.setImageBitmap(CommonUtil.decodeFromBitmap(cursor.getString(cursor
-//                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_IMAGE))));
+        ivProdPhoto.setDefaultImageResId(R.drawable.default_img);
+        ivProdPhoto.setImageUrl(Constants.BASE_URL+"/images/products/"+cursor.getString(cursor
+                .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_IMAGE)), imageLoader);
 
 
         try {
@@ -106,7 +110,7 @@ public class ProductAdapter extends CursorAdapter {
                 TextView tvProdElementQty = (TextView) v.getTag();
                 if (Integer.valueOf(tvProdElementQty.getText().toString()) >= 1) {
                     tvProdElementQty.setText("" + (Integer.valueOf(tvProdElementQty.getText().toString()) - 1));
-                    addProduct(false, (Integer) tvProdElementQty.getTag(),Integer.valueOf(tvProdElementQty.getText().toString()));
+                    addProduct(false, (Integer) tvProdElementQty.getTag(), Integer.valueOf(tvProdElementQty.getText().toString()));
                 }
             }
         });
@@ -117,7 +121,7 @@ public class ProductAdapter extends CursorAdapter {
                 TextView tvProdElementQty = (TextView) v.getTag();
                 if (Integer.valueOf(tvProdElementQty.getText().toString()) < 3) {
                     tvProdElementQty.setText("" + (Integer.valueOf(tvProdElementQty.getText().toString()) + 1));
-                    addProduct(true, (Integer) tvProdElementQty.getTag(),Integer.valueOf(tvProdElementQty.getText().toString()));
+                    addProduct(true, (Integer) tvProdElementQty.getTag(), Integer.valueOf(tvProdElementQty.getText().toString()));
                 }
             }
         });
@@ -154,7 +158,7 @@ public class ProductAdapter extends CursorAdapter {
     }
 
 
-    public void addProduct(Boolean insert, int prodDetailId,int qty) {
+    public void addProduct(Boolean insert, int prodDetailId, int qty) {
         try {
             Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCT + "  WHERE " + DataBaseHelper.COLUMN_PROD_DETAIL_ID + " = '"
                     + prodDetailId + "'");
@@ -214,7 +218,7 @@ public class ProductAdapter extends CursorAdapter {
                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_PROD_LIST, productArray.toString());
                 SharedPreferenceUtil.save();
                 if (checkCart) {
-                    ProductListActivity.checkCart(context,productArray);
+                    ProductListActivity.checkCart(context, productArray);
                 } else {
                     MyCartActivity.setAdapter(context, productArray, qty);
 

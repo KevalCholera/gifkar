@@ -66,6 +66,7 @@
                 android:id="@+id/slideView"
                 layout="@layout/fragment_new_features"
                 android:layout_width="match_parent"
+
                 android:layout_height="match_parent"
                 app:layout_collapseMode="parallax" />
 

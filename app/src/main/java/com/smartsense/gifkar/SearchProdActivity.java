@@ -1,31 +1,31 @@
 package com.smartsense.gifkar;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.smartsense.gifkar.adapter.ShopListAdapter;
+import com.smartsense.gifkar.adapter.ProductAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
-public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
+public class SearchProdActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView btBack;
     private EditText etSearch;
-    private RecyclerView lvSearch;
+    private ListView lvSearch;
     private LinearLayout llSearch;
-    DataBaseHelper dbHelper = new DataBaseHelper(SearchActivity.this);
+    DataBaseHelper dbHelper = new DataBaseHelper(SearchProdActivity.this);
     CommonUtil commonUtil = new CommonUtil();
 
     @Override
@@ -40,23 +40,21 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_prod_search);
         etSearch = (EditText) findViewById(R.id.etSearch);
-        lvSearch = (RecyclerView) findViewById(R.id.lvSearch);
-        lvSearch.setLayoutManager(new LinearLayoutManager(lvSearch.getContext()));
+        lvSearch = (ListView) findViewById(R.id.lvSearch);
         llSearch = (LinearLayout) findViewById(R.id.llSearch);
         lvSearch.setVisibility(View.GONE);
         llSearch.setVisibility(View.VISIBLE);
-        Log.i("id", "" + getIntent().getStringExtra("id"));
+//        Log.i("id", "" + getIntent().getStringExtra("id"));
         etSearch.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) { // TODO Auto-generated method stub
-                if (s != "") {
-                    Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_SHOP + "  WHERE " + DataBaseHelper.COLUMN_CATEGORY_ID + " = '"
-                            + getIntent().getStringExtra("id") + "' AND (" + DataBaseHelper.COLUMN_SHOP_NAME + " like '" + s.toString() + "%' OR " + DataBaseHelper.COLUMN_TAGS + " like '%" + s.toString() + "%')");
+                if (!s.toString().equalsIgnoreCase("")) {
+                    Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCT + "  WHERE  (" + DataBaseHelper.COLUMN_PROD_NAME + " like '" + s.toString() + "%' OR " + DataBaseHelper.COLUMN_PROD_CATEGORY_NAME + " like '%" + s.toString() + "%')");
                     if (cursor.getCount() > 0) {
                         lvSearch.setVisibility(View.VISIBLE);
                         llSearch.setVisibility(View.GONE);
-                        lvSearch.setAdapter(new ShopListAdapter(SearchActivity.this, cursor));
+                        lvSearch.setAdapter(new ProductAdapter(SearchProdActivity.this, cursor,dbHelper,true));
 //                        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
                     } else {
 
@@ -75,12 +73,20 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
             public void afterTextChanged(Editable s) {
             }
         });
+        lvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
+//                JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
+                startActivity(new Intent(SearchProdActivity.this, ProductDetailActivity.class).putExtra("ProdDEID", (Integer) view.getTag()));
+
+            }
+        });
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btActionBarBack:
+                CommonUtil.closeKeyboard(this);
                 finish();
                 break;
             default:

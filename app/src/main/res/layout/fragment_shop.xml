@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recycle_view"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="match_parent"
+    android:background="@color/textcolorwhite"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/llShopListEmapty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/default_img" />
+
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+            android:id="@+id/tvShopListEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="bold"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="Looking for something ?"
+            android:textSize="@dimen/text_16" />
+    </LinearLayout>
+
+
+</RelativeLayout><!--<?xml version="1.0" encoding="utf-8"?>--><!--<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:id="@+id/recycle_view"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content" />-->

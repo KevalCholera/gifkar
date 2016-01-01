@@ -4,14 +4,13 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:gravity="center"
-    android:padding="@dimen/padding_16"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/padding_16">
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/ivCheckout1ElementImage"
         android:layout_width="@dimen/product_image_height"
-        android:layout_height="@dimen/product_image_height"
-        android:background="@drawable/ic_gifkar_logo" />
+        android:layout_height="@dimen/product_image_height" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -69,11 +68,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="normal"
-            android:textColor="@color/mainColor"
             android:gravity="center_vertical|bottom"
             android:padding="@dimen/padding_5"
-            android:textSize="@dimen/text_16"
-            android:text="\u20B9 100" />
+            android:text="\u20B9 100"
+            android:textColor="@color/mainColor"
+            android:textSize="@dimen/text_16" />
 
     </LinearLayout>
 

@@ -180,7 +180,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".SearchActivity"
+            android:name=".SearchShopActivity"
+            android:label="@string/search"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".SearchProdActivity"
             android:label="@string/search"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />

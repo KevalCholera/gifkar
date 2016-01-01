@@ -68,9 +68,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
             etEmail.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_EMAIL, ""));
             if (userInfo.optString("isEmailVerified").equalsIgnoreCase("1")) {
                 tVProfileVerified.setText("Verified");
+                tVProfileVerified.setTextColor(getResources().getColor(R.color.black));
                 tVProfileVerified.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verified, 0);
             } else {
                 tVProfileVerified.setText("Unverified");
+                tVProfileVerified.setTextColor(getResources().getColor(R.color.red));
                 tVProfileVerified.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.unverified, 0);
             }
             etFirstName.setText(userInfo.optString("firstName"));

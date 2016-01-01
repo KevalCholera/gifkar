@@ -14,8 +14,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.mpt.storage.SharedPreferenceUtil;
+import com.smartsense.gifkar.GifkarApp;
 import com.smartsense.gifkar.MyCartActivity;
 import com.smartsense.gifkar.ProductListActivity;
 import com.smartsense.gifkar.R;
@@ -33,7 +35,7 @@ public class MyCartAdapter extends BaseAdapter {
     JSONObject productObj;
     Context activity;
     Boolean check;
-
+    ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
     public MyCartAdapter(Context activity, JSONArray dataArray, Boolean check) {
         this.activity = activity;
         this.dataArray = dataArray;
@@ -107,7 +109,7 @@ public class MyCartAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if (Integer.valueOf(holder.tvProdElementQty.getText().toString()) >= 1) {
                     holder.tvProdElementQty.setText("" + (Integer.valueOf(holder.tvProdElementQty.getText().toString()) - 1));
-                    addProduct(false, (JSONObject) holder.tvProdElementQty.getTag(),Integer.valueOf(holder.tvProdElementQty.getText().toString()));
+                    addProduct(false, (JSONObject) holder.tvProdElementQty.getTag(), Integer.valueOf(holder.tvProdElementQty.getText().toString()));
                 }
             }
         });
@@ -116,11 +118,12 @@ public class MyCartAdapter extends BaseAdapter {
             public void onClick(View v) {
                 if (Integer.valueOf(holder.tvProdElementQty.getText().toString()) < 3) {
                     holder.tvProdElementQty.setText("" + (Integer.valueOf(holder.tvProdElementQty.getText().toString()) + 1));
-                    addProduct(true, (JSONObject) holder.tvProdElementQty.getTag(),Integer.valueOf(holder.tvProdElementQty.getText().toString()));
+                    addProduct(true, (JSONObject) holder.tvProdElementQty.getTag(), Integer.valueOf(holder.tvProdElementQty.getText().toString()));
                 }
             }
         });
-
+        holder.ivProdPhoto.setDefaultImageResId(R.drawable.default_img);
+        holder.ivProdPhoto.setImageUrl(Constants.BASE_URL + "/images/products/" + addressObj.optString(DataBaseHelper.COLUMN_PROD_IMAGE), imageLoader);
         return view;
     }
 

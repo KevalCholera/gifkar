@@ -1,5 +1,6 @@
 package com.smartsense.gifkar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -9,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ShopFilterActivity extends AppCompatActivity implements View.OnClickListener{
+public class ShopFilterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView btBack;
     private CheckBox cbRatting;
@@ -30,23 +31,31 @@ public class ShopFilterActivity extends AppCompatActivity implements View.OnClic
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_shop_filter);
-        cbName=(CheckBox) findViewById(R.id.cbShopFilterName);
-        cbMinOrder=(CheckBox) findViewById(R.id.cbShopFilterMinOrder);
-        cbRatting=(CheckBox) findViewById(R.id.cbShopFilterRatting);
-        btApplyFilter=(Button) findViewById(R.id.btnShopApplyFilter);
+        cbName = (CheckBox) findViewById(R.id.cbShopFilterName);
+        cbMinOrder = (CheckBox) findViewById(R.id.cbShopFilterMinOrder);
+        cbRatting = (CheckBox) findViewById(R.id.cbShopFilterRatting);
+        btApplyFilter = (Button) findViewById(R.id.btnShopApplyFilter);
         btApplyFilter.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
+        Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.btnShopApplyFilter:
-
+                intent.putExtra("cbMinOrder", cbMinOrder.isChecked());
+                intent.putExtra("cbRatting", cbRatting.isChecked());
+                intent.putExtra("cbName", cbName.isChecked());
+                setResult(2, intent);
+                finish();
                 break;
             case R.id.btActionBarBack:
+                setResult(1, intent);
                 finish();
                 break;
             default:
         }
     }
+
+
 }

@@ -52,7 +52,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     private static TextView tvProdCartRs;
     private static TextView tvProdCartCount;
     private static LinearLayout llProdBottom;
-    private productListAdapter adapter;
+    private ProductListAdapter productListAdapter;
     private ImageView btActionBarSearch;
 
     @Override
@@ -112,7 +112,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                 startActivity(new Intent(this, ProductFilterActivity.class));
                 break;
             case R.id.btActionBarSearch:
-                startActivity(new Intent(this, SearchActivity.class));
+//                startActivity(new Intent(this, SearchShopActivity.class));
+                startActivity(new Intent(this, SearchProdActivity.class).putExtra("id", SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_ID, "")));
                 break;
             case R.id.btActionBarBack:
                 finish();
@@ -130,12 +131,12 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    static class productListAdapter extends FragmentPagerAdapter {
+    static class ProductListAdapter extends FragmentPagerAdapter {
         //        private final List<Fragment> mFragments = new ArrayList<>();
         private final List<String> mFragmentTitles = new ArrayList<>();
         private final List<String> mFragmentID = new ArrayList<>();
 
-        public productListAdapter(FragmentManager fm) {
+        public ProductListAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -146,7 +147,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
 
         @Override
         public Fragment getItem(int position) {
-            return ProductFragment.newInstance(mFragmentID.get(position));
+            return ProductFragment.newInstance(mFragmentID.get(position),mFragmentTitles.get(position));
         }
 
         @Override
@@ -161,7 +162,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void setupViewPager(JSONArray product) {
-        adapter = new productListAdapter(getSupportFragmentManager());
+        productListAdapter = new ProductListAdapter(getSupportFragmentManager());
 //        String tempary = "{\"eventId\":123,\"errorCode\":0,\"status\":200,\"message\":\"Product List.\",\"data\":{\"products\":[{\"id\":1,\"name\":\"Sub category\",\"products\":[{\"productDetailId\":7,\"subCategoryId\":1,\"description\":\"\",\"productCode\":\"123153\",\"quantity\":10,\"price\":\"100.00\",\"image\":\"productImg1446529988.png\",\"itemType\":\"na\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":4,\"name\":\"Bottle\",\"description\":\"Bottle\\n\"},\"productId\":6,\"name\":\"product6\",\"packageType\":{\"id\":12,\"name\":\"Box\"}},{\"productDetailId\":9,\"subCategoryId\":1,\"description\":\"desc2\",\"productCode\":\"12354\",\"quantity\":11,\"price\":\"100.00\",\"image\":\"productImg1446525634.jpg\",\"itemType\":\"non-veg\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":2,\"name\":\"Ml\",\"description\":\"Miligram\\n\"},\"productId\":6,\"name\":\"product6\",\"packageType\":{\"id\":5,\"name\":\"Bottle\"}},{\"productDetailId\":10,\"subCategoryId\":1,\"description\":\"desc\",\"productCode\":\"121356\",\"quantity\":12,\"price\":\"100.00\",\"image\":\"productImg1446530085.jpg\",\"itemType\":\"veg\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":3,\"name\":\"Box\",\"description\":\"BOx\"},\"productId\":6,\"name\":\"product6\",\"packageType\":{\"id\":12,\"name\":\"Box\"}}]},{\"id\":2,\"name\":\"Sub category1\",\"products\":[{\"productDetailId\":12,\"subCategoryId\":2,\"description\":\"description\",\"productCode\":\"123153\",\"quantity\":1,\"price\":\"100.00\",\"image\":\"\",\"itemType\":\"na\",\"earliestDelivery\":12,\"isAvailble\":\"1\",\"unit\":{\"id\":1,\"name\":\"Kg\",\"description\":\"Kilogram\\n\"},\"productId\":9,\"name\":\"Some Item\",\"packageType\":{\"id\":5,\"name\":\"Bottle\"}}]}]}}\n";
         try {
 //            JSONObject response = new JSONObject(tempary);
@@ -174,7 +175,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void adpterViewPager() {
-        viewPager.setAdapter(adapter);
+        viewPager.setAdapter(productListAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -224,7 +225,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                     }
 
                 }
-                adapter.addFragment(catJson.optString("id"), catJson.optString("name"));
+                productListAdapter.addFragment(catJson.optString("id"), catJson.optString("name"));
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -23,9 +23,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.ShopListAdapter;
@@ -43,11 +48,15 @@ public class ShopFragment extends Fragment {
     static RecyclerView recyclerView;
     DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
     CommonUtil commonUtil = new CommonUtil();
+    private LinearLayout llListEmpty;
+    private TextView tvListEmpty;
+    Fragment fragment = this;
 
-    public static ShopFragment newInstance(String ID) {
+    public static ShopFragment newInstance(String ID,String name) {
         ShopFragment fragmentFirst = new ShopFragment();
         Bundle args = new Bundle();
         args.putString("ID", ID);
+        args.putString("name", name);
         fragmentFirst.setArguments(args);
         return fragmentFirst;
     }
@@ -55,7 +64,20 @@ public class ShopFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_shop, container, false);
+        View view = (View) inflater.inflate(R.layout.fragment_shop, container, false);
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
+        ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
+        btFilter.setVisibility(View.VISIBLE);
+
+        btFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragment.startActivityForResult(new Intent(getActivity(), ShopFilterActivity.class), 2);
+            }
+        });
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycle_view);
+        llListEmpty=(LinearLayout) view.findViewById(R.id.llShopListEmapty);
+        tvListEmpty=(TextView) view.findViewById(R.id.tvShopListEmpty);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
         try {
 //            jsonArray = new JSONArray(getArguments().getString("ID"));
@@ -64,6 +86,12 @@ public class ShopFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
             if (cursor.getCount() > 0) {
                 recyclerView.setAdapter(new ShopListAdapter(getActivity(), cursor));
+                llListEmpty.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            } else {
+                tvListEmpty.setText("Currently " + getArguments().getString("name") + " shop not available.");
+                llListEmpty.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
             }
 //
         } catch (Exception e) {
@@ -86,8 +114,17 @@ public class ShopFragment extends Fragment {
                     }
                 })
         );
-        return recyclerView;
+        return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {
+            Log.d("yes", data.getBooleanExtra("cbMinOrder", false) + "");
+            data.getBooleanExtra("cbRatting",false);
+            data.getBooleanExtra("cbName",false);
+        }
+    }
 
 }

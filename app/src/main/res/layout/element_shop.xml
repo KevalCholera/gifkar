@@ -14,12 +14,11 @@
         android:layout_weight="2"
         android:orientation="horizontal">
 
-        <com.android.volley.toolbox.NetworkImageView
+        <com.smartsense.gifkar.utill.CircleImageView
             android:id="@+id/ivShopListImage"
             android:layout_width="@dimen/product_image_height"
             android:layout_height="@dimen/product_image_height"
-            android:layout_gravity="center"
-            android:background="@drawable/ic_gifkar_logo" />
+            android:layout_gravity="center" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -43,9 +42,9 @@
                     android:layout_margin="@dimen/padding_2"
                     android:layout_weight="2"
                     android:fontFamily="bold"
+                    android:gravity="bottom"
                     android:paddingBottom="@dimen/padding_5"
                     android:singleLine="true"
-                    android:gravity="bottom"
                     android:text="Shop Name"
                     android:textColor="@color/textcolor"
                     android:textSize="@dimen/text_14" />
@@ -60,8 +59,8 @@
                     android:fontFamily="normal"
                     android:padding="@dimen/padding_8"
                     android:text="5.0"
-                    android:textSize="@dimen/text_16"
-                    android:textColor="@color/textcolorwhite" />
+                    android:textColor="@color/textcolorwhite"
+                    android:textSize="@dimen/text_16" />
 
 
             </LinearLayout>
@@ -130,8 +129,8 @@
                     android:id="@+id/ivShopListMidNight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/padding_2"
                     android:layout_gravity="right"
+                    android:layout_margin="@dimen/padding_2"
                     android:background="@drawable/ic_night_deliver" />
             </LinearLayout>
         </LinearLayout>

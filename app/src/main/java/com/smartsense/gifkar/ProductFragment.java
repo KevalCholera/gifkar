@@ -24,7 +24,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.smartsense.gifkar.adapter.ProductAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
@@ -32,14 +34,16 @@ import com.smartsense.gifkar.utill.DataBaseHelper;
 
 public class ProductFragment extends Fragment {
     ListView lvProduct;
-
+    LinearLayout llProdListEmpty;
+    TextView tvProdListEmpty;
     DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
     CommonUtil commonUtil = new CommonUtil();
 
-    public static ProductFragment newInstance(String ID) {
+    public static ProductFragment newInstance(String ID, String categoryName) {
         ProductFragment fragmentFirst = new ProductFragment();
         Bundle args = new Bundle();
         args.putString("ID", ID);
+        args.putString("name", categoryName);
         fragmentFirst.setArguments(args);
         return fragmentFirst;
     }
@@ -48,11 +52,19 @@ public class ProductFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_product, container, false);
         lvProduct = (ListView) view.findViewById(R.id.lvProductList);
+        llProdListEmpty=(LinearLayout) view.findViewById(R.id.llProdListEmapty);
+        tvProdListEmpty=(TextView) view.findViewById(R.id.tvProdListEmpty);
         try {
             Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCT + "  WHERE " + DataBaseHelper.COLUMN_PROD_CATEGORY_ID + " = '"
                     + getArguments().getString("ID") + "'");
             if (cursor.getCount() > 0) {
                 lvProduct.setAdapter(new ProductAdapter(getActivity(), cursor, dbHelper, true));
+                llProdListEmpty.setVisibility(View.GONE);
+                lvProduct.setVisibility(View.VISIBLE);
+            } else {
+                tvProdListEmpty.setText("Currently " + getArguments().getString("name") + " category product not available.");
+                llProdListEmpty.setVisibility(View.VISIBLE);
+                lvProduct.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,8 +78,6 @@ public class ProductFragment extends Fragment {
         });
         return view;
     }
-
-
 
 
 }

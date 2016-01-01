@@ -58,6 +58,8 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
     private TextView tVHeadName;
     private TextView tVHeadMobileNo;
     private TextView tvHeadAddress;
+    private TextView tvHeadTerms;
+    private TextView tvHeadPrivacy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,10 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         tvHeadAddress = (TextView) header.findViewById(R.id.tvHeadAddress);
         tVHeadName = (TextView) header.findViewById(R.id.tVHeadName);
         tVHeadMobileNo = (TextView) header.findViewById(R.id.tVHeadMobileNo);
+        tvHeadPrivacy= (TextView) findViewById(R.id.tvHeadPrivacy);
+        tvHeadPrivacy.setOnClickListener(this);
+        tvHeadTerms= (TextView) findViewById(R.id.tvHeadTerms);
+        tvHeadTerms.setOnClickListener(this);
         lvNavList = (ListView) header.findViewById(R.id.lvHeadList);
         setHeader(GifkarActivity.this);
         if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
@@ -176,7 +182,12 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.llHeadAddress:
                 startActivity(new Intent(this, CitySelectActivity.class));
                 break;
-
+            case R.id.tvHeadPrivacy:
+                startActivity(new Intent(this, TermsandCondtionsActivity.class));
+                break;
+            case R.id.tvHeadTerms:
+                startActivity(new Intent(this, TermsandCondtionsActivity.class));
+                break;
             default:
         }
     }

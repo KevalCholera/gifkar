@@ -46,6 +46,7 @@ public class NewFeatureAdapter extends PagerAdapter {
 //        imageView.setDefaultImageResId(R.drawable.normal_hori_bg);
 //        imageView.setImageResource(mResources[position]);
 //        Constants.BASE_URL+"/images/bannerImages/"+
+        imageView.setDefaultImageResId(R.drawable.default_img);
         imageView.setImageUrl(mResources.optJSONObject(position).optString("image"), imgLoader);
 
         container.addView(itemView);

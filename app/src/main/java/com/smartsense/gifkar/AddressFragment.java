@@ -155,6 +155,7 @@ public class AddressFragment extends Fragment implements View.OnClickListener, R
                                 etCountry.setText(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("name"));
                                 etCountry.setTag(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optString("id"));
                                 if (response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optJSONArray("cities").length() != 0) {
+                                    cityArr = response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optJSONArray("cities");
                                     etCity.setText(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optJSONArray("cities").getJSONObject(0).optString("name"));
                                     etCity.setTag(response.getJSONObject("data").getJSONArray("countries").getJSONObject(0).optJSONArray("cities").getJSONObject(0).optString("id"));
                                 }
@@ -204,7 +205,16 @@ public class AddressFragment extends Fragment implements View.OnClickListener, R
                         JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
                         etCountry.setText(getCodeObj.optString("name"));
                         etCountry.setTag(getCodeObj.optString("id"));
-                        cityArr = getCodeObj.optJSONArray("cities");
+                        if (getCodeObj.optJSONArray("cities").length() != 0) {
+                            try {
+                                cityArr = getCodeObj.optJSONArray("cities");
+                                etCity.setText(getCodeObj.optJSONArray("cities").getJSONObject(0).optString("name"));
+                                etCity.setTag(getCodeObj.optJSONArray("cities").getJSONObject(0).optString("id"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
                         alert.dismiss();
 
                     }
@@ -230,8 +240,8 @@ public class AddressFragment extends Fragment implements View.OnClickListener, R
             if (cityArr.length() == 0) {
                 CommonUtil.alertBox(getActivity(), "", "City Not Found Please Try Again.");
             } else {
-                etCity.setText(cityArr.getJSONObject(0).optString("name"));
-                etCity.setTag(cityArr.getJSONObject(0).optString("id"));
+//                etCity.setText(cityArr.getJSONObject(0).optString("name"));
+//                etCity.setTag(cityArr.getJSONObject(0).optString("id"));
                 CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(getActivity(), cityArr, false);
                 list_view.setAdapter(countryCodeAdapter);
 
