@@ -23,12 +23,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,14 +42,15 @@ import java.util.StringTokenizer;
 public class ShopFragment extends Fragment {
 
     //    static JSONArray jsonArray;
-    static RecyclerView recyclerView;
+    RecyclerView recyclerView;
     DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
     CommonUtil commonUtil = new CommonUtil();
     private LinearLayout llListEmpty;
     private TextView tvListEmpty;
     Fragment fragment = this;
+//    private String s1 = "";
 
-    public static ShopFragment newInstance(String ID,String name) {
+    public static ShopFragment newInstance(String ID, String name) {
         ShopFragment fragmentFirst = new ShopFragment();
         Bundle args = new Bundle();
         args.putString("ID", ID);
@@ -65,39 +63,21 @@ public class ShopFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_shop, container, false);
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
-        ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
-        btFilter.setVisibility(View.VISIBLE);
-
-        btFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragment.startActivityForResult(new Intent(getActivity(), ShopFilterActivity.class), 2);
-            }
-        });
+//        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
+//        ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
+//        btFilter.setVisibility(View.VISIBLE);
+//        btFilter.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                fragment.startActivityForResult(new Intent(getActivity(), ShopFilterActivity.class), 2);
+//            }
+//        });
         recyclerView = (RecyclerView) view.findViewById(R.id.recycle_view);
-        llListEmpty=(LinearLayout) view.findViewById(R.id.llShopListEmapty);
-        tvListEmpty=(TextView) view.findViewById(R.id.tvShopListEmpty);
+        llListEmpty = (LinearLayout) view.findViewById(R.id.llShopListEmapty);
+        tvListEmpty = (TextView) view.findViewById(R.id.tvShopListEmpty);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
-        try {
-//            jsonArray = new JSONArray(getArguments().getString("ID"));
-            Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_SHOP + "  WHERE " + DataBaseHelper.COLUMN_CATEGORY_ID + " = '"
-                    + getArguments().getString("ID") + "'");
-            recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-            if (cursor.getCount() > 0) {
-                recyclerView.setAdapter(new ShopListAdapter(getActivity(), cursor));
-                llListEmpty.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-            } else {
-                tvListEmpty.setText("Currently " + getArguments().getString("name") + " shop not available.");
-                llListEmpty.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-            }
-//
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        fillShopList();
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -109,6 +89,7 @@ public class ShopFragment extends Fragment {
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_ID, st.nextToken());
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CATEGORY_ID, st.nextToken());
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_NAME, st.nextToken());
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_IMAGE, st.nextToken());
                         SharedPreferenceUtil.save();
                         startActivity(new Intent(getActivity(), ProductListActivity.class));
                     }
@@ -117,13 +98,39 @@ public class ShopFragment extends Fragment {
         return view;
     }
 
+    public void fillShopList() {
+        try {
+//            jsonArray = new JSONArray(getArguments().getString("ID"));
+            final Cursor cursor;
+            if (SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_NAME, false) | SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_RATTING, false) | SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_RATTING, false)) {
+                cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_SHOP + "  WHERE " + DataBaseHelper.COLUMN_CATEGORY_ID + " = '"
+                        + getArguments().getString("ID") + "' ORDER BY " + SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_FILTER,"") + " COLLATE NOCASE");
+            } else {
+                cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_SHOP + "  WHERE " + DataBaseHelper.COLUMN_CATEGORY_ID + " = '"
+                        + getArguments().getString("ID") + "' ");
+            }
+            if (cursor.getCount() > 0) {
+                recyclerView.setAdapter(new ShopListAdapter(getActivity(), cursor));
+                llListEmpty.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            } else {
+                tvListEmpty.setText("Currently " + getArguments().getString("name") + " shop not available.");
+                llListEmpty.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2) {
-            Log.d("yes", data.getBooleanExtra("cbMinOrder", false) + "");
-            data.getBooleanExtra("cbRatting",false);
-            data.getBooleanExtra("cbName",false);
+//            s1 = data.getStringExtra("orderBy");
+//            if (!s1.equalsIgnoreCase("")) {
+                fillShopList();
+//            }
         }
     }
 

@@ -7,7 +7,7 @@ public class Constants {
     public static final int STATUS_CHECK = 201;
     public static final String DB_PATH = "/data/data/com.smartsense.gifkar/databases/";
     public static final String BASE_URL = "https://gifkar.cloudapp.net";
-//    public static final String BASE_URL = "https://192.168.1.113";
+    //    public static final String BASE_URL = "https://192.168.1.113";
     public static final String BASE_IMAGE_URL = "http://104.43.15.1:8025";
     public static final String PRO_TITLE = "Please Wait";
     public static final String PRO_LIST = "Syncing Process Running...";
@@ -54,6 +54,15 @@ public class Constants {
         public static final String SHOP_NAME = "shop_name";
         public static final String SHOP_ID = "shop_id";
         public static final String OCCASIONS = "occasions";
+        public static final String SHOP_FILTER = "shop_filter";
+        public static final String FILTER_SHOP_NAME = "filter_shop_name";
+        public static final String FILTER_SHOP_MIN = "filter_shop_min";
+        public static final String FILTER_SHOP_RATTING = "filter_shop_rat";
+        public static final String FILTER_PROD_NAME = "filter_prod_name";
+        public static final String FILTER_PROD_PRICE = "filter_prod_price";
+        public static final String PROD_FILTER = "prod_filter";
+
+        public static final String SHOP_IMAGE = "shop_image";
     }
 
     public class NavigationItems {
@@ -73,7 +82,6 @@ public class Constants {
         public static final int NAV_FEED_US = 11;
         public static final int NAV_SETTING = 13;
         public static final int NAV_LOGOUT = 12;
-
 
 
     }

@@ -66,8 +66,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
-        btFilter = (ImageView) v.findViewById(R.id.btActionBarfilter);
-        btFilter.setOnClickListener(this);
+//        btFilter = (ImageView) v.findViewById(R.id.btActionBarfilter);
+//        btFilter.setOnClickListener(this);
         btInfo = (ImageView) v.findViewById(R.id.btActionBarInfo);
         btInfo.setOnClickListener(this);
         btActionBarSearch = (ImageView) v.findViewById(R.id.btActionBarSearch);

@@ -52,6 +52,8 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     private Handler handler;
     View newFeaturesView;
     TextView tvGreetText;
+    private Fragment fragment=this;
+
     public ShopListFragment() {
         // Required empty public constructor
 
@@ -67,7 +69,6 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
         actionBarTitle.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
         newFeaturesView = (View) rootView.findViewById(R.id.newfeaturesView);
-//        newFeaturesView.setEnabled(false);
         CommonUtil.disableView(newFeaturesView);
         tvGreetText = (TextView) rootView.findViewById(R.id.tvGreetText);
         ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
@@ -75,12 +76,12 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
         btSearch.setVisibility(View.VISIBLE);
 
-//        btFilter.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                fragment.startActivityForResult(new Intent(getActivity(), ShopFilterActivity.class), 2);
-//            }
-//        });
+        btFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragment.startActivityForResult(new Intent(getActivity(), ShopFilterActivity.class), 2);
+            }
+        });
         btSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -362,6 +363,15 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         }
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        List<Fragment> fragments = getChildFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                fragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
 
 }

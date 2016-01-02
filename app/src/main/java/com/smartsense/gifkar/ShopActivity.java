@@ -12,14 +12,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.ShopPagerAdapter;
+import com.smartsense.gifkar.utill.Constants;
 
 public class ShopActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView btBack;
     private TabLayout tabLayout;
     private Button btReport;
-
+    ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,20 +33,21 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.action_bar_center, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
-        titleTextView.setText(getResources().getString(R.string.shop_name));
+        titleTextView.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_NAME, ""));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_shop);
-        btReport=(Button) findViewById(R.id.btReport);
+        btReport = (Button) findViewById(R.id.btReport);
         btReport.setOnClickListener(this);
         final View shopTOP = (View) findViewById(R.id.shopTop);
         int height = getResources().getDisplayMetrics().heightPixels;
         ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) shopTOP.getLayoutParams();
-        params.height = (int) (height / 3.5);
+        params.height = (int) (height / 3);
         shopTOP.setLayoutParams(params);
-
-
+        NetworkImageView ivShopTopElementIMG=(NetworkImageView) shopTOP.findViewById(R.id.ivShopTopElementIMG);
+        ivShopTopElementIMG.setDefaultImageResId(R.drawable.gift);
+        ivShopTopElementIMG.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_IMAGE, ""), imageLoader);
         tabLayout = (TabLayout) findViewById(R.id.tabs_shop);
         tabLayout.addTab(tabLayout.newTab().setText("CONTACT"));
         tabLayout.addTab(tabLayout.newTab().setText("REVIEWS"));

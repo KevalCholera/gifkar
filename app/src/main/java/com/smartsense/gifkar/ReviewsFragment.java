@@ -6,35 +6,61 @@ import android.content.Context;
 import android.media.Rating;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.utill.CircleImageView;
+import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.Constants;
+import com.smartsense.gifkar.utill.DataRequest;
+import com.smartsense.gifkar.utill.JsonErrorShow;
 
-public class ReviewsFragment extends Fragment implements View.OnClickListener {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class ReviewsFragment extends Fragment implements View.OnClickListener, Response.Listener<JSONObject>,
+        Response.ErrorListener {
     private CircleImageView ivReviewUser;
     private TextView tvUserName;
     private EditText etReviewAdd;
     private Button btAddReview;
     private Rating rbReview;
     private TextView llShopReview;
+    LinearLayout llReview, llNoReview;
+    ListView lvReview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_reviews, container, false);
         llShopReview = (TextView) view.findViewById(R.id.llShopReview);
         llShopReview.setOnClickListener(this);
+        llReview = (LinearLayout) view.findViewById(R.id.llReview);
+        llNoReview = (LinearLayout) view.findViewById(R.id.llNoReview);
+        lvReview = (ListView) view.findViewById(R.id.lvReview);
+        btAddReview=(Button) view.findViewById(R.id.btnAddReview);
         return view;
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.llShopReview:
+            case R.id.tvReview:
+            case R.id.btnAddReview:
                 openAddReviewPopup();
                 break;
             default:
@@ -57,6 +83,51 @@ public class ReviewsFragment extends Fragment implements View.OnClickListener {
             alert.show();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void deleteAddress(String id) {
+        final String tag = "deladdress";
+        String url = Constants.BASE_URL + "/mobile/orderDetail/delete";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("addressId", id);
+        params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_DEL_ADDRESS));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        Log.i("params", params.toString());
+        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        CommonUtil.alertBox(getActivity(), "", getResources().getString(R.string.nointernet_try_again_msg));
+        CommonUtil.cancelProgressDialog();
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        CommonUtil.cancelProgressDialog();
+        if (response != null) {
+            try {
+                if (response.getInt("status") == Constants.STATUS_SUCCESS) {
+                    switch (Integer.valueOf(response.getString("eventId"))) {
+                        case Constants.Events.EVENT_GET_ADDRESS:
+
+                            break;
+                        case Constants.Events.EVENT_DEL_ADDRESS:
+
+                            break;
+                    }
+                } else {
+                    JsonErrorShow.jsonErrorShow(response, getActivity());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -71,7 +71,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
                 ivShopListImage.setDefaultImageResId(R.drawable.default_img);
 //                Constants.BASE_URL + "/images/shops/thumbs/" +
                 ivShopListImage.setImageUrl(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB)), imageLoader);
-                view.setTag(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_ID)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CATEGORY_ID))+" "+cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_NAME)));
+                view.setTag(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_ID)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CATEGORY_ID))+" "+cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_NAME))+" "+cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB)));
             }
         };
     }

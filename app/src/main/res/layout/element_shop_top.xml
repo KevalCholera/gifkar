@@ -4,10 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/ivShopTopElementIMG"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gift" />
+        android:scaleType="fitXY"
+        android:layout_height="match_parent" />
 
 
     <LinearLayout
@@ -30,24 +31,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
-                android:text="4.4"
+                android:fontFamily="normal"
                 android:gravity="center"
-                android:textSize="@dimen/text_16"
+                android:text="4.4"
                 android:textColor="@color/textcolorwhite"
-                android:fontFamily="normal" />
+                android:textSize="@dimen/text_16" />
 
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
+                android:drawableLeft="@drawable/ic_cart"
+                android:drawablePadding="@dimen/padding_left_8"
                 android:fontFamily="normal"
-                android:text="RATINGS"
                 android:gravity="center"
-                android:textColor="@color/textcolorwhite"
                 android:padding="@dimen/padding_5"
-                android:textSize="@dimen/text_16"
-                android:drawableLeft="@drawable/ic_cart" />
+                android:text="RATINGS"
+                android:textColor="@color/textcolorwhite"
+                android:textSize="@dimen/text_16" />
         </LinearLayout>
 
         <View
@@ -68,24 +70,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
-                android:text="11"
+                android:fontFamily="normal"
                 android:gravity="center"
+                android:text="11"
                 android:textColor="@color/textcolorwhite"
-                android:textSize="@dimen/text_16"
-                android:fontFamily="normal" />
+                android:textSize="@dimen/text_16" />
 
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
-                android:fontFamily="normal"
-                android:text="RATINGS"
-                android:gravity="center"
-                android:textSize="@dimen/text_16"
-                android:textColor="@color/textcolorwhite"
+                android:drawableLeft="@drawable/address_edit"
                 android:drawablePadding="@dimen/padding_left_8"
-                android:drawableLeft="@drawable/address_edit" />
+                android:fontFamily="normal"
+                android:gravity="center"
+                android:text="RATINGS"
+                android:textColor="@color/textcolorwhite"
+                android:textSize="@dimen/text_16" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

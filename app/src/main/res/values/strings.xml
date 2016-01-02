@@ -247,6 +247,7 @@
     <string name="emapty_active_order">Looks like don\'t have any on going orders.</string>
     <string name="emapty_past_order">Looks like don\'t have any on past orders.</string>
     <string name="emapty_address">Looks like don\'t have any address.</string>
+    <string name="emapty_review">Looks like don\'t have any review.</string>
     <string name="emapty_cart_gift">Why don\'t you Gift someone today?</string>
     <string name="emapty_cart">Opps! Cart seems empty.</string>
     <string name="btStartGift">START GIFTING</string>

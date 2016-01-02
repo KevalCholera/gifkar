@@ -20,16 +20,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.ProductAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
+import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
 public class ProductFragment extends Fragment {
@@ -38,6 +42,7 @@ public class ProductFragment extends Fragment {
     TextView tvProdListEmpty;
     DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
     CommonUtil commonUtil = new CommonUtil();
+    private Fragment fragment = this;
 
     public static ProductFragment newInstance(String ID, String categoryName) {
         ProductFragment fragmentFirst = new ProductFragment();
@@ -51,12 +56,49 @@ public class ProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_product, container, false);
+        View v = ((AppCompatActivity)getActivity()).getSupportActionBar().getCustomView();
+        ImageView btFilter = (ImageView) v.findViewById(R.id.btActionBarfilter);
+        btFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragment.startActivityForResult(new Intent(getActivity(), ProductFilterActivity.class), 1);
+            }
+        });
         lvProduct = (ListView) view.findViewById(R.id.lvProductList);
-        llProdListEmpty=(LinearLayout) view.findViewById(R.id.llProdListEmapty);
-        tvProdListEmpty=(TextView) view.findViewById(R.id.tvProdListEmpty);
+        llProdListEmpty = (LinearLayout) view.findViewById(R.id.llProdListEmapty);
+        tvProdListEmpty = (TextView) view.findViewById(R.id.tvProdListEmpty);
+        fillProdList();
+        lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
+//                JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
+                startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("ProdDEID", (Integer) view.getTag()));
+
+            }
+        });
+        return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+//            s1 = data.getStringExtra("orderBy");
+//            if (!s1.equalsIgnoreCase("")) {
+            fillProdList();
+//            }
+        }
+    }
+
+    private void fillProdList() {
         try {
-            Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCT + "  WHERE " + DataBaseHelper.COLUMN_PROD_CATEGORY_ID + " = '"
-                    + getArguments().getString("ID") + "'");
+            final Cursor cursor;
+            if (SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_PROD_NAME, false) | SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_PROD_PRICE, false)) {
+                cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCT + "  WHERE " + DataBaseHelper.COLUMN_PROD_CATEGORY_ID + " = '"
+                        + getArguments().getString("ID") + "' ORDER BY " + SharedPreferenceUtil.getString(Constants.PrefKeys.PROD_FILTER, "") + " COLLATE NOCASE");
+            } else {
+                cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCT + "  WHERE " + DataBaseHelper.COLUMN_PROD_CATEGORY_ID + " = '"
+                        + getArguments().getString("ID") + "'");
+            }
             if (cursor.getCount() > 0) {
                 lvProduct.setAdapter(new ProductAdapter(getActivity(), cursor, dbHelper, true));
                 llProdListEmpty.setVisibility(View.GONE);
@@ -69,15 +111,6 @@ public class ProductFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
-//                JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
-                startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("ProdDEID", (Integer) view.getTag()));
-
-            }
-        });
-        return view;
     }
-
 
 }

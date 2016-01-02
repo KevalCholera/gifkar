@@ -5,24 +5,83 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-        android:id="@+id/llShopReview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/activity_bg"
-        android:capitalize="sentences"
-        android:drawableRight="@drawable/ic_action_plus"
-        android:fontFamily="normal"
-        android:gravity="center_vertical"
-        android:padding="@dimen/padding_8"
-        android:text="@string/screen_add_review"
-        android:textColor="@android:color/black"
-        android:textSize="@dimen/text_16" />
 
-
-    <ListView
-        android:id="@+id/lvShopReview"
+    <LinearLayout
+        android:id="@+id/llNoReview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_25"></ListView>
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/address_empty" />
+
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:fontFamily="normal"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="@string/nodelivery"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:fontFamily="normal"
+            android:gravity="center"
+            android:padding="@dimen/padding_8"
+            android:text="@string/emapty_review" />
+
+        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
+            android:id="@+id/btnAddReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@color/mainColor"
+            android:fontFamily="normal"
+            android:paddingLeft="35dp"
+            android:paddingRight="35dp"
+            android:text="WRITE REVIEW"
+            android:textColor="@color/textcolorwhite"
+            android:textSize="@dimen/text_size_20" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llReview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+            android:id="@+id/tvReview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/activity_bg"
+            android:capitalize="sentences"
+            android:drawableRight="@drawable/ic_action_plus"
+            android:fontFamily="normal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/padding_8"
+            android:text="@string/screen_add_review"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_16" />
+
+
+        <ListView
+            android:id="@+id/lvReview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_25"></ListView>
+    </LinearLayout>
 </LinearLayout>
