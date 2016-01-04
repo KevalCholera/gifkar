@@ -85,12 +85,12 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ibProdDetailPlus:
+            case R.id.ibProdDetailMinus:
                 if (Integer.valueOf(tvProdQty.getText().toString()) >= 1) {
                     tvProdQty.setText("" + (Integer.valueOf(tvProdQty.getText().toString()) - 1));
                 }
                 break;
-            case R.id.ibProdDetailMinus:
+            case R.id.ibProdDetailPlus:
                 if (Integer.valueOf(tvProdQty.getText().toString()) < 3) {
                     tvProdQty.setText("" + (Integer.valueOf(tvProdQty.getText().toString()) + 1));
                 }

@@ -35,7 +35,8 @@
         android:layout_marginRight="@dimen/left_margin"
         android:background="@drawable/button_blue_back"
         android:fontFamily="normal"
-        android:padding="@dimen/padding_8"
+        android:padding="@dimen/padding_5"
+        android:textSize="@dimen/text_10"
         android:text="1"
         android:textColor="@android:color/white"
         android:visibility="gone" />

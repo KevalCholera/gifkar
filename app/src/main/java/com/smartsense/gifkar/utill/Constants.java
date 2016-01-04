@@ -63,6 +63,7 @@ public class Constants {
         public static final String PROD_FILTER = "prod_filter";
 
         public static final String SHOP_IMAGE = "shop_image";
+        public static final String TIMESLOT = "time_slot";
     }
 
     public class NavigationItems {
@@ -134,6 +135,7 @@ public class Constants {
         public static final int EVENT_ORDER_DETAIL = 44;
         public static final int EVENT_GET_OCCASION = 45;
         public static final int EVENT_GET_TIMESLOT = 46;
+        public static final int EVENT_GET_REVIEW = 47;
     }
 
 

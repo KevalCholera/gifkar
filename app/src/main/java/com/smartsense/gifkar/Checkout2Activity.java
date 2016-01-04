@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -86,7 +89,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
         btToday.setOnClickListener(this);
         btTomorrow = (Button) findViewById(R.id.btnCheckout2Tomorrow);
         btTomorrow.setOnClickListener(this);
-        btAfterTomorrow = (Button) findViewById(R.id.btnCheckout2Tomorrow);
+        btAfterTomorrow = (Button) findViewById(R.id.btnCheckout2AfterTomorrow);
         btAfterTomorrow.setOnClickListener(this);
         etCheckout2WriteOccasion = (EditText) findViewById(R.id.etCheckout2WriteOccasion);
         etCheckout2SelectOccasion = (EditText) findViewById(R.id.etCheckout2SelectOccasion);
@@ -94,7 +97,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
         getOccasion();
     }
 
-    public void openPopupTimeSlot(JSONArray timeSlot, int dateSelect) {
+    public void openPopupTimeSlot(JSONArray timeSlot, final int dateSelect) {
         try {
 
 
@@ -103,24 +106,28 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
             View dialog = inflater.inflate(R.layout.dialog_pickup_time_slot, null);
             alertDialogs.setView(dialog);
 
-            TextView tvPickupDate = (TextView) dialog.findViewById(R.id.tvPickupDate);
-//            Calendar calendar = Calendar.getInstance();
-//            switch (dateSelect) {
-//                case 1:
-////                    + DateAndTimeUtil.getTimeSlotDate(calendar)
-//                    tvPickupDate.setText("Today - " +DateAndTimeUtil.toStringReadableDate(calendar));
-//                    break;
-//                case 2:
-//                    calendar.add(Calendar.DAY_OF_MONTH, 1);
-//                    tvPickupDate.setText("Tomorrow - " + DateAndTimeUtil.getTimeSlotDate(calendar));
-//                    break;
-//                case 3:
-//                    calendar.add(Calendar.DAY_OF_MONTH, 2);
-//                    tvPickupDate.setText("Day After Tomorrow - " + DateAndTimeUtil.getTimeSlotDate(calendar));
-//                    break;
-//                default:
-//                    tvPickupDate.setText("");
-//            }
+            final TextView tvPickupDate = (TextView) dialog.findViewById(R.id.tvPickupDate);
+            final Calendar calendar = Calendar.getInstance();
+            final SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy");
+            String formattedDate;
+            switch (dateSelect) {
+                case 1:
+                    formattedDate = df.format(calendar.getTime());
+                    tvPickupDate.setText("Today - " + formattedDate);
+                    break;
+                case 2:
+                    calendar.add(Calendar.DAY_OF_MONTH, 1);
+                    formattedDate = df.format(calendar.getTime());
+                    tvPickupDate.setText("Tomorrow - " + formattedDate);
+                    break;
+                case 3:
+                    calendar.add(Calendar.DAY_OF_MONTH, 2);
+                    formattedDate = df.format(calendar.getTime());
+                    tvPickupDate.setText("Day After Tomorrow - " + formattedDate);
+                    break;
+                default:
+                    tvPickupDate.setText("");
+            }
             final RadioGroup rgPickUp = (RadioGroup) dialog.findViewById(R.id.rgPickUp);
             TextView tvPickupCancel = (TextView) dialog.findViewById(R.id.tvPickupCancel);
             tvPickupCancel.setOnClickListener(new View.OnClickListener() {
@@ -134,8 +141,57 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                 @Override
                 public void onClick(View view) {
                     RadioButton rb = (RadioButton) rgPickUp.findViewById(rgPickUp.getCheckedRadioButtonId());
-                    btToday.setText(rb.getText());
-                    btToday.setTag(rb.getId());
+                    switch (dateSelect) {
+                        case 1:
+                            btToday.setText(tvPickupDate.getText().toString() + "\n" + rb.getText());
+                            btToday.setTag(rb.getId());
+
+                            btToday.setBackgroundResource(R.drawable.borderblue);
+                            btToday.setTextColor(getResources().getColor(R.color.textcolorwhite));
+
+                            btTomorrow.setTextColor(getResources().getColor(R.color.mainColor));
+                            btAfterTomorrow.setTextColor(getResources().getColor(R.color.mainColor));
+                            btTomorrow.setText(getResources().getString(R.string.tommorow_del));
+                            btTomorrow.setBackgroundResource(R.drawable.borderwhite);
+                            btTomorrow.setTag("");
+                            btAfterTomorrow.setTag("");
+                            btAfterTomorrow.setText(getResources().getString(R.string.day_after_tommorow_del));
+                            btAfterTomorrow.setBackgroundResource(R.drawable.borderwhite);
+                            break;
+                        case 2:
+                            btTomorrow.setText(tvPickupDate.getText().toString() + "\n" + rb.getText());
+                            btTomorrow.setTag(rb.getId());
+                            btTomorrow.setBackgroundResource(R.drawable.borderblue);
+                            btTomorrow.setTextColor(getResources().getColor(R.color.textcolorwhite));
+
+                            btToday.setTextColor(getResources().getColor(R.color.mainColor));
+                            btAfterTomorrow.setTextColor(getResources().getColor(R.color.mainColor));
+                            btToday.setText(getResources().getString(R.string.today_del));
+                            btToday.setBackgroundResource(R.drawable.borderwhite);
+                            btToday.setTag("");
+                            btAfterTomorrow.setTag("");
+                            btAfterTomorrow.setText(getResources().getString(R.string.day_after_tommorow_del));
+                            btAfterTomorrow.setBackgroundResource(R.drawable.borderwhite);
+                            break;
+                        case 3:
+                            btAfterTomorrow.setText(tvPickupDate.getText().toString() + "\n" + rb.getText());
+                            btAfterTomorrow.setTag(rb.getId());
+                            btAfterTomorrow.setBackgroundResource(R.drawable.borderblue);
+                            btAfterTomorrow.setTextColor(getResources().getColor(R.color.textcolorwhite));
+
+                            btTomorrow.setTextColor(getResources().getColor(R.color.mainColor));
+                            btToday.setTextColor(getResources().getColor(R.color.mainColor));
+                            btTomorrow.setText(getResources().getString(R.string.tommorow_del));
+                            btTomorrow.setBackgroundResource(R.drawable.borderwhite);
+                            btToday.setTag("");
+                            btTomorrow.setTag("");
+                            btToday.setText(getResources().getString(R.string.today_del));
+                            btToday.setBackgroundResource(R.drawable.borderwhite);
+
+                            break;
+                        default:
+
+                    }
                     alert.dismiss();
                 }
             });
@@ -169,23 +225,48 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                     startActivity(new Intent(this, Checkout2Activity.class));
                     break;
                 case R.id.btnCheckout2Today:
+                    if (SharedPreferenceUtil.getString(Constants.PrefKeys.TIMESLOT, "").equalsIgnoreCase(""))
+                        getTimeSlot();
+                    else
+                        openPopupTimeSlot(new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.TIMESLOT, "")), 1);
+                    break;
                 case R.id.btnCheckout2Tomorrow:
+                    if (SharedPreferenceUtil.getString(Constants.PrefKeys.TIMESLOT, "").equalsIgnoreCase(""))
+                        getTimeSlot();
+                    else
+                        openPopupTimeSlot(new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.TIMESLOT, "")), 2);
+                    break;
                 case R.id.btnCheckout2AfterTomorrow:
-                    getTimeSlot();
+                    if (SharedPreferenceUtil.getString(Constants.PrefKeys.TIMESLOT, "").equalsIgnoreCase(""))
+                        getTimeSlot();
+                    else
+                        openPopupTimeSlot(new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.TIMESLOT, "")), 3);
                     break;
                 case R.id.btActionBarBack:
                     finish();
                     break;
                 case R.id.tvChackout2DelAddress:
-                    startActivityForResult(new Intent(this, MyAddressActivity.class), 0);
+                    startActivityForResult(new Intent(this, MyAddressActivity.class).putExtra(Constants.SCREEN, true), 0);
                     break;
                 case R.id.etCheckout2SelectOccasion:
                     if (SharedPreferenceUtil.getString(Constants.PrefKeys.OCCASIONS, "").equalsIgnoreCase(""))
                         getOccasion();
                     else
-                        openCountryPopup(new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.OCCASIONS, "")));
+                        openOccasionsPopup(new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.OCCASIONS, "")));
                     break;
-
+                case R.id.btnCheckout2PlaceOrder:
+                    if (tvChackout2DelAddress.getText().toString().equalsIgnoreCase("")) {
+                        CommonUtil.alertBox(this, "", "Please select delivery address.");
+                    } else if (btToday.getBackground().getConstantState()
+                            .equals(getResources().getDrawable(R.drawable.borderwhite).getConstantState()) & btTomorrow.getBackground().getConstantState()
+                            .equals(getResources().getDrawable(R.drawable.borderwhite).getConstantState()) & btAfterTomorrow.getBackground().getConstantState()
+                            .equals(getResources().getDrawable(R.drawable.borderwhite).getConstantState())) {
+                        CommonUtil.alertBox(this, "", "Please select time slot for delivery.");
+                    } else if (etCheckout2WriteOccasion.getText().toString().equalsIgnoreCase("")) {
+                        CommonUtil.alertBox(this, "", "Please enter occasion message.");
+                    } else
+//                        doCheckout();
+                    break;
                 default:
             }
         } catch (JSONException e) {
@@ -193,7 +274,14 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    public void openCountryPopup(JSONObject response) {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferenceUtil.remove(Constants.PrefKeys.OCCASIONS);
+        SharedPreferenceUtil.save();
+    }
+
+    public void openOccasionsPopup(JSONObject response) {
         try {
 
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);
@@ -234,18 +322,43 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
     }
 
 
-
     public void doCheckout() {
         final String tag = "doCheckout";
-        String url = Constants.BASE_URL + "/mobile/order/create";
+        String url = Constants.BASE_URL + "/mobile/orderDetail/create";
         Map<String, String> params = new HashMap<String, String>();
         params.put("eventId", String.valueOf(Constants.Events.EVENT_CHECK_OUT));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
-        params.put("occasionId", "");
-        params.put("senderName", "");
-        params.put("message", "");
-        params.put("deliveryAddressId", "");
+        params.put("occasionId", (String) etCheckout2SelectOccasion.getTag());
+        params.put("senderName", "Ronak");
+        params.put("message", etCheckout2WriteOccasion.getText().toString());
+        params.put("deliveryAddressId", (String) tvChackout2DelAddress.getTag());
+        params.put("products", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
+        final Calendar calendar = Calendar.getInstance();
+        final SimpleDateFormat df = new SimpleDateFormat("y-M-d");
+        String formattedDate;
+        if (btToday.getBackground().getConstantState()
+                .equals(getResources().getDrawable(R.drawable.borderblue).getConstantState())) {
+
+            formattedDate = df.format(calendar.getTime());
+            params.put("expectedDeliveryDate", formattedDate);
+            params.put("deliveryTimeSlotId", "" + (Integer) btToday.getTag());
+        }
+        if (btTomorrow.getBackground().getConstantState()
+                .equals(getResources().getDrawable(R.drawable.borderblue).getConstantState())) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            formattedDate = df.format(calendar.getTime());
+            params.put("expectedDeliveryDate", formattedDate);
+            params.put("deliveryTimeSlotId", "" + (Integer) btTomorrow.getTag());
+        }
+        if (btAfterTomorrow.getBackground().getConstantState()
+                .equals(getResources().getDrawable(R.drawable.borderblue).getConstantState())) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            formattedDate = df.format(calendar.getTime());
+            params.put("expectedDeliveryDate", formattedDate);
+            params.put("deliveryTimeSlotId", "" + (Integer) btAfterTomorrow.getTag());
+        }
+        Log.i("params", params.toString());
         CommonUtil.showProgressDialog(this, "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -293,7 +406,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.OCCASIONS, response.toString());
                             SharedPreferenceUtil.save();
                             if (checkCountry)
-                                openCountryPopup(response);
+                                openOccasionsPopup(response);
                             checkCountry = true;
                             if (response.getJSONObject("data").getJSONArray("occasions").length() != 0) {
                                 etCheckout2SelectOccasion.setText(response.getJSONObject("data").getJSONArray("occasions").getJSONObject(0).optString("name"));
@@ -301,7 +414,12 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                             }
                             break;
                         case Constants.Events.EVENT_GET_TIMESLOT:
-                            openPopupTimeSlot(response.getJSONObject("data").getJSONArray("timeSlots"), 2);
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.TIMESLOT, response.getJSONObject("data").getJSONArray("timeSlots").toString());
+                            SharedPreferenceUtil.save();
+//                            openPopupTimeSlot(response.getJSONObject("data").getJSONArray("timeSlots"), 2);
+                            break;
+                        case Constants.Events.EVENT_CHECK_OUT:
+                            Log.i("res", response.toString());
                             break;
                     }
                 } else {
@@ -309,6 +427,18 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+            if (!data.getStringExtra("address").equalsIgnoreCase("")) {
+                tvChackout2DelAddress.setText(data.getStringExtra("address"));
+                tvChackout2DelAddress.setTag(data.getStringExtra("addressId"));
+                tvChackout2DelAddress.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.profile_edit, 0);
             }
         }
     }

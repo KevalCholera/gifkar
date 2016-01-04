@@ -13,6 +13,7 @@
     <string name="screen_edit_address">Edit Address</string>
     <string name="screen_edit_reminder">Edit Reminder</string>
     <string name="screen_my_address">My Addresses</string>
+    <string name="screen_my_address1">Select Address</string>
     <string name="screen_my_reminders">My Reminders</string>
     <string name="screen_my_cart">My Cart</string>
     <string name="screen_notification">Notifications</string>

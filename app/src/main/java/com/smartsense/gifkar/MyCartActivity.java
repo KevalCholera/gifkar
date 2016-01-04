@@ -22,7 +22,7 @@ import com.smartsense.gifkar.utill.DataBaseHelper;
 
 import org.json.JSONArray;
 
-public class MyCartActivity extends AppCompatActivity implements View.OnClickListener{
+public class MyCartActivity extends AppCompatActivity implements View.OnClickListener {
     static ListView lvMyCart;
     static LinearLayout llMyCart;
     static LinearLayout llMyCartEmpty;
@@ -55,18 +55,18 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
 
         setContentView(R.layout.activity_my_cart);
 
-        llMyCart=(LinearLayout) findViewById(R.id.ll_cart);
-        llMyCartEmpty=(LinearLayout) findViewById(R.id.ll_cart_empty);
-        llChackout=(LinearLayout) findViewById(R.id.llChackout);
+        llMyCart = (LinearLayout) findViewById(R.id.ll_cart);
+        llMyCartEmpty = (LinearLayout) findViewById(R.id.ll_cart_empty);
+        llChackout = (LinearLayout) findViewById(R.id.llChackout);
         llChackout.setOnClickListener(this);
-        lvMyCart=(ListView) findViewById(R.id.lvCart);
-        tvCartShopName=(TextView) findViewById(R.id.tvCartShopName);
+        lvMyCart = (ListView) findViewById(R.id.lvCart);
+        tvCartShopName = (TextView) findViewById(R.id.tvCartShopName);
         tvCartShopName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_NAME, ""));
-        tvCartTotalRs=(TextView) findViewById(R.id.tvCartTotalRs);
+        tvCartTotalRs = (TextView) findViewById(R.id.tvCartTotalRs);
 
 
         try {
-            if (CommonUtil.checkCartCount()!=0) {
+            if (CommonUtil.checkCartCount() != 0) {
                 productArray = new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
                 llMyCartEmpty.setVisibility(View.VISIBLE);
                 llMyCart.setVisibility(View.GONE);
@@ -90,7 +90,7 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
             totalAmount += (productArray.optJSONObject(i).optDouble(DataBaseHelper.COLUMN_PROD_PRICE) * productArray.optJSONObject(i).optDouble("quantity"));
         }
 
-        titleTextView.setText(a.getResources().getString(R.string.screen_my_cart)+"("+productArray.length()+")");
+        titleTextView.setText(a.getResources().getString(R.string.screen_my_cart) + "(" + productArray.length() + ")");
 
         if (totalAmount == 0) {
             llMyCartEmpty.setVisibility(View.VISIBLE);
@@ -111,7 +111,10 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llChackout:
-                startActivity(new Intent(this, Checkout1Activity.class));
+                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
+                    startActivity(new Intent(this, Checkout1Activity.class));
+                else
+                    startActivity(new Intent(this, GifkarActivity.class));
                 break;
             case R.id.btActionBarBack:
                 finish();

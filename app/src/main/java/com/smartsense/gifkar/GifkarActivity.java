@@ -103,19 +103,24 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         llHeadProfile.setOnClickListener(this);
         llHeadAddress = (LinearLayout) header.findViewById(R.id.llHeadAddress);
         llHeadAddress.setOnClickListener(this);
+
+        ImageView ivHeadEdit=(ImageView) header.findViewById(R.id.ivHeadEdit);
+
         ivHeadImage = (CircleImageView) header.findViewById(R.id.ivHeadImage);
         ivHeadImage.setDefaultImageResId(R.drawable.ic_user);
         tvHeadAddress = (TextView) header.findViewById(R.id.tvHeadAddress);
         tVHeadName = (TextView) header.findViewById(R.id.tVHeadName);
         tVHeadMobileNo = (TextView) header.findViewById(R.id.tVHeadMobileNo);
-        tvHeadPrivacy= (TextView) findViewById(R.id.tvHeadPrivacy);
+        tvHeadPrivacy = (TextView) findViewById(R.id.tvHeadPrivacy);
         tvHeadPrivacy.setOnClickListener(this);
-        tvHeadTerms= (TextView) findViewById(R.id.tvHeadTerms);
+        tvHeadTerms = (TextView) findViewById(R.id.tvHeadTerms);
         tvHeadTerms.setOnClickListener(this);
         lvNavList = (ListView) header.findViewById(R.id.lvHeadList);
         setHeader(GifkarActivity.this);
-        if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
+        if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+            ivHeadEdit.setVisibility(View.VISIBLE);
             getUserDetail();
+        }
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShopListFragment()).commit();
 //        fm.beginTransaction().replace(R.id.fragment_container, frg).commit();
 
@@ -476,7 +481,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     @Override
-    public  void onResume(){
+    public void onResume() {
         super.onResume();
         CommonUtil.cancelProgressDialog();
     }

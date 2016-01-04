@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -65,18 +66,25 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
         tvMyAddress = (TextView) findViewById(R.id.tvMyAddress);
         tvMyAddress.setOnClickListener(this);
         lvMyAddress = (ListView) findViewById(R.id.lvMyAddress);
+        if (getIntent().getBooleanExtra(Constants.SCREEN, false)) {
+            titleTextView.setText(getResources().getString(R.string.screen_my_address1));
+            lvMyAddress.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
+                    JSONObject addressObj = (JSONObject) adapterView.getItemAtPosition(position);
+                    Intent intent = new Intent();
+                    String s1 = addressObj.optString("recipientName") + "\n" + addressObj.optString("recipientContact") + "\n" + addressObj.optString("address") + " " + addressObj.optString("companyName") + " " + addressObj.optString("landmark") + "\n" + addressObj.optJSONObject("area").optString("name") + "," + addressObj.optJSONObject("area").optString("name") + " " + addressObj.optJSONObject("area").optString("name");
+                    intent.putExtra("address", s1);
+                    intent.putExtra("addressId", addressObj.optString("id"));
+                    setResult(0, intent);
+                    finish();
+                }
+            });
+        }
         btnAddAddress = (Button) findViewById(R.id.btnAddAddress);
         btnAddAddress.setOnClickListener(this);
         llAddress = (LinearLayout) findViewById(R.id.llMyAddress);
         llNoAddress = (LinearLayout) findViewById(R.id.llNoAddreess);
         getAddress();
-//        String temp = "{ \"eventId\" : 123,   \"errorCode\" : 0,   \"status\" : 200,   \"message\" : \"Address list.\", \"data\" :  { \"deliveryAddresses\" : [ { \"recipientName\" : \"raju bhai\",  \"recipientContact\" : \"98989898\", \"address\" : \"titanium city center\",  \"landmark\" : \"sachin tower\", \"isActive\" : \"1\",   \"area\" : { \"id\" : \"1\",   \"name\" : \"Prahlad nagar\" } },  { \"recipientName\" : \"raju bhai\",   \"recipientContact\" : \"98989898\",  \"address\" : \"titanium city center\",    \"landmark\" : \"sachin tower\",  \"isActive\" : \"1\",  \"area\" : { \"id\" : \"1\" , \"name\" : \"Prahlad nagar\" } } ] } }";
-//        try {
-//            JSONObject address = new JSONObject(temp);
-//            myAddressFill(address);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
     }
 
@@ -88,6 +96,9 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
                 startActivityForResult(new Intent(this, AddAddressActivity.class), 0);
                 break;
             case R.id.btActionBarBack:
+                Intent intent = new Intent();
+                intent.putExtra("address", "");
+                setResult(0, intent);
                 finish();
                 break;
             case R.id.btActionBarInfo:
@@ -103,7 +114,7 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
             if (address.getJSONObject("data").getJSONArray("deliveryAddresses").length() > 0) {
                 llAddress.setVisibility(View.VISIBLE);
                 llNoAddress.setVisibility(View.GONE);
-                myAddressAdapter = new MyAddressAdapter(this, address.getJSONObject("data").getJSONArray("deliveryAddresses"), true);
+                myAddressAdapter = new MyAddressAdapter(this, address.getJSONObject("data").getJSONArray("deliveryAddresses"), getIntent().getBooleanExtra(Constants.SCREEN, false));
                 lvMyAddress.setAdapter(myAddressAdapter);
             } else {
                 llAddress.setVisibility(View.GONE);
@@ -192,17 +203,19 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-                getAddress();
+        getAddress();
     }
 
     public class MyAddressAdapter extends BaseAdapter implements View.OnClickListener {
         JSONArray dataArray;
         private LayoutInflater inflater;
         Activity activity;
+        Boolean check;
 
         public MyAddressAdapter(Activity activity, JSONArray dataArray, Boolean check) {
             this.activity = activity;
             this.dataArray = dataArray;
+            this.check = check;
             inflater = LayoutInflater.from(activity);
         }
 
@@ -258,6 +271,10 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
             holder.ivDelete.setTag(addressObj.toString());
             holder.ivEdit.setOnClickListener(this);
             holder.ivEdit.setTag(addressObj.toString());
+            if (check) {
+                holder.ivDelete.setVisibility(View.GONE);
+                holder.ivEdit.setVisibility(View.GONE);
+            }
             return view;
         }
 
@@ -298,7 +315,7 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
                     alertbox.show();
                     break;
                 case R.id.ivMyAddressElementAddressEdit:
-                    activity.startActivityForResult(new Intent(activity, AddAddressActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_MYADDRESS).putExtra("Address", (String) view.getTag()),0);
+                    activity.startActivityForResult(new Intent(activity, AddAddressActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_MYADDRESS).putExtra("Address", (String) view.getTag()), 0);
                     break;
             }
         }

@@ -49,11 +49,13 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/ivHeadEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|right"
             android:layout_marginRight="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_20"
+            android:visibility="invisible"
             android:background="@drawable/profile_edit" />
     </LinearLayout>
 
@@ -78,10 +80,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableLeft="@drawable/address_pin"
-            android:drawablePadding="@dimen/padding_8"
+            android:drawablePadding="@dimen/padding_5"
             android:fontFamily="normal"
             android:gravity="center_vertical"
-            android:paddingLeft="@dimen/padding_16"
+            android:paddingLeft="@dimen/padding_8"
+            android:textSize="12sp"
             android:text="Prahlad Nagar,380015"
             android:textColor="@android:color/white" />
 
@@ -89,7 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|right"
-            android:layout_margin="@dimen/margin_10"
+            android:layout_margin="@dimen/margin_5"
             android:background="@drawable/address_edit" />
     </LinearLayout>
 

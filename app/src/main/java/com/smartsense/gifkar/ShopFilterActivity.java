@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -63,6 +64,7 @@ public class ShopFilterActivity extends AppCompatActivity implements View.OnClic
                 if (cbRatting.isChecked())
                     myList.add(DataBaseHelper.COLUMN_RATING);
                 String s1 = TextUtils.join(",", myList);
+                Log.i("save",s1);
                 SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_FILTER, s1);
                 SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_SHOP_NAME, cbName.isChecked());
                 SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_SHOP_MIN, cbMinOrder.isChecked());

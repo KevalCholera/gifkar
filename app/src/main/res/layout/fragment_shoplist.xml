@@ -24,10 +24,10 @@
         android:fontFamily="normal"
         android:gravity="center"
         android:singleLine="true"
-        android:padding="@dimen/padding_10"
+        android:padding="@dimen/padding_5"
         android:text="@string/greet_text_main"
         android:textColor="@color/textcolorwhite"
-        android:textSize="@dimen/text_16"
+        android:textSize="@dimen/text_12"
         android:translationZ="10000dp" />
     <!--android:layout_above="@id/tvGreetText"-->
     <!--<LinearLayout-->
@@ -91,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="35dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="55dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

@@ -102,7 +102,7 @@ public class ShopFragment extends Fragment {
         try {
 //            jsonArray = new JSONArray(getArguments().getString("ID"));
             final Cursor cursor;
-            if (SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_NAME, false) | SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_RATTING, false) | SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_RATTING, false)) {
+            if (SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_NAME, false) | SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_RATTING, false) | SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_MIN, false)) {
                 cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_SHOP + "  WHERE " + DataBaseHelper.COLUMN_CATEGORY_ID + " = '"
                         + getArguments().getString("ID") + "' ORDER BY " + SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_FILTER,"") + " COLLATE NOCASE");
             } else {

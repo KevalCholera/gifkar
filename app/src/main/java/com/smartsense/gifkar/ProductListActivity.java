@@ -125,7 +125,10 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                 startActivity(new Intent(this, MyCartActivity.class));
                 break;
             case R.id.llProdListCheckOut:
-                startActivity(new Intent(this, Checkout1Activity.class));
+                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
+                    startActivity(new Intent(this, Checkout1Activity.class));
+                else
+                    startActivity(new Intent(this, GifkarActivity.class));
                 break;
             default:
         }

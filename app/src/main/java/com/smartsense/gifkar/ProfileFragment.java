@@ -23,7 +23,6 @@ import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataRequest;
-import com.smartsense.gifkar.utill.DateAndTimeUtil;
 import com.smartsense.gifkar.utill.JsonErrorShow;
 
 import org.json.JSONException;
@@ -32,7 +31,6 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener, Response.Listener<JSONObject>,
@@ -43,7 +41,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
     private RadioButton rbMale, rbFemale;
     private RadioGroup rbGroup;
     private Calendar mCalendar = null;
-
+    final SimpleDateFormat df = new SimpleDateFormat("y-M-d");
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_profile, container, false);
@@ -79,8 +77,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
             etLastName.setText(userInfo.optString("lastName"));
             etDob.setText(userInfo.optString("dob"));
             if (!userInfo.optString("dob").equalsIgnoreCase("")) {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM", Locale.ENGLISH);
-                mCalendar.setTime(sdf.parse(userInfo.optString("dob")));
+//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-dd-MM", Locale.ENGLISH);
+
+                final SimpleDateFormat df = new SimpleDateFormat("y-M-d");
+                mCalendar.setTime(df.parse(userInfo.optString("dob")));
             }
             if (userInfo.optString("gender").equalsIgnoreCase("m")) {
                 rbMale.setChecked(true);
@@ -129,7 +129,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
             params.put("flag", "profile");
             params.put("firstName", etFirstName.getText().toString());
             params.put("lastName", etFirstName.getText().toString());
-            params.put("dob", mCalendar == null ? etDob.getText().toString() : DateAndTimeUtil.toStringDateMy(mCalendar));
+            params.put("dob", mCalendar == null ? etDob.getText().toString() : df.format(mCalendar.getTime()));
             params.put("gender", (String) rb.getTag());
             Log.d("forgot Params", params.toString());
             CommonUtil.showProgressDialog(getActivity(), "Wait...");
@@ -146,7 +146,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
                 mCalendar.set(Calendar.YEAR, year);
                 mCalendar.set(Calendar.MONTH, month);
                 mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                etDob.setText(DateAndTimeUtil.toStringReadableDate(mCalendar));
+
+                etDob.setText(df.format(mCalendar.getTime()));
+//                etDob.setText(DateAndTimeUtil.toStringReadableDate(mCalendar));
             }
         }, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH));
         DatePicker.show();
