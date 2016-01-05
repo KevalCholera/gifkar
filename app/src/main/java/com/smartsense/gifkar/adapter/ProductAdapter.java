@@ -36,10 +36,10 @@ public class ProductAdapter extends CursorAdapter {
     DataBaseHelper dbHelper;
     CommonUtil commonUtil = new CommonUtil();
     static JSONArray productArray;
-    JSONObject productObj;
+    static JSONObject productObj;
     Context context;
-    Boolean checkCart;
-    ImageLoader imageLoader= GifkarApp.getInstance().getDiskImageLoader();
+    static Boolean checkCart;
+    ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
 
     public ProductAdapter(Context context, Cursor productCursor, DataBaseHelper dbHelper, Boolean checkCart) {
         super(context, productCursor, 0);
@@ -59,8 +59,8 @@ public class ProductAdapter extends CursorAdapter {
         TextView tvProdElementName = (TextView) view.findViewById(R.id.tvProdElementName);
         NetworkImageView ivProdPhoto = (NetworkImageView) view.findViewById(R.id.ivProdElementImage);
         TextView tvProdElementQty = (TextView) view.findViewById(R.id.tvProdElementQty);
-        ImageButton ibProdElementPlus = (ImageButton) view.findViewById(R.id.ibProdElementPlus);
-        ImageButton ibProdElementMinus = (ImageButton) view.findViewById(R.id.ibProdElementMinus);
+        final ImageButton ibProdElementPlus = (ImageButton) view.findViewById(R.id.ibProdElementPlus);
+        final ImageButton ibProdElementMinus = (ImageButton) view.findViewById(R.id.ibProdElementMinus);
         ImageButton ibProdElementNext = (ImageButton) view.findViewById(R.id.ibProdElementNext);
 
 //        if (cursor.getInt(cursor.getColumnIndexOrThrow("day_id")) == day_id) {
@@ -72,7 +72,7 @@ public class ProductAdapter extends CursorAdapter {
         tvProdElementCate.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_QUANTITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME)));
         tvProdElementDT.setText(cursor.getString(cursor
                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_EARLIY_DEL)));
-        tvProdElementPrice.setText(cursor.getString(cursor
+        tvProdElementPrice.setText("₹ " + cursor.getString(cursor
                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PRICE)));
         tvProdElementName.setText(cursor.getString(cursor
                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_NAME)));
@@ -82,7 +82,7 @@ public class ProductAdapter extends CursorAdapter {
         ibProdElementNext.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
         view.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
         ivProdPhoto.setDefaultImageResId(R.drawable.default_img);
-        ivProdPhoto.setImageUrl(Constants.BASE_URL+"/images/products/"+cursor.getString(cursor
+        ivProdPhoto.setImageUrl(Constants.BASE_URL + "/images/products/" + cursor.getString(cursor
                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_IMAGE)), imageLoader);
 
 
@@ -91,12 +91,18 @@ public class ProductAdapter extends CursorAdapter {
                 for (int i = 0; i < productArray.length(); i++) {
                     if (productArray.getJSONObject(i).getInt(DataBaseHelper.COLUMN_PROD_DETAIL_ID) == cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID))) {
                         tvProdElementQty.setText("" + productArray.getJSONObject(i).getInt("quantity"));
+                        ibProdElementMinus.setBackgroundResource(R.drawable.ic_product_minius_fill);
+                        ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_fill);
                         break;
                     } else {
+                        ibProdElementMinus.setBackgroundResource(R.drawable.ic_product_minus_unfill);
+                        ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_unfill);
                         tvProdElementQty.setText("" + 0);
                     }
                 }
             } else {
+                ibProdElementMinus.setBackgroundResource(R.drawable.ic_product_minus_unfill);
+                ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_unfill);
                 tvProdElementQty.setText("" + 0);
             }
         } catch (Exception e) {
@@ -110,7 +116,11 @@ public class ProductAdapter extends CursorAdapter {
                 TextView tvProdElementQty = (TextView) v.getTag();
                 if (Integer.valueOf(tvProdElementQty.getText().toString()) >= 1) {
                     tvProdElementQty.setText("" + (Integer.valueOf(tvProdElementQty.getText().toString()) - 1));
-                    addProduct(false, (Integer) tvProdElementQty.getTag(), Integer.valueOf(tvProdElementQty.getText().toString()));
+                    addProduct(commonUtil, dbHelper, context, false, (Integer) tvProdElementQty.getTag(), Integer.valueOf(tvProdElementQty.getText().toString()));
+                    if (Integer.valueOf(tvProdElementQty.getText().toString()) == 0) {
+                        ibProdElementMinus.setBackgroundResource(R.drawable.ic_product_minus_unfill);
+                        ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_unfill);
+                    }
                 }
             }
         });
@@ -121,7 +131,11 @@ public class ProductAdapter extends CursorAdapter {
                 TextView tvProdElementQty = (TextView) v.getTag();
                 if (Integer.valueOf(tvProdElementQty.getText().toString()) < 3) {
                     tvProdElementQty.setText("" + (Integer.valueOf(tvProdElementQty.getText().toString()) + 1));
-                    addProduct(true, (Integer) tvProdElementQty.getTag(), Integer.valueOf(tvProdElementQty.getText().toString()));
+                    addProduct(commonUtil, dbHelper, context, false, (Integer) tvProdElementQty.getTag(), Integer.valueOf(tvProdElementQty.getText().toString()));
+                    if (Integer.valueOf(tvProdElementQty.getText().toString()) > 0) {
+                        ibProdElementMinus.setBackgroundResource(R.drawable.ic_product_minius_fill);
+                        ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_fill);
+                    }
                 }
             }
         });
@@ -158,7 +172,7 @@ public class ProductAdapter extends CursorAdapter {
     }
 
 
-    public void addProduct(Boolean insert, int prodDetailId, int qty) {
+    public static void addProduct(CommonUtil commonUtil, DataBaseHelper dbHelper, Context context, Boolean insert, int prodDetailId, int qty) {
         try {
             Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCT + "  WHERE " + DataBaseHelper.COLUMN_PROD_DETAIL_ID + " = '"
                     + prodDetailId + "'");
@@ -223,6 +237,9 @@ public class ProductAdapter extends CursorAdapter {
                     MyCartActivity.setAdapter(context, productArray, qty);
 
                 }
+                if (insert)
+                    ProductDetailActivity.checkCart(productArray);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -232,9 +249,9 @@ public class ProductAdapter extends CursorAdapter {
 
     public static JSONArray remove(final int idx, final JSONArray from) {
         final List<JSONObject> objs = asList(from);
-        Log.i("objs", objs.toString());
+//        Log.i("objs", objs.toString());
         objs.remove(idx);
-        Log.i("objs", objs.toString());
+//        Log.i("objs", objs.toString());
         final JSONArray ja = new JSONArray();
         for (final JSONObject obj : objs) {
             ja.put(obj);

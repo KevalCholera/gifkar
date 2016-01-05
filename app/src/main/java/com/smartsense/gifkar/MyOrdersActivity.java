@@ -126,19 +126,31 @@ public class MyOrdersActivity extends Fragment implements Response.Listener<JSON
         CommonUtil.cancelProgressDialog();
     }
 
+
+    private void setupViewPager(JSONObject response) {
+        try {
+            MyOrderPagerAdapter myOrderPagerAdapter = new MyOrderPagerAdapter(getFragmentManager(), getActivity(), response.optJSONObject("data").optJSONObject("orderDetails"));
+            viewPager.setAdapter(myOrderPagerAdapter);
+            tabLayout.setupWithViewPager(viewPager);
+            CommonUtil.cancelProgressDialog();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void onResponse(JSONObject response) {
-        CommonUtil.cancelProgressDialog();
+//        CommonUtil.cancelProgressDialog();
         if (response != null) {
             try {
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_ORDER_HISTORY:
-                            viewPager.setAdapter(new MyOrderPagerAdapter(getFragmentManager(), getActivity(), response.optJSONObject("data").optJSONObject("orderDetails")));
-                            tabLayout.setupWithViewPager(viewPager);
+                            setupViewPager(response);
                             break;
                     }
                 } else {
+                    CommonUtil.cancelProgressDialog();
                     JsonErrorShow.jsonErrorShow(response, getActivity());
                 }
             } catch (JSONException e) {

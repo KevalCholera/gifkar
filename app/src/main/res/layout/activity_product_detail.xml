@@ -16,8 +16,7 @@
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/ivProdDetailImage"
             android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="@drawable/gift" />
+            android:layout_height="150dp" />
     </LinearLayout>
 
     <View
@@ -46,8 +45,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="normal"
                 android:text="@string/prod_name"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_16" />
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvProdDetailRs"
@@ -55,8 +54,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="normal"
                 android:text="\u20B9 100"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_18" />
+                android:textSize="@dimen/text_18"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -66,8 +65,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
-
             <ImageButton
+
                 android:id="@+id/ibProdDetailMinus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,16 +81,18 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:text="@string/total_quntity"
-                android:textSize="@dimen/text_16"
-                android:textColor="@color/textcolorblack" />
+                android:textColor="@color/textcolorblack"
+                android:textSize="@dimen/text_16" />
 
             <ImageButton
                 android:id="@+id/ibProdDetailPlus"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_product_plus_unfill"
                 android:padding="@dimen/padding_1" />
+
+
+
         </LinearLayout>
 
 
@@ -130,8 +131,8 @@
                     android:gravity="right"
                     android:padding="@dimen/padding_8"
                     android:text="@string/unit_name"
-                    android:textSize="@dimen/text_16"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_16" />
 
                 <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:layout_width="match_parent"
@@ -139,9 +140,9 @@
                     android:fontFamily="normal"
                     android:gravity="right"
                     android:padding="@dimen/padding_8"
-                    android:textSize="@dimen/text_16"
                     android:text="@string/description"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_16" />
 
             </LinearLayout>
 
@@ -156,18 +157,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="normal"
-                    android:textSize="@dimen/text_16"
                     android:padding="@dimen/padding_8"
-                    android:text="@string/prod_name" />
+                    android:text="@string/prod_name"
+                    android:textSize="@dimen/text_16" />
 
                 <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvProdDetailDes"
-                    android:textSize="@dimen/text_16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="normal"
                     android:padding="@dimen/padding_8"
-                    android:text="\u20B9 100" />
+                    android:text="\u20B9 100"
+                    android:textSize="@dimen/text_16" />
             </LinearLayout>
 
 
@@ -190,8 +191,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:clickable="true"
             android:background="@color/colorPrimary"
+            android:clickable="true"
             android:gravity="center_vertical"
             android:visibility="visible">
 

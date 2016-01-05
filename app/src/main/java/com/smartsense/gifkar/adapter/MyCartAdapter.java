@@ -36,10 +36,11 @@ public class MyCartAdapter extends BaseAdapter {
     Context activity;
     Boolean check;
     ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
+
     public MyCartAdapter(Context activity, JSONArray dataArray, Boolean check) {
         this.activity = activity;
         this.dataArray = dataArray;
-        this.check=check;
+        this.check = check;
         getCartItem();
         inflater = LayoutInflater.from(activity);
     }
@@ -102,6 +103,14 @@ public class MyCartAdapter extends BaseAdapter {
         holder.tvProdElementPrice.setText(addressObj.optString(DataBaseHelper.COLUMN_PROD_PRICE));
         holder.tvProdElementName.setText(addressObj.optString(DataBaseHelper.COLUMN_PROD_NAME));
         holder.tvProdElementQty.setText(addressObj.optString("quantity"));
+        if (Integer.valueOf(addressObj.optString("quantity")) == 0) {
+            holder.ibProdElementMinus.setBackgroundResource(R.drawable.ic_product_minus_unfill);
+            holder.ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_unfill);
+        } else {
+            holder.ibProdElementMinus.setBackgroundResource(R.drawable.ic_product_minius_fill);
+            holder.ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_fill);
+        }
+
         holder.ibProdElementNext.setVisibility(View.INVISIBLE);
         holder.tvProdElementQty.setTag(addressObj);
         holder.ibProdElementMinus.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +119,10 @@ public class MyCartAdapter extends BaseAdapter {
                 if (Integer.valueOf(holder.tvProdElementQty.getText().toString()) >= 1) {
                     holder.tvProdElementQty.setText("" + (Integer.valueOf(holder.tvProdElementQty.getText().toString()) - 1));
                     addProduct(false, (JSONObject) holder.tvProdElementQty.getTag(), Integer.valueOf(holder.tvProdElementQty.getText().toString()));
+                    if (Integer.valueOf(holder.tvProdElementQty.getText().toString()) == 0) {
+                        holder.ibProdElementMinus.setBackgroundResource(R.drawable.ic_product_minus_unfill);
+                        holder.ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_unfill);
+                    }
                 }
             }
         });
@@ -119,6 +132,10 @@ public class MyCartAdapter extends BaseAdapter {
                 if (Integer.valueOf(holder.tvProdElementQty.getText().toString()) < 3) {
                     holder.tvProdElementQty.setText("" + (Integer.valueOf(holder.tvProdElementQty.getText().toString()) + 1));
                     addProduct(true, (JSONObject) holder.tvProdElementQty.getTag(), Integer.valueOf(holder.tvProdElementQty.getText().toString()));
+                    if (Integer.valueOf(holder.tvProdElementQty.getText().toString()) != 0) {
+                        holder.ibProdElementMinus.setBackgroundResource(R.drawable.ic_product_minius_fill);
+                        holder.ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_fill);
+                    }
                 }
             }
         });
@@ -139,33 +156,33 @@ public class MyCartAdapter extends BaseAdapter {
         ImageButton ibProdElementNext;
     }
 
-    public void addProduct(Boolean insert, JSONObject jsonData,int qty) {
+    public void addProduct(Boolean insert, JSONObject jsonData, int qty) {
         try {
-                for (int i = 0; i < productArray.length(); i++) {
-                    if (jsonData.getInt(DataBaseHelper.COLUMN_PROD_DETAIL_ID) == productArray.getJSONObject(i).getInt(DataBaseHelper.COLUMN_PROD_DETAIL_ID)) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                            productArray.remove(i);
-                        } else {
-                            productArray = ProductAdapter.remove(i, productArray);
-                        }
-                        break;
+            for (int i = 0; i < productArray.length(); i++) {
+                if (jsonData.getInt(DataBaseHelper.COLUMN_PROD_DETAIL_ID) == productArray.getJSONObject(i).getInt(DataBaseHelper.COLUMN_PROD_DETAIL_ID)) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        productArray.remove(i);
+                    } else {
+                        productArray = ProductAdapter.remove(i, productArray);
                     }
+                    break;
                 }
-                if (qty != 0) {
-                    productObj = new JSONObject();
-                    productObj.put(DataBaseHelper.COLUMN_PROD_DETAIL_ID, jsonData.getInt(DataBaseHelper.COLUMN_PROD_DETAIL_ID));
-                    productObj.put(DataBaseHelper.COLUMN_PROD_ID, jsonData.getInt(DataBaseHelper.COLUMN_PROD_ID));
-                    productObj.put("quantity", qty);
-                    productObj.put(DataBaseHelper.COLUMN_PROD_NAME, jsonData.getString(DataBaseHelper.COLUMN_PROD_NAME));
-                    productObj.put(DataBaseHelper.COLUMN_PROD_IMAGE, jsonData.getString(DataBaseHelper.COLUMN_PROD_IMAGE));
-                    productObj.put(DataBaseHelper.COLUMN_PROD_PRICE, jsonData.getString(DataBaseHelper.COLUMN_PROD_PRICE));
-                    productObj.put(DataBaseHelper.COLUMN_PROD_QUANTITY, jsonData.getString(DataBaseHelper.COLUMN_PROD_QUANTITY));
-                    productObj.put(DataBaseHelper.COLUMN_PROD_ITEM_TYPE, jsonData.getString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE));
-                    productObj.put(DataBaseHelper.COLUMN_PROD_DESC, jsonData.getString(DataBaseHelper.COLUMN_PROD_DESC));
-                    productObj.put(DataBaseHelper.COLUMN_PROD_UNIT_NAME, jsonData.getString(DataBaseHelper.COLUMN_PROD_UNIT_NAME));
-                    productObj.put(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME, jsonData.getString(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME));
-                    productObj.put(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME, jsonData.getString(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME));
-                    productObj.put(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME, jsonData.getString(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME));
+            }
+            if (qty != 0) {
+                productObj = new JSONObject();
+                productObj.put(DataBaseHelper.COLUMN_PROD_DETAIL_ID, jsonData.getInt(DataBaseHelper.COLUMN_PROD_DETAIL_ID));
+                productObj.put(DataBaseHelper.COLUMN_PROD_ID, jsonData.getInt(DataBaseHelper.COLUMN_PROD_ID));
+                productObj.put("quantity", qty);
+                productObj.put(DataBaseHelper.COLUMN_PROD_NAME, jsonData.getString(DataBaseHelper.COLUMN_PROD_NAME));
+                productObj.put(DataBaseHelper.COLUMN_PROD_IMAGE, jsonData.getString(DataBaseHelper.COLUMN_PROD_IMAGE));
+                productObj.put(DataBaseHelper.COLUMN_PROD_PRICE, jsonData.getString(DataBaseHelper.COLUMN_PROD_PRICE));
+                productObj.put(DataBaseHelper.COLUMN_PROD_QUANTITY, jsonData.getString(DataBaseHelper.COLUMN_PROD_QUANTITY));
+                productObj.put(DataBaseHelper.COLUMN_PROD_ITEM_TYPE, jsonData.getString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE));
+                productObj.put(DataBaseHelper.COLUMN_PROD_DESC, jsonData.getString(DataBaseHelper.COLUMN_PROD_DESC));
+                productObj.put(DataBaseHelper.COLUMN_PROD_UNIT_NAME, jsonData.getString(DataBaseHelper.COLUMN_PROD_UNIT_NAME));
+                productObj.put(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME, jsonData.getString(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME));
+                productObj.put(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME, jsonData.getString(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME));
+                productObj.put(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME, jsonData.getString(DataBaseHelper.COLUMN_PROD_CATEGORY_NAME));
 //                    productObj.put(DataBaseHelper.COLUMN_PROD_EARLIY_DEL, cursor.getString(cursor
 //                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_EARLIY_DEL)));
 //                    productObj.put(DataBaseHelper.COLUMN_PROD_IS_AVAIL, cursor.getString(cursor
@@ -178,17 +195,17 @@ public class MyCartAdapter extends BaseAdapter {
 //                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_ID)));
 //                    productObj.put(DataBaseHelper.COLUMN_PROD_CATEGORY_ID, cursor.getString(cursor
 //                            .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_CATEGORY_ID)));
-                    productArray.put(productObj);
-                }
-                Log.i("productArray", productArray.toString());
-                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_PROD_LIST, productArray.toString());
-                SharedPreferenceUtil.save();
-                if (check) {
-                    ProductListActivity.checkCart(activity,productArray);
-                } else {
-                    MyCartActivity.setAdapter(activity, productArray, qty);
+                productArray.put(productObj);
+            }
+            Log.i("productArray", productArray.toString());
+            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_PROD_LIST, productArray.toString());
+            SharedPreferenceUtil.save();
+            if (check) {
+                ProductListActivity.checkCart(activity, productArray);
+            } else {
+                MyCartActivity.setAdapter(activity, productArray, qty);
 
-                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

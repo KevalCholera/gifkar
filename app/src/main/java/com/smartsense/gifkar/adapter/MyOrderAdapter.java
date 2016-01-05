@@ -12,10 +12,11 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.smartsense.gifkar.GifkarApp;
 import com.smartsense.gifkar.R;
 import com.smartsense.gifkar.utill.Constants;
-import com.smartsense.gifkar.utill.DateAndTimeUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Ronak on 02-12-2015.
@@ -78,12 +79,14 @@ public class MyOrderAdapter extends BaseAdapter {
         }
         JSONObject orderObj = dataArray.optJSONObject(position);
         holder.tvOrderNo.setText("Order ID : " + orderObj.optString("orderNo"));
-        holder.tvDate.setText(DateAndTimeUtil.myDateAndTime(orderObj.optString("placedAt")));
+        final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                holder.tvDate.setText(DateAndTimeUtil.myDateAndTime(orderObj.optString("placedAt")));
+        holder.tvDate.setText(orderObj.optString("placedAt"));
         holder.tvDetails.setText(orderObj.optString("itemCount") + " Items");
         holder.tvShopName.setText(orderObj.optString("shopName"));
         holder.tvOrderStatus.setText("Your Order is " + orderObj.optString("orderStatus"));
         holder.ivImg.setImageUrl(Constants.BASE_URL + "/images/shops/thumbs/" + orderObj.optString("shopImage"), imageLoader);
-        view.setTag(orderObj.optString("orderDetailId"));
+//        view.setTag(orderObj.optString("orderDetailId"));
         return view;
     }
 

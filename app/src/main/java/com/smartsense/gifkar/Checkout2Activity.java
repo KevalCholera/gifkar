@@ -97,6 +97,8 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
         getOccasion();
     }
 
+    String formattedDate;
+
     public void openPopupTimeSlot(JSONArray timeSlot, final int dateSelect) {
         try {
 
@@ -109,7 +111,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
             final TextView tvPickupDate = (TextView) dialog.findViewById(R.id.tvPickupDate);
             final Calendar calendar = Calendar.getInstance();
             final SimpleDateFormat df = new SimpleDateFormat("dd MMM yyyy");
-            String formattedDate;
+
             switch (dateSelect) {
                 case 1:
                     formattedDate = df.format(calendar.getTime());
@@ -137,13 +139,14 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                 }
             });
             TextView tvPickupSet = (TextView) dialog.findViewById(R.id.tvPickupSet);
+
             tvPickupSet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     RadioButton rb = (RadioButton) rgPickUp.findViewById(rgPickUp.getCheckedRadioButtonId());
                     switch (dateSelect) {
                         case 1:
-                            btToday.setText(tvPickupDate.getText().toString() + "\n" + rb.getText());
+                            btToday.setText(formattedDate + "\n" + rb.getText());
                             btToday.setTag(rb.getId());
 
                             btToday.setBackgroundResource(R.drawable.borderblue);
@@ -159,7 +162,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                             btAfterTomorrow.setBackgroundResource(R.drawable.borderwhite);
                             break;
                         case 2:
-                            btTomorrow.setText(tvPickupDate.getText().toString() + "\n" + rb.getText());
+                            btTomorrow.setText(formattedDate + "\n" + rb.getText());
                             btTomorrow.setTag(rb.getId());
                             btTomorrow.setBackgroundResource(R.drawable.borderblue);
                             btTomorrow.setTextColor(getResources().getColor(R.color.textcolorwhite));
@@ -174,7 +177,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                             btAfterTomorrow.setBackgroundResource(R.drawable.borderwhite);
                             break;
                         case 3:
-                            btAfterTomorrow.setText(tvPickupDate.getText().toString() + "\n" + rb.getText());
+                            btAfterTomorrow.setText(formattedDate + "\n" + rb.getText());
                             btAfterTomorrow.setTag(rb.getId());
                             btAfterTomorrow.setBackgroundResource(R.drawable.borderblue);
                             btAfterTomorrow.setTextColor(getResources().getColor(R.color.textcolorwhite));
@@ -265,7 +268,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                     } else if (etCheckout2WriteOccasion.getText().toString().equalsIgnoreCase("")) {
                         CommonUtil.alertBox(this, "", "Please enter occasion message.");
                     } else
-//                        doCheckout();
+                        doCheckout();
                     break;
                 default:
             }
@@ -419,7 +422,9 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
 //                            openPopupTimeSlot(response.getJSONObject("data").getJSONArray("timeSlots"), 2);
                             break;
                         case Constants.Events.EVENT_CHECK_OUT:
-                            Log.i("res", response.toString());
+//                            startActivity(new Intent(Checkout2Activity.this, OrderDetailActivity.class).putExtra("id", response.getJSONObject("data").optString("id")));
+                            startActivity(new Intent(Checkout2Activity.this, OrderDetailActivity.class).putExtra("id", 1));
+                            finish();
                             break;
                     }
                 } else {

@@ -43,6 +43,7 @@ public class ProductFragment extends Fragment {
     DataBaseHelper dbHelper = new DataBaseHelper(getActivity());
     CommonUtil commonUtil = new CommonUtil();
     private Fragment fragment = this;
+    public static Boolean reloadList = false;
 
     public static ProductFragment newInstance(String ID, String categoryName) {
         ProductFragment fragmentFirst = new ProductFragment();
@@ -56,7 +57,7 @@ public class ProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_product, container, false);
-        View v = ((AppCompatActivity)getActivity()).getSupportActionBar().getCustomView();
+        View v = ((AppCompatActivity) getActivity()).getSupportActionBar().getCustomView();
         ImageView btFilter = (ImageView) v.findViewById(R.id.btActionBarfilter);
         btFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +87,15 @@ public class ProductFragment extends Fragment {
 //            if (!s1.equalsIgnoreCase("")) {
             fillProdList();
 //            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (reloadList) {
+            reloadList = false;
+            fillProdList();
         }
     }
 

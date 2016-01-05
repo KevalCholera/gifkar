@@ -117,6 +117,7 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
                     startActivity(new Intent(this, GifkarActivity.class));
                 break;
             case R.id.btActionBarBack:
+                ProductFragment.reloadList = true;
                 finish();
                 break;
             case R.id.btActionBarInfo:

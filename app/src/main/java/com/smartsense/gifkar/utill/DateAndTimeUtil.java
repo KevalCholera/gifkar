@@ -20,7 +20,7 @@ public class DateAndTimeUtil {
     private static final SimpleDateFormat WEEK_DAYS_FORMAT = new SimpleDateFormat("EEEE", Locale.getDefault());
     private static final SimpleDateFormat SHORT_WEEK_DAYS_FORMAT = new SimpleDateFormat("E", Locale.getDefault());
     private static final SimpleDateFormat DATE_FORMAT_My = new SimpleDateFormat("y-M-d", Locale.getDefault());
-    private static final SimpleDateFormat MY_DATE_AND_TIME_FORMAT_INPUT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    private static final SimpleDateFormat MY_DATE_AND_TIME_FORMAT_INPUT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static final SimpleDateFormat MY_DATE_AND_TIME_FORMAT_OUTPUT = new SimpleDateFormat("dd MMM yyyy | hh:mm tt", Locale.getDefault());
     private static final SimpleDateFormat MY_DATE_AND_TIME_FORMAT_TIMESLOT = new SimpleDateFormat("dd MM yyyy", Locale.getDefault());
     public static String toStringTime(Calendar calendar) {
