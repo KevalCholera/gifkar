@@ -26,6 +26,7 @@ public class ShopFilterActivity extends AppCompatActivity implements View.OnClic
     private CheckBox cbName;
     private CheckBox cbMinOrder;
     private Button btApplyFilter;
+    private Button btnShopCancelFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +46,39 @@ public class ShopFilterActivity extends AppCompatActivity implements View.OnClic
         cbRatting = (CheckBox) findViewById(R.id.cbShopFilterRatting);
         btApplyFilter = (Button) findViewById(R.id.btnShopApplyFilter);
         btApplyFilter.setOnClickListener(this);
+        btnShopCancelFilter= (Button) findViewById(R.id.btnShopCancelFilter);
+        btnShopCancelFilter.setOnClickListener(this);
         cbName.setChecked(SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_NAME, false));
         cbMinOrder.setChecked(SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_MIN, false));
         cbRatting.setChecked(SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_RATTING, false));
+        cbName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setVisible();
+            }
+        });
+        cbRatting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setVisible();
+            }
+        });
+        cbMinOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setVisible();
+            }
+        });
+        setVisible();
+    }
 
+
+
+    public void setVisible() {
+        if (cbRatting.isChecked() | cbName.isChecked()| cbMinOrder.isChecked())
+            btnShopCancelFilter.setVisibility(View.VISIBLE);
+        else
+            btnShopCancelFilter.setVisibility(View.GONE);
     }
 
     @Override
@@ -77,6 +107,17 @@ public class ShopFilterActivity extends AppCompatActivity implements View.OnClic
             case R.id.btActionBarBack:
                 setResult(2, intent);
                 finish();
+                break;
+            case R.id.btnShopCancelFilter:
+                cbName.setChecked(false);
+                cbMinOrder.setChecked(false);
+                cbRatting.setChecked(false);
+                setVisible();
+                SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_FILTER, "");
+                SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_SHOP_NAME, false);
+                SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_SHOP_MIN, false);
+                SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_SHOP_RATTING, false);
+                SharedPreferenceUtil.save();
                 break;
             default:
         }

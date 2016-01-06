@@ -74,7 +74,7 @@
                 android:padding="@dimen/padding_2"
                 android:text="@string/search_nearby"
                 android:textColor="@color/mainColor"
-                android:textSize="@dimen/text_14" />
+                android:textSize="@dimen/text_12" />
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="wrap_content"

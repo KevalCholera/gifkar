@@ -108,6 +108,7 @@
             android:gravity="top"
             android:hint="@string/tap_here"
             android:minHeight="100dp"
+            android:inputType="textCapSentences"
             android:padding="@dimen/padding_10"
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color"

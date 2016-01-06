@@ -37,19 +37,19 @@
                 android:textColor="@color/textcolorwhite"
                 android:textSize="@dimen/text_16" />
 
-
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
-                android:drawableLeft="@drawable/ic_cart"
+                android:drawableLeft="@drawable/ic_star_white"
                 android:drawablePadding="@dimen/padding_left_8"
                 android:fontFamily="normal"
                 android:gravity="center"
-                android:padding="@dimen/padding_5"
                 android:text="RATINGS"
                 android:textColor="@color/textcolorwhite"
                 android:textSize="@dimen/text_16" />
+
+
         </LinearLayout>
 
         <View
@@ -85,7 +85,7 @@
                 android:drawablePadding="@dimen/padding_left_8"
                 android:fontFamily="normal"
                 android:gravity="center"
-                android:text="RATINGS"
+                android:text="REVIEWS"
                 android:textColor="@color/textcolorwhite"
                 android:textSize="@dimen/text_16" />
         </LinearLayout>

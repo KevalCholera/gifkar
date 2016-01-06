@@ -33,11 +33,15 @@
     <string name="status_revoke_access">Revoked access</string>
     <string name="status_revoke_access_error">Error revoking access: %s</string>
     <string name="signed_in_as">Signed in as %s</string>
-    <string name="wrn_pwd_len">Password must contains at least 5 char</string>
+    <string name="wrn_pwd_len">Password must contains at least 6 char</string>
     <string name="wrn_pwd">Enter password</string>
     <string name="wrn_promo">Enter promo code</string>
     <string name="wrn_em_mo">Enter valid Email Id or Mobile No</string>
     <string name="wrn_em">Enter email id</string>
+    <string name="wrn_em_exit">Email already exists.</string>
+    <string name="wrn_mn_exit">Mobile already exists.</string>
+    <string name="wrn_terms_exit">Please check Terms &amp; Conditions to Continue.</string>
+
     <string name="wrn_email">Enter valid email id </string>
     <string name="wrn_repwd">Enter re password</string>
     <string name="wrn_oldpwd">Enter old password</string>
@@ -326,6 +330,7 @@
     <string name="place_order">PLACE ORDER</string>
     <string name="add_new_address">Add a new address</string>
     <string name="apply_filter">APPLY FILTERS</string>
+    <string name="cancel_filter">CANCEL FILTERS</string>
     <string name="whats_wrong">WHAT\'S WRONG?</string>
     <string name="phone_no">Phone Number</string>
     <string name="shop_close">Shop Closed</string>

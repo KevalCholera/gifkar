@@ -5,9 +5,10 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,7 @@ public class MyOrdersActivity extends Fragment implements Response.Listener<JSON
     }
 
 
-    public class MyOrderPagerAdapter extends FragmentPagerAdapter {
+    public class MyOrderPagerAdapter extends FragmentStatePagerAdapter {
 
         final int TAB_COUNT = 2;
         private Context context;
@@ -129,7 +130,9 @@ public class MyOrdersActivity extends Fragment implements Response.Listener<JSON
 
     private void setupViewPager(JSONObject response) {
         try {
+            Log.d("hm","no");
             MyOrderPagerAdapter myOrderPagerAdapter = new MyOrderPagerAdapter(getFragmentManager(), getActivity(), response.optJSONObject("data").optJSONObject("orderDetails"));
+            Log.d("hm","yes");
             viewPager.setAdapter(myOrderPagerAdapter);
             tabLayout.setupWithViewPager(viewPager);
             CommonUtil.cancelProgressDialog();
@@ -146,7 +149,9 @@ public class MyOrdersActivity extends Fragment implements Response.Listener<JSON
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_ORDER_HISTORY:
+                            Log.d("hm","yes");
                             setupViewPager(response);
+                            Log.d("hm", "no");
                             break;
                     }
                 } else {

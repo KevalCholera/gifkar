@@ -88,7 +88,7 @@ public class CityAdapter extends BaseAdapter implements Filterable {
 //                //for highlight color
 //                tmpstrname = testJson.optString("area_name").replace(highlight, "<font color='red'>" + highlight + "</font>");
 //            } else {
-            tmpstrname = testJson.optString("name");
+            tmpstrname = testJson.optString("name")+" - "+testJson.optString("pincode");
 //            }
 //            holder.tv_cityName_City.setText(testJson.optString("area_name"));
             holder.tv_cityName_City.setText(Html.fromHtml(tmpstrname), TextView.BufferType.SPANNABLE);

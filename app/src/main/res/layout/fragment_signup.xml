@@ -26,12 +26,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
                 android:layout_weight="1"
+                android:inputType="textCapSentences"
                 android:background="@drawable/edittext_round"
                 android:ems="10"
                 android:fontFamily="normal"
                 android:singleLine="true"
                 android:hint="@string/full_name"
-                android:padding="@dimen/padding_5"
+                android:padding="@dimen/edittext_padding_8"
                 android:textSize="@dimen/text_16"
                 android:textColorHighlight="@android:color/white"
                 android:textColorHint="@color/edittext_hint_color" />
@@ -45,9 +46,10 @@
                 android:background="@drawable/edittext_round"
                 android:ems="10"
                 android:singleLine="true"
+                android:inputType="textCapSentences"
                 android:fontFamily="normal"
                 android:hint="@string/last_name"
-                android:padding="@dimen/padding_5"
+                android:padding="@dimen/edittext_padding_8"
                 android:textSize="@dimen/text_16"
                 android:textColorHighlight="@android:color/white"
                 android:textColorHint="@color/edittext_hint_color" />
@@ -69,7 +71,7 @@
                 android:focusable="false"
                 android:fontFamily="normal"
                 android:gravity="center"
-                android:padding="@dimen/padding_5"
+                android:padding="@dimen/edittext_padding_8"
                 android:textSize="@dimen/text_16" />
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
@@ -82,7 +84,7 @@
                 android:fontFamily="normal"
                 android:hint="@string/mobile"
                 android:inputType="number"
-                android:padding="@dimen/padding_5"
+                android:padding="@dimen/edittext_padding_8"
                 android:textSize="@dimen/text_16"
                 android:textColorHighlight="@android:color/white"
                 android:textColorHint="@color/edittext_hint_color" />
@@ -98,7 +100,7 @@
             android:fontFamily="normal"
             android:hint="@string/email1"
             android:inputType="textEmailAddress"
-            android:padding="@dimen/padding_5"
+            android:padding="@dimen/edittext_padding_8"
             android:textSize="@dimen/text_16"
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
@@ -114,7 +116,7 @@
             android:fontFamily="normal"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:padding="@dimen/padding_5"
+            android:padding="@dimen/edittext_padding_8"
             android:textSize="@dimen/text_16"
             android:textColorHint="@color/edittext_hint_color" />
 
@@ -128,7 +130,7 @@
             android:fontFamily="normal"
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
-            android:padding="@dimen/padding_5"
+            android:padding="@dimen/edittext_padding_8"
             android:textSize="@dimen/text_16"
             android:textColorHint="@color/edittext_hint_color" />
 

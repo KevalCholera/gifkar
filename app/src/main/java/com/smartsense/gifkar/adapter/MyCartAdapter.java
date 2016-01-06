@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -100,7 +101,7 @@ public class MyCartAdapter extends BaseAdapter {
         JSONObject addressObj = dataArray.optJSONObject(position);
         holder.tvProdElementCate.setText(addressObj.optString(DataBaseHelper.COLUMN_PROD_QUANTITY) + " " + addressObj.optString(DataBaseHelper.COLUMN_PROD_UNIT_NAME) + " " + addressObj.optString(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME));
         holder.tvProdElementDT.setText(addressObj.optString(DataBaseHelper.COLUMN_PROD_EARLIY_DEL));
-        holder.tvProdElementPrice.setText(addressObj.optString(DataBaseHelper.COLUMN_PROD_PRICE));
+        holder.tvProdElementPrice.setText("₹ " +addressObj.optString(DataBaseHelper.COLUMN_PROD_PRICE));
         holder.tvProdElementName.setText(addressObj.optString(DataBaseHelper.COLUMN_PROD_NAME));
         holder.tvProdElementQty.setText(addressObj.optString("quantity"));
         if (Integer.valueOf(addressObj.optString("quantity")) == 0) {
@@ -136,6 +137,8 @@ public class MyCartAdapter extends BaseAdapter {
                         holder.ibProdElementMinus.setBackgroundResource(R.drawable.ic_product_minius_fill);
                         holder.ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_fill);
                     }
+                }else{
+                    Toast.makeText(activity, "Sorry, Maximum item limit is Three", Toast.LENGTH_SHORT).show();
                 }
             }
         });

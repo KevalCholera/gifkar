@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -61,7 +62,7 @@ public class ProductAdapter extends CursorAdapter {
         TextView tvProdElementQty = (TextView) view.findViewById(R.id.tvProdElementQty);
         final ImageButton ibProdElementPlus = (ImageButton) view.findViewById(R.id.ibProdElementPlus);
         final ImageButton ibProdElementMinus = (ImageButton) view.findViewById(R.id.ibProdElementMinus);
-        ImageButton ibProdElementNext = (ImageButton) view.findViewById(R.id.ibProdElementNext);
+//        ImageButton ibProdElementNext = (ImageButton) view.findViewById(R.id.ibProdElementNext);
 
 //        if (cursor.getInt(cursor.getColumnIndexOrThrow("day_id")) == day_id) {
 ////			Log.i("if",day_id+"yes" +cursor.getInt(cursor.getColumnIndexOrThrow("day_id")));
@@ -79,7 +80,7 @@ public class ProductAdapter extends CursorAdapter {
         tvProdElementQty.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
         ibProdElementPlus.setTag(tvProdElementQty);
         ibProdElementMinus.setTag(tvProdElementQty);
-        ibProdElementNext.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
+//        ibProdElementNext.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
         view.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
         ivProdPhoto.setDefaultImageResId(R.drawable.default_img);
         ivProdPhoto.setImageUrl(Constants.BASE_URL + "/images/products/" + cursor.getString(cursor
@@ -136,14 +137,15 @@ public class ProductAdapter extends CursorAdapter {
                         ibProdElementMinus.setBackgroundResource(R.drawable.ic_product_minius_fill);
                         ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_fill);
                     }
+                }else{
+                    Toast.makeText(context, "Sorry, Maximum item limit is Three", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        ibProdElementNext.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                (String) v.getTag()
                 context.startActivity(new Intent(context, ProductDetailActivity.class).putExtra("ProdDEID", (Integer) v.getTag()));
 
             }

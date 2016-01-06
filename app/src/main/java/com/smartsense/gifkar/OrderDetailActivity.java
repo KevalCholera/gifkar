@@ -24,12 +24,12 @@ import com.smartsense.gifkar.adapter.CheckoutAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataRequest;
-import com.smartsense.gifkar.utill.DateAndTimeUtil;
 import com.smartsense.gifkar.utill.JsonErrorShow;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 
 public class OrderDetailActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
         Response.ErrorListener {
@@ -93,16 +93,18 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
     public void orderDetailFill(JSONObject response) {
         try {
             tvOrderDetailOrderNo.setText("Order ID : " + response.optString("orderNo"));
-            tvOrderDetailDateTime.setText(DateAndTimeUtil.myDateAndTime(response.optString("createdAt")));
+            final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            tvOrderDetailDateTime.setText(response.optString("createdAt"));
+//            tvOrderDetailDateTime.setText(DateAndTimeUtil.myDateAndTime(response.optString("createdAt")));
             tvOrderDetailAddress.setText("Name : " + response.optJSONObject("deliveryAddress").optString("recipientName") + "\nMobile No. : " + response.optJSONObject("deliveryAddress").optString("recipientContact") + "\nAddress : " + response.optJSONObject("deliveryAddress").optString("address") + " " + response.optJSONObject("deliveryAddress").optString("landmark") + " " + response.optJSONObject("deliveryAddress").optString("area") + " " + response.optJSONObject("deliveryAddress").optString("city") + " " + response.optJSONObject("deliveryAddress").optString("pincode"));
             tvOrderElementShopName.setText(response.optString("shopName"));
             ivShopListImage.setImageUrl(Constants.BASE_URL + "/images/shops/thumbs/" +response.optString("shopImage"), imageLoader);
             tvOrderElementOrderStatus.setText("Your Order is " + response.optString("orderStatus"));
             tvOrderElementDetails.setText(response.optJSONArray("products").length() + " Items");
             tvOrderDetailName.setText("Name : " + response.optJSONObject("sender").optString("firstName") + " " + response.optJSONObject("sender").optString("lastName"));
-            tvOrderDetailOrderNo.setText("Mobile No. : " + response.optString("mobile"));
-            JSONArray productCartArray = response.optJSONArray("products");
-            CheckoutAdapter checkoutAdapter = new CheckoutAdapter(this, productCartArray, true);
+            tvOrderDetailNo.setText("Mobile No. : " + response.optString("mobile"));
+
+            CheckoutAdapter checkoutAdapter = new CheckoutAdapter(this, response.optJSONArray("products"), false);
             lvOrderDetail.setAdapter(checkoutAdapter);
         } catch (Exception e) {
             e.printStackTrace();

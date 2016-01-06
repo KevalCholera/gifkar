@@ -24,7 +24,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -44,6 +43,7 @@ public class ProductFragment extends Fragment {
     CommonUtil commonUtil = new CommonUtil();
     private Fragment fragment = this;
     public static Boolean reloadList = false;
+    public static Boolean reloadExit = false;
 
     public static ProductFragment newInstance(String ID, String categoryName) {
         ProductFragment fragmentFirst = new ProductFragment();
@@ -65,17 +65,23 @@ public class ProductFragment extends Fragment {
                 fragment.startActivityForResult(new Intent(getActivity(), ProductFilterActivity.class), 1);
             }
         });
-        lvProduct = (ListView) view.findViewById(R.id.lvProductList);
         llProdListEmpty = (LinearLayout) view.findViewById(R.id.llProdListEmapty);
         tvProdListEmpty = (TextView) view.findViewById(R.id.tvProdListEmpty);
+        lvProduct = (ListView) view.findViewById(R.id.lvProductList);
+//        lvProduct.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("ProdDEID", (Integer) view.getTag()));
+//            }
+//        });
+//        lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
+////                JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
+//                getActivity().startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("ProdDEID", (Integer) view.getTag()));
+//
+//            }
+//        });
         fillProdList();
-        lvProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
-//                JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
-                startActivity(new Intent(getActivity(), ProductDetailActivity.class).putExtra("ProdDEID", (Integer) view.getTag()));
-
-            }
-        });
         return view;
     }
 
@@ -95,6 +101,10 @@ public class ProductFragment extends Fragment {
         super.onResume();
         if (reloadList) {
             reloadList = false;
+            if (reloadExit) {
+                reloadExit = false;
+                getActivity().finish();
+            }
             fillProdList();
         }
     }

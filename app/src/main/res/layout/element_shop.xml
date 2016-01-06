@@ -57,10 +57,10 @@
                     android:layout_marginRight="@dimen/padding_2"
                     android:background="@drawable/button_blue_back"
                     android:fontFamily="normal"
-                    android:padding="@dimen/padding_8"
+                    android:padding="@dimen/padding_5"
                     android:text="5.0"
                     android:textColor="@color/textcolorwhite"
-                    android:textSize="@dimen/text_16" />
+                    android:textSize="@dimen/text_12" />
 
 
             </LinearLayout>

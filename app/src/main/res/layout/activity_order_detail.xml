@@ -181,7 +181,7 @@
                     android:layout_height="6dp"
                     android:layout_marginBottom="6dp"
                     android:layout_marginLeft="-18dp"
-                    android:layout_marginRight="-18dp"
+                    android:layout_marginRight="-14dp"
                     android:layout_weight="1"
                     android:background="@drawable/dashline" />
 

@@ -21,7 +21,7 @@
             android:fontFamily="normal"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:padding="@dimen/padding_5"
+            android:padding="@dimen/edittext_padding_8"
             android:textSize="@dimen/text_16"
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
@@ -37,7 +37,7 @@
             android:fontFamily="normal"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:padding="@dimen/padding_5"
+            android:padding="@dimen/edittext_padding_8"
             android:textSize="@dimen/text_16"
             android:textColorHint="@color/edittext_hint_color" />
 

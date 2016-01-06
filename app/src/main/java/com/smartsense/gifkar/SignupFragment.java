@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -215,16 +216,20 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
             etPass.setError(getString(R.string.wrn_pwd));
         } else if (TextUtils.isEmpty(etConPass.getText().toString())) {
             etConPass.setError(getString(R.string.wrn_repwd));
-        } else if (etPass.length() < 5){
+        } else if (etPass.length() < 6) {
             etPass.setError(getString(R.string.wrn_pwd_len));
         } else if (!TextUtils.equals(etPass.getText().toString(), etConPass.getText().toString())) {
             etConPass.setError(getString(R.string.wrn_match));
         } else if (!cbTerms.isChecked()) {
-            CommonUtil.alertBox(getActivity(), "", "Please check Terms & Conditions to Continue.");
+//            CommonUtil.alertBox(getActivity(), "", "Please check Terms & Conditions to Continue.");
+//            cbTerms.setError(getString(R.string.wrn_terms_exit));
+            Toast.makeText(getActivity(), "Please check Terms & Conditions to Continue.", Toast.LENGTH_SHORT).show();
         } else if (!isMnoVerified) {
-            CommonUtil.alertBox(getActivity(), "", "Mobile already exists.");
+            etMobileNo.setError(getString(R.string.wrn_mn_exit));
+//            CommonUtil.alertBox(getActivity(), "", "Mobile already exists.");
         } else if (!isEmailVerified) {
-            CommonUtil.alertBox(getActivity(), "", "Email already exists.");
+            etEmail.setError(getString(R.string.wrn_em_exit));
+//            CommonUtil.alertBox(getActivity(), "", "Email already exists.");
         } else {
             final String tag = "Signup";
             String url = Constants.BASE_URL + "/mobile/user/signup";
@@ -260,6 +265,13 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_SIGNUP:
+                            etMobileNo.setText("");
+                            etEmail.setText("");
+                            etConPass.setText("");
+                            etPass.setText("");
+                            etFirstName.setText("");
+                            etLastName.setText("");
+                            cbTerms.setChecked(false);
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").optString("userId"));
                             SharedPreferenceUtil.save();
                             startActivity(new Intent(getActivity(), OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra("tag", (String) etCountryCode.getTag()));

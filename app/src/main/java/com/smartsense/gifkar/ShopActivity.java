@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +21,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageView btBack;
     private TabLayout tabLayout;
-    private Button btReport;
+    private TextView btReport;
     ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
 
     @Override
@@ -38,12 +37,12 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_shop);
-        btReport = (Button) findViewById(R.id.btReport);
+        btReport = (TextView) findViewById(R.id.btReport);
         btReport.setOnClickListener(this);
         final View shopTOP = (View) findViewById(R.id.shopTop);
         int height = getResources().getDisplayMetrics().heightPixels;
         ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) shopTOP.getLayoutParams();
-        params.height = (int) (height / 3);
+        params.height = (int) (height / 5);
         shopTOP.setLayoutParams(params);
         NetworkImageView ivShopTopElementIMG=(NetworkImageView) shopTOP.findViewById(R.id.ivShopTopElementIMG);
         ivShopTopElementIMG.setDefaultImageResId(R.drawable.gift);
@@ -79,11 +78,11 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
 
         TextView tab = (TextView) LayoutInflater.from(this).inflate(R.layout.element_tab, null);
         tab.setText("CONTACT");
-        tab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_pencil, 0, 0);
+        tab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_gray_contact_icon, 0, 0);
         tabLayout.getTabAt(0).setCustomView(tab);
         tab = (TextView) LayoutInflater.from(this).inflate(R.layout.element_tab, null);
         tab.setText("REVIEWS");
-        tab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_pencil, 0, 0);
+        tab.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_grey_pensil, 0, 0);
         tabLayout.getTabAt(1).setCustomView(tab);
 
     }

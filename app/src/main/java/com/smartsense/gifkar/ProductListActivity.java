@@ -34,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,7 +123,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                 startActivity(new Intent(this, ShopActivity.class));
                 break;
             case R.id.llProdListCart:
-                startActivity(new Intent(this, MyCartActivity.class));
+                startActivity(new Intent(this, MyCartActivity.class).putExtra("flag",true));
                 break;
             case R.id.llProdListCheckOut:
                 if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
@@ -246,7 +247,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         } else {
             llProdBottom.setVisibility(View.VISIBLE);
             tvProdCartRs.setText("₹" + totalAmount);
-            tvProdCartCount.setText("" + productArray.length());
+            DecimalFormat twodigits = new DecimalFormat("00");
+            tvProdCartCount.setText("" + twodigits.format(productArray.length()));
         }
 
     }

@@ -24,7 +24,7 @@
                 android:fontFamily="bold"
                 android:padding="@dimen/padding_8"
                 android:text="@string/order_no"
-                android:textSize="16dp" />
+                android:textSize="14dp" />
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvOrderElementDateTime"
@@ -53,7 +53,7 @@
                 android:padding="@dimen/padding_8"
                 android:text="@string/details"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="14dp" />
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvOrderElementDetails"
@@ -97,7 +97,7 @@
                 android:padding="@dimen/padding_2"
                 android:text="@string/shop_name"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="14dp" />
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvOrderElementOrderStatus"

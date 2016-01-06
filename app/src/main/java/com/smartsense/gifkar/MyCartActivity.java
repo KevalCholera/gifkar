@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -26,13 +27,15 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
     static ListView lvMyCart;
     static LinearLayout llMyCart;
     static LinearLayout llMyCartEmpty;
-    private ImageView btBack, btCart;
+    private ImageView btBack;
+    private static ImageView btCart;
     private static TextView tvCartTotalRs;
     private TextView tvCartShopName;
     private LinearLayout llChackout;
     private static double totalAmount;
     static JSONArray productArray;
     private static TextView titleTextView;
+    Button btnCartStartGifiting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +52,14 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
         btCart = (ImageView) v.findViewById(R.id.btActionBarInfo);
         btCart.setBackgroundResource(R.drawable.ic_cart_del);
         btCart.setOnClickListener(this);
+        btCart.setVisibility(View.GONE);
         getSupportActionBar().setCustomView(v);
         Toolbar parent = (Toolbar) v.getParent();//first get parent toolbar of current action bar
         parent.setContentInsetsAbsolute(0, 0);
 
         setContentView(R.layout.activity_my_cart);
-
+        btnCartStartGifiting = (Button) findViewById(R.id.btnCartStartGifiting);
+        btnCartStartGifiting.setOnClickListener(this);
         llMyCart = (LinearLayout) findViewById(R.id.ll_cart);
         llMyCartEmpty = (LinearLayout) findViewById(R.id.ll_cart_empty);
         llChackout = (LinearLayout) findViewById(R.id.llChackout);
@@ -68,19 +73,20 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
         try {
             if (CommonUtil.checkCartCount() != 0) {
                 productArray = new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
-                llMyCartEmpty.setVisibility(View.VISIBLE);
-                llMyCart.setVisibility(View.GONE);
+
+                llMyCartEmpty.setVisibility(View.GONE);
+                llMyCart.setVisibility(View.VISIBLE);
                 lvMyCart.setAdapter(new MyCartAdapter(MyCartActivity.this, productArray, false));
                 setAdapter(MyCartActivity.this, productArray, 1);
             } else {// no product set visibile empty cart
                 productArray = new JSONArray();
-                llMyCartEmpty.setVisibility(View.GONE);
-                llMyCart.setVisibility(View.VISIBLE);
+                llMyCartEmpty.setVisibility(View.VISIBLE);
+                llMyCart.setVisibility(View.GONE);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        getSupportActionBar().setTitle("Cart(" + CommonUtil.checkCartCount() + ")");
     }
 
 
@@ -89,8 +95,13 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
         for (int i = 0; i < productArray.length(); i++) {
             totalAmount += (productArray.optJSONObject(i).optDouble(DataBaseHelper.COLUMN_PROD_PRICE) * productArray.optJSONObject(i).optDouble("quantity"));
         }
-
-        titleTextView.setText(a.getResources().getString(R.string.screen_my_cart) + "(" + productArray.length() + ")");
+        if (productArray.length() == 0) {
+            btCart.setVisibility(View.GONE);
+            titleTextView.setText(a.getResources().getString(R.string.screen_my_cart));
+        } else {
+            btCart.setVisibility(View.VISIBLE);
+            titleTextView.setText(a.getResources().getString(R.string.screen_my_cart) + "(" + productArray.length() + ")");
+        }
 
         if (totalAmount == 0) {
             llMyCartEmpty.setVisibility(View.VISIBLE);
@@ -117,6 +128,12 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
                     startActivity(new Intent(this, GifkarActivity.class));
                 break;
             case R.id.btActionBarBack:
+                ProductFragment.reloadList = true;
+                finish();
+                break;
+            case R.id.btnCartStartGifiting:
+                if (getIntent().getBooleanExtra("flag", false))
+                    ProductFragment.reloadExit = true;
                 ProductFragment.reloadList = true;
                 finish();
                 break;

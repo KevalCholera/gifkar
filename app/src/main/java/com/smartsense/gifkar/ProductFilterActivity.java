@@ -18,11 +18,11 @@ import com.smartsense.gifkar.utill.DataBaseHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductFilterActivity extends AppCompatActivity implements View.OnClickListener{
+public class ProductFilterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView btBack;
-    CheckBox cbName,cbPrice;
-    private Button btApplyFilter;
+    CheckBox cbName, cbPrice;
+    private Button btApplyFilter, btnProdCancelFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +37,40 @@ public class ProductFilterActivity extends AppCompatActivity implements View.OnC
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_product_filter);
-        cbName=(CheckBox) findViewById(R.id.cbProdFilterName);
-        cbPrice=(CheckBox) findViewById(R.id.cbProdFilterPrice);
-        btApplyFilter=(Button) findViewById(R.id.btnProdApplyFilter);
+        cbName = (CheckBox) findViewById(R.id.cbProdFilterName);
+        cbPrice = (CheckBox) findViewById(R.id.cbProdFilterPrice);
+        cbName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setVisible();
+            }
+        });
+
+        cbPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setVisible();
+            }
+        });
+        btnProdCancelFilter = (Button) findViewById(R.id.btnProdCancelFilter);
+        btnProdCancelFilter.setOnClickListener(this);
+        btApplyFilter = (Button) findViewById(R.id.btnProdApplyFilter);
         btApplyFilter.setOnClickListener(this);
         cbName.setChecked(SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_PROD_NAME, false));
         cbPrice.setChecked(SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_PROD_PRICE, false));
+        setVisible();
+    }
+
+    public void setVisible() {
+        if (cbPrice.isChecked() | cbName.isChecked())
+            btnProdCancelFilter.setVisibility(View.VISIBLE);
+        else
+            btnProdCancelFilter.setVisibility(View.GONE);
     }
 
     @Override
     public void onClick(View view) {
-        Intent intent=new Intent();
+        Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.btnProdApplyFilter:
                 List<String> myList = new ArrayList<String>();
@@ -67,6 +90,15 @@ public class ProductFilterActivity extends AppCompatActivity implements View.OnC
             case R.id.btActionBarBack:
                 setResult(1, intent);
                 finish();
+                break;
+            case R.id.btnProdCancelFilter:
+                cbName.setChecked(false);
+                cbPrice.setChecked(false);
+                setVisible();
+                SharedPreferenceUtil.putValue(Constants.PrefKeys.PROD_FILTER, "");
+                SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_PROD_NAME, false);
+                SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_PROD_PRICE, false);
+                SharedPreferenceUtil.save();
                 break;
             default:
         }

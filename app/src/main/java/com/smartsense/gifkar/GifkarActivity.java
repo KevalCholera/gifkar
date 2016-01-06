@@ -69,6 +69,12 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         imageLoader = GifkarApp.getInstance().getDiskImageLoader();
         actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
         actionBarTitle.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
+        actionBarTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(GifkarActivity.this,CitySelectActivity.class).putExtra("area",true));
+            }
+        });
         setSupportActionBar(toolbar);
         btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
 //        btFilter.setOnClickListener(this);
@@ -131,7 +137,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         NavigationAdapter adp = new NavigationAdapter(a, fm);
         lvNavList.setAdapter(adp);
         setListViewHeightBasedOnChildren(lvNavList);
-        tvHeadAddress.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
+        tvHeadAddress.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CITY_NAME, ""));
         tVHeadMobileNo.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_EMAIL, ""));
         tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, "WelCome"));
         ivHeadImage.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imageLoader);
@@ -236,9 +242,9 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         public void getList() {
 
             //user is login and display sign out btn
-            mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "About Us", "Feed Us", "Sign Out", "Setting"};
+            mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends",  "Feed Us", "About Us","Sign Out", "Setting"};
             mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
-                    R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_about, R.drawable.ic_feedus, R.drawable.ic_logout, R.drawable.ic_setting};
+                    R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_feedus, R.drawable.ic_about, R.drawable.ic_logout, R.drawable.ic_setting};
 //            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
 //
 //            } else {
@@ -413,13 +419,19 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                 fragmentCall(c, new NotificationActivity(), fm, check);
                 break;
             case Constants.NavigationItems.NAV_REFER_FRIEND:
-                fragmentCall(c, new ReferFriendsActivity(), fm, check);
+//                fragmentCall(c, new ReferFriendsActivity(), fm, check);
+                fragmentCall(c, new ShopListFragment(), fm, check);
+                c.startActivity(new Intent(c, ReferFriendsActivity.class));
                 break;
             case Constants.NavigationItems.NAV_ABOUT_US:
-                fragmentCall(c, new AboutUsActivity(), fm, check);
+//                fragmentCall(c, new AboutUsActivity(), fm, check);
+                fragmentCall(c, new ShopListFragment(), fm, check);
+                c.startActivity(new Intent(c, AboutUsActivity.class));
                 break;
             case Constants.NavigationItems.NAV_FEED_US:
-                fragmentCall(c, new FeedUsActivity(), fm, check);
+//                fragmentCall(c, new FeedUsActivity(), fm, check);
+                fragmentCall(c, new ShopListFragment(), fm, check);
+                c.startActivity(new Intent(c, FeedUsActivity.class));
                 break;
 //            case Constants.NavigationItems.NAV_SETTING:
 //                break;

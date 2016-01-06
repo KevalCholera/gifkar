@@ -49,7 +49,7 @@ public class SplashActivity extends AppCompatActivity implements AnimationListen
         img4 = (ImageView) findViewById(R.id.imageView4);
         img5 = (ImageView) findViewById(R.id.imageView5);
         an1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.together);
-        img1.startAnimation(an1);
+//        img1.startAnimation(an1);
         an2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.top);
         an3 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.top);
         an4 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.top);
@@ -106,7 +106,7 @@ public class SplashActivity extends AppCompatActivity implements AnimationListen
             @Override
             public void run() {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                     if (CommonUtil.isInternet(SplashActivity.this)) {
                         if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
                             if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))

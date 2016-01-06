@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
@@ -22,6 +23,8 @@ import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
 import org.json.JSONArray;
+
+import java.text.DecimalFormat;
 
 public class ProductDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -144,7 +147,8 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         } else {
             llProdDetailBottom.setVisibility(View.VISIBLE);
             tvProdDetailCartRs.setText("₹" + totalAmount);
-            tvProdDetailCartCount.setText("" + productArray.length());
+            DecimalFormat twodigits = new DecimalFormat("00");
+            tvProdDetailCartCount.setText("" + twodigits.format(productArray.length()));
         }
 
     }
@@ -172,6 +176,8 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                         ibProdMinus.setBackgroundResource(R.drawable.ic_product_minius_fill);
                         ibProdPlus.setBackgroundResource(R.drawable.ic_product_plus_fill);
                     }
+                }else{
+                    Toast.makeText(this,"Sorry, Maximum item limit is Three",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btActionBarBack:
@@ -180,6 +186,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.llProdDetailCart:
                 startActivity(new Intent(this, MyCartActivity.class));
+//                finish();
                 break;
             case R.id.llProdDetailCheckOut:
                 if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))

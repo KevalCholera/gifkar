@@ -201,7 +201,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
             etInputemail.setError(getString(R.string.wrn_em_mo));
         } else if (TextUtils.isEmpty(password)) {
             etInputPassword.setError(getString(R.string.wrn_pwd));
-        } else if (password.length() < 5) {
+        } else if (password.length() < 6) {
             etInputPassword.setError(getString(R.string.wrn_pwd_len));
         } else {
             if (!CommonUtil.isInternet(getActivity()))
@@ -420,6 +420,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_LOGIN:
+                            etInputemail.setText("");
+                            etInputPassword.setText("");
                             if (response.getJSONObject("data").has("isVerified")) {
                                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
                                 SharedPreferenceUtil.save();

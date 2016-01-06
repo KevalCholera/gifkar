@@ -64,7 +64,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
             etCountryCode.setTag(getIntent().getStringExtra("tag"));}
         btSend = (Button) findViewById(R.id.btnSend);
         btSend.setOnClickListener(this);
-//        getCountryList(checkCountry);
+        getCountryList(checkCountry);
     }
 
     @Override

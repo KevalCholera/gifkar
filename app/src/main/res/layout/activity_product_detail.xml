@@ -219,9 +219,9 @@
                 android:layout_marginLeft="@dimen/margin_25"
                 android:background="@drawable/badge_circle"
                 android:fontFamily="bold"
-                android:text="10"
+                android:text="01"
                 android:textColor="@color/mainColor"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
         </RelativeLayout>
 
 

@@ -4,6 +4,7 @@ package com.smartsense.gifkar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.smartsense.gifkar.adapter.MyOrderAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ActiveOrdersFragment extends Fragment implements View.OnClickListener {
 
@@ -27,6 +29,7 @@ public class ActiveOrdersFragment extends Fragment implements View.OnClickListen
         ActiveOrdersFragment fragmentFirst = new ActiveOrdersFragment();
         Bundle args = new Bundle();
         args.putString("orderDetail", orderDetail);
+        Log.i("activeorderDetail",orderDetail);
         fragmentFirst.setArguments(args);
         return fragmentFirst;
     }
@@ -41,8 +44,8 @@ public class ActiveOrdersFragment extends Fragment implements View.OnClickListen
         orderFill();
         lvLiveOrders.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
-//                JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
-                startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra("id", (String) view.getTag()));
+                JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
+                startActivity(new Intent(getActivity(), OrderDetailActivity.class).putExtra("id", getCodeObj.optString("orderDetailId")));
             }
         });
         return view;

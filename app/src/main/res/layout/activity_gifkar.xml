@@ -59,8 +59,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
+
             android:gravity="center"
-            android:background="@color/activity_bg"
+            android:background="@drawable/textlines"
             android:orientation="horizontal">
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView

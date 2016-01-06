@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_5"
+            android:inputType="textCapSentences"
             android:background="@drawable/edittext_round"
             android:ems="10"
             android:fontFamily="normal"
@@ -35,6 +36,7 @@
             android:fontFamily="normal"
             android:hint="@string/address"
             android:padding="@dimen/padding_5"
+            android:inputType="textCapSentences"
             android:textSize="@dimen/text_16"
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
@@ -47,6 +49,7 @@
             android:background="@drawable/edittext_round"
             android:ems="10"
             android:fontFamily="normal"
+            android:inputType="textCapSentences"
             android:hint="@string/area"
             android:padding="@dimen/padding_5"
             android:textSize="@dimen/text_16"
@@ -64,6 +67,7 @@
             android:fontFamily="normal"
             android:hint="@string/city"
             android:padding="@dimen/padding_5"
+            android:inputType="textCapSentences"
             android:textSize="@dimen/text_16"
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
