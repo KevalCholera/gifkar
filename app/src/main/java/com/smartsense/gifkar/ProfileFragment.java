@@ -42,6 +42,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
     private RadioGroup rbGroup;
     private Calendar mCalendar = null;
     final SimpleDateFormat df = new SimpleDateFormat("y-M-d");
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.fragment_profile, container, false);
@@ -52,7 +53,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
         etDob.setOnClickListener(this);
         etEmail = (EditText) view.findViewById(R.id.etProfileEmail);
         tVProfileVerified = (TextView) view.findViewById(R.id.tVProfileVerified);
-        tVProfileVerified.setOnClickListener(this);
+
         rbGroup = (RadioGroup) view.findViewById(R.id.rbProfileGroup);
         rbMale = (RadioButton) view.findViewById(R.id.rbProfileMale);
         rbMale.setTag("m");
@@ -65,10 +66,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
             userInfo = userInfo.optJSONObject("userDetails");
             etEmail.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_EMAIL, ""));
             if (userInfo.optString("isEmailVerified").equalsIgnoreCase("1")) {
+                tVProfileVerified.setOnClickListener(this);
                 tVProfileVerified.setText("Verified");
                 tVProfileVerified.setTextColor(getResources().getColor(R.color.black));
                 tVProfileVerified.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verified, 0);
             } else {
+                tVProfileVerified.setOnClickListener(this);
                 tVProfileVerified.setText("Unverified");
                 tVProfileVerified.setTextColor(getResources().getColor(R.color.red));
                 tVProfileVerified.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.unverified, 0);
@@ -105,13 +108,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
                 datePicker();
                 break;
             case R.id.tVProfileVerified:
+                doSendMail();
                 break;
             default:
         }
     }
 
     public void doUpdate() {
-
         if (TextUtils.isEmpty(etFirstName.getText().toString())) {
             etFirstName.setError(getString(R.string.wrn_fname));
         } else if (TextUtils.isEmpty(etLastName.getText().toString())) {
@@ -131,12 +134,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
             params.put("lastName", etFirstName.getText().toString());
             params.put("dob", mCalendar == null ? etDob.getText().toString() : df.format(mCalendar.getTime()));
             params.put("gender", (String) rb.getTag());
-            Log.d("forgot Params", params.toString());
+            Log.d("Params", params.toString());
             CommonUtil.showProgressDialog(getActivity(), "Wait...");
             DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
             loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
         }
+    }
+
+
+    public void doSendMail() {
+        final String tag = "doSendMail";
+        String url = Constants.BASE_URL + "/mobile/user/sendEmailVerification";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_EMAIL_DETAILS));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
+        Log.d("Params", params.toString());
+        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
 
     public void datePicker() {
@@ -146,7 +164,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
                 mCalendar.set(Calendar.YEAR, year);
                 mCalendar.set(Calendar.MONTH, month);
                 mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
                 etDob.setText(df.format(mCalendar.getTime()));
 //                etDob.setText(DateAndTimeUtil.toStringReadableDate(mCalendar));
             }
@@ -183,7 +200,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
                         case Constants.Events.EVENT_USER_DETAIL:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.optJSONObject("data").toString());
                             SharedPreferenceUtil.save();
-
+                            break;
+                        case Constants.Events.EVENT_EMAIL_DETAILS:
+                            CommonUtil.alertBox(getActivity(), "", response.optString("message"));
+//                            tVProfileVerified.setEnabled(false);
+                            tVProfileVerified.setFocusable(false);
                             break;
                     }
                 } else {

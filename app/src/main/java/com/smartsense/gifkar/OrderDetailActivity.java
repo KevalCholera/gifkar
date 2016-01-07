@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OrderDetailActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
         Response.ErrorListener {
@@ -44,8 +47,8 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
     private TextView tvOrderElementDetails;
     private TextView tvOrderDetailName;
     private TextView tvOrderDetailNo;
-    private Button btProdDetailEmail;
-    private Button btProdDetailCall;
+    private TextView btProdDetailEmail;
+    private TextView btProdDetailCall;
     private ListView lvOrderDetail;
     private TextView tvOrderProcess;
     private TextView tvOrderAccepted;
@@ -81,13 +84,14 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         tvOrderCompleted = (TextView) findViewById(R.id.tvOrderCompleted);
         tvOrderAccepted = (TextView) findViewById(R.id.tvOrderAccepted);
         tvOrderProcess = (TextView) findViewById(R.id.tvOrderProcess);
-        btProdDetailEmail = (Button) findViewById(R.id.btProdDetailEmail);
+        btProdDetailEmail = (TextView) findViewById(R.id.btProdDetailEmail);
         btProdDetailEmail.setOnClickListener(this);
-        btProdDetailCall = (Button) findViewById(R.id.btProdDetailCall);
+        btProdDetailCall = (TextView) findViewById(R.id.btProdDetailCall);
+        btProdDetailCall.setOnClickListener(this);
         ivShopListImage = (NetworkImageView) findViewById(R.id.ivShopListImage);
         lvOrderDetail = (ListView) findViewById(R.id.lvOrderDetail);
-        getOrderDetail("1");
-//        getOrderDetail(getIntent().getStringExtra("id"));
+//        getOrderDetail("1");
+        getOrderDetail(getIntent().getStringExtra("id"));
     }
 
     public void orderDetailFill(JSONObject response) {
@@ -98,11 +102,11 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
 //            tvOrderDetailDateTime.setText(DateAndTimeUtil.myDateAndTime(response.optString("createdAt")));
             tvOrderDetailAddress.setText("Name : " + response.optJSONObject("deliveryAddress").optString("recipientName") + "\nMobile No. : " + response.optJSONObject("deliveryAddress").optString("recipientContact") + "\nAddress : " + response.optJSONObject("deliveryAddress").optString("address") + " " + response.optJSONObject("deliveryAddress").optString("landmark") + " " + response.optJSONObject("deliveryAddress").optString("area") + " " + response.optJSONObject("deliveryAddress").optString("city") + " " + response.optJSONObject("deliveryAddress").optString("pincode"));
             tvOrderElementShopName.setText(response.optString("shopName"));
-            ivShopListImage.setImageUrl(Constants.BASE_URL + "/images/shops/thumbs/" +response.optString("shopImage"), imageLoader);
+            ivShopListImage.setImageUrl(Constants.BASE_URL + "/images/shops/thumbs/" + response.optString("shopImage"), imageLoader);
             tvOrderElementOrderStatus.setText("Your Order is " + response.optString("orderStatus"));
             tvOrderElementDetails.setText(response.optJSONArray("products").length() + " Items");
             tvOrderDetailName.setText("Name : " + response.optJSONObject("sender").optString("firstName") + " " + response.optJSONObject("sender").optString("lastName"));
-            tvOrderDetailNo.setText("Mobile No. : " + response.optString("mobile"));
+            tvOrderDetailNo.setText("Mobile No. : " + response.optJSONObject("sender").optString("mobile"));
 
             CheckoutAdapter checkoutAdapter = new CheckoutAdapter(this, response.optJSONArray("products"), false);
             lvOrderDetail.setAdapter(checkoutAdapter);
@@ -134,6 +138,9 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
             case R.id.btEmailDialogCancel:
                 alert.dismiss();
                 break;
+            case R.id.btProdDetailCall:
+
+                break;
             case R.id.btProdDetailEmail:
                 openInfoPopup();
                 break;
@@ -161,6 +168,23 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    public void sendMail() {
+        final String tag = "sendMail";
+        String url = Constants.BASE_URL + "/mobile/orderDetail/sendMail";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("email", etEmail.getText().toString());
+        params.put("orderDetailId", etEmail.getText().toString());
+        params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_DEL_ADDRESS));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        Log.i("params", params.toString());
+        CommonUtil.showProgressDialog(this, "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+
     public void getOrderDetail(String orderId) {
         final String tag = "getOrder";
         String url = Constants.BASE_URL + "/mobile/orderDetail/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&orderDetailId=" + orderId + "&userToken=" + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "") + "&eventId=" + String.valueOf(Constants.Events.EVENT_ORDER_DETAIL);
@@ -185,9 +209,6 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_ORDER_DETAIL:
                             orderDetailFill(response.getJSONObject("data").optJSONObject("orderDetails"));
-                            break;
-                        case Constants.Events.EVENT_DEL_ADDRESS:
-
                             break;
                     }
                 } else {

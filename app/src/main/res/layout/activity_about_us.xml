@@ -53,13 +53,13 @@
             android:orientation="horizontal">
 
             <com.smartsense.gifkar.utill.CircleImageView1
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_5"
                 android:layout_marginLeft="@dimen/margin_5"
                 android:layout_marginRight="@dimen/margin_5"
-                android:layout_marginTop="@dimen/margin_10"
-                android:src="@drawable/star" />
+                android:layout_marginTop="@dimen/margin_20"
+                android:src="@drawable/rate_us" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/down_arrow" />
+                        android:src="@drawable/mobile_no_drop_arrow_1" />
                 </LinearLayout>
 
                 <View
@@ -116,8 +116,8 @@
             android:orientation="horizontal">
 
             <com.smartsense.gifkar.utill.CircleImageView1
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
                 android:src="@drawable/help" />
 
@@ -147,7 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/down_arrow" />
+                        android:src="@drawable/mobile_no_drop_arrow" />
                 </LinearLayout>
 
                 <View
@@ -167,8 +167,8 @@
             android:orientation="horizontal">
 
             <com.smartsense.gifkar.utill.CircleImageView1
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
                 android:src="@drawable/faqs" />
 
@@ -200,7 +200,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/down_arrow" />
+                        android:src="@drawable/mobile_no_drop_arrow" />
                 </LinearLayout>
 
                 <View

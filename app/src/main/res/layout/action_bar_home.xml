@@ -15,7 +15,7 @@
         android:padding="5dp"
         android:scaleType="fitXY"
         android:src="@drawable/home_menu"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
 
 

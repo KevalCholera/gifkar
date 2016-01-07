@@ -27,7 +27,7 @@
 
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                android:id="@+id/ivShopTopElementRatting"
+                android:id="@+id/tvShopTopElementRatting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
@@ -66,7 +66,7 @@
 
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                android:id="@+id/ivShopTopElementReview"
+                android:id="@+id/tvShopTopElementReview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"

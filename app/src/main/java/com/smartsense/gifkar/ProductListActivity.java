@@ -75,7 +75,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         btActionBarSearch.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         Toolbar parent = (Toolbar) v.getParent();
-        parent.setContentInsetsAbsolute(0, 0);
+        parent.setContentInsetsAbsolute(15, 15);
         setContentView(R.layout.activity_product_list);
         viewPager = (ViewPager) findViewById(R.id.vpProdListDetail);
         tabLayout = (TabLayout) findViewById(R.id.tlProdListTabList);
@@ -129,7 +129,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                 if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
                     startActivity(new Intent(this, Checkout1Activity.class));
                 else
-                    startActivity(new Intent(this, GifkarActivity.class));
+                    startActivity(new Intent(this, StartActivity.class));
                 break;
             default:
         }

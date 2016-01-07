@@ -8,214 +8,214 @@
 
 
     <!--<android.support.v4.widget.NestedScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:padding="@dimen/padding_16">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:padding="@dimen/padding_16">-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:fontFamily="normal"
+                android:gravity="right"
+                android:padding="@dimen/padding_8"
+                android:text="@string/shop_email"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_12" />
 
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="normal"
-                    android:gravity="right"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/shop_email"
-                    android:textSize="@dimen/text_12"
-                    android:textColor="@color/colorPrimary" />
-
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:id="@+id/tvShopDetailEmail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:fontFamily="normal"
-                    android:padding="@dimen/padding_8"
-                    android:textSize="@dimen/text_12"
-                    android:text="thackerronak@gmail.com" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:id="@+id/tvShopDetailEmail"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="2"
+                android:fontFamily="normal"
+                android:padding="@dimen/padding_8"
+                android:text="thackerronak@gmail.com"
+                android:textSize="@dimen/text_12" />
 
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="normal"
-                    android:textSize="@dimen/text_12"
-                    android:gravity="right"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/shop_mno"
-                    android:textColor="@color/colorPrimary" />
-
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:id="@+id/tvShopDetailMNo"
-                    android:layout_width="0dp"
-                    android:textSize="@dimen/text_12"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:fontFamily="normal"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/prod_name" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:layout_width="0dp"
-                    android:textSize="@dimen/text_12"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="normal"
-                    android:gravity="right"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/shop_add"
-                    android:textColor="@color/colorPrimary" />
-
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:id="@+id/tvShopDetailAddress"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_12"
-                    android:layout_weight="2"
-                    android:fontFamily="normal"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/city_hint" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_12"
-                    android:layout_weight="1"
-                    android:fontFamily="normal"
-                    android:gravity="right"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/map"
-                    android:textColor="@color/colorPrimary" />
-
-                <com.android.volley.toolbox.NetworkImageView
-                    android:id="@+id/ivShopDetailMap"
-                    android:layout_weight="2"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:background="@drawable/gift" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="normal"
-                    android:textSize="@dimen/text_12"
-                    android:gravity="right"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/days"
-                    android:textColor="@color/colorPrimary" />
-
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:id="@+id/tvShopDetailDays"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_12"
-                    android:layout_weight="2"
-                    android:fontFamily="normal"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/city_hint" />
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_12"
-                    android:layout_weight="1"
-                    android:fontFamily="normal"
-                    android:gravity="right"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/open_time"
-                    android:textColor="@color/colorPrimary" />
-
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:id="@+id/tvShopDetailOpenTime"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_12"
-                    android:layout_weight="2"
-                    android:fontFamily="normal"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/city_hint" />
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:layout_width="0dp"
-                    android:textSize="@dimen/text_12"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="normal"
-                    android:gravity="right"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/close_time"
-                    android:textColor="@color/colorPrimary" />
-
-                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:id="@+id/tvShopDetailCloseTIme"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_12"
-                    android:layout_weight="2"
-                    android:fontFamily="normal"
-                    android:padding="@dimen/padding_8"
-                    android:text="@string/city_hint" />
-
-
-            </LinearLayout>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="normal"
+                android:gravity="right"
+                android:padding="@dimen/padding_8"
+                android:text="@string/shop_mno"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_12" />
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:id="@+id/tvShopDetailMNo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="normal"
+                android:padding="@dimen/padding_8"
+                android:text="@string/prod_name"
+                android:textSize="@dimen/text_12" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="normal"
+                android:gravity="right"
+                android:padding="@dimen/padding_8"
+                android:text="@string/shop_add"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_12" />
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:id="@+id/tvShopDetailAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="normal"
+                android:padding="@dimen/padding_8"
+                android:text="@string/city_hint"
+                android:textSize="@dimen/text_12" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="normal"
+                android:gravity="right"
+                android:padding="@dimen/padding_8"
+                android:text="@string/map"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_12" />
+
+            <ImageView
+                android:id="@+id/ivShopDetailMap"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="normal"
+                android:gravity="right"
+                android:padding="@dimen/padding_8"
+                android:text="@string/days"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_12" />
+            <!--android:id="@+id/tvShopDetailDays"-->
+            <LinearLayout
+                android:id="@+id/llShopDetailDays"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="normal"
+                android:orientation="horizontal" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="normal"
+                android:gravity="right"
+                android:padding="@dimen/padding_8"
+                android:text="@string/open_time"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_12" />
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:id="@+id/tvShopDetailOpenTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="normal"
+                android:padding="@dimen/padding_8"
+                android:text="@string/city_hint"
+                android:textSize="@dimen/text_12" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="normal"
+                android:gravity="right"
+                android:padding="@dimen/padding_8"
+                android:text="@string/close_time"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_12" />
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:id="@+id/tvShopDetailCloseTIme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="normal"
+                android:padding="@dimen/padding_8"
+                android:text="@string/city_hint"
+                android:textSize="@dimen/text_12" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
     <!--</android.support.v4.widget.NestedScrollView>-->
 
 </android.support.v4.widget.NestedScrollView>

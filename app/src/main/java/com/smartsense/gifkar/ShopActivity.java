@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.ShopPagerAdapter;
 import com.smartsense.gifkar.utill.Constants;
@@ -44,9 +43,9 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) shopTOP.getLayoutParams();
         params.height = (int) (height / 5);
         shopTOP.setLayoutParams(params);
-        NetworkImageView ivShopTopElementIMG=(NetworkImageView) shopTOP.findViewById(R.id.ivShopTopElementIMG);
-        ivShopTopElementIMG.setDefaultImageResId(R.drawable.gift);
-        ivShopTopElementIMG.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_IMAGE, ""), imageLoader);
+//        NetworkImageView ivShopTopElementIMG=(NetworkImageView) shopTOP.findViewById(R.id.ivShopTopElementIMG);
+//        ivShopTopElementIMG.setDefaultImageResId(R.drawable.gift);
+//        ivShopTopElementIMG.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_IMAGE, ""), imageLoader);
         tabLayout = (TabLayout) findViewById(R.id.tabs_shop);
         tabLayout.addTab(tabLayout.newTab().setText("CONTACT"));
         tabLayout.addTab(tabLayout.newTab().setText("REVIEWS"));

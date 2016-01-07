@@ -136,6 +136,7 @@ public class Constants {
         public static final int EVENT_GET_OCCASION = 45;
         public static final int EVENT_GET_TIMESLOT = 46;
         public static final int EVENT_GET_REVIEW = 47;
+        public static final int EVENT_REPORT_ERROR = 48;
     }
 
 

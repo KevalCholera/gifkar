@@ -27,7 +27,7 @@ public class MultipartRequestJson extends Request<JSONObject> {
 
     private MultipartEntity entity = new MultipartEntity();
 
-    private static final String FILE_PART_NAME = "file";
+    private static final String FILE_PART_NAME = "image";
 
     private final Response.Listener<JSONObject> mListener;
     private final File file;

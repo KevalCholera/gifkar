@@ -411,19 +411,19 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                             if (checkCountry)
                                 openOccasionsPopup(response);
                             checkCountry = true;
-                            if (response.getJSONObject("data").getJSONArray("occasions").length() != 0) {
-                                etCheckout2SelectOccasion.setText(response.getJSONObject("data").getJSONArray("occasions").getJSONObject(0).optString("name"));
-                                etCheckout2SelectOccasion.setTag(response.getJSONObject("data").getJSONArray("occasions").getJSONObject(0).optString("id"));
+                            if (response.getJSONObject("data").optJSONArray("occasions").length() != 0) {
+                                etCheckout2SelectOccasion.setText(response.getJSONObject("data").optJSONArray("occasions").optJSONObject(0).optString("name"));
+                                etCheckout2SelectOccasion.setTag(response.getJSONObject("data").optJSONArray("occasions").optJSONObject(0).optString("id"));
                             }
                             break;
                         case Constants.Events.EVENT_GET_TIMESLOT:
-                            SharedPreferenceUtil.putValue(Constants.PrefKeys.TIMESLOT, response.getJSONObject("data").getJSONArray("timeSlots").toString());
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.TIMESLOT, response.optJSONObject("data").optJSONArray("timeSlots").toString());
                             SharedPreferenceUtil.save();
 //                            openPopupTimeSlot(response.getJSONObject("data").getJSONArray("timeSlots"), 2);
                             break;
                         case Constants.Events.EVENT_CHECK_OUT:
 //                            startActivity(new Intent(Checkout2Activity.this, OrderDetailActivity.class).putExtra("id", response.getJSONObject("data").optString("id")));
-                            startActivity(new Intent(Checkout2Activity.this, OrderDetailActivity.class).putExtra("id", 1));
+                            startActivity(new Intent(Checkout2Activity.this, OrderDetailActivity.class).putExtra("id", response.optJSONObject("data").optString("orderDetailId")));
                             finish();
                             break;
                     }

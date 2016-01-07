@@ -61,6 +61,10 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
         TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
         actionBarTitle.setText(getResources().getString(R.string.screen_my_reminders));
+        ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
+        btFilter.setVisibility(View.INVISIBLE);
+        ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
+        btSearch.setVisibility(View.INVISIBLE);
         tvMyReminder = (TextView) view.findViewById(R.id.tvMyReminder);
         tvMyReminder.setOnClickListener(this);
         lvMyReminder = (ListView) view.findViewById(R.id.lvMyReminders);

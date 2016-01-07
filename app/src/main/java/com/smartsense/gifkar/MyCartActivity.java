@@ -52,7 +52,7 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
         btCart = (ImageView) v.findViewById(R.id.btActionBarInfo);
         btCart.setBackgroundResource(R.drawable.ic_cart_del);
         btCart.setOnClickListener(this);
-        btCart.setVisibility(View.GONE);
+
         getSupportActionBar().setCustomView(v);
         Toolbar parent = (Toolbar) v.getParent();//first get parent toolbar of current action bar
         parent.setContentInsetsAbsolute(0, 0);
@@ -69,19 +69,25 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
         tvCartShopName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_NAME, ""));
         tvCartTotalRs = (TextView) findViewById(R.id.tvCartTotalRs);
 
+        checkCart();
 
+    }
+
+    public void checkCart() {
         try {
             if (CommonUtil.checkCartCount() != 0) {
                 productArray = new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
-
+                btCart.setVisibility(View.VISIBLE);
                 llMyCartEmpty.setVisibility(View.GONE);
                 llMyCart.setVisibility(View.VISIBLE);
                 lvMyCart.setAdapter(new MyCartAdapter(MyCartActivity.this, productArray, false));
                 setAdapter(MyCartActivity.this, productArray, 1);
             } else {// no product set visibile empty cart
                 productArray = new JSONArray();
+                btCart.setVisibility(View.GONE);
                 llMyCartEmpty.setVisibility(View.VISIBLE);
                 llMyCart.setVisibility(View.GONE);
+                titleTextView.setText(getResources().getString(R.string.screen_my_cart));
 
             }
         } catch (Exception e) {
@@ -144,8 +150,9 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
                 alertbox.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
-//                        JSONObject objAddress = (JSONObject) view.getTag();
-//                        String deleteId=objAddress.optString("");
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_PROD_LIST);
+                        SharedPreferenceUtil.save();
+                        checkCart();
                     }
 
                 });

@@ -81,6 +81,7 @@
             android:ems="10"
             android:fontFamily="normal"
             android:hint="@string/pin"
+            android:inputType="number"
             android:padding="@dimen/padding_5"
             android:textSize="@dimen/text_16"
             android:textColorHighlight="@android:color/white"
@@ -94,7 +95,7 @@
             android:layout_margin="@dimen/margin_5"
             android:background="@drawable/edittext_round"
             android:ems="10"
-            android:enabled="false"
+
             android:fontFamily="normal"
             android:hint="@string/weblink"
             android:padding="@dimen/padding_5"
@@ -110,8 +111,9 @@
             android:layout_margin="@dimen/margin_5"
             android:background="@drawable/edittext_round"
             android:ems="10"
-            android:enabled="false"
+
             android:fontFamily="normal"
+            android:inputType="textEmailAddress"
             android:hint="@string/email1"
             android:padding="@dimen/padding_5"
             android:textSize="@dimen/text_16"

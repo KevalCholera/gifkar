@@ -60,7 +60,11 @@
     <string name="wrn_flat">Enter Flat No</string>
     <string name="wrn_street">Enter Street Name</string>
     <string name="wrn_land">Enter Landmark</string>
-
+    <string name="wrn_error_report">Enter Description</string>
+    <string name="wrn_shop_name">Enter Shop Name</string>
+    <string name="wrn_shop_address">Enter Address</string>
+    <string name="wrn_shop_city">Enter City</string>
+    <string name="wrn_web_link">Enter Website</string>
     <string name="login">Login</string>
     <string name="signup">Register</string>
     <string name="done">DONE</string>

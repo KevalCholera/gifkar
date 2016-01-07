@@ -1,31 +1,54 @@
 package com.smartsense.gifkar;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.utill.CircleImageView;
+import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
+import com.smartsense.gifkar.utill.DataRequest;
+import com.smartsense.gifkar.utill.JsonErrorShow;
+import com.smartsense.gifkar.utill.MultipartRequestJson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.util.HashMap;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     ImageView btBack;
     TextView tvName, tvMobile, tvVerified;
     CircleImageView ivProfileImage;
     ImageLoader imageLoader;
+    private static final int REQUEST_CAMERA = 0;
+    private final int SELECT_FILE = 1;
+    File dir = null;
+    private String outputFile = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,22 +64,24 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         tvMobile = (TextView) findViewById(R.id.tVProfileMobileNo);
+        tvMobile.setOnClickListener(this);
         tvName = (TextView) findViewById(R.id.tvProfileName);
         tvVerified = (TextView) findViewById(R.id.tVProfileVerified);
         ivProfileImage = (CircleImageView) findViewById(R.id.ivProfileImage);
+        ivProfileImage.setOnClickListener(this);
         imageLoader = GifkarApp.getInstance().getDiskImageLoader();
         try {
             JSONObject userInfo = new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_INFO, ""));
-            userInfo=userInfo.optJSONObject("userDetails");
+            userInfo = userInfo.optJSONObject("userDetails");
 //            Constants.BASE_URL + "/images/users/" +
             ivProfileImage.setDefaultImageResId(R.drawable.ic_user);
             ivProfileImage.setImageUrl(Constants.BASE_URL + "/images/users/" + userInfo.optString("image"), imageLoader);
             tvName.setText(userInfo.optString("firstName") + " " + userInfo.optString("lastName"));
             tvMobile.setText(userInfo.optString("mobile"));
-            if (userInfo.optString("mobile").equalsIgnoreCase("")){
+            if (userInfo.optString("mobile").equalsIgnoreCase("")) {
                 tvVerified.setVisibility(View.GONE);
-                tvMobile.setVisibility(View.GONE);}
-            else
+                tvMobile.setVisibility(View.GONE);
+            } else
                 tvMobile.setText(userInfo.optString("mobile"));
 
             if (userInfo.optString("isMobileVerified").equalsIgnoreCase("1")) {
@@ -109,6 +134,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.btActionBarBack:
                 finish();
                 break;
+            case R.id.tVProfileMobileNo:
+                startActivity(new Intent(ProfileActivity.this, MobileNoActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_LOGIN));
+                break;
+            case R.id.ivProfileImage:
+                images();
+                break;
             default:
         }
     }
@@ -150,4 +181,206 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+
+    private void doUpload () {
+        final String tag = "doUpload";
+        File file = null;
+        file = new File(outputFile);
+        CommonUtil.showProgressDialog(this, "Wait...");
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("flag", "image");
+        params.put("removeImage", "0");
+        params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_UPDATE));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+
+        Log.i("params", params.toString());
+        MultipartRequestJson multipartRequest = new MultipartRequestJson(Constants.BASE_URL + "/mobile/user/update",
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("response", response.toString());
+                        CommonUtil.cancelProgressDialog();
+                        try {
+                            if (response.getInt("status") == Constants.STATUS_SUCCESS) {
+                                final AlertDialog.Builder alert = new AlertDialog.Builder(ProfileActivity.this);
+                                alert.setTitle("Success!");
+                                alert.setMessage(response.optString("message"));
+                                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                    }
+
+                                });
+                                alert.show();
+
+                            } else {
+                                JsonErrorShow.jsonErrorShow(response, ProfileActivity.this);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                CommonUtil.cancelProgressDialog();
+                Log.e("Volley Request Error", error.getLocalizedMessage());
+
+            }
+
+        }, file, params);
+        multipartRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(multipartRequest, tag);
+
+    }
+
+
+    private void doRemove() {
+        final String tag = "doRemove";
+        File file = null;
+        file = new File(outputFile);
+        CommonUtil.showProgressDialog(this, "Wait...");
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("flag", "image");
+        params.put("removeImage", "1");
+        params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_UPDATE));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        Log.i("params", params.toString());
+        DataRequest loginRequest = new DataRequest(Request.Method.POST,Constants.BASE_URL + "/mobile/user/update",params,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("response", response.toString());
+                        CommonUtil.cancelProgressDialog();
+                        try {
+                            if (response.getInt("status") == Constants.STATUS_SUCCESS) {
+                                final AlertDialog.Builder alert = new AlertDialog.Builder(ProfileActivity.this);
+                                alert.setTitle("Success!");
+                                alert.setMessage(response.optString("message"));
+                                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                    }
+
+                                });
+                                alert.show();
+
+                            } else {
+                                JsonErrorShow.jsonErrorShow(response, ProfileActivity.this);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                CommonUtil.cancelProgressDialog();
+                Log.e("Volley Request Error", error.getLocalizedMessage());
+
+            }
+
+        });
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+
+    }
+
+    public void images() {
+        final CharSequence[] items = {"Camera", "Gallery", "Remove Image",
+                "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Source");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (items[item].equals("Camera")) {
+//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    intent.putExtra(MediaStore.EXTRA_OUTPUT,
+//                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
+//                    intent.putExtra("crop", "true");
+////                    intent.putExtra("aspectX", 0);
+////                    intent.putExtra("aspectY", 0);
+////                    intent.putExtra("outputX", 100);
+////                    intent.putExtra("outputY", 100);
+//                    try {
+//                        intent.putExtra("return-data", true);
+//                        startActivityForResult(intent, REQUEST_CAMERA);
+//                    } catch (ActivityNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CAMERA);
+                } else if (items[item].equals("Gallery")) {
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_PICK);
+                    intent.putExtra("crop", "true");
+//                    intent.putExtra("aspectX", 0);
+//                    intent.putExtra("aspectY", 0);
+//                    intent.putExtra("outputX", 100);
+//                    intent.putExtra("outputY", 100);
+                    try {
+                        intent.putExtra("return-data", true);
+                        startActivityForResult(Intent.createChooser(intent,
+                                "Complete action using"), SELECT_FILE);
+                    } catch (ActivityNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }else{
+                    doRemove();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if (requestCode == REQUEST_CAMERA) {
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+//                    Bitmap photo = extras.getParcelable("data");
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    ivProfileImage.setImageBitmap(photo);
+                    // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+                    Uri tempUri = CommonUtil.getImageUri(getApplicationContext(), photo);
+
+                    // CALL THIS METHOD TO GET THE ACTUAL PATH
+                    outputFile = CommonUtil.getRealPathFromURI(tempUri, ProfileActivity.this);
+                    doUpload ();
+                }
+            }
+
+            if (requestCode == SELECT_FILE) {
+                Bundle extras2 = data.getExtras();
+                if (extras2 != null) {
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    ivProfileImage.setImageBitmap(photo);
+                    // CALL THIS METHOD TO GET THE URI FROM THE BITMAP
+                    Uri tempUri = CommonUtil.getImageUri(getApplicationContext(), photo);
+
+                    // CALL THIS METHOD TO GET THE ACTUAL PATH
+                    outputFile = CommonUtil.getRealPathFromURI(tempUri, ProfileActivity.this);
+                    doUpload ();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
 }

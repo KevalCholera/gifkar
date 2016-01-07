@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +60,8 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
 //        btInfo.setBackground(getResources().getDrawable(R.drawable.));
         btInfo.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
-        Toolbar parent = (Toolbar) v.getParent();//first get parent toolbar of current action bar
-        parent.setContentInsetsAbsolute(0, 0);
+//        Toolbar parent = (Toolbar) v.getParent();//first get parent toolbar of current action bar
+//        parent.setContentInsetsAbsolute(0, 0);
         tvMyAddress = (TextView) findViewById(R.id.tvMyAddress);
         tvMyAddress.setOnClickListener(this);
         lvMyAddress = (ListView) findViewById(R.id.lvMyAddress);

@@ -27,7 +27,7 @@
         android:padding="@dimen/padding_10">
 
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/rbReportErrorPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
 
         </LinearLayout>
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/rbReportErrorAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
 
         </LinearLayout>
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/rbReportErrorShopClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
 
         </LinearLayout>
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/rbReportErrorMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

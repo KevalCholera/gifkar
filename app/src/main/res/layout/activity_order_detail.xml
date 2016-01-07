@@ -264,34 +264,34 @@
             android:translationZ="10000dp">
 
 
-            <com.smartsense.gifkar.textstyleUtil.TypefaceButton
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/btProdDetailEmail"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:drawableLeft="@drawable/ic_mail_white"
                 android:fontFamily="normal"
                 android:gravity="center"
-                android:padding="@dimen/padding_10"
+                android:padding="@dimen/padding_5"
                 android:text="@string/email_details"
                 android:textColor="@color/textcolorwhite"
-                android:textSize="@dimen/text_16" />
+                android:textSize="@dimen/text_14" />
 
 
-            <com.smartsense.gifkar.textstyleUtil.TypefaceButton
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/btProdDetailCall"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/colorPrimaryDark"
                 android:drawableLeft="@drawable/ic_call_white"
                 android:fontFamily="normal"
                 android:gravity="center"
-                android:padding="@dimen/padding_10"
+                android:padding="@dimen/padding_5"
                 android:text="@string/call_us"
                 android:textColor="@color/textcolorwhite"
-                android:textSize="@dimen/text_16" />
+                android:textSize="@dimen/text_14" />
 
         </LinearLayout>
     </LinearLayout>

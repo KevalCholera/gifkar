@@ -54,6 +54,7 @@ public class ReviewsFragment extends Fragment implements View.OnClickListener, R
         llNoReview = (LinearLayout) view.findViewById(R.id.llNoReview);
         lvReview = (ListView) view.findViewById(R.id.lvReview);
         btAddReview = (Button) view.findViewById(R.id.btnAddReview);
+        btAddReview.setOnClickListener(this);
         getReview();
         return view;
     }
@@ -111,7 +112,7 @@ public class ReviewsFragment extends Fragment implements View.OnClickListener, R
     public void getReview() {
         final String tag = "getReview";
         String url = Constants.BASE_URL + "/mobile/shopReview/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&shopId=" + SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_ID, "") + "&userToken=" + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "") + "&eventId=" + String.valueOf(Constants.Events.EVENT_GET_REVIEW);
-        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+//        CommonUtil.showProgressDialog(getActivity(), "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
