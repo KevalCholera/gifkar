@@ -1,4 +1,4 @@
-package com.smartsense.gifkar.textstyleutil;
+package com.smartsense.gifkar.textstyleUtil;
 
 /**
  * Interface for linking a 'textStyle' attribute with the actual font asset name.

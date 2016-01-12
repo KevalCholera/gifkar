@@ -1,4 +1,4 @@
-package com.smartsense.gifkar.textstyleutil;
+package com.smartsense.gifkar.textstyleUtil;
 
 /**
  * Implementation of {@link TextStyle} defining the possible values for the 'textStyle' attribute

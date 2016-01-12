@@ -1,4 +1,4 @@
-package com.smartsense.gifkar.textstyleutil;
+package com.smartsense.gifkar.textstyleUtil;
 
 /**
  * Created by evelina on 16/01/2014.

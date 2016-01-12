@@ -1,16 +1,15 @@
-package com.smartsense.gifkar.textstyleutil;
+package com.smartsense.gifkar.textstyleUtil;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.EditText;
 import android.widget.TextView;
 
 /**
  * A subclass of {@link TextView} which has a custom {@link TextStyle} applied.
  */
-public class TypefaceEditText extends EditText {
+public class TypefaceTextView extends TextView {
 
-    public TypefaceEditText(Context context, AttributeSet attrs) {
+    public TypefaceTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypefaceManager.getInstance().applyTypeface(this, context, attrs);
     }

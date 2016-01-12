@@ -1,4 +1,4 @@
-package com.smartsense.gifkar.textstyleutil;
+package com.smartsense.gifkar.textstyleUtil;
 
 import android.content.Context;
 import android.content.res.TypedArray;

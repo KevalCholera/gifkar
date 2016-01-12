@@ -1,16 +1,16 @@
-package com.smartsense.gifkar.textstyleutil;
+package com.smartsense.gifkar.textstyleUtil;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 /**
  * A subclass of {@link TextView} which has a custom {@link TextStyle} applied.
  */
-public class TypefaceRadioButton extends RadioButton {
+public class TypefaceAppTextView extends AppCompatTextView {
 
-    public TypefaceRadioButton(Context context, AttributeSet attrs) {
+    public TypefaceAppTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypefaceManager.getInstance().applyTypeface(this, context, attrs);
     }

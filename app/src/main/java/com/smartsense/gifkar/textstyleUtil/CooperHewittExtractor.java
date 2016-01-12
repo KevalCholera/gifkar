@@ -1,4 +1,4 @@
-package com.smartsense.gifkar.textstyleutil;
+package com.smartsense.gifkar.textstyleUtil;
 
 /**
  * Implementation of {@TextStyleExtractor} for the Roboto font.
