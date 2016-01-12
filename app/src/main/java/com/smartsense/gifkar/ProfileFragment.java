@@ -66,7 +66,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
             userInfo = userInfo.optJSONObject("userDetails");
             etEmail.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_EMAIL, ""));
             if (userInfo.optString("isEmailVerified").equalsIgnoreCase("1")) {
-                tVProfileVerified.setOnClickListener(this);
+//                tVProfileVerified.setOnClickListener(this);
                 tVProfileVerified.setText("Verified");
                 tVProfileVerified.setTextColor(getResources().getColor(R.color.black));
                 tVProfileVerified.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.verified, 0);
@@ -168,6 +168,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
 //                etDob.setText(DateAndTimeUtil.toStringReadableDate(mCalendar));
             }
         }, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH));
+        DatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
         DatePicker.show();
     }
 
@@ -194,11 +195,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.PROFILE_UPDATE:
+
                             CommonUtil.alertBox(getActivity(), "", "Profile Updated Successfully");
                             getUserDetail();
                             break;
                         case Constants.Events.EVENT_USER_DETAIL:
-                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.optJSONObject("data").toString());
+                            TextView tvName=(TextView) getActivity().findViewById(R.id.tvProfileName);
+                            tvName.setText(response.optJSONObject("data").optJSONObject("userDetails").optString("firstName") + " " + response.optJSONObject("data").optJSONObject("userDetails").optString("lastName"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_FULLNAME, response.optJSONObject("data").optJSONObject("userDetails").optString("firstName") + " " + response.optJSONObject("data").optJSONObject("userDetails").optString("lastName"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_PROIMG, Constants.BASE_URL + "/images/users/" + response.optJSONObject("data").optJSONObject("userDetails").optString("image"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_INFO, response.optJSONObject("data").toString());
                             SharedPreferenceUtil.save();
                             break;
                         case Constants.Events.EVENT_EMAIL_DETAILS:

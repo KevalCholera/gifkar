@@ -66,6 +66,19 @@
             android:textColor="@color/textcolorwhite"
             android:textSize="@dimen/text_16" />
 
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+            android:id="@+id/tvLoginSkip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_10"
+            android:padding="@dimen/padding_5"
+            android:textSize="@dimen/text_12"
+            android:gravity="center"
+            android:fontFamily="normal"
+            android:text="@string/skip"
+            android:textColor="@color/mainColor" />
+
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:layout_width="wrap_content"
@@ -124,7 +137,7 @@
 
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-            android:id="@+id/tvLoginSkip"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -133,7 +146,7 @@
             android:textSize="@dimen/text_12"
             android:gravity="center"
             android:fontFamily="normal"
-            android:text="@string/skip"
+            android:text="@string/social"
             android:textColor="@color/mainColor" />
 
 

@@ -45,6 +45,7 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
     LinearLayout llMyReminder, llNoMyReminder;
     private ImageView btBack, btInfo;
     Fragment fragment = this;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.activity_my_reminders, container, false);
@@ -228,8 +229,9 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
             holder.tvDate.setText(parts[0]);
             holder.tvTime.setText(parts[1]);
             holder.tvName.setText(addressObj.optString("name"));
-//        holder.tvType.setText(addressObj.optJSONObject("occasion").optString("name") + " | " + addressObj.optString("relation"));// + " | " + CommonUtil.beforeAlaram(addressObj.optInt("relation"))
-            holder.tvType.setText("");
+            holder.tvType.setText(addressObj.optJSONObject("occasion").optString("name") + " | " + addressObj.optString("relation"));// + " | " + CommonUtil.beforeAlaram(addressObj.optInt("relation"))
+            holder.reminder.setChecked(addressObj.optInt("isActive") == 1 ? true : false);
+//            holder.tvType.setText("");
             holder.ivDelete.setOnClickListener(this);
             holder.ivDelete.setTag(addressObj.toString());
             holder.ivEdit.setOnClickListener(this);
@@ -276,7 +278,7 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
                     alertbox.show();
                     break;
                 case R.id.ivMyReminderElementEdit:
-                    fragment.startActivityForResult(new Intent(activity, AddRemindersActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_MYREMINDER).putExtra("Reminder", (String) view.getTag()),0);
+                    fragment.startActivityForResult(new Intent(activity, AddRemindersActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_MYREMINDER).putExtra("Reminder", (String) view.getTag()), 0);
                     break;
             }
         }

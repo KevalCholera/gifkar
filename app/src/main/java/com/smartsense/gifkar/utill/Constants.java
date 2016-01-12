@@ -64,6 +64,7 @@ public class Constants {
 
         public static final String SHOP_IMAGE = "shop_image";
         public static final String TIMESLOT = "time_slot";
+        public static final String PREF_IS_SOCIAL = "social_flag";
     }
 
     public class NavigationItems {
@@ -137,6 +138,7 @@ public class Constants {
         public static final int EVENT_GET_TIMESLOT = 46;
         public static final int EVENT_GET_REVIEW = 47;
         public static final int EVENT_REPORT_ERROR = 48;
+        public static final int EVENT_UPDATE_PHOTO_REMOVE = 49;
     }
 
 

@@ -517,7 +517,8 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_MNO, response.optJSONObject("data").optJSONObject("userDetails").optString("mobile"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_PROIMG, Constants.BASE_URL + "/images/users/" + response.optJSONObject("data").optJSONObject("userDetails").optString("image"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_INFO, response.optJSONObject("data").toString());
-                            SharedPreferenceUtil.save();
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_IS_SOCIAL,response.optJSONObject("data").optJSONObject("userDetails").optString("signedUpUsing"));
+        SharedPreferenceUtil.save();
                             tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, ""));
                             ivHeadImage.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imageLoader);
                             tVHeadMobileNo.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_MNO, ""));

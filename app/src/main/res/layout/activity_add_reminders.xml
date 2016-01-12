@@ -90,8 +90,8 @@
             android:background="@drawable/edittext_round"
             android:ems="10"
             android:fontFamily="normal"
-            android:inputType="textCapSentences"
             android:hint="@string/name"
+            android:inputType="textCapSentences"
             android:padding="@dimen/padding_5"
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color"
@@ -106,8 +106,8 @@
             android:background="@drawable/edittext_round"
             android:ems="10"
             android:fontFamily="normal"
-            android:inputType="textCapSentences"
             android:hint="@string/relationship"
+            android:inputType="textCapSentences"
             android:padding="@dimen/padding_5"
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color"
@@ -166,7 +166,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/margin_5" />
+                android:layout_margin="@dimen/margin_5"
+                android:checked="true" />
         </LinearLayout>
 
         <RadioGroup
@@ -226,6 +227,10 @@
             android:padding="@dimen/padding_8"
             android:text="@string/reminder_bottom"
             android:textSize="@dimen/text_12" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="10dp" />
 
     </LinearLayout>
 

@@ -126,6 +126,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+        if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_IS_SOCIAL, "").equalsIgnoreCase("facebook") | SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_IS_SOCIAL, "").equalsIgnoreCase("google")){
+            tabLayout.removeTab(tabLayout.getTabAt(2));
+        }
+
+
+
     }
 
     @Override
@@ -182,7 +188,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    private void doUpload () {
+    private void doUpload() {
         final String tag = "doUpload";
         File file = null;
         file = new File(outputFile);
@@ -204,6 +210,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         CommonUtil.cancelProgressDialog();
                         try {
                             if (response.getInt("status") == Constants.STATUS_SUCCESS) {
+//                                ivProfileImage.setDefaultImageResId(R.drawable.ic_user);
+//                                ivProfileImage.setImageUrl(Constants.BASE_URL + "/images/users/" + userInfo.optString("image"), imageLoader);
                                 final AlertDialog.Builder alert = new AlertDialog.Builder(ProfileActivity.this);
                                 alert.setTitle("Success!");
                                 alert.setMessage(response.optString("message"));
@@ -248,10 +256,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         params.put("flag", "image");
         params.put("removeImage", "1");
         params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
-        params.put("eventId", String.valueOf(Constants.Events.EVENT_UPDATE));
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_UPDATE_PHOTO_REMOVE));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         Log.i("params", params.toString());
-        DataRequest loginRequest = new DataRequest(Request.Method.POST,Constants.BASE_URL + "/mobile/user/update",params,
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, Constants.BASE_URL + "/mobile/user/update", params,
                 new Response.Listener<JSONObject>() {
 
                     @Override
@@ -337,7 +345,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     }
                 } else if (items[item].equals("Cancel")) {
                     dialog.dismiss();
-                }else{
+                } else {
                     doRemove();
                 }
             }
@@ -360,7 +368,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                     // CALL THIS METHOD TO GET THE ACTUAL PATH
                     outputFile = CommonUtil.getRealPathFromURI(tempUri, ProfileActivity.this);
-                    doUpload ();
+                    doUpload();
                 }
             }
 
@@ -374,7 +382,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                     // CALL THIS METHOD TO GET THE ACTUAL PATH
                     outputFile = CommonUtil.getRealPathFromURI(tempUri, ProfileActivity.this);
-                    doUpload ();
+                    doUpload();
                 }
             }
         } catch (Exception e) {

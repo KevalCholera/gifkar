@@ -56,7 +56,6 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
     SwitchCompat switchMyReminder;
     JSONObject reminderObj;
     RadioButton rbMyReminder1Day, rbMyReminder2Day, rbMyReminder1Hour;
-    private Calendar mCalendar;
     Dialog alert;
     private RadioGroup rbMyReminderGroup;
 
@@ -109,17 +108,34 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                 String[] parts = reminderObj.optString("reminderDate").split(" ");
                 etMyReminderAddDate.setText(parts[0]);
                 etMyReminderAddTime.setText(parts[1]);
-//                etMyReminderAddRelationType.setText(reminderObj.optJSONObject("occasion").optString("name"));
-//                etMyReminderAddRelationType.setTag(reminderObj.optJSONObject("occasion").optString("id"));
+                etMyReminderAddRelationType.setText(reminderObj.optJSONObject("occasion").optString("name"));
+                etMyReminderAddRelationType.setTag(reminderObj.optJSONObject("occasion").optString("id"));
                 etMyReminderAddRelation.setText(reminderObj.optString("relation"));
                 etMyReminderName.setText(reminderObj.optString("name"));
                 etMyReminderAddDescription.setText(reminderObj.optString("description"));
+                switchMyReminder.setChecked(reminderObj.optInt("isActive") == 1 ? true : false);
+                switch (reminderObj.getInt("alertTime")){
+                    case 1:
+                        rbMyReminder1Day.setChecked(true);
+                        break;
+                    case 2:
+                        rbMyReminder2Day.setChecked(true);
+                        break;
+                    case 3:
+                        rbMyReminder1Hour.setChecked(true);
+                        break;
+                    default:
+                        rbMyReminder1Day.setChecked(true);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
     }
+    private Calendar mCalendar = null;
+    final SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+    final SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
 
     public void timePicker() {
         TimePickerDialog TimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
@@ -127,9 +143,11 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
             public void onTimeSet(android.widget.TimePicker timePicker, int hour, int minute) {
                 mCalendar.set(Calendar.HOUR_OF_DAY, hour);
                 mCalendar.set(Calendar.MINUTE, minute);
-                etMyReminderAddTime.setText(DateAndTimeUtil.toStringReadableTime(mCalendar, getApplicationContext()));
+                etMyReminderAddTime.setText(tf.format(mCalendar.getTime()));
+//                etMyReminderAddTime.setText(DateAndTimeUtil.toStringReadableTime(mCalendar, getApplicationContext()));
             }
         }, mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(this));
+
         TimePicker.show();
     }
 
@@ -140,9 +158,11 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                 mCalendar.set(Calendar.YEAR, year);
                 mCalendar.set(Calendar.MONTH, month);
                 mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                etMyReminderAddDate.setText(DateAndTimeUtil.toStringReadableDate(mCalendar));
+                etMyReminderAddDate.setText(df.format(mCalendar.getTime()));
+//                etMyReminderAddDate.setText(DateAndTimeUtil.toStringReadableDate(mCalendar));
             }
         }, mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH));
+        DatePicker.getDatePicker().setMinDate(System.currentTimeMillis());
         DatePicker.show();
     }
 

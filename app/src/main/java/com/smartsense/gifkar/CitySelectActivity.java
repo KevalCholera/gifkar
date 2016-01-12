@@ -108,6 +108,7 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                     }
                     lvCity.setAdapter(cityAdapter);
                     etCitySearch.setText("");
+                    etCitySearch.setHint(getResources().getString(R.string.delivery_area));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -160,6 +161,7 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                     finish();
                 else {
                     titleTextView.setText(getResources().getString(R.string.screen_city));
+                    etCitySearch.setHint(getResources().getString(R.string.delivery_hint));
                     flagMode = true;
                     cityFill(cityObj);
                 }

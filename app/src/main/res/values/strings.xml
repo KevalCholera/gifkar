@@ -118,6 +118,7 @@
     <string name="mobile">Mobile Number</string>
     <string name="email1">Email</string>
     <string name="skip">SKIP</string>
+    <string name="social">We will never post without your permission.</string>
     <string name="password">Password</string>
     <string name="oldpassword">Old Password</string>
     <string name="newpassword">New Password</string>
@@ -302,7 +303,8 @@
     <string name="city_bottom">Celebrate Every Occasion With  Your Loved Ones</string>
     <string name="search_nearby">SEARCH NEARBY</string>
     <string name="to_get_it">(to get it delivered)</string>
-    <string name="delivery_hint">Where do you want to deliver?</string>
+    <string name="delivery_hint">In which city you want to deliver</string>
+    <string name="delivery_area">In which area you want to deliver</string>
     <string name="screen_area">Select Area -</string>
     <string name="sort_by">SORT BY</string>
     <string name="rattinag">RATTING</string>
