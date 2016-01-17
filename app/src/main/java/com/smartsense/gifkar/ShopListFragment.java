@@ -175,7 +175,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                     }
 
                 }
-                adapter.addFragment(catJson.optString("id"), catJson.optString("name"));
+                adapter.addFragment(catJson.optString("id"), "     "+catJson.optString("name")+"     ");
             }
         } catch (Exception e) {
             e.printStackTrace();

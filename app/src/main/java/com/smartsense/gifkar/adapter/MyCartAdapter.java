@@ -93,7 +93,7 @@ public class MyCartAdapter extends BaseAdapter {
             holder.ivProdPhoto = (NetworkImageView) view.findViewById(R.id.ivProdElementImage);
             holder.ibProdElementPlus = (ImageButton) view.findViewById(R.id.ibProdElementPlus);
             holder.ibProdElementMinus = (ImageButton) view.findViewById(R.id.ibProdElementMinus);
-            holder.ibProdElementNext = (ImageButton) view.findViewById(R.id.ibProdElementNext);
+//            holder.ibProdElementNext = (ImageButton) view.findViewById(R.id.ibProdElementNext);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -112,7 +112,7 @@ public class MyCartAdapter extends BaseAdapter {
             holder.ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_fill);
         }
 
-        holder.ibProdElementNext.setVisibility(View.INVISIBLE);
+//        holder.ibProdElementNext.setVisibility(View.INVISIBLE);
         holder.tvProdElementQty.setTag(addressObj);
         holder.ibProdElementMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +156,7 @@ public class MyCartAdapter extends BaseAdapter {
         TextView tvProdElementQty;
         ImageButton ibProdElementPlus;
         ImageButton ibProdElementMinus;
-        ImageButton ibProdElementNext;
+//        ImageButton ibProdElementNext;
     }
 
     public void addProduct(Boolean insert, JSONObject jsonData, int qty) {

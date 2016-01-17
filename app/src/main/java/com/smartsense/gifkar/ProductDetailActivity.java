@@ -35,12 +35,12 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     private ImageButton ibProdPlus;
     private TextView tvProdDes;
     private TextView tvProdUnitName;
-    private TextView tvProdName;
+//    private TextView tvProdName;
     private NetworkImageView ivProdPhoto;
     private TextView tvProdQty;
     private static TextView tvProdDetailCartCount;
     private static TextView tvProdDetailCartRs;
-    private Button llProdDetailCheckOut;
+    private TextView llProdDetailCheckOut;
     RelativeLayout llProdDetailCart;
     DataBaseHelper dbHelper;
     CommonUtil commonUtil = new CommonUtil();
@@ -65,7 +65,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         tvProdDes = (TextView) findViewById(R.id.tvProdDetailDes);
         tvProdUnitName = (TextView) findViewById(R.id.tvProdDetailUnitName);
         tvProdPrice = (TextView) findViewById(R.id.tvProdDetailRs);
-        tvProdName = (TextView) findViewById(R.id.tvProdDetailName);
+//        tvProdName = (TextView) findViewById(R.id.tvProdDetailName);
         ivProdPhoto = (NetworkImageView) findViewById(R.id.ivProdDetailImage);
         tvProdQty = (TextView) findViewById(R.id.tvProdDetailQty);
         ibProdPlus = (ImageButton) findViewById(R.id.ibProdDetailPlus);
@@ -76,7 +76,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         tvProdDetailCartRs = (TextView) findViewById(R.id.tvProdDetailCartRs);
         llProdDetailCart = (RelativeLayout) findViewById(R.id.llProdDetailCart);
         llProdDetailCart.setOnClickListener(this);
-        llProdDetailCheckOut = (Button) findViewById(R.id.llProdDetailCheckOut);
+        llProdDetailCheckOut = (TextView) findViewById(R.id.llProdDetailCheckOut);
         llProdDetailCheckOut.setOnClickListener(this);
 
         Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCT + "  WHERE " + DataBaseHelper.COLUMN_PROD_DETAIL_ID + " = '"
@@ -112,8 +112,8 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
             tvProdUnitName.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_QUANTITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME)));
             tvProdPrice.setText("₹ " +cursor.getString(cursor
                     .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PRICE)));
-            tvProdName.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_NAME)));
+//            tvProdName.setText(cursor.getString(cursor
+//                    .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_NAME)));
             titleTextView.setText(cursor.getString(cursor
                     .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_NAME)));
             ivProdPhoto.setDefaultImageResId(R.drawable.default_img);
@@ -147,8 +147,9 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         } else {
             llProdDetailBottom.setVisibility(View.VISIBLE);
             tvProdDetailCartRs.setText("₹" + totalAmount);
-            DecimalFormat twodigits = new DecimalFormat("00");
-            tvProdDetailCartCount.setText("" + twodigits.format(productArray.length()));
+//            DecimalFormat twodigits = new DecimalFormat("00");
+//            tvProdDetailCartCount.setText("" + twodigits.format(productArray.length()));
+            tvProdDetailCartCount.setText(" " + productArray.length()+" ");
         }
 
     }

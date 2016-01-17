@@ -146,7 +146,7 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_GET_NOTIFICATION:
                             notificationFill(response);
-                            seenNotification();
+//                            seenNotification();
                             break;
                         case Constants.Events.EVENT_DEL_NOTIFICATION:
                             getNotification();
@@ -210,8 +210,9 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
             else
                 view.setBackgroundColor(activity.getResources().getColor(R.color.textcolorwhite));
 //            if (!notificationObj.optString("notification").equalsIgnoreCase(null)) {
-            holder.tvTitle.setText(notificationObj.optJSONObject("notification").optString("subject"));
-            holder.tvDec.setText(notificationObj.optJSONObject("notification").optString("message"));
+//            if(notificationObj.has("notification")){
+//            holder.tvTitle.setText(notificationObj.optJSONObject("notification").optString("subject"));
+//            holder.tvDec.setText(notificationObj.optJSONObject("notification").optString("message"));}
 //            }
             holder.ivDelete.setOnClickListener(this);
             holder.ivDelete.setTag(notificationObj.toString());

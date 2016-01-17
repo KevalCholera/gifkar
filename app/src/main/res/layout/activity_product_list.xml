@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center"
         android:orientation="horizontal"
         android:translationZ="10000dp">
@@ -47,19 +47,18 @@
             android:gravity="center_vertical"
             android:visibility="visible">
 
-            <TextView
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvProdListCartRs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="@dimen/padding_5"
                 android:drawableLeft="@drawable/ic_cart_large"
-                android:drawablePadding="@dimen/padding_16"
+                android:drawablePadding="@dimen/padding_8"
                 android:gravity="center"
-                android:padding="@dimen/padding_5"
                 android:text="100"
                 android:textColor="@color/textcolorwhite"
-                android:textSize="@dimen/text_16" />
+                android:textSize="@dimen/text_14" />
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvProdListCartCount"
@@ -67,19 +66,20 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/tvProdListCartRs"
                 android:layout_alignTop="@id/tvProdListCartRs"
-                android:layout_marginLeft="@dimen/margin_25"
+                android:layout_marginLeft="21dp"
+                android:layout_marginTop="4dp"
                 android:background="@drawable/badge_circle"
                 android:fontFamily="bold"
                 android:text="10"
                 android:textColor="@color/mainColor"
-                android:textSize="12sp" />
+                android:textSize="8sp" />
         </RelativeLayout>
 
 
-        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/llProdListCheckOut"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
             android:drawableRight="@drawable/ic_right_arrow"
@@ -87,7 +87,7 @@
             android:gravity="center"
             android:text="@string/checkout"
             android:textColor="@color/textcolorwhite"
-            android:textSize="@dimen/text_16" />
+            android:textSize="@dimen/text_14" />
 
     </LinearLayout>
 

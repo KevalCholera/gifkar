@@ -20,28 +20,24 @@
         android:id="@+id/btActionBarBack1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/btActionBarBack"
         android:layout_centerVertical="true"
-        android:padding="2dp"
-        android:visibility="invisible"
         android:layout_marginLeft="@dimen/margin_5"
         android:layout_marginRight="@dimen/margin_5"
-        android:src="@drawable/home_search" />
+        android:layout_toRightOf="@id/btActionBarBack"
+        android:padding="2dp"
+        android:src="@drawable/home_search"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/btActionBarBack2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/btActionBarBack1"
         android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/btActionBarBack1"
         android:padding="2dp"
-        android:visibility="invisible"
-        android:src="@drawable/home_search" />
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_centerVertical="true">-->
+        android:src="@drawable/home_search"
+        android:visibility="invisible" />
+
 
     <ImageView
         android:id="@+id/btActionBarInfo"
@@ -58,8 +54,8 @@
         android:id="@+id/btActionBarfilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/btActionBarInfo"
         android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/btActionBarInfo"
         android:padding="5dp"
         android:scaleType="fitXY"
         android:src="@drawable/home_filter" />
@@ -74,23 +70,44 @@
         android:scaleType="fitXY"
         android:src="@drawable/home_search" />
 
-
-
-    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-        android:id="@+id/actionBarTitle"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
-        android:layout_toLeftOf="@id/btActionBarSearch"
-        android:layout_toRightOf="@id/btActionBarBack2"
-        android:fontFamily="normal"
-        android:gravity="center_horizontal|center_vertical"
-        android:padding="4dp"
-        android:singleLine="true"
-        android:text="@string/delivery"
-        android:textSize="@dimen/text_16"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="#FFFFFF" />
-    <!--</LinearLayout>-->
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+            android:id="@+id/actionBarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toLeftOf="@id/btActionBarSearch"
+            android:layout_toRightOf="@id/btActionBarBack2"
+            android:fontFamily="normal"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="4dp"
+            android:singleLine="true"
+            android:text="@string/delivery"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/text_16" />
+
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+            android:id="@+id/actionBarArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_toLeftOf="@id/btActionBarSearch"
+            android:layout_toRightOf="@id/btActionBarBack2"
+            android:fontFamily="normal"
+            android:gravity="center_horizontal|center_vertical"
+            android:singleLine="true"
+            android:visibility="visible"
+            android:text="@string/delivery"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/text_10" />
+    </LinearLayout>
 </RelativeLayout>

@@ -1,17 +1,23 @@
 package com.smartsense.gifkar;
 
+import android.*;
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -49,6 +56,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private final int SELECT_FILE = 1;
     File dir = null;
     private String outputFile = "";
+    private static final int PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +152,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(new Intent(ProfileActivity.this, MobileNoActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_LOGIN));
                 break;
             case R.id.ivProfileImage:
-                images();
+//                images();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (!checkPermission()) {
+                        requestPermission();
+                    } else {
+                        images();
+                    }
+                } else {
+                    images();
+                }
                 break;
             default:
         }
@@ -385,10 +402,72 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     doUpload();
                 }
             }
+
+
+            if (requestCode == SELECT_FILE) {
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
     }
+
+
+    private boolean checkPermission() {
+        int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (result == PackageManager.PERMISSION_GRANTED) {
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    private void requestPermission() {
+
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            showMessageOKCancel("You need to allow access to Read Storage",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                                        PERMISSION_REQUEST_CODE);
+                            }
+                        }
+                    });
+
+        } else {
+
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
+    }
+
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    images();
+                } else {
+                    Toast.makeText(this, "Permission Denied, You cannot access storage data.", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
 }

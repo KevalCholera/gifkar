@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,6 +26,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.mpt.storage.SharedPreferenceUtil;
+import com.smartsense.gifkar.receivers.AlarmReceiver;
+import com.smartsense.gifkar.utill.AlarmUtil;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataRequest;
@@ -34,7 +37,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MyRemindersActivity extends Fragment implements View.OnClickListener, Response.Listener<JSONObject>,
@@ -140,6 +147,103 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
 
+    public void onOffReminder(final Boolean check, final JSONObject reminderObj1) {
+        int isActive = check ? 1 : 0;
+        final String tag = "ReminderUpdate";
+        String url;
+        Map<String, String> params = new HashMap<String, String>();
+        url = Constants.BASE_URL + "/mobile/reminder/update";
+        params.put("reminderId", reminderObj1.optString("id"));
+        params.put("flag", "onOff");
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_UPDATE_REMINDER));
+        params.put("isActive", "" + isActive);
+        params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        Log.i("params", params.toString());
+        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("response", response.toString());
+                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(getActivity());
+                        CommonUtil.cancelProgressDialog();
+                        try {
+
+                            Intent alarmIntent = new Intent(getActivity(), AlarmReceiver.class);
+                            int reminderId = reminderObj1.optInt("id");
+                            if (check) {
+                                alert.setTitle("Success!");
+                                alert.setMessage("Reminder Successfully On.");
+                                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                                    }
+                                });
+                                alert.show();
+                                JSONObject reminderObj = new JSONObject();
+                                reminderObj.put("name", reminderObj1.optString("name"));
+                                reminderObj.put("relation", reminderObj1.optString("relation"));
+                                reminderObj.put("desription", reminderObj1.optString("description"));
+                                reminderObj.put("title", reminderObj1.optJSONObject("occasion").optString("name"));
+                                SimpleDateFormat sdf = new SimpleDateFormat("y-M-d H:m:s", Locale.ENGLISH);
+                                Calendar mCalendar = null;
+                                Log.i("params", reminderObj1.toString());
+                                mCalendar = Calendar.getInstance();
+                                mCalendar.setTime(sdf.parse(reminderObj1.optString("reminderDate")));
+                                Calendar mCalendar1 = mCalendar;
+                                switch (reminderObj1.optInt("alertTime")) {
+                                    case 1:
+                                        mCalendar1.add(Calendar.DAY_OF_MONTH, -1);
+                                        break;
+                                    case 2:
+                                        mCalendar1.add(Calendar.DAY_OF_MONTH, -2);
+                                        break;
+                                    case 3:
+                                        mCalendar1.add(Calendar.HOUR_OF_DAY, -1);
+                                        break;
+                                    default:
+                                }
+                                AlarmUtil.setAlarm(getActivity(), alarmIntent, reminderId, reminderObj, mCalendar);
+                                AlarmUtil.setAlarm(getActivity(), alarmIntent, reminderId, reminderObj, mCalendar1);
+                            } else {
+                                alert.setTitle("Success!");
+                                alert.setMessage("Reminder Successfully Off.");
+                                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                                    }
+                                });
+                                alert.show();
+                                AlarmUtil.cancelAlarm(getActivity(), alarmIntent, reminderId);
+                            }
+//                    Log.i("date", DateAndTimeUtil.toStringReadableDate(mCalendar1));
+//                    Log.i("time", DateAndTimeUtil.toStringReadableTime(mCalendar1, getApplicationContext()));
+//                }else{
+//                    AlarmUtil.cancelAlarm(getApplicationContext(), alarmIntent, reminderId);
+//                }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                CommonUtil.cancelProgressDialog();
+                Log.e("Volley Request Error", error.getLocalizedMessage());
+
+            }
+
+        });
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
@@ -224,7 +328,8 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
             } else {
                 holder = (ViewHolder) view.getTag();
             }
-            JSONObject addressObj = dataArray.optJSONObject(position);
+            final JSONObject addressObj = dataArray.optJSONObject(position);
+
             String[] parts = addressObj.optString("reminderDate").split(" ");
             holder.tvDate.setText(parts[0]);
             holder.tvTime.setText(parts[1]);
@@ -236,6 +341,12 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
             holder.ivDelete.setTag(addressObj.toString());
             holder.ivEdit.setOnClickListener(this);
             holder.ivEdit.setTag(addressObj.toString());
+            holder.reminder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    onOffReminder(b, addressObj);
+                }
+            });
             return view;
         }
 

@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="@color/black"
+        android:background="@color/black_light"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -33,7 +33,7 @@
                 android:layout_margin="@dimen/margin_5"
                 android:fontFamily="normal"
                 android:gravity="center"
-                android:text="4.4"
+                android:text="-"
                 android:textColor="@color/textcolorwhite"
                 android:textSize="@dimen/text_16" />
 
@@ -72,7 +72,7 @@
                 android:layout_margin="@dimen/margin_5"
                 android:fontFamily="normal"
                 android:gravity="center"
-                android:text="11"
+                android:text="-"
                 android:textColor="@color/textcolorwhite"
                 android:textSize="@dimen/text_16" />
 

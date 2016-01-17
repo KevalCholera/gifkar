@@ -114,7 +114,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                 etMyReminderName.setText(reminderObj.optString("name"));
                 etMyReminderAddDescription.setText(reminderObj.optString("description"));
                 switchMyReminder.setChecked(reminderObj.optInt("isActive") == 1 ? true : false);
-                switch (reminderObj.getInt("alertTime")){
+                switch (reminderObj.getInt("alertTime")) {
                     case 1:
                         rbMyReminder1Day.setChecked(true);
                         break;
@@ -133,6 +133,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
         }
 
     }
+
     private Calendar mCalendar = null;
     final SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
     final SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
@@ -250,7 +251,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                 params.put("reminderId", reminderObj.optString("id"));
                 params.put("flag", "all");
                 params.put("eventId", String.valueOf(Constants.Events.EVENT_UPDATE_REMINDER));
-            }else {
+            } else {
                 url = Constants.BASE_URL + "/mobile/reminder/create";
                 params.put("eventId", String.valueOf(Constants.Events.EVENT_ADD_REMINDER));
             }
@@ -266,38 +267,6 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
             params.put("defaultToken", Constants.DEFAULT_TOKEN);
             Log.i("params", params.toString());
             //In Response
-            try {
-                Intent alarmIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
-                int reminderId = 0;
-//                if (switchMyReminder.isChecked()) {
-                    JSONObject reminderObj = new JSONObject();
-                    reminderObj.put("name", etMyReminderName.getText().toString());
-                    reminderObj.put("relation", etMyReminderAddRelation.getText().toString());
-                    reminderObj.put("desription", etMyReminderAddDescription.getText().toString());
-                    reminderObj.put("title", etMyReminderAddRelationType.getText().toString());
-                    Calendar mCalendar1 = mCalendar;
-                    switch ((int) rB.getTag()) {
-                        case 1:
-                            mCalendar1.add(Calendar.DAY_OF_MONTH, -1);
-                            break;
-                        case 2:
-                            mCalendar1.add(Calendar.DAY_OF_MONTH, -2);
-                            break;
-                        case 3:
-                            mCalendar1.add(Calendar.HOUR_OF_DAY, -1);
-                            break;
-                        default:
-                    }
-                    AlarmUtil.setAlarm(getApplicationContext(), alarmIntent, reminderId, reminderObj, mCalendar);
-                    AlarmUtil.setAlarm(getApplicationContext(), alarmIntent, reminderId, reminderObj, mCalendar1);
-//                    Log.i("date", DateAndTimeUtil.toStringReadableDate(mCalendar1));
-//                    Log.i("time", DateAndTimeUtil.toStringReadableTime(mCalendar1, getApplicationContext()));
-//                }else{
-//                    AlarmUtil.cancelAlarm(getApplicationContext(), alarmIntent, reminderId);
-//                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
             CommonUtil.showProgressDialog(this, "Wait...");
             DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
             loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -340,6 +309,38 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                             });
                             alert.show();
                             break;
+                    }
+                    try {
+                        int reminderId = 0;
+                        Intent alarmIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
+                        if (switchMyReminder.isChecked()) {
+                            int selectedId = rbMyReminderGroup.getCheckedRadioButtonId();
+                            RadioButton rB = (RadioButton) findViewById(selectedId);
+                            JSONObject reminderObj = new JSONObject();
+                            reminderObj.put("name", etMyReminderName.getText().toString());
+                            reminderObj.put("relation", etMyReminderAddRelation.getText().toString());
+                            reminderObj.put("desription", etMyReminderAddDescription.getText().toString());
+                            reminderObj.put("title", etMyReminderAddRelationType.getText().toString());
+                            Calendar mCalendar1 = mCalendar;
+                            switch ((int) rB.getTag()) {
+                                case 1:
+                                    mCalendar1.add(Calendar.DAY_OF_MONTH, -1);
+                                    break;
+                                case 2:
+                                    mCalendar1.add(Calendar.DAY_OF_MONTH, -2);
+                                    break;
+                                case 3:
+                                    mCalendar1.add(Calendar.HOUR_OF_DAY, -1);
+                                    break;
+                                default:
+                            }
+                            AlarmUtil.setAlarm(getApplicationContext(), alarmIntent, reminderId, reminderObj, mCalendar);
+                            AlarmUtil.setAlarm(getApplicationContext(), alarmIntent, reminderId, reminderObj, mCalendar1);
+                        } else {
+                            AlarmUtil.cancelAlarm(getApplicationContext(), alarmIntent, reminderId);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 } else {
                     JsonErrorShow.jsonErrorShow(response, this);

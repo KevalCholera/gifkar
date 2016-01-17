@@ -1,214 +1,206 @@
-<?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+<?xml version="1.0" encoding="utf-8"?><!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@android:color/white">-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:id="@+id/llGifkar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_25"
+        android:layout_marginRight="@dimen/margin_25"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.smartsense.gifkar.utill.CircleImageView1
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_5"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:layout_marginRight="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_20"
+            android:src="@drawable/rate_us" />
 
         <LinearLayout
-            android:id="@+id/llMyReminders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/activity_bg"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/padding_16">
-
-            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_25"
-                android:layout_weight="1"
-                android:capitalize="sentences"
-                android:fontFamily="normal"
-                android:text="@string/version_app"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_16" />
-
-            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/margin_25"
-                android:layout_weight="1"
-                android:fontFamily="normal"
-                android:gravity="right|center_vertical"
-                android:text="@string/app_ver"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_16" />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/llGifkar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_25"
-            android:layout_marginRight="@dimen/margin_25"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <com.smartsense.gifkar.utill.CircleImageView1
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_5"
-                android:layout_marginLeft="@dimen/margin_5"
-                android:layout_marginRight="@dimen/margin_5"
-                android:layout_marginTop="@dimen/margin_20"
-                android:src="@drawable/star" />
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_5"
-                        android:layout_weight="1"
-                        android:fontFamily="normal"
-                        android:padding="@dimen/padding_16"
-                        android:text="@string/app_name"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/text_14"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/mobile_no_drop_arrow_1" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginBottom="@dimen/margin_5"
-                    android:background="@color/activity_bg" />
+                android:orientation="horizontal">
 
                 <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_5"
                     android:fontFamily="normal"
-                    android:text="@string/large"
-                    android:textSize="@dimen/text_12" />
-            </LinearLayout>
-        </LinearLayout>
+                    android:paddingTop="@dimen/padding_16"
+                    android:paddingBottom="@dimen/padding_16"
+                    android:paddingLeft="@dimen/padding_16"
+                    android:text="@string/app_name_VER"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_14"
+                    android:textStyle="bold" />
 
-
-        <LinearLayout
-            android:id="@+id/llHelp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_25"
-            android:layout_marginRight="@dimen/margin_25"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.smartsense.gifkar.utill.CircleImageView1
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_5"
-                android:src="@drawable/help" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_margin="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:paddingTop="@dimen/padding_16"
+                    android:paddingBottom="@dimen/padding_16"
+                    android:paddingRight="@dimen/padding_16"
+                    android:text="v1.0"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_10"
+                    android:textStyle="bold" />
 
-                    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_5"
-                        android:layout_weight="1"
-                        android:fontFamily="normal"
-                        android:padding="@dimen/padding_16"
-                        android:text="@string/help"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/text_14"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/mobile_no_drop_arrow" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/activity_bg" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llFAQS"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_25"
-            android:layout_marginRight="@dimen/margin_25"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.smartsense.gifkar.utill.CircleImageView1
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_5"
-                android:src="@drawable/faqs" />
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_5"
-                        android:layout_weight="1"
-                        android:fontFamily="normal"
-                        android:padding="@dimen/padding_16"
-                        android:text="@string/faq"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/text_14"
-
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/mobile_no_drop_arrow" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/activity_bg" />
+                    android:layout_gravity="center_vertical"
+                    android:visibility="invisible"
+                    android:src="@drawable/mobile_no_drop_arrow_1" />
             </LinearLayout>
-        </LinearLayout>
 
+
+        </LinearLayout>
     </LinearLayout>
-</ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:layout_marginLeft="@dimen/margin_25"
+        android:layout_marginRight="@dimen/margin_25"
+        android:background="@color/activity_bg" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/white">
+
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/margin_25"
+            android:layout_marginRight="@dimen/margin_25"
+            android:fontFamily="normal"
+            android:text="@string/large"
+            android:textSize="@dimen/text_12" />
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/llHelp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_25"
+        android:layout_marginRight="@dimen/margin_25"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.smartsense.gifkar.utill.CircleImageView1
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:src="@drawable/help" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/help"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_14"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/mobile_no_drop_arrow" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/activity_bg" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llFAQS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_25"
+        android:layout_marginRight="@dimen/margin_25"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.smartsense.gifkar.utill.CircleImageView1
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5"
+            android:src="@drawable/faqs" />
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:padding="@dimen/padding_16"
+                    android:text="@string/faq"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_14"
+
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/mobile_no_drop_arrow" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/activity_bg" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout><!--</ScrollView>-->

@@ -2,14 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <LinearLayout
         android:id="@+id/llHeadProfile"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
         android:gravity="center"
@@ -17,8 +18,8 @@
 
         <com.smartsense.gifkar.utill.CircleImageView
             android:id="@+id/ivHeadImage"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_margin="@dimen/margin_10"
             android:paddingTop="@dimen/nav_header_vertical_spacing" />
 
@@ -56,14 +57,11 @@
             android:layout_marginRight="@dimen/margin_10"
             android:layout_marginTop="@dimen/margin_20"
             android:visibility="invisible"
-            android:background="@drawable/address_edit" />
+            android:background="@drawable/white_pencil" />
     </LinearLayout>
 
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"></FrameLayout>
+
 
     <LinearLayout
         android:id="@+id/llHeadAddress"
@@ -93,14 +91,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="top|right"
             android:layout_margin="@dimen/margin_5"
-            android:background="@drawable/address_edit" />
+            android:background="@drawable/white_pencil" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/lvHeadList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_10"
+
+        android:background="@android:color/white"
         android:listSelector="@android:color/transparent"
         android:layout_weight="1"
         android:divider="@null"

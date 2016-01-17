@@ -50,15 +50,17 @@
         android:id="@+id/actionBarHomeTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/btActionBarfilter"
+        android:layout_toLeftOf="@id/btActionBarSearch"
+        android:layout_toRightOf="@id/btActionBarBack"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:fontFamily="normal"
+        android:background="@color/colorPrimaryDark"
         android:singleLine="true"
         android:gravity="center_horizontal|center_vertical"
         android:padding="8dp"
         android:text="@string/delivery"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="@dimen/text_16"
         android:textColor="#FFFFFF" />
     <!--</LinearLayout>-->
 </RelativeLayout>

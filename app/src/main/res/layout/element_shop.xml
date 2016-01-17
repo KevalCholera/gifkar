@@ -6,7 +6,7 @@
     android:background="@android:color/white"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="@dimen/padding_16">
+    android:padding="14dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,11 +14,14 @@
         android:layout_weight="2"
         android:orientation="horizontal">
 
-        <com.smartsense.gifkar.utill.CircleImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/ivShopListImage"
             android:layout_width="@dimen/product_image_height"
             android:layout_height="@dimen/product_image_height"
-            android:layout_gravity="center" />
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/borderwhite"
+            android:padding="@dimen/padding_5"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -38,15 +41,15 @@
                 <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvShopListShopName"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="@dimen/padding_2"
                     android:layout_weight="2"
-                    android:fontFamily="bold"
+                    android:fontFamily="normal"
                     android:gravity="bottom"
-                    android:paddingBottom="@dimen/padding_5"
+                    android:paddingBottom="@dimen/padding_3"
                     android:singleLine="true"
                     android:text="Shop Name"
-                    android:textColor="@color/textcolor"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/text_14" />
 
                 <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
@@ -55,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginRight="@dimen/padding_2"
-                    android:background="@drawable/button_blue_back"
+                    android:background="@drawable/squre_blue"
                     android:fontFamily="normal"
                     android:padding="@dimen/padding_5"
                     android:text="5.0"
@@ -72,7 +75,7 @@
                 android:layout_margin="@dimen/padding_2"
                 android:fontFamily="normal"
                 android:text="Cake,Gift,Birth Day"
-                android:textColor="@color/textcolor"
+                android:textColor="@color/black_light"
                 android:textSize="@dimen/text_12" />
 
             <LinearLayout
@@ -83,13 +86,14 @@
 
                 <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                     android:id="@+id/tvShopListMinOrder"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/padding_2"
-                    android:layout_weight="1"
                     android:fontFamily="normal"
+                    android:paddingBottom="@dimen/padding_5"
+                    android:paddingTop="@dimen/padding_2"
                     android:text="Minimum Order : \u20B9 100"
-                    android:textColor="@color/textcolor"
+                    android:textColor="@color/black_light"
                     android:textSize="@dimen/text_12" />
 
                 <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
@@ -100,8 +104,10 @@
                     android:layout_weight="1"
                     android:fontFamily="normal"
                     android:gravity="right"
+                    android:paddingBottom="@dimen/padding_2"
+                    android:paddingTop="@dimen/padding_2"
                     android:text="Cut of Time :2 hours"
-                    android:textColor="@color/textcolor"
+                    android:textColor="@color/black_light"
                     android:textSize="@dimen/text_12" />
 
 
@@ -121,7 +127,7 @@
                     android:layout_weight="1"
                     android:fontFamily="normal"
                     android:text="Delivery Time : 10:00 AM to 5:00 PM"
-                    android:textColor="@color/textcolor"
+                    android:textColor="@color/black_light"
                     android:textSize="@dimen/text_12" />
 
 

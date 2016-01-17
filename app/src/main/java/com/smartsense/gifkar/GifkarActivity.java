@@ -316,7 +316,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
             if (position == Constants.NavigationItems.NAV_NOTIFICATIONS) {
                 convertView.setOnClickListener(this);
                 tvCount.setVisibility(View.VISIBLE);
-                tvCount.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_DJ_WALLET, "0"));
+                tvCount.setText(" "+SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_DJ_WALLET, "0")+" ");
             } else if (position == Constants.NavigationItems.NAV_MY_CART) {
                 convertView.setOnClickListener(this);
                 try {
@@ -326,7 +326,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                             tvCount.setVisibility(View.INVISIBLE);
                         } else {
                             tvCount.setVisibility(View.VISIBLE);
-                            tvCount.setText("" + productArray.length());
+                            tvCount.setText(" " + productArray.length()+" ");
                         }
                     } else {
                         tvCount.setVisibility(View.INVISIBLE);

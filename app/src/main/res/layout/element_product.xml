@@ -3,13 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:gravity="center"
-    android:orientation="horizontal">
+    android:gravity="top"
+    android:orientation="horizontal"
+    android:padding="@dimen/padding_8">
 
-    <com.smartsense.gifkar.utill.CircleImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/ivProdElementImage"
         android:layout_width="@dimen/product_image_height"
-        android:layout_height="@dimen/product_image_height"         />
+        android:layout_height="@dimen/product_image_height"
+        android:scaleType="fitXY"
+        android:layout_marginTop="@dimen/margin_8"
+        android:background="@drawable/borderwhite" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -24,14 +28,13 @@
             android:id="@+id/tvProdElementName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="normal"
-            android:paddingBottom="@dimen/padding_8"
             android:layout_marginTop="@dimen/margin_5"
+            android:fontFamily="normal"
+            android:paddingBottom="@dimen/padding_5"
             android:singleLine="true"
             android:text="Shop Name"
-            android:textColor="@color/textcolor"
-            android:textSize="@dimen/text_16"
-            android:textStyle="bold" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_16" />
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/tvProdElementCate"
@@ -39,7 +42,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="normal"
             android:text="Eggless"
-            android:textColor="@color/textcolor"
+            android:textColor="@color/black_light"
             android:textSize="@dimen/text_12" />
 
 
@@ -48,80 +51,65 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="normal"
+            android:visibility="gone"
             android:text="Delivery Time : 10:00AM to 5:00PM"
-            android:textColor="@color/textcolor"
+            android:textColor="@color/black_light"
             android:textSize="@dimen/text_12" />
 
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                android:id="@+id/tvProdElementRs"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:fontFamily="normal"
-                android:paddingLeft="@dimen/padding_8"
-                android:textSize="@dimen/text_16"
-                android:text="\u20B9 100" />
-
-            <ImageButton
-                android:id="@+id/ibProdElementNext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:visibility="gone"
-                android:background="@drawable/right_icon" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/ibProdElementMinus"
+            <com.smartsense.gifkar.textstyleUtil.TypefaceAppTextView
+                android:id="@+id/tvProdElementRs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_product_minus_unfill"
-                android:padding="@dimen/padding_1" />
+                android:fontFamily="normal"
+                android:text="\u20B9 100"
+                android:textSize="14sp"
+                android:textColor="@color/black" />
 
-            <TextView
-                android:id="@+id/tvProdElementQty"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="@string/total_quntity"
-                android:textColor="@color/textcolorblack" />
-
-            <ImageButton
-                android:id="@+id/ibProdElementPlus"
-
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_product_plus_unfill"
-                android:padding="@dimen/padding_1" />
+android:gravity="right"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ibProdElementMinus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_product_minus_unfill"
+                    android:padding="@dimen/padding_1" />
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:id="@+id/tvProdElementQty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="@string/total_quntity"
+                    android:textColor="@color/textcolorblack" />
+
+                <ImageButton
+                    android:id="@+id/ibProdElementPlus"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_product_plus_unfill"
+                    android:padding="@dimen/padding_1" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
 
     </LinearLayout>
+
 
 </LinearLayout>

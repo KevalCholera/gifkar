@@ -43,8 +43,8 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
     private TextView tvShopDetailMNo;
     private TextView tvShopDetailAddress;
     private TextView tvShopDetailDays;
-    private TextView tvShopDetailOpenTime;
-    private TextView tvShopDetailCloseTIme;
+//    private TextView tvShopDetailOpenTime;
+//    private TextView tvShopDetailCloseTIme;
     ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
     private TextView tvShopTopElementRatting;
     private TextView tvShopTopElementReview;
@@ -60,8 +60,8 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
         tvShopDetailMNo = (TextView) view.findViewById(R.id.tvShopDetailMNo);
         tvShopDetailAddress = (TextView) view.findViewById(R.id.tvShopDetailAddress);
 //        tvShopDetailDays = (TextView) view.findViewById(R.id.tvShopDetailDays);
-        tvShopDetailOpenTime = (TextView) view.findViewById(R.id.tvShopDetailOpenTime);
-        tvShopDetailCloseTIme = (TextView) view.findViewById(R.id.tvShopDetailCloseTIme);
+//        tvShopDetailOpenTime = (TextView) view.findViewById(R.id.tvShopDetailOpenTime);
+//        tvShopDetailCloseTIme = (TextView) view.findViewById(R.id.tvShopDetailCloseTIme);
         ivShopDetailMap = (ImageView) view.findViewById(R.id.ivShopDetailMap);
         ivShopDetailMap.setOnClickListener(this);
         ivShopTopElementIMG = (NetworkImageView) shopTop.findViewById(R.id.ivShopTopElementIMG);
@@ -74,8 +74,8 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
         tvShopDetailEmail.setText(response.optString("email"));
         tvShopDetailMNo.setText(response.optString("primary_contact"));
         tvShopDetailAddress.setText(response.optString("address"));
-        tvShopTopElementRatting.setText(response.optString("ratings"));
-        tvShopTopElementReview.setText(response.optString("reviews"));
+        tvShopTopElementRatting.setText(response.optString("ratings").equalsIgnoreCase("0")?" - ":response.optString("ratings"));
+        tvShopTopElementReview.setText(response.optString("reviews").equalsIgnoreCase("0")?" - ":response.optString("reviews"));
         ivShopTopElementIMG.setImageUrl(Constants.BASE_URL + "/images/shops/" + response.optString("image"), imageLoader);
         String url = "https://maps.googleapis.com/maps/api/staticmap?size=300x300&markers=color:blue|" + response.optString("latitude") + "," + response.optString("longitude") + "&key=AIzaSyC6skw69zy87ANbkWl_Rq05_LYxkji_4fg";
         tvShopDetailEmail.setTag(response.optString("latitude") + "," + response.optString("longitude"));
@@ -91,8 +91,8 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
 
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.element_date, null);
             day = String.valueOf(response.optJSONArray("timings").optJSONObject(i).optString("day").charAt(0));
-            open = String.valueOf(response.optJSONArray("timings").optJSONObject(i).optString("opens_at").charAt(0));
-            close = String.valueOf(response.optJSONArray("timings").optJSONObject(i).optString("closes_at").charAt(0));
+            open = String.valueOf(response.optJSONArray("timings").optJSONObject(i).optString("opens_at"));
+            close = String.valueOf(response.optJSONArray("timings").optJSONObject(i).optString("closes_at"));
             TextView days = (TextView) view.findViewById(R.id.tvDay);
             days.setText(day.toUpperCase());
             TextView tvOpen = (TextView) view.findViewById(R.id.tvOpen);

@@ -8,11 +8,11 @@
         android:id="@+id/tvDay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_8"
 
-        android:layout_margin="@dimen/margin_5"
         android:fontFamily="normal"
         android:gravity="center"
-        android:padding="@dimen/padding_8"
+        android:padding="@dimen/padding_2"
         android:text="+91 India"
         android:textSize="@dimen/text_12" />
 
@@ -20,23 +20,23 @@
         android:id="@+id/tvOpen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+android:layout_marginTop="@dimen/padding_16"
 
-        android:layout_margin="@dimen/margin_5"
         android:fontFamily="normal"
         android:gravity="center"
-        android:padding="@dimen/padding_8"
+        android:padding="@dimen/padding_2"
         android:text="+91 India"
-        android:textSize="@dimen/text_12" />
+        android:textSize="8sp" />
 
     <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:id="@+id/tvClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_margin="@dimen/margin_5"
+        android:layout_marginTop="@dimen/margin_16"
         android:fontFamily="normal"
         android:gravity="center"
-        android:padding="@dimen/padding_8"
+        android:padding="@dimen/padding_2"
         android:text="+91 India India"
-        android:textSize="@dimen/text_12" />
+        android:textSize="8sp" />
 </LinearLayout>

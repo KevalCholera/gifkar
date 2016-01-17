@@ -48,7 +48,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     private TabLayout tabLayout;
     DataBaseHelper dbHelper;
     CommonUtil commonUtil = new CommonUtil();
-    private Button llProdCheckOut;
+    private TextView llProdCheckOut;
     private RelativeLayout llProdCart;
     private static TextView tvProdCartRs;
     private static TextView tvProdCartCount;
@@ -65,6 +65,8 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.action_bar_prod, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
+        TextView actionBarArea = (TextView) v.findViewById(R.id.actionBarArea);
+
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
 //        btFilter = (ImageView) v.findViewById(R.id.btActionBarfilter);
@@ -86,10 +88,11 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         llProdCart = (RelativeLayout) findViewById(R.id.llProdListCart);
         llProdCart.setOnClickListener(this);
         llProdBottom = (LinearLayout) findViewById(R.id.llProdListBottom);
-        llProdCheckOut = (Button) findViewById(R.id.llProdListCheckOut);
+        llProdCheckOut = (TextView) findViewById(R.id.llProdListCheckOut);
         llProdCheckOut.setOnClickListener(this);
-        titleTextView.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_NAME,""));
-        getProductList(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_ID, ""),SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CATEGORY_ID, ""));
+        titleTextView.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_NAME, ""));
+        actionBarArea.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
+        getProductList(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_ID, ""), SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CATEGORY_ID, ""));
         getCartItem();
     }
 
@@ -123,7 +126,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                 startActivity(new Intent(this, ShopActivity.class));
                 break;
             case R.id.llProdListCart:
-                startActivity(new Intent(this, MyCartActivity.class).putExtra("flag",true));
+                startActivity(new Intent(this, MyCartActivity.class).putExtra("flag", true));
                 break;
             case R.id.llProdListCheckOut:
                 if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
@@ -151,7 +154,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
 
         @Override
         public Fragment getItem(int position) {
-            return ProductFragment.newInstance(mFragmentID.get(position),mFragmentTitles.get(position));
+            return ProductFragment.newInstance(mFragmentID.get(position), mFragmentTitles.get(position));
         }
 
         @Override
@@ -229,7 +232,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                     }
 
                 }
-                productListAdapter.addFragment(catJson.optString("id"), catJson.optString("name"));
+                productListAdapter.addFragment(catJson.optString("id"), "      " + catJson.optString("name") + "      ");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -247,16 +250,18 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         } else {
             llProdBottom.setVisibility(View.VISIBLE);
             tvProdCartRs.setText("₹" + totalAmount);
-            DecimalFormat twodigits = new DecimalFormat("00");
-            tvProdCartCount.setText("" + twodigits.format(productArray.length()));
+//            DecimalFormat twodigits = new DecimalFormat("00");
+//            tvProdCartCount.setText("" + twodigits.format(productArray.length()));
+            tvProdCartCount.setText(" " + productArray.length() + " ");
+//            tvProdCartCount.setText("12");
         }
 
     }
 
 
-    public void getProductList(String shopId,String cateId) {
+    public void getProductList(String shopId, String cateId) {
         final String tag = "EVENT_PROD_LIST";
-        String url = Constants.BASE_URL + "/mobile/product/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_PRODLIST) + "&shopId=" + shopId+"&categoryId=" + cateId;
+        String url = Constants.BASE_URL + "/mobile/product/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_PRODLIST) + "&shopId=" + shopId + "&categoryId=" + cateId;
         DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         CommonUtil.showProgressDialog(this, "Wait...");

@@ -1,5 +1,6 @@
 package com.smartsense.gifkar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -40,13 +41,13 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.llGifkar:
-                finish();
+
                 break;
             case R.id.llHelp:
-                finish();
+                startActivity(new Intent(this, TermsandCondtionsActivity.class));
                 break;
             case R.id.llFAQS:
-                finish();
+                startActivity(new Intent(this, TermsandCondtionsActivity.class));
                 break;
 
         }

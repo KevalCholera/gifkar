@@ -62,11 +62,11 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
                 } else {
                     ivShopListMidNight.setVisibility(View.GONE);
                 }
-//                tvShopListRating.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING))==null ? "0" : cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING)));
-                tvShopListCutofTime.setText("Cut of Time: " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CUT_OF_TIME)) + "hours");
-                tvShopListDeliveryTime.setText("Delivery Time: " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_FROM)) + " to " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_TO)));
+                tvShopListRating.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING)).equalsIgnoreCase("null") ? "  -  " : cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING)));
+                tvShopListCutofTime.setText("Cut off Time : " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CUT_OF_TIME)) + "hours");
+                tvShopListDeliveryTime.setText("Del. Time : " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_FROM)) + " to " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_TO)));
                 tvShopListShopName.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_NAME)));
-                tvShopListMinOrder.setText("Minimum Order: \u20B9 " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_MIN_ORDER)));
+                tvShopListMinOrder.setText("Min. : \u20B9 " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_MIN_ORDER)));
                 tvShopListTag.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_TAGS)));
                 ivShopListImage.setDefaultImageResId(R.drawable.default_img);
 //                Constants.BASE_URL + "/images/shops/thumbs/" +

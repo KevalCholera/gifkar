@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Gifkar</string>
+    <string name="app_name_VER">About Gifkar</string>
     <string name="screen_forgot">Forgot Password</string>
     <string name="screen_otp">Enter SMS Code</string>
     <string name="screen_change_mno">Edit Mobile Number</string>
@@ -139,7 +140,6 @@
 
     <string name="large">
     "Material is the metaphor.\n\n"
-
     "A material metaphor is the unifying theory of a rationalized space and a system of motion."
     "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
     "technologically advanced and open to imagination and magic.\n"
@@ -150,6 +150,7 @@
     "The fundamentals of light, surface, and movement are key to conveying how objects move, "
     "interact, and exist in space and in relation to each other. Realistic lighting shows "
     "seams, divides space, and indicates moving parts.\n\n"
+
     </string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -314,7 +315,7 @@
     <string name="report_error">Report Error</string>
     <string name="screen_add_review">ADD REVIEW</string>
     <string name="shop_email">Email : </string>
-    <string name="shop_mno">Contact Numbar : </string>
+    <string name="shop_mno">Contact : </string>
     <string name="shop_add">Address : </string>
     <string name="open_time">Open Time : </string>
     <string name="close_time">Close Time : </string>

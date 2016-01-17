@@ -114,7 +114,7 @@ public class ShopFragment extends Fragment {
                 llListEmpty.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
             } else {
-                tvListEmpty.setText("Currently " + getArguments().getString("name") + " shop not available.");
+                tvListEmpty.setText("Currently " + getArguments().getString("name").trim() + " shop not available.");
                 llListEmpty.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }

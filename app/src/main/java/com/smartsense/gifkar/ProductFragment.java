@@ -124,7 +124,7 @@ public class ProductFragment extends Fragment {
                 llProdListEmpty.setVisibility(View.GONE);
                 lvProduct.setVisibility(View.VISIBLE);
             } else {
-                tvProdListEmpty.setText("Currently " + getArguments().getString("name") + " category product not available.");
+                tvProdListEmpty.setText("Currently " + getArguments().getString("name").trim() + " category product not available.");
                 llProdListEmpty.setVisibility(View.VISIBLE);
                 lvProduct.setVisibility(View.GONE);
             }

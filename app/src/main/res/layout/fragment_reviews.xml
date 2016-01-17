@@ -3,20 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:gravity="center"
     android:orientation="vertical">
 
 
     <LinearLayout
         android:id="@+id/llNoReview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/padding_16"
         android:orientation="vertical"
         android:visibility="visible">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:background="@drawable/empty_star" />
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
@@ -45,8 +48,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_10"
+            android:layout_gravity="center"
             android:background="@color/mainColor"
             android:fontFamily="normal"
+            android:visibility="gone"
             android:paddingLeft="35dp"
             android:paddingRight="35dp"
             android:text="WRITE REVIEW"
@@ -59,7 +64,7 @@
         android:id="@+id/llReview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -71,6 +76,7 @@
             android:capitalize="sentences"
             android:drawableRight="@drawable/ic_action_plus"
             android:fontFamily="normal"
+            android:visibility="gone"
             android:gravity="center_vertical"
             android:padding="@dimen/padding_8"
             android:text="@string/screen_add_review"
