@@ -139,6 +139,9 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
 //            db = dbHelper.getWritableDatabase();
 //            db.execSQL("DELETE FROM " + DataBaseHelper.TABLE_SHOP);
             commonUtil.execSQL(dbHelper, "DELETE FROM " + DataBaseHelper.TABLE_SHOP);
+            Adapter.mFragmentTitles.clear();
+            Adapter.mFragmentID.clear();
+            tabLayout.removeAllTabs();
 //            db.close();
             for (int i = 0; i < category.length(); i++) {
                 JSONObject catJson = category.optJSONObject(i);

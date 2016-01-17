@@ -83,7 +83,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             userInfo = userInfo.optJSONObject("userDetails");
 //            Constants.BASE_URL + "/images/users/" +
             ivProfileImage.setDefaultImageResId(R.drawable.ic_user);
-            ivProfileImage.setImageUrl(Constants.BASE_URL + "/images/users/" + userInfo.optString("image"), imageLoader);
+            ivProfileImage.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imageLoader);
             tvName.setText(userInfo.optString("firstName") + " " + userInfo.optString("lastName"));
             tvMobile.setText(userInfo.optString("mobile"));
             if (userInfo.optString("mobile").equalsIgnoreCase("")) {
@@ -283,6 +283,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     public void onResponse(JSONObject response) {
                         Log.d("response", response.toString());
                         CommonUtil.cancelProgressDialog();
+                        ivProfileImage.setDefaultImageResId(R.drawable.ic_user);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_PROIMG);
                         try {
                             if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                                 final AlertDialog.Builder alert = new AlertDialog.Builder(ProfileActivity.this);

@@ -50,6 +50,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.mpt.storage.SharedPreferenceUtil;
+import com.parse.ParseInstallation;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataRequest;
@@ -422,11 +423,16 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                         case Constants.Events.EVENT_LOGIN:
                             etInputemail.setText("");
                             etInputPassword.setText("");
+
                             if (response.getJSONObject("data").has("isVerified")) {
                                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
                                 SharedPreferenceUtil.save();
                                 startActivity(new Intent(getActivity(), MobileNoActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_LOGIN));
                             } else {
+                                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                                installation.put("UserID", response.getJSONObject("data").getString("userId"));
+//                                installation.addAllUnique("channels", Arrays.asList("test"));
+                                installation.saveInBackground();
                                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
                                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
                                 SharedPreferenceUtil.save();
@@ -438,6 +444,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                             }
                             break;
                         case Constants.Events.EVENT_SIGNUP:
+                            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                            installation.put("UserID", response.getJSONObject("data").getString("userId"));
+//                                installation.addAllUnique("channels", Arrays.asList("test"));
+                            installation.saveInBackground();
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
                             SharedPreferenceUtil.save();
                             if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))

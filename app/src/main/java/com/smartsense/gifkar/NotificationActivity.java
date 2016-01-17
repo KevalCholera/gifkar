@@ -45,6 +45,7 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
         TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
         actionBarTitle.setText(getResources().getString(R.string.screen_notification));
+        actionBarTitle.setBackgroundColor(getActivity().getResources().getColor(R.color.mainColor));
         ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
         btFilter.setVisibility(View.INVISIBLE);
         ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
@@ -199,6 +200,7 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
                 // TODO Auto-generated method stub
                 holder.tvTitle = (TextView) view.findViewById(R.id.tvNotificationElementName);
                 holder.tvDec = (TextView) view.findViewById(R.id.tvNotificationElementNo);
+                holder.tvDate = (TextView) view.findViewById(R.id.tvNotificationElementDate);
                 holder.ivDelete = (ImageView) view.findViewById(R.id.ivNotificationElementDelete);
                 view.setTag(holder);
             } else {
@@ -210,9 +212,10 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
             else
                 view.setBackgroundColor(activity.getResources().getColor(R.color.textcolorwhite));
 //            if (!notificationObj.optString("notification").equalsIgnoreCase(null)) {
-//            if(notificationObj.has("notification")){
-//            holder.tvTitle.setText(notificationObj.optJSONObject("notification").optString("subject"));
-//            holder.tvDec.setText(notificationObj.optJSONObject("notification").optString("message"));}
+            if(notificationObj.has("notification")){
+            holder.tvTitle.setText(notificationObj.optJSONObject("notification").optString("subject"));
+                holder.tvDate.setText(notificationObj.optJSONObject("notification").optString("startDate"));
+            holder.tvDec.setText(notificationObj.optJSONObject("notification").optString("message"));}
 //            }
             holder.ivDelete.setOnClickListener(this);
             holder.ivDelete.setTag(notificationObj.toString());
@@ -222,6 +225,7 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
         class ViewHolder {
             TextView tvTitle;
             TextView tvDec;
+            TextView tvDate;
             ImageView ivDelete;
         }
 

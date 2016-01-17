@@ -32,6 +32,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.mpt.storage.SharedPreferenceUtil;
+import com.parse.ParseInstallation;
+import com.smartsense.gifkar.receivers.AlarmReceiver;
+import com.smartsense.gifkar.utill.AlarmUtil;
 import com.smartsense.gifkar.utill.CircleImageView;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
@@ -42,7 +45,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class GifkarActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
@@ -68,11 +75,12 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_gifkar);
         imageLoader = GifkarApp.getInstance().getDiskImageLoader();
         actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
+        actionBarTitle.setBackgroundDrawable(getResources().getDrawable(R.drawable.head_squre));
         actionBarTitle.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
         actionBarTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(GifkarActivity.this,CitySelectActivity.class).putExtra("area",true));
+                startActivity(new Intent(GifkarActivity.this, CitySelectActivity.class).putExtra("area", true));
             }
         });
         setSupportActionBar(toolbar);
@@ -110,7 +118,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         llHeadAddress = (LinearLayout) header.findViewById(R.id.llHeadAddress);
         llHeadAddress.setOnClickListener(this);
 
-        ImageView ivHeadEdit=(ImageView) header.findViewById(R.id.ivHeadEdit);
+        ImageView ivHeadEdit = (ImageView) header.findViewById(R.id.ivHeadEdit);
 
         ivHeadImage = (CircleImageView) header.findViewById(R.id.ivHeadImage);
         ivHeadImage.setDefaultImageResId(R.drawable.ic_user);
@@ -140,6 +148,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         tvHeadAddress.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CITY_NAME, ""));
         tVHeadMobileNo.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_EMAIL, ""));
         tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, "WelCome"));
+        ivHeadImage.setDefaultImageResId(R.drawable.ic_user);
         ivHeadImage.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imageLoader);
     }
 
@@ -185,10 +194,14 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(new Intent(this, OrderDetailActivity.class));
                 break;
             case R.id.llHeadProfile:
-                if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "").equalsIgnoreCase(""))
+                if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "").equalsIgnoreCase("")) {
                     startActivity(new Intent(this, StartActivity.class));
-                else
+                    finish();
+                } else {
+                    DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                    drawer.closeDrawer(GravityCompat.START);
                     startActivity(new Intent(this, ProfileActivity.class));
+                }
                 break;
             case R.id.llHeadAddress:
                 startActivity(new Intent(this, CitySelectActivity.class));
@@ -242,7 +255,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         public void getList() {
 
             //user is login and display sign out btn
-            mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends",  "Feed Us", "About Us","Sign Out", "Setting"};
+            mNavTitles = new String[]{"Sign In", "Home", "empty", "My Cart", "My Orders", "My Addresses", "My Reminders", "empty", "Notifications", "Refer Friends", "Feed Us", "About Us", "Sign Out", "Setting"};
             mIcons = new int[]{R.drawable.ic_login, R.drawable.ic_home, R.drawable.ic_home, R.drawable.ic_cart,
                     R.drawable.ic_orders, R.drawable.ic_address, R.drawable.ic_reminder, R.drawable.ic_home, R.drawable.ic_notification, R.drawable.ic_refer, R.drawable.ic_feedus, R.drawable.ic_about, R.drawable.ic_logout, R.drawable.ic_setting};
 //            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
@@ -316,7 +329,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
             if (position == Constants.NavigationItems.NAV_NOTIFICATIONS) {
                 convertView.setOnClickListener(this);
                 tvCount.setVisibility(View.VISIBLE);
-                tvCount.setText(" "+SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_DJ_WALLET, "0")+" ");
+                tvCount.setText(" " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_DJ_WALLET, "0") + " ");
             } else if (position == Constants.NavigationItems.NAV_MY_CART) {
                 convertView.setOnClickListener(this);
                 try {
@@ -326,7 +339,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                             tvCount.setVisibility(View.INVISIBLE);
                         } else {
                             tvCount.setVisibility(View.VISIBLE);
-                            tvCount.setText(" " + productArray.length()+" ");
+                            tvCount.setText(" " + productArray.length() + " ");
                         }
                     } else {
                         tvCount.setVisibility(View.INVISIBLE);
@@ -486,8 +499,40 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
         Log.i("params", params.toString());
-//        CommonUtil.showProgressDialog(GifkarApp.getInstance(), "Wait...");
-        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        CommonUtil.showProgressDialog(GifkarActivity.this, "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params,
+                new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("response", response.toString());
+                        CommonUtil.cancelProgressDialog();
+                        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                        installation.put("UserID", "");
+//                                installation.addAllUnique("channels", Arrays.asList("test"));
+                        installation.saveInBackground();
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_ID);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_FULLNAME);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_EMAIL);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_MNO);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_ACCESS_TOKEN);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_PROIMG);
+                        SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_INFO);
+                        SharedPreferenceUtil.save();
+                        startActivity(new Intent(GifkarActivity.this, StartActivity.class));
+
+                    }
+
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                CommonUtil.cancelProgressDialog();
+                Log.e("Volley Request Error", error.getLocalizedMessage());
+
+            }
+
+        });
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
@@ -495,7 +540,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onResume() {
         super.onResume();
-        CommonUtil.cancelProgressDialog();
+//        CommonUtil.cancelProgressDialog();
     }
 
     @Override
@@ -517,8 +562,8 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_MNO, response.optJSONObject("data").optJSONObject("userDetails").optString("mobile"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_PROIMG, Constants.BASE_URL + "/images/users/" + response.optJSONObject("data").optJSONObject("userDetails").optString("image"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_INFO, response.optJSONObject("data").toString());
-                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_IS_SOCIAL,response.optJSONObject("data").optJSONObject("userDetails").optString("signedUpUsing"));
-        SharedPreferenceUtil.save();
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_IS_SOCIAL, response.optJSONObject("data").optJSONObject("userDetails").optString("signedUpUsing"));
+                            SharedPreferenceUtil.save();
                             tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, ""));
                             ivHeadImage.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imageLoader);
                             tVHeadMobileNo.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_MNO, ""));
@@ -526,6 +571,10 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                         case Constants.Events.EVENT_SIGN_OUT:
 //                            CommonUtil.alertBox(GifkarApp.getInstance(),"", "Logout Sucessfully");
 //                            Toast.makeText(this,"Logout Sucessfully",Toast.LENGTH_SHORT).show();
+                            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                            installation.put("UserID", "");
+//                                installation.addAllUnique("channels", Arrays.asList("test"));
+                            installation.saveInBackground();
                             SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_ID);
                             SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_FULLNAME);
                             SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_EMAIL);
@@ -534,6 +583,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                             SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_PROIMG);
                             SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_INFO);
                             SharedPreferenceUtil.save();
+                            GifkarApp.getInstance().startActivity(new Intent(this, StartActivity.class));
                             break;
                     }
                 } else {
