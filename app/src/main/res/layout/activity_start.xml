@@ -78,9 +78,5 @@
         android:layout_height="fill_parent"
         android:layout_below="@id/tab_layout" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/bottom_ribbion" />
+
 </RelativeLayout>

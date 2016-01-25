@@ -139,7 +139,7 @@
             android:name=".CitySelectActivity"
             android:label="@string/screen_city"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
         <activity
             android:name=".ShopFilterActivity"
             android:label="@string/filter"

@@ -161,7 +161,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                             if (response.getError() != null) {
                                 // handle error
                             } else {
-                                String email = me.optString("email");
+                               // String email = me.optString("email");
                                 Log.d("All requested data", me.toString());
                                 try {
                                     String accessToken = AccessToken.getCurrentAccessToken().getToken();

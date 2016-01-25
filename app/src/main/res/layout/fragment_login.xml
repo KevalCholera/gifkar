@@ -2,157 +2,165 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:padding="@dimen/margin_5">
+    android:background="@android:color/white">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin_25"
+
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_25"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_5">
 
-        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
-            android:id="@+id/etLoginEmailId"
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
+                android:id="@+id/etLoginEmailId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_5"
+                android:background="@drawable/edittext_round"
+                android:fontFamily="normal"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:padding="@dimen/edittext_padding_8"
+                android:textColorHighlight="@android:color/white"
+                android:textColorHint="@color/edittext_hint_color"
+                android:textSize="@dimen/text_16" />
+
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
+                android:id="@+id/etLoginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_5"
+                android:background="@drawable/edittext_round"
+                android:ems="10"
+                android:fontFamily="normal"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:padding="@dimen/edittext_padding_8"
+                android:textColorHint="@color/edittext_hint_color"
+                android:textSize="@dimen/text_16" />
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:id="@+id/tvLoginForgotPwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:fontFamily="normal"
+                android:padding="@dimen/padding_5"
+                android:text="@string/forgot_password_hint"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/forgot_pass_textcolor"
+                android:textSize="@dimen/text_12"
+                android:textStyle="normal" />
+
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceButton
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_5"
+                android:background="@color/mainColor"
+                android:fontFamily="normal"
+                android:text="@string/sign_in"
+                android:textColor="@color/textcolorwhite"
+                android:textSize="@dimen/text_16" />
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:id="@+id/tvLoginSkip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_10"
+                android:fontFamily="normal"
+                android:gravity="center"
+                android:padding="@dimen/padding_5"
+                android:text="@string/skip"
+                android:textColor="@color/mainColor"
+                android:textSize="@dimen/text_12" />
+
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_10"
+                android:fontFamily="normal"
+                android:padding="@dimen/padding_5"
+                android:text="@string/social_account"
+                android:textColor="@color/forgot_pass_textcolor"
+                android:textSize="@dimen/text_12" />
+
+
+            <!--<fragment-->
+            <!--android:id="@+id/titles"-->
+            <!--class="com.smartsense.gifkar.FacebookLogin"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:layout_weight="1"-->
+            <!--tools:layout="@layout/fb_button" />-->
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceButton
+                android:id="@+id/fb_login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_5"
+                android:background="@color/facebookbackcolor"
+                android:drawableLeft="@drawable/fb"
+                android:drawableStart="@drawable/fb"
+                android:fontFamily="normal"
+                android:maxHeight="50dp"
+                android:paddingRight="@dimen/padding_10"
+                android:text="@string/fb_signup"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_12" />
+
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_5"
+                android:background="@color/googlebackcolor"
+                android:drawableLeft="@drawable/gplus"
+                android:drawableStart="@drawable/gplus"
+                android:fontFamily="normal"
+                android:maxHeight="50dp"
+                android:paddingRight="@dimen/padding_10"
+                android:text="@string/google_signup"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_12" />
+
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/margin_10"
+                android:fontFamily="normal"
+                android:gravity="center"
+                android:padding="@dimen/padding_5"
+                android:text="@string/social"
+                android:textColor="@color/mainColor"
+                android:textSize="@dimen/text_12" />
+
+
+
+        </LinearLayout>
+
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_5"
-            android:background="@drawable/edittext_round"
-            android:fontFamily="normal"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:padding="@dimen/edittext_padding_8"
-            android:textSize="@dimen/text_16"
-            android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
-
-
-        <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
-            android:id="@+id/etLoginPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_5"
-            android:background="@drawable/edittext_round"
-            android:ems="10"
-            android:fontFamily="normal"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:padding="@dimen/edittext_padding_8"
-            android:textSize="@dimen/text_16"
-            android:textColorHint="@color/edittext_hint_color" />
-
-        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-            android:id="@+id/tvLoginForgotPwd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:fontFamily="normal"
-            android:padding="@dimen/padding_5"
-            android:textSize="@dimen/text_12"
-            android:text="@string/forgot_password_hint"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/forgot_pass_textcolor"
-            android:textStyle="normal" />
-
-
-        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_5"
-            android:background="@color/mainColor"
-            android:fontFamily="normal"
-            android:text="@string/sign_in"
-            android:textColor="@color/textcolorwhite"
-            android:textSize="@dimen/text_16" />
-
-        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-            android:id="@+id/tvLoginSkip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/margin_10"
-            android:padding="@dimen/padding_5"
-            android:textSize="@dimen/text_12"
-            android:gravity="center"
-            android:fontFamily="normal"
-            android:text="@string/skip"
-            android:textColor="@color/mainColor" />
-
-
-        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/margin_10"
-            android:fontFamily="normal"
-            android:padding="@dimen/padding_5"
-            android:textSize="@dimen/text_12"
-            android:text="@string/social_account"
-            android:textColor="@color/forgot_pass_textcolor" />
-
-
-        <!--<fragment-->
-        <!--android:id="@+id/titles"-->
-        <!--class="com.smartsense.gifkar.FacebookLogin"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--android:layout_weight="1"-->
-        <!--tools:layout="@layout/fb_button" />-->
-
-        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
-            android:id="@+id/fb_login_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/facebookbackcolor"
-            android:drawableLeft="@drawable/fb"
-            android:drawableStart="@drawable/fb"
-            android:layout_margin="@dimen/margin_5"
-            android:fontFamily="normal"
-            android:maxHeight="50dp"
-            android:paddingRight="@dimen/padding_10"
-            android:textSize="@dimen/text_12"
-            android:text="@string/fb_signup"
-            android:textColor="@android:color/white" />
-
-
-        <com.smartsense.gifkar.textstyleUtil.TypefaceButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxHeight="50dp"
-            android:textSize="@dimen/text_12"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/margin_5"
-            android:background="@color/googlebackcolor"
-            android:drawableLeft="@drawable/gplus"
-            android:drawableStart="@drawable/gplus"
-            android:fontFamily="normal"
-            android:paddingRight="@dimen/padding_10"
-            android:text="@string/google_signup"
-            android:textColor="@android:color/white" />
-
-
-
-
-        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/margin_10"
-            android:padding="@dimen/padding_5"
-            android:textSize="@dimen/text_12"
-            android:gravity="center"
-            android:fontFamily="normal"
-            android:text="@string/social"
-            android:textColor="@color/mainColor" />
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bottom_ribbion" />
     </LinearLayout>
-
 </ScrollView>

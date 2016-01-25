@@ -33,11 +33,11 @@ public class SplashActivity extends AppCompatActivity implements AnimationListen
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } else {
-            View decorView = getWindow().getDecorView();
+//            View decorView = getWindow().getDecorView();
 // Hide the status bar.
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+//            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
 
-            decorView.setSystemUiVisibility(uiOptions);
+//            decorView.setSystemUiVisibility(uiOptions);
 
 //            getSupportActionBar().hide();
 

@@ -1,5 +1,7 @@
 package com.smartsense.gifkar;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +22,7 @@ import java.util.List;
 
 public class ProductFilterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView btBack;
+    private ImageView btBack,btInfo;
     CheckBox cbName, cbPrice;
     private Button btApplyFilter, btnProdCancelFilter;
 
@@ -30,11 +32,14 @@ public class ProductFilterActivity extends AppCompatActivity implements View.OnC
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater inflater = LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.action_bar_center, null);
+        View v = inflater.inflate(R.layout.action_bar_info, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
         titleTextView.setText(getResources().getString(R.string.filter));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
+        btInfo = (ImageView) v.findViewById(R.id.btActionBarInfo);
+
+        btInfo.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_product_filter);
         cbName = (CheckBox) findViewById(R.id.cbProdFilterName);
@@ -99,8 +104,26 @@ public class ProductFilterActivity extends AppCompatActivity implements View.OnC
                 SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_PROD_NAME, false);
                 SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_PROD_PRICE, false);
                 SharedPreferenceUtil.save();
+                setResult(1, intent);
+                finish();
+                break;
+            case R.id.btActionBarInfo:
+                openInfoPopup();
                 break;
             default:
+        }
+    }
+    public void openInfoPopup() {
+        try {
+            final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View dialog = inflater.inflate(R.layout.dialog_info, null);
+            alertDialogs.setView(dialog);
+//            alertDialogs.setCancelable(false);
+            AlertDialog alert = alertDialogs.create();
+            alert.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

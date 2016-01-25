@@ -499,7 +499,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
         Log.i("params", params.toString());
-        CommonUtil.showProgressDialog(GifkarActivity.this, "Wait...");
+//        CommonUtil.showProgressDialog(GifkarActivity.this, "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params,
                 new Response.Listener<JSONObject>() {
 
@@ -519,7 +519,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                         SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_PROIMG);
                         SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_INFO);
                         SharedPreferenceUtil.save();
-                        startActivity(new Intent(GifkarActivity.this, StartActivity.class));
+//                        startActivity(new Intent(GifkarActivity.this, StartActivity.class));
 
                     }
 

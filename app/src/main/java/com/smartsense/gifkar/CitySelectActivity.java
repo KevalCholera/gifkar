@@ -107,6 +107,7 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                         finish();
                     }
                     lvCity.setAdapter(cityAdapter);
+
                     etCitySearch.setText("");
                     etCitySearch.setHint(getResources().getString(R.string.delivery_area));
                 } catch (Exception e) {

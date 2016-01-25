@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -33,7 +35,7 @@ import java.util.Map;
 public class OTPActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
         Response.ErrorListener {
     TextView tvOtpNo, tvResend, tvEditNum;
-    String countryCode = "", mobileNo = "", verify = "",countryCodeTag="";
+    String countryCode = "", mobileNo = "", verify = "";
     EditText etOne, etTwo, etThree, etFour;
     Button btOTP;
     private ImageView btBack;
@@ -49,6 +51,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
         titleTextView.setText(getResources().getString(R.string.screen_otp));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
+        btBack.setVisibility(View.INVISIBLE);
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_otp);
@@ -62,6 +65,10 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         etTwo = (EditText) findViewById(R.id.etOTPTwo);
         etThree = (EditText) findViewById(R.id.etOTPThree);
         etFour = (EditText) findViewById(R.id.etOTPFour);
+        etOne.addTextChangedListener(new CustomTextWatcher(etOne));
+        etTwo.addTextChangedListener(new CustomTextWatcher(etTwo));
+        etThree.addTextChangedListener(new CustomTextWatcher(etThree));
+        etFour.addTextChangedListener(new CustomTextWatcher(etFour));
         etFour.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // If the event is a key-down event on the "enter" button
@@ -78,10 +85,10 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         btOTP.setOnClickListener(this);
         countryCode = getIntent().getStringExtra("code");
         mobileNo = getIntent().getStringExtra("mobile");
-        countryCodeTag=getIntent().getStringExtra("tag");
 //        otp = getIntent().getStringExtra(Constants.OTP);
-        if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT)
+        if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT) {
             tvEditNum.setVisibility(View.GONE);
+        }
         tvOtpNo.setText("Please Enter the SMS code that you have received on " + countryCode + " " + mobileNo);
     }
 
@@ -89,7 +96,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvOtpEditNumber:
-                startActivity(new Intent(this, MobileNoActivity.class).putExtra("no",mobileNo).putExtra("code", countryCode).putExtra("tag",countryCodeTag));
+                startActivity(new Intent(this, MobileNoActivity.class));
                 break;
             case R.id.tvOtpResend:
                 tvResend.requestFocus();
@@ -127,7 +134,6 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         Map<String, String> params = new HashMap<String, String>();
         params.put("eventId", String.valueOf(Constants.Events.EVENT_RESEND_OTP));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
-        params.put("userId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_ID, ""));
         params.put("mobile", mobileNo);
         params.put("countryCode", countryCode.substring(1));
         CommonUtil.showProgressDialog(this, "Wait...");
@@ -192,7 +198,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                             etThree.setText("");
                             etFour.setText("");
                             etOne.setText("");
-                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
                             SharedPreferenceUtil.save();
 //                            otp=response.optJSONObject("data").optString("userToken");
                             coundDownStart();
@@ -215,5 +221,41 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         }
 
 
+    }
+
+    private class CustomTextWatcher implements TextWatcher {
+        private EditText mEditText;
+
+        public CustomTextWatcher(EditText e) {
+            mEditText = e;
+        }
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (!(s.toString().equalsIgnoreCase(""))) {
+                if (mEditText == etOne) {
+                    etOne.clearFocus();
+                    etTwo.requestFocus();
+                    etTwo.setCursorVisible(true);
+                } else if (mEditText == etTwo) {
+                    etTwo.clearFocus();
+                    etThree.requestFocus();
+                    etThree.setCursorVisible(true);
+                } else if (mEditText == etThree) {
+                    etThree.clearFocus();
+                    etFour.requestFocus();
+                    etFour.setCursorVisible(true);
+                } else if (mEditText == etFour) {
+
+                }
+            }
+        }
+
+        public void afterTextChanged(Editable s) {
+
+        }
     }
 }

@@ -186,7 +186,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
 
     public void doForgot(String device, String value) {
         final String tag = "forgotpassword";
-        String url = Constants.BASE_URL + "/user/requestResetPassword";
+        String url = Constants.BASE_URL + "/mobile/user/requestResetPassword";
         Map<String, String> params = new HashMap<String, String>();
         params.put("eventId", String.valueOf(Constants.Events.EVENT_FORGOT_PASS));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);

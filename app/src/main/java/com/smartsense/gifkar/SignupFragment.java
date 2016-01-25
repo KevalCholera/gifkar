@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,24 +70,26 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
 
             }
         });
+        etMobileNo.addTextChangedListener(new CustomTextWatcher(etMobileNo));
         etEmail = (EditText) view.findViewById(R.id.etSignUpEmailId);
-        etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                                             @Override
-                                             public void onFocusChange(View v, boolean hasFocus) {
-                                                 etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                                                 if (!hasFocus) {
-                                                     // TODO: the editText has just been left
-                                                     isEmailVerified = false;
-                                                     if (etEmail.length() != 0) {
-                                                         if (CommonUtil.isValidEmail(etEmail.getText().toString())) {
-                                                             checkMobileEmail("email", etEmail.getText().toString(), Constants.Events.EVENT_EMAIL_CHECK);
-                                                         }
-                                                     }
-                                                 }
-                                             }
-                                         }
-
-        );
+        etEmail.addTextChangedListener(new CustomTextWatcher(etEmail));
+//        etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//                                             @Override
+//                                             public void onFocusChange(View v, boolean hasFocus) {
+//                                                 etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+//                                                 if (!hasFocus) {
+//                                                     // TODO: the editText has just been left
+//                                                     isEmailVerified = false;
+//                                                     if (etEmail.length() != 0) {
+//                                                         if (CommonUtil.isValidEmail(etEmail.getText().toString())) {
+//                                                             checkMobileEmail("email", etEmail.getText().toString(), Constants.Events.EVENT_EMAIL_CHECK);
+//                                                         }
+//                                                     }
+//                                                 }
+//                                             }
+//                                         }
+//
+//        );
 
         etPass = (EditText) view.findViewById(R.id.etSignUpPassword);
         etConPass = (EditText) view.findViewById(R.id.etSignUpConfirmPassword);
@@ -321,5 +325,43 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
         super.onDestroy();
         SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_COUNTRY_LIST);
         SharedPreferenceUtil.save();
+    }
+
+    private class CustomTextWatcher implements TextWatcher {
+        private EditText mEditText;
+
+        public CustomTextWatcher(EditText e) {
+            mEditText = e;
+        }
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            if (mEditText == etMobileNo) {
+                etMobileNo.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            } else
+                etEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (!(s.toString().equalsIgnoreCase(""))) {
+                if (mEditText == etMobileNo) {
+                    isMnoVerified = false;
+                    if ((etMobileNo.length() >= 8 && etMobileNo.length() <= 13)) {
+                        checkMobileEmail("mobile", etMobileNo.getText().toString(), Constants.Events.EVENT_MOBILE_CHECK);
+                    }
+                } else {
+                    if (etEmail.length() != 0) {
+                        isEmailVerified = false;
+                        if (CommonUtil.isValidEmail(etEmail.getText().toString())) {
+                            checkMobileEmail("email", etEmail.getText().toString(), Constants.Events.EVENT_EMAIL_CHECK);
+                        }
+                    }
+                }
+
+            }
+        }
+
+        public void afterTextChanged(Editable s) {
+
+        }
     }
 }
