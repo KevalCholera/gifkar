@@ -80,7 +80,28 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         actionBarTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(GifkarActivity.this, CitySelectActivity.class).putExtra("area", true));
+                if (CommonUtil.checkCartCount() == 0) {
+                    startActivity(new Intent(GifkarActivity.this, CitySelectActivity.class).putExtra("area", true));
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(GifkarActivity.this);
+                    alert.setTitle("Empty Cart?");
+                    alert.setMessage("Do you wish to discard your current Cart?");
+                    alert.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //Do something here where "ok" clicked
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_PROD_LIST);
+                            startActivity(new Intent(GifkarActivity.this, CitySelectActivity.class).putExtra("area", true));
+                        }
+                    });
+                    alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //Do something here where "Cancel" clicked
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+                }
+
             }
         });
         setSupportActionBar(toolbar);
@@ -114,7 +135,9 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         navigationView.addHeaderView(header);
         fm = getSupportFragmentManager();
         llHeadProfile = (LinearLayout) header.findViewById(R.id.llHeadProfile);
-        llHeadProfile.setOnClickListener(this);
+        if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+            llHeadProfile.setOnClickListener(this);
+        }
         llHeadAddress = (LinearLayout) header.findViewById(R.id.llHeadAddress);
         llHeadAddress.setOnClickListener(this);
 
@@ -204,13 +227,33 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.llHeadAddress:
-                startActivity(new Intent(this, CitySelectActivity.class));
+                if (CommonUtil.checkCartCount() == 0) {
+                    startActivity(new Intent(this, CitySelectActivity.class));
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(GifkarActivity.this);
+                    alert.setTitle("Empty Cart?");
+                    alert.setMessage("Do you wish to discard your current Cart?");
+                    alert.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //Do something here where "ok" clicked
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_PROD_LIST);
+                            startActivity(new Intent(GifkarActivity.this, CitySelectActivity.class));
+                        }
+                    });
+                    alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //Do something here where "Cancel" clicked
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+                }
                 break;
             case R.id.tvHeadPrivacy:
-                startActivity(new Intent(this, TermsandCondtionsActivity.class));
+                startActivity(new Intent(this, TermsandCondtionsActivity.class).putExtra("page", 3).putExtra("text", "Privacy Policy"));
                 break;
             case R.id.tvHeadTerms:
-                startActivity(new Intent(this, TermsandCondtionsActivity.class));
+                startActivity(new Intent(this, TermsandCondtionsActivity.class).putExtra("page", 4).putExtra("text", "Terms and Conditions"));
                 break;
             default:
         }
@@ -371,6 +414,19 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                     iv_image.setVisibility(View.GONE);
                     viewLine.setVisibility(View.VISIBLE);
 
+                } else if (!SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+                    if (position == Constants.NavigationItems.NAV_MY_ORDERS | position == Constants.NavigationItems.NAV_MY_REMINDERS | position == Constants.NavigationItems.NAV_MY_ADDRESSES | position == Constants.NavigationItems.NAV_NOTIFICATIONS) {
+                        viewLine.setVisibility(View.GONE);
+                        tvTitle.setVisibility(View.VISIBLE);
+                        Log.d("postion", "" + position);
+                        tvTitle.setTextColor(mContext.getResources().getColor(R.color.activity_bg));
+                        iv_image.setVisibility(View.VISIBLE);
+                    } else {
+                        convertView.setOnClickListener(this);
+                        viewLine.setVisibility(View.GONE);
+                        tvTitle.setVisibility(View.VISIBLE);
+                        iv_image.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     convertView.setOnClickListener(this);
                     viewLine.setVisibility(View.GONE);
@@ -393,7 +449,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void navigationButtonclick(final Activity c, View v, FragmentManager fm) {
+    public void navigationButtonclick(final Activity c, View v, final FragmentManager fm) {
         int position = (int) v.getTag();
         Boolean check = false;
         if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "").equalsIgnoreCase("")) {
@@ -450,12 +506,12 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
 //                break;
             case Constants.NavigationItems.NAV_LOGOUT:
                 AlertDialog.Builder alert = new AlertDialog.Builder(c);
-                alert.setTitle("Confirm!");
-                alert.setMessage("are you sure you want to sign out?");
-                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                alert.setTitle("Logout");
+                alert.setMessage("Are you sure you want to logout?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //Do something here where "ok" clicked
-                        doLogout();
+                        doLogout(c, fm);
                     }
                 });
                 alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -491,7 +547,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    public void doLogout() {
+    public void doLogout(final Activity c, FragmentManager fm) {
         final String tag = "logout";
         String url = Constants.BASE_URL + "/mobile/user/logout";
         Map<String, String> params = new HashMap<String, String>();
@@ -499,7 +555,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
         Log.i("params", params.toString());
-//        CommonUtil.showProgressDialog(GifkarActivity.this, "Wait...");
+        CommonUtil.showProgressDialog(c, "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params,
                 new Response.Listener<JSONObject>() {
 
@@ -519,7 +575,8 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                         SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_PROIMG);
                         SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_INFO);
                         SharedPreferenceUtil.save();
-//                        startActivity(new Intent(GifkarActivity.this, StartActivity.class));
+                        c.startActivity(new Intent(c, StartActivity.class));
+                        finish();
 
                     }
 

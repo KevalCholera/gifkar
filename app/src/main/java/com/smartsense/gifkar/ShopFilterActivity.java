@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ShopFilterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView btBack,btInfo;
+    private ImageView btBack, btInfo;
     private CheckBox cbRatting;
     private CheckBox cbName;
     private CheckBox cbMinOrder;
@@ -51,7 +51,7 @@ public class ShopFilterActivity extends AppCompatActivity implements View.OnClic
         cbRatting = (CheckBox) findViewById(R.id.cbShopFilterRatting);
         btApplyFilter = (Button) findViewById(R.id.btnShopApplyFilter);
         btApplyFilter.setOnClickListener(this);
-        btnShopCancelFilter= (Button) findViewById(R.id.btnShopCancelFilter);
+        btnShopCancelFilter = (Button) findViewById(R.id.btnShopCancelFilter);
         btnShopCancelFilter.setOnClickListener(this);
         cbName.setChecked(SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_NAME, false));
         cbMinOrder.setChecked(SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_MIN, false));
@@ -59,25 +59,56 @@ public class ShopFilterActivity extends AppCompatActivity implements View.OnClic
         cbName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVisible();
+                setVisible1();
             }
         });
         cbRatting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVisible();
+                setVisible3();
             }
         });
         cbMinOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVisible();
+                setVisible2();
             }
         });
         setVisible();
     }
 
 
+    public void setVisible3() {
+        if (cbRatting.isChecked() | cbName.isChecked() | cbMinOrder.isChecked()) {
+            cbName.setChecked(false);
+            cbMinOrder.setChecked(false);
+            btnShopCancelFilter.setVisibility(View.VISIBLE);
+        } else {
+            btnShopCancelFilter.setVisibility(View.GONE);
+        }
+    }
+
+
+    public void setVisible1() {
+        if (cbRatting.isChecked() | cbName.isChecked() | cbMinOrder.isChecked()) {
+            cbRatting.setChecked(false);
+            cbMinOrder.setChecked(false);
+            btnShopCancelFilter.setVisibility(View.VISIBLE);
+        } else {
+            btnShopCancelFilter.setVisibility(View.GONE);
+        }
+    }
+
+
+    public void setVisible2() {
+        if (cbRatting.isChecked() | cbName.isChecked() | cbMinOrder.isChecked()) {
+            cbRatting.setChecked(false);
+            cbName.setChecked(false);
+            btnShopCancelFilter.setVisibility(View.VISIBLE);
+        } else {
+            btnShopCancelFilter.setVisibility(View.GONE);
+        }
+    }
 
     public void setVisible() {
         if (cbRatting.isChecked() | cbName.isChecked()| cbMinOrder.isChecked())
@@ -99,7 +130,7 @@ public class ShopFilterActivity extends AppCompatActivity implements View.OnClic
                 if (cbRatting.isChecked())
                     myList.add(DataBaseHelper.COLUMN_RATING);
                 String s1 = TextUtils.join(",", myList);
-                Log.i("save",s1);
+                Log.i("save", s1);
                 SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_FILTER, s1);
                 SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_SHOP_NAME, cbName.isChecked());
                 SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_SHOP_MIN, cbMinOrder.isChecked());

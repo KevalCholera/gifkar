@@ -38,7 +38,7 @@
             android:gravity="center"
             android:textSize="16sp"
             android:padding="@dimen/padding_8"
-            android:text="@string/emapty_address" />
+            android:text="@string/emapty_reminder" />
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/btnReminder"

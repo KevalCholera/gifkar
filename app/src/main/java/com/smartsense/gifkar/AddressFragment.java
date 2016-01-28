@@ -145,7 +145,7 @@ public class AddressFragment extends Fragment implements View.OnClickListener, R
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.PROFILE_UPDATE:
-                            CommonUtil.alertBox(getActivity(), "", "Profile Address Updated Successfully");
+                            JsonErrorShow.diloagMsgShow(getActivity(),"Address updated successfully.");
                             getUserDetail();
                             break;
                         case Constants.Events.EVENT_COUNTRY_LIST:

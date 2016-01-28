@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +63,7 @@ public class ProductAdapter extends CursorAdapter {
         TextView tvProdElementQty = (TextView) view.findViewById(R.id.tvProdElementQty);
         final ImageButton ibProdElementPlus = (ImageButton) view.findViewById(R.id.ibProdElementPlus);
         final ImageButton ibProdElementMinus = (ImageButton) view.findViewById(R.id.ibProdElementMinus);
+        ImageView ivProdElementType = (ImageView) view.findViewById(R.id.ivProdElementType);
 //        ImageButton ibProdElementNext = (ImageButton) view.findViewById(R.id.ibProdElementNext);
 
 //        if (cursor.getInt(cursor.getColumnIndexOrThrow("day_id")) == day_id) {
@@ -70,7 +72,19 @@ public class ProductAdapter extends CursorAdapter {
 //        } else {
 //            view.setBackground(context.getResources().getDrawable(R.drawable.shape_box));
 //        }
-        tvProdElementCate.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_QUANTITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME)));
+        if (cursor.getString(cursor
+                .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_ITEM_TYPE)).trim().equalsIgnoreCase("veg")) {
+            ivProdElementType.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.veg));
+            ivProdElementType.setVisibility(View.VISIBLE);
+        }else if (cursor.getString(cursor
+                .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_ITEM_TYPE)).trim().equalsIgnoreCase("non-veg")) {
+            ivProdElementType.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.non_veg));
+            ivProdElementType.setVisibility(View.VISIBLE);
+        }else{
+            ivProdElementType.setVisibility(View.GONE);
+        }
+//        + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME))
+        tvProdElementCate.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_QUANTITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME)));
         tvProdElementDT.setText(cursor.getString(cursor
                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_EARLIY_DEL)));
         tvProdElementPrice.setText("₹ " + cursor.getString(cursor
@@ -138,7 +152,7 @@ public class ProductAdapter extends CursorAdapter {
                         ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_fill);
                     }
                 }else{
-                    Toast.makeText(context, "Sorry, Maximum item limit is Three", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Sorry, you can't add more of these items", Toast.LENGTH_SHORT).show();
                 }
             }
         });

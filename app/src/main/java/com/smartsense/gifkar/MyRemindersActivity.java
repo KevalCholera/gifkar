@@ -3,6 +3,7 @@ package com.smartsense.gifkar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -71,7 +72,8 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
         actionBarTitle.setText(getResources().getString(R.string.screen_my_reminders));
         actionBarTitle.setBackgroundColor(getActivity().getResources().getColor(R.color.mainColor));
         ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
-        btFilter.setVisibility(View.INVISIBLE);
+        btFilter.setBackgroundResource(R.drawable.ic_action_info);
+//        btFilter.setVisibility(View.INVISIBLE);
         ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
         btSearch.setVisibility(View.INVISIBLE);
         tvMyReminder = (TextView) view.findViewById(R.id.tvMyReminder);
@@ -99,10 +101,26 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
             case R.id.btnReminder:
                 startActivityForResult(new Intent(getActivity(), AddRemindersActivity.class), 0);
                 break;
-//            case R.id.btActionBarBack:
-//                finish();
-//                break;
+            case R.id.btActionBarfilter:
+                openInfoPopup();
+                break;
             default:
+        }
+    }
+
+    public void openInfoPopup() {
+        try {
+            final android.app.AlertDialog.Builder alertDialogs = new android.app.AlertDialog.Builder(getActivity());
+            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View dialog = inflater.inflate(R.layout.dialog_info, null);
+            alertDialogs.setView(dialog);
+            alertDialogs.setCancelable(true);
+            TextView tvDialog=(TextView) dialog.findViewById(R.id.textInfoDialog);
+            tvDialog.setText(getResources().getString(R.string.remind_des));
+            android.app.AlertDialog alert = alertDialogs.create();
+            alert.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -367,8 +385,9 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
                 case R.id.ivMyReminderElementDelete:
                     AlertDialog.Builder alertbox = new AlertDialog.Builder(activity);
                     alertbox.setCancelable(true);
-                    alertbox.setMessage("Are you sure you want to delete ?");
-                    alertbox.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    alertbox.setTitle("Delete Reminder");
+                    alertbox.setMessage("Are you sure you want to delete this reminder?");
+                    alertbox.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
                             JSONObject objReminder = null;
@@ -382,7 +401,7 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
                         }
 
                     });
-                    alertbox.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    alertbox.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {
 
                         }

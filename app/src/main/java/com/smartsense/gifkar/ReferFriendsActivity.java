@@ -124,13 +124,13 @@ public class ReferFriendsActivity extends AppCompatActivity implements View.OnCl
             intent.setAction(Intent.ACTION_SEND);
             intent.setPackage("com.facebook.katana");
             intent.setType("text/plain");
-            intent.putExtra( Intent.EXTRA_TEXT, getResources().getString(R.string.share_msg));
+            intent.putExtra( Intent.EXTRA_TEXT, getResources().getString(R.string.share_msg)+ ReferFriendsActivity.this.getPackageName());
             startActivity(intent);
         } else {
             Intent waIntent = new Intent(Intent.ACTION_SEND);
             waIntent.setType("text/plain");
             waIntent.setPackage(packageName);
-            waIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_msg));
+            waIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.share_msg) + ReferFriendsActivity.this.getPackageName());
             startActivity(Intent.createChooser(waIntent, "Share with"));
         }
     }

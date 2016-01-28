@@ -16,6 +16,11 @@ import com.smartsense.gifkar.GifkarApp;
 import com.smartsense.gifkar.R;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 /**
  * Created by smartSense on 06-12-2015.
  */
@@ -23,9 +28,13 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
     CursorAdapter mCursorAdapter;
     Context mContext;
     ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
+    final SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
+    private Calendar mCalendar = null;
+    private Calendar mCalendar1 = null;
 
     public ShopListAdapter(Context context, Cursor c) {
-
+        mCalendar = Calendar.getInstance();
+        mCalendar1 = Calendar.getInstance();
         mContext = context;
 
         mCursorAdapter = new CursorAdapter(mContext, c, 0) {
@@ -63,15 +72,27 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
                     ivShopListMidNight.setVisibility(View.GONE);
                 }
                 tvShopListRating.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING)).equalsIgnoreCase("null") ? "  -  " : cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING)));
-                tvShopListCutofTime.setText("Cut off Time : " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CUT_OF_TIME)) + "hours");
-                tvShopListDeliveryTime.setText("Del. Time : " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_FROM)) + " to " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_TO)));
+                tvShopListCutofTime.setText("Cut off Time : " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CUT_OF_TIME)) + " hours");
+                if (!cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_FROM)).equalsIgnoreCase("null")) {
+
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("H:m:s", Locale.ENGLISH);
+                        mCalendar.setTime(sdf.parse(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_FROM))));
+                        mCalendar1.setTime(sdf.parse(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_TO))));
+                        tvShopListDeliveryTime.setText("Del. Time : " + df.format(mCalendar.getTime()) + " to " + df.format(mCalendar1.getTime()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                } else
+                    tvShopListDeliveryTime.setText("Del. Time : ");
                 tvShopListShopName.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_NAME)));
                 tvShopListMinOrder.setText("Min. : \u20B9 " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_MIN_ORDER)));
                 tvShopListTag.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_TAGS)));
                 ivShopListImage.setDefaultImageResId(R.drawable.default_img);
 //                Constants.BASE_URL + "/images/shops/thumbs/" +
                 ivShopListImage.setImageUrl(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB)), imageLoader);
-                view.setTag(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_ID)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CATEGORY_ID))+" "+cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_NAME))+" "+cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB)));
+                view.setTag(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_ID)) + "_" + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CATEGORY_ID)) + "_" + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB)) + "_" + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_NAME))+ "_" + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_MIN_ORDER))+ "_" + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_CHARGE)));
             }
         };
     }

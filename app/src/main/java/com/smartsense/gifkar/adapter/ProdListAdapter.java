@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -55,15 +56,21 @@ public class ProdListAdapter extends RecyclerView.Adapter<ProdListAdapter.ViewHo
                 ImageButton ibProdElementPlus = (ImageButton) view.findViewById(R.id.ibProdElementPlus);
                 ImageButton ibProdElementMinus = (ImageButton) view.findViewById(R.id.ibProdElementMinus);
                 NetworkImageView ivShopListImage = (NetworkImageView) view.findViewById(R.id.ivProdElementImage);
-
+                ImageView ivProdElementType = (ImageView) view.findViewById(R.id.ivProdElementType);
 //              ivShopListImage.setDefaultImageResId(R.drawable.ic_gifkar_logo);
 //              ivShopListImage.setImageUrl(Constants.BASE_IMAGE_URL + cursor.getString(cursor.getColumnIndexOrThrow("body")), imageLoader);
 
-                tvProdElementCate.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_QUANTITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME)));
-                tvProdElementDT.setText(cursor.getString(cursor
-                        .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_EARLIY_DEL)));
-                tvProdElementPrice.setText(cursor.getString(cursor
-                        .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PRICE)));
+                if (cursor.getString(cursor
+                        .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_ITEM_TYPE)).trim().equalsIgnoreCase("veg")) {
+                    ivProdElementType.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.veg));
+                    ivProdElementType.setVisibility(View.VISIBLE);
+                }else if (cursor.getString(cursor
+                        .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_ITEM_TYPE)).trim().equalsIgnoreCase("non-veg")) {
+                    ivProdElementType.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.non_veg));
+                    ivProdElementType.setVisibility(View.VISIBLE);
+                }else{
+                    ivProdElementType.setVisibility(View.GONE);
+                }
                 tvProdElementName.setText(cursor.getString(cursor
                         .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_NAME)));
                 ibProdElementPlus.setTag(tvProdElementQty);

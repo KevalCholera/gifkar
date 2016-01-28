@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,11 +95,21 @@ public class MyCartAdapter extends BaseAdapter {
             holder.ibProdElementPlus = (ImageButton) view.findViewById(R.id.ibProdElementPlus);
             holder.ibProdElementMinus = (ImageButton) view.findViewById(R.id.ibProdElementMinus);
 //            holder.ibProdElementNext = (ImageButton) view.findViewById(R.id.ibProdElementNext);
+            holder.ivProdElementType = (ImageView) view.findViewById(R.id.ivProdElementType);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
         JSONObject addressObj = dataArray.optJSONObject(position);
+        if (addressObj.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("veg")) {
+            holder.ivProdElementType.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.veg));
+            holder.ivProdElementType.setVisibility(View.VISIBLE);
+        }else if (addressObj.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("non-veg")) {
+            holder.ivProdElementType.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.non_veg));
+            holder.ivProdElementType.setVisibility(View.VISIBLE);
+        }else{
+            holder.ivProdElementType.setVisibility(View.GONE);
+        }
         holder.tvProdElementCate.setText(addressObj.optString(DataBaseHelper.COLUMN_PROD_QUANTITY) + " " + addressObj.optString(DataBaseHelper.COLUMN_PROD_UNIT_NAME) + " " + addressObj.optString(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME));
         holder.tvProdElementDT.setText(addressObj.optString(DataBaseHelper.COLUMN_PROD_EARLIY_DEL));
         holder.tvProdElementPrice.setText("₹ " +addressObj.optString(DataBaseHelper.COLUMN_PROD_PRICE));
@@ -138,7 +149,7 @@ public class MyCartAdapter extends BaseAdapter {
                         holder.ibProdElementPlus.setBackgroundResource(R.drawable.ic_product_plus_fill);
                     }
                 }else{
-                    Toast.makeText(activity, "Sorry, Maximum item limit is Three", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Sorry, you can't add more of these items", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -156,6 +167,7 @@ public class MyCartAdapter extends BaseAdapter {
         TextView tvProdElementQty;
         ImageButton ibProdElementPlus;
         ImageButton ibProdElementMinus;
+        ImageView ivProdElementType;
 //        ImageButton ibProdElementNext;
     }
 

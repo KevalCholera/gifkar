@@ -39,7 +39,7 @@
             android:layout_marginLeft="@dimen/margin_8"
 
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <!--<com.smartsense.gifkar.textstyleUtil.TypefaceTextView-->
             <!--android:id="@+id/tvProdDetailName"-->
@@ -52,12 +52,21 @@
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
                 android:id="@+id/tvProdDetailRs"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:fontFamily="normal"
                 android:text="\u20B9 100"
                 android:textSize="@dimen/text_16"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivProdDetailType"
+                android:layout_width="18dp"
+                android:gravity="center"
+                android:layout_height="18dp"
+
+                android:background="@drawable/veg" />
 
         </LinearLayout>
 

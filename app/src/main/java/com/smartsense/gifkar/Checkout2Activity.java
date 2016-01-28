@@ -314,7 +314,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                     }
                 });
                 alertDialogs.setView(dialog);
-                alertDialogs.setCancelable(false);
+                alertDialogs.setCancelable(true);
                 alert = alertDialogs.create();
                 alert.show();
             }

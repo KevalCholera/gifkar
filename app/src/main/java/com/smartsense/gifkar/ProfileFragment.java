@@ -131,7 +131,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, R
             params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
             params.put("flag", "profile");
             params.put("firstName", etFirstName.getText().toString());
-            params.put("lastName", etFirstName.getText().toString());
+            params.put("lastName", etLastName.getText().toString());
             params.put("dob", mCalendar == null ? etDob.getText().toString() : df.format(mCalendar.getTime()));
             params.put("gender", (String) rb.getTag());
             Log.d("Params", params.toString());

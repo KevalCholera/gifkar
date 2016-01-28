@@ -7,5 +7,5 @@
 
     <solid android:color="@color/textcolorwhite"/>
 
-    <solid android:color="#ACB0AC"/>
+    <solid android:color="@color/textcolorwhite"/>
 </shape>

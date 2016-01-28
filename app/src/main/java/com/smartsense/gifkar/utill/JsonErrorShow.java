@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.GifkarActivity;
@@ -48,15 +49,16 @@ public class JsonErrorShow {
     }
 
     public static void diloagMsgShow(Activity a, String msg) {
-        final AlertDialog.Builder alert = new AlertDialog.Builder(a);
-//        alert.setTitle("Error!");
-        alert.setMessage(msg);
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-
-            }
-
-        });
-        alert.show();
+        Toast.makeText(a, msg, Toast.LENGTH_LONG).show();
+//        final AlertDialog.Builder alert = new AlertDialog.Builder(a);
+////        alert.setTitle("Error!");
+//        alert.setMessage(msg);
+//        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int id) {
+//
+//            }
+//
+//        });
+//        alert.show();
     }
 }

@@ -116,6 +116,8 @@ public class SuggestNewShopActivity extends AppCompatActivity implements View.On
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View dialog = inflater.inflate(R.layout.dialog_info, null);
             alertDialogs.setView(dialog);
+            TextView tvDialog=(TextView) dialog.findViewById(R.id.textInfoDialog);
+            tvDialog.setText(getResources().getString(R.string.suggest_des));
 //            alertDialogs.setCancelable(false);
             AlertDialog alert = alertDialogs.create();
             alert.show();

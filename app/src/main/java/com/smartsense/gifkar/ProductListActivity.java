@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -41,6 +42,7 @@ import java.util.List;
 public class ProductListActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
         Response.ErrorListener {
 
+    private static double totalAmount;
     private ImageView btBack;
     private ImageView btFilter;
     private ImageView btInfo;
@@ -129,10 +131,14 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
                 startActivity(new Intent(this, MyCartActivity.class).putExtra("flag", true));
                 break;
             case R.id.llProdListCheckOut:
-                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
-                    startActivity(new Intent(this, Checkout1Activity.class));
-                else
-                    startActivity(new Intent(this, StartActivity.class));
+                if (totalAmount >= Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"))) {
+                    if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
+                        startActivity(new Intent(this, Checkout1Activity.class));
+                    else
+                        startActivity(new Intent(this, StartActivity.class));
+                } else {
+                    Toast.makeText(ProductListActivity.this, "Minimum order amount from this shop is " + SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"), Toast.LENGTH_LONG).show();
+                }
                 break;
             default:
         }
@@ -240,7 +246,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     }
 
     public static void checkCart(Context context, JSONArray productArray) {
-        double totalAmount = 0;
+        totalAmount = 0;
         for (int i = 0; i < productArray.length(); i++) {
             totalAmount += (productArray.optJSONObject(i).optDouble(DataBaseHelper.COLUMN_PROD_PRICE) * productArray.optJSONObject(i).optDouble("quantity"));
         }

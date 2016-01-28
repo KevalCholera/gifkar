@@ -92,7 +92,11 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.tvMyAddress:
             case R.id.btnAddAddress:
-                startActivityForResult(new Intent(this, AddAddressActivity.class), 0);
+                if (getIntent().getBooleanExtra(Constants.SCREEN, false)) {
+                    startActivityForResult(new Intent(this, AddAddressActivity.class).putExtra("area", true), 0);
+                } else {
+                    startActivityForResult(new Intent(this, AddAddressActivity.class).putExtra("area", false), 0);
+                }
                 break;
             case R.id.btActionBarBack:
                 Intent intent = new Intent();
@@ -131,7 +135,12 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View dialog = inflater.inflate(R.layout.dialog_info, null);
             alertDialogs.setView(dialog);
-//            alertDialogs.setCancelable(false);
+            alertDialogs.setCancelable(true);
+            TextView tvDialog = (TextView) dialog.findViewById(R.id.textInfoDialog);
+            if (getIntent().getBooleanExtra(Constants.SCREEN, false))
+                tvDialog.setText(getResources().getString(R.string.address_des1));
+            else
+                tvDialog.setText(getResources().getString(R.string.address_des));
             AlertDialog alert = alertDialogs.create();
             alert.show();
         } catch (Exception e) {
@@ -143,7 +152,10 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
         final String tag = "address";
         String url = Constants.BASE_URL + "/mobile/deliveryAddress/get";
         Map<String, String> params = new HashMap<String, String>();
-        params.put("address", "all");
+        if (getIntent().getBooleanExtra(Constants.SCREEN, false))
+            params.put("areaId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_ID, ""));
+        else
+            params.put("address", "all");
         params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
         params.put("eventId", String.valueOf(Constants.Events.EVENT_GET_ADDRESS));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
@@ -265,7 +277,7 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
             holder.tvName.setText(addressObj.optString("recipientName"));
             holder.tvNo.setText(addressObj.optString("recipientContact"));
             holder.tvStreet.setText(addressObj.optString("address") + " " + addressObj.optString("companyName") + " " + addressObj.optString("landmark"));
-            holder.tvCity.setText(addressObj.optJSONObject("area").optString("name") + "," + addressObj.optJSONObject("area").optString("name") + " " + addressObj.optJSONObject("area").optString("name"));
+            holder.tvCity.setText(addressObj.optJSONObject("area").optString("name") + "," + addressObj.optJSONObject("area").optString("pincode") + " " + addressObj.optJSONObject("city").optString("name"));
             holder.ivDelete.setOnClickListener(this);
             holder.ivDelete.setTag(addressObj.toString());
             holder.ivEdit.setOnClickListener(this);
@@ -292,8 +304,9 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
                 case R.id.ivMyAddressElementAddressDelete:
                     AlertDialog.Builder alertbox = new AlertDialog.Builder(activity);
                     alertbox.setCancelable(true);
-                    alertbox.setMessage("Are you sure you want to delete ?");
-                    alertbox.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    alertbox.setTitle("Delete Address");
+                    alertbox.setMessage("Are you sure you want to delete this address?");
+                    alertbox.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
                             JSONObject objReminder = null;
@@ -306,7 +319,7 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
                         }
 
                     });
-                    alertbox.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    alertbox.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface arg0, int arg1) {
 
                         }
@@ -314,9 +327,10 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
                     alertbox.show();
                     break;
                 case R.id.ivMyAddressElementAddressEdit:
-                    activity.startActivityForResult(new Intent(activity, AddAddressActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_MYADDRESS).putExtra("Address", (String) view.getTag()), 0);
+                    activity.startActivityForResult(new Intent(activity, AddAddressActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_MYADDRESS).putExtra("Address", (String) view.getTag()).putExtra("area", false), 0);
                     break;
             }
+
         }
 
     }

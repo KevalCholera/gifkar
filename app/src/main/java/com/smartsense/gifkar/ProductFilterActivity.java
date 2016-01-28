@@ -22,7 +22,7 @@ import java.util.List;
 
 public class ProductFilterActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private ImageView btBack,btInfo;
+    private ImageView btBack, btInfo;
     CheckBox cbName, cbPrice;
     private Button btApplyFilter, btnProdCancelFilter;
 
@@ -47,14 +47,14 @@ public class ProductFilterActivity extends AppCompatActivity implements View.OnC
         cbName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVisible();
+                setVisible1();
             }
         });
 
         cbPrice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setVisible();
+                setVisible2();
             }
         });
         btnProdCancelFilter = (Button) findViewById(R.id.btnProdCancelFilter);
@@ -65,6 +65,34 @@ public class ProductFilterActivity extends AppCompatActivity implements View.OnC
         cbPrice.setChecked(SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_PROD_PRICE, false));
         setVisible();
     }
+
+
+    public void setVisible1() {
+        if (cbPrice.isChecked() | cbName.isChecked()){
+            cbPrice.setChecked(false);
+            btnProdCancelFilter.setVisibility(View.VISIBLE);
+        } else
+            btnProdCancelFilter.setVisibility(View.GONE);
+    }
+
+    public void setVisible2() {
+        if (cbPrice.isChecked() | cbName.isChecked()){
+            btnProdCancelFilter.setVisibility(View.VISIBLE);
+            cbName.setChecked(false);
+        } else
+            btnProdCancelFilter.setVisibility(View.GONE);
+    }
+
+//    public void setVisible() {
+//        if (cbPrice.isChecked()) {
+//            btnProdCancelFilter.setVisibility(View.VISIBLE);
+//            cbName.setChecked(false);
+//        } else if (cbName.isChecked()) {
+//            cbPrice.setChecked(false);
+//            btnProdCancelFilter.setVisibility(View.VISIBLE);
+//        } else
+//            btnProdCancelFilter.setVisibility(View.GONE);
+//    }
 
     public void setVisible() {
         if (cbPrice.isChecked() | cbName.isChecked())
@@ -113,6 +141,7 @@ public class ProductFilterActivity extends AppCompatActivity implements View.OnC
             default:
         }
     }
+
     public void openInfoPopup() {
         try {
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);

@@ -147,25 +147,36 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_5"
-                android:layout_weight="1"
                 android:fontFamily="normal"
-                android:padding="@dimen/padding_8"
+                android:padding="@dimen/padding_5"
                 android:text="@string/reminder"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_14"
                 android:textStyle="bold" />
 
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:fontFamily="normal"
+
+                android:text="(ON/OFF)"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_10" />
+
+
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/switchMyReminder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical|right"
                 android:layout_margin="@dimen/margin_5"
                 android:checked="true" />
         </LinearLayout>

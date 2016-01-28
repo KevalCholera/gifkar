@@ -29,7 +29,8 @@ import java.text.DecimalFormat;
 public class ProductDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static JSONArray productArray;
-    private ImageView btBack;
+    private static double totalAmount;
+    private ImageView btBack,ivProdDetailType;
     private ImageButton ibProdMinus;
     private TextView tvProdPrice;
     private ImageButton ibProdPlus;
@@ -58,6 +59,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
         titleTextView.setText(getResources().getString(R.string.prod_name));
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
+
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_product_detail);
@@ -78,6 +80,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         llProdDetailCart.setOnClickListener(this);
         llProdDetailCheckOut = (TextView) findViewById(R.id.llProdDetailCheckOut);
         llProdDetailCheckOut.setOnClickListener(this);
+        ivProdDetailType = (ImageView) findViewById(R.id.ivProdDetailType);
 
         Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_PRODUCT + "  WHERE " + DataBaseHelper.COLUMN_PROD_DETAIL_ID + " = '"
                 + getIntent().getIntExtra("ProdDEID", 0) + "'");
@@ -105,11 +108,24 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            if (cursor.getString(cursor
+                    .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_ITEM_TYPE)).trim().equalsIgnoreCase("veg")) {
+                ivProdDetailType.setBackgroundDrawable(getResources().getDrawable(R.drawable.veg));
+                ivProdDetailType.setVisibility(View.VISIBLE);
+            }else if (cursor.getString(cursor
+                    .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_ITEM_TYPE)).trim().equalsIgnoreCase("non-veg")) {
+                ivProdDetailType.setBackgroundDrawable(getResources().getDrawable(R.drawable.non_veg));
+                ivProdDetailType.setVisibility(View.VISIBLE);
+            }else{
+                ivProdDetailType.setVisibility(View.GONE);
+            }
             tvProdQty.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
 
             tvProdDes.setText(cursor.getString(cursor
                     .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DESC)));
-            tvProdUnitName.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_QUANTITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME)));
+//             + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME))
+            tvProdUnitName.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_QUANTITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME)));
             tvProdPrice.setText("₹ " +cursor.getString(cursor
                     .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PRICE)));
 //            tvProdName.setText(cursor.getString(cursor
@@ -137,7 +153,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     }
 
     public static void checkCart(JSONArray productArray) {
-        double totalAmount = 0;
+        totalAmount = 0;
         for (int i = 0; i < productArray.length(); i++) {
             totalAmount += (productArray.optJSONObject(i).optDouble(DataBaseHelper.COLUMN_PROD_PRICE) * productArray.optJSONObject(i).optDouble("quantity"));
         }
@@ -178,7 +194,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
                         ibProdPlus.setBackgroundResource(R.drawable.ic_product_plus_fill);
                     }
                 }else{
-                    Toast.makeText(this,"Sorry, Maximum item limit is Three",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"Sorry, you can't add more of these items",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btActionBarBack:
@@ -190,10 +206,14 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
 //                finish();
                 break;
             case R.id.llProdDetailCheckOut:
-                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
-                    startActivity(new Intent(this, Checkout1Activity.class));
-                else
-                    startActivity(new Intent(this, GifkarActivity.class));
+                if (totalAmount > Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"))) {
+                    if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
+                        startActivity(new Intent(this, Checkout1Activity.class));
+                    else
+                        startActivity(new Intent(this, StartActivity.class));
+                } else {
+                    Toast.makeText(ProductDetailActivity.this, "Minimum order amount from this shop is " + SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"), Toast.LENGTH_LONG).show();
+                }
                 break;
             default:
         }

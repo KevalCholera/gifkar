@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.MyCartAdapter;
@@ -128,10 +129,14 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llChackout:
-                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
-                    startActivity(new Intent(this, Checkout1Activity.class));
-                else
-                    startActivity(new Intent(this, GifkarActivity.class));
+                if (totalAmount > Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"))) {
+                    if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
+                        startActivity(new Intent(this, Checkout1Activity.class));
+                    else
+                        startActivity(new Intent(this, StartActivity.class));
+                } else {
+                    Toast.makeText(MyCartActivity.this, "Minimum order amount from this shop is " + SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"), Toast.LENGTH_LONG).show();
+                }
                 break;
             case R.id.btActionBarBack:
                 ProductFragment.reloadList = true;
@@ -146,7 +151,7 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.btActionBarInfo:
                 AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
                 alertbox.setCancelable(true);
-                alertbox.setMessage("Are you sure you want to delete ?");
+                alertbox.setMessage("Are you sure you want to empty your Cart?");
                 alertbox.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {

@@ -1,5 +1,6 @@
 package com.smartsense.gifkar;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -8,9 +9,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -18,11 +21,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.mpt.storage.SharedPreferenceUtil;
+import com.smartsense.gifkar.adapter.CountryCodeAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataRequest;
 import com.smartsense.gifkar.utill.JsonErrorShow;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,6 +41,9 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
     ImageView btBack;
     JSONObject addressObj;
     Boolean check = true;
+    android.app.AlertDialog alert;
+    JSONArray cityArr;
+    private ImageView btInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +64,13 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         }
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
+//        btInfo = (ImageView) v.findViewById(R.id.btActionBarInfo);
+//        btInfo.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_add_address);
         etNo = (EditText) findViewById(R.id.etMyAddressAddNo);
-
         etArea = (EditText) findViewById(R.id.etMyAddressAddArea);
-        etArea.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, ""));
-
         etPincode = (EditText) findViewById(R.id.etMyAddressAddPinCode);
-        etPincode.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
         etStreet = (EditText) findViewById(R.id.etMyAddressAddStreet);
         etFlatNo = (EditText) findViewById(R.id.etMyAddressAddFlatNo);
         etName = (EditText) findViewById(R.id.etMyAddressAddName);
@@ -74,13 +80,32 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_MYADDRESS) {
             check = false;
             btnAddAddress.setText(getResources().getString(R.string.update));
-            etArea.setText(addressObj.optJSONObject("area").optString("name"));
-            etPincode.setText(addressObj.optJSONObject("area").optString("name"));
+            etArea.setText(addressObj.optJSONObject("city").optString("name"));
+            etPincode.setText(addressObj.optJSONObject("area").optString("name") + " " + addressObj.optJSONObject("area").optString("pincode"));
             etNo.setText(addressObj.optString("recipientContact"));
             etStreet.setText(addressObj.optString("companyName"));
             etFlatNo.setText(addressObj.optString("address"));
             etName.setText(addressObj.optString("recipientName"));
             etLandmark.setText(addressObj.optString("landmark"));
+            etPincode.setTag(addressObj.optJSONObject("city").optString("id"));
+            etArea.setTag(addressObj.optJSONObject("area").optString("id"));
+        }
+
+        if (getIntent().getBooleanExtra("area", false)) {
+            etPincode.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + " " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
+            etPincode.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            etPincode.setTag(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_ID, ""));
+            etArea.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CITY_NAME, ""));
+            etArea.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            etArea.setTag(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CITY_ID, ""));
+        } else {
+            getCityList();
+            etPincode.setOnClickListener(this);
+            etArea.setOnClickListener(this);
+            etPincode.setEnabled(true);
+            etArea.setEnabled(true);
+            etArea.setFocusable(false);
+            etPincode.setFocusable(false);
         }
 
     }
@@ -107,6 +132,15 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
             case R.id.btActionBarBack:
                 finish();
                 break;
+            case R.id.etMyAddressAddPinCode:
+                openAreaPopup();
+                break;
+            case R.id.etMyAddressAddArea:
+                openCityPopup();
+                break;
+            case R.id.btActionBarInfo:
+                openInfoPopup();
+                break;
             default:
         }
     }
@@ -128,13 +162,22 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         params.put("address", etFlatNo.getText().toString());
         params.put("companyName", etStreet.getText().toString());
         params.put("landmark", etLandmark.getText().toString());
-        params.put("areaId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_ID, ""));
-        params.put("cityId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CITY_ID, ""));
+        params.put("areaId", (String) etPincode.getTag());
+        params.put("cityId", (String) etArea.getTag());
         params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         Log.i("params", params.toString());
         CommonUtil.showProgressDialog(this, "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+    public void getCityList() {
+        final String tag = "cityList";
+        String url = Constants.BASE_URL + "/mobile/city/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&eventId=" + String.valueOf(Constants.Events.EVENT_CITY);
+        CommonUtil.showProgressDialog(this, "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
@@ -174,6 +217,21 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                             });
                             alert.show();
                             break;
+                        case Constants.Events.EVENT_CITY:
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());
+                            SharedPreferenceUtil.save();
+                            if (getIntent().getIntExtra(Constants.SCREEN, 1) != Constants.ScreenCode.SCREEN_MYADDRESS) {
+                                if (response.getJSONObject("data").getJSONArray("cities").length() != 0) {
+                                    etArea.setText(response.getJSONObject("data").getJSONArray("cities").getJSONObject(0).optString("name"));
+                                    etArea.setTag(response.getJSONObject("data").getJSONArray("cities").getJSONObject(0).optString("id"));
+                                    if (response.getJSONObject("data").getJSONArray("cities").getJSONObject(0).optJSONArray("areas").length() != 0) {
+                                        cityArr = response.getJSONObject("data").getJSONArray("cities").getJSONObject(0).optJSONArray("areas");
+                                        etPincode.setText(response.getJSONObject("data").getJSONArray("cities").getJSONObject(0).optJSONArray("areas").getJSONObject(0).optString("name") + " " + response.getJSONObject("data").getJSONArray("cities").getJSONObject(0).optJSONArray("areas").getJSONObject(0).optString("pincode"));
+                                        etPincode.setTag(response.getJSONObject("data").getJSONArray("cities").getJSONObject(0).optJSONArray("areas").getJSONObject(0).optString("id"));
+                                    }
+                                }
+                            }
+                            break;
                     }
                 } else {
                     JsonErrorShow.jsonErrorShow(response, AddAddressActivity.this);
@@ -184,4 +242,101 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    public void openCityPopup() {
+        try {
+            JSONObject response = new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_COUNTRY_LIST, ""));
+            final android.app.AlertDialog.Builder alertDialogs = new android.app.AlertDialog.Builder(AddAddressActivity.this);
+            LayoutInflater inflater = (LayoutInflater) AddAddressActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View dialog = inflater.inflate(R.layout.dialog_city_select, null);
+            ListView list_view = (ListView) dialog.findViewById(R.id.list_view);
+            if (response.getJSONObject("data").getJSONArray("cities").length() == 0) {
+                CommonUtil.alertBox(AddAddressActivity.this, "", "City Not Found Please Try Again.");
+            } else {
+                etArea.setText(response.getJSONObject("data").getJSONArray("cities").getJSONObject(0).optString("name"));
+                etArea.setTag(response.getJSONObject("data").getJSONArray("cities").getJSONObject(0).optString("id"));
+                cityArr = response.getJSONObject("data").getJSONArray("cities").getJSONObject(0).optJSONArray("areas");
+                CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(AddAddressActivity.this, response.getJSONObject("data").getJSONArray("cities"), false);
+                list_view.setAdapter(countryCodeAdapter);
+
+                list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
+                        JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
+                        etArea.setText(getCodeObj.optString("name"));
+                        etArea.setTag(getCodeObj.optString("id"));
+                        if (getCodeObj.optJSONArray("areas").length() != 0) {
+                            try {
+                                cityArr = getCodeObj.optJSONArray("areas");
+                                etPincode.setText(getCodeObj.optJSONArray("areas").getJSONObject(0).optString("name") + " " + getCodeObj.optJSONArray("areas").getJSONObject(0).optString("pincode"));
+                                etPincode.setTag(getCodeObj.optJSONArray("areas").getJSONObject(0).optString("id"));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        alert.dismiss();
+
+                    }
+                });
+                alertDialogs.setView(dialog);
+                alertDialogs.setCancelable(false);
+                alert = alertDialogs.create();
+                alert.show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openAreaPopup() {
+        try {
+            final android.app.AlertDialog.Builder alertDialogs = new android.app.AlertDialog.Builder(AddAddressActivity.this);
+            LayoutInflater inflater = (LayoutInflater) AddAddressActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View dialog = inflater.inflate(R.layout.dialog_city_select, null);
+            ListView list_view = (ListView) dialog.findViewById(R.id.list_view);
+            if (cityArr.length() == 0) {
+                CommonUtil.alertBox(AddAddressActivity.this, "", "Area Not Found Please Try Again.");
+            } else {
+//                etCity.setText(cityArr.getJSONObject(0).optString("name"));
+//                etCity.setTag(cityArr.getJSONObject(0).optString("id"));
+                CountryCodeAdapter countryCodeAdapter = new CountryCodeAdapter(AddAddressActivity.this, cityArr, false);
+                list_view.setAdapter(countryCodeAdapter);
+
+                list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
+                        JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
+                        etPincode.setText(getCodeObj.optString("name") + " " + getCodeObj.optString("pincode"));
+                        etPincode.setTag(getCodeObj.optString("id"));
+                        alert.dismiss();
+
+                    }
+                });
+                alertDialogs.setView(dialog);
+                alertDialogs.setCancelable(false);
+                alert = alertDialogs.create();
+                alert.show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openInfoPopup() {
+        try {
+            final android.app.AlertDialog.Builder alertDialogs = new android.app.AlertDialog.Builder(this);
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View dialog = inflater.inflate(R.layout.dialog_info, null);
+            alertDialogs.setView(dialog);
+//            alertDialogs.setCancelable(false);
+            TextView tvDialog=(TextView) dialog.findViewById(R.id.textInfoDialog);
+            tvDialog.setText(getResources().getString(R.string.del_des));
+            android.app.AlertDialog alert = alertDialogs.create();
+            alert.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

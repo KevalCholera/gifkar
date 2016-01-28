@@ -58,6 +58,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
     RadioButton rbMyReminder1Day, rbMyReminder2Day, rbMyReminder1Hour;
     Dialog alert;
     private RadioGroup rbMyReminderGroup;
+    private ImageView btInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater inflater = LayoutInflater.from(this);
-        View v = inflater.inflate(R.layout.action_bar_center, null);
+        View v = inflater.inflate(R.layout.action_bar_info, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
         try {
             if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_MYREMINDER) {
@@ -79,6 +80,8 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
         }
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
         btBack.setOnClickListener(this);
+        btInfo = (ImageView) v.findViewById(R.id.btActionBarInfo);
+        btInfo.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         mCalendar = Calendar.getInstance();
         rbMyReminderGroup = (RadioGroup) findViewById(R.id.rbMyReminderGroup);
@@ -170,6 +173,9 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btActionBarInfo:
+                openInfoPopup();
+                break;
             case R.id.btnMyReminderAdd:
                 saveReminder();
                 break;
@@ -351,5 +357,19 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
         }
 
 
+    }
+
+    public void openInfoPopup() {
+        try {
+            final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View dialog = inflater.inflate(R.layout.dialog_info, null);
+            alertDialogs.setView(dialog);
+//            alertDialogs.setCancelable(false);
+            AlertDialog alert = alertDialogs.create();
+            alert.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

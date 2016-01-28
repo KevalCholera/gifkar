@@ -61,7 +61,7 @@ public class Checkout1Activity extends AppCompatActivity implements View.OnClick
         CheckoutAdapter checkoutAdapter = null;
         try {
             double totalAmount = 0;
-            double shipping = 0;
+            double shipping = Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.DELIVERY_CHARGES,"0"));
             for (int i = 0; i < productCartArray.length(); i++) {
                 totalAmount += (productCartArray.optJSONObject(i).optDouble(DataBaseHelper.COLUMN_PROD_PRICE) * productCartArray.optJSONObject(i).optDouble("quantity"));
             }

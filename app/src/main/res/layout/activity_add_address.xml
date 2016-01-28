@@ -90,7 +90,6 @@
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/edittext_hint_color" />
 
-
         <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etMyAddressAddArea"
             android:layout_width="match_parent"
@@ -99,6 +98,8 @@
             android:background="@drawable/edittext_round"
             android:ems="10"
             android:enabled="false"
+            android:clickable="true"
+            android:drawableRight="@drawable/down_arrow"
             android:fontFamily="normal"
             android:inputType="textCapSentences"
             android:hint="@string/area"
@@ -115,7 +116,9 @@
             android:layout_margin="@dimen/margin_5"
             android:background="@drawable/edittext_round"
             android:ems="10"
+            android:drawableRight="@drawable/down_arrow"
             android:enabled="false"
+            android:clickable="true"
             android:fontFamily="normal"
             android:hint="@string/pin"
             android:padding="@dimen/padding_5"

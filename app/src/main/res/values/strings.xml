@@ -259,15 +259,16 @@
     <string name="emapty_past_order">Looks like don\'t have any on past orders.</string>
     <string name="emapty_address">Looks like don\'t have any address.</string>
     <string name="emapty_review">Looks like don\'t have any review.</string>
+    <string name="emapty_reminder">Looks like don\'t have any reminder.</string>
     <string name="emapty_cart_gift">Why don\'t you Gift someone today?</string>
     <string name="emapty_cart">Opps! Cart seems empty.</string>
     <string name="btStartGift">START GIFTING</string>
-    <string name="reception_name">Reception Name</string>
-    <string name="wrn_reception_name">Enter Reception Name</string>
+    <string name="reception_name">Recipient Name</string>
+    <string name="wrn_reception_name">Enter Recipient Name</string>
     <string name="notificaton_name">Notification Name</string>
     <string name="landmark">Landmark</string>
-    <string name="reception_no">Reception Mobile No.</string>
-    <string name="wrn_reception_no">Enter Reception Mobile No.</string>
+    <string name="reception_no">Recipient Mobile No.</string>
+    <string name="wrn_reception_no">Enter Recipient Mobile No.</string>
     <string name="info">Info</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
@@ -285,7 +286,7 @@
     <string name="gmail">Gmail</string>
     <string name="gplus">Google Plus</string>
     <string name="msg">SMS</string>
-    <string name="share_msg">Share With Friends</string>
+    <string name="share_msg">Celebrate every occasion with your loved ones. Send gifts from local stores - Download the Gifkar app - https://play.google.com/store/apps/details?id=</string>
     <string name="select_country">Select Country</string>
     <string name="screen_about">About Us</string>
     <string name="app_ver">1.0.0</string>
@@ -368,4 +369,10 @@
     <string name="wrn_pincode">Enter Pincode</string>
     <string name="wrn_country">Enter Country</string>
     <string name="wrn_area">Enter Area</string>
+    <string name="address_des">You can save delivery addresses of your recipient\'s (friends and family) in advance for a faster checkout. Please try to provide as much as accurate address information for better delivery experience</string>
+    <string name="suggest_des">You can suggest us your favorite local gifting shop from your area if we are in your city. We will try to get them on board for you.</string>
+    <string name="near_des">Oops either we don\'t recongnized the area or we are not operating in that area yet. Sorry!</string>
+    <string name="del_des">Select or Add delivery address of your recipient. The delivery address should be from the same area and city of selected local shop.</string>
+    <string name="remind_des">Do you forget birthdays of your loved ones? Do you forget special occasions with whom you want to celebrate? You can set reminders about birthdays, occasions etc. to get advance notifications.</string>
+    <string name="address_des1">Select or Add delivery address of your recipient. The delivery address should be from the same area and city of selected local shop.</string>
 </resources>

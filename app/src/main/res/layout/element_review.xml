@@ -10,7 +10,9 @@
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/ivReviewImage"
         android:layout_width="@dimen/product_image_height"
-        android:layout_height="@dimen/product_image_height" />
+        android:layout_height="@dimen/product_image_height"
+        android:layout_gravity="top"
+        android:layout_marginTop="@dimen/margin_5" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -18,28 +20,49 @@
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:orientation="vertical">
 
-        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-            android:id="@+id/tvReviewName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="normal"
-            android:paddingBottom="@dimen/padding_8"
-            android:singleLine="true"
-            android:text="Product Name"
-            android:textColor="@color/mainColor"
-            android:textSize="@dimen/text_14"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/padding_8">
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:id="@+id/tvReviewName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:fontFamily="normal"
+                android:singleLine="true"
+                android:text="Product Name"
+                android:textColor="@color/mainColor"
+                android:textSize="@dimen/text_14"
+                android:textStyle="bold" />
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:id="@+id/tvReviewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="normal"
+                android:gravity="top|right"
+                android:padding="@dimen/padding_5"
+                android:text="17 Jan 2016"
+                android:textSize="@dimen/text_10" />
+
+        </LinearLayout>
+
 
         <RatingBar
             android:id="@+id/rbReview"
             style="?android:attr/ratingBarStyleSmall"
-            android:isIndicator="false"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5" />
+            android:isIndicator="false"
+            android:paddingBottom="@dimen/padding_5"
+            />
 
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
@@ -47,30 +70,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="normal"
-            android:text="@string/city_bottom"
+            android:text="@string/large"
             android:textColor="@color/textcolor"
             android:textSize="@dimen/text_12" />
 
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-            android:id="@+id/tvReviewDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="normal"
-            android:gravity="top|right"
-            android:padding="@dimen/padding_5"
-            android:text="17 Jan 2016"
-            android:textSize="@dimen/text_16" />
 
     </LinearLayout>
 

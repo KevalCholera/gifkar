@@ -114,7 +114,7 @@
             android:layout_margin="@dimen/margin_5"
             android:background="@color/mainColor"
             android:fontFamily="normal"
-            android:text="@string/add_address"
+            android:text="@string/update"
             android:padding="@dimen/padding_5"
             android:textColor="@color/textcolorwhite"
             android:textSize="@dimen/text_16" />

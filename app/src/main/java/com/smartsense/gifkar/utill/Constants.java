@@ -65,6 +65,8 @@ public class Constants {
         public static final String SHOP_IMAGE = "shop_image";
         public static final String TIMESLOT = "time_slot";
         public static final String PREF_IS_SOCIAL = "social_flag";
+        public static final String MIN_ORDER = "min_order";
+        public static final String DELIVERY_CHARGES = "del_charges";
     }
 
     public class NavigationItems {

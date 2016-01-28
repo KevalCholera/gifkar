@@ -18,6 +18,8 @@ import com.smartsense.gifkar.utill.DateAndTimeUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+
 /**
  * Created by Ronak on 02-12-2015.
  */
@@ -77,11 +79,12 @@ public class ReviewAdapter extends BaseAdapter {
         }
         JSONObject addressObj = dataArray.optJSONObject(position);
         holder.tvReviewName.setText(addressObj.optJSONObject("user").optString("first_name") + " " + addressObj.optJSONObject("user").optString("last_name"));
-        holder.tvReviewDes.setText(DateAndTimeUtil.myDateAndTime(addressObj.optString("created_at")));
-        holder.tvReviewDate.setText(addressObj.optString("review"));
+        holder.tvReviewDes.setText(addressObj.optString("review"));
+        Calendar mCalendar = Calendar.getInstance();
+        holder.tvReviewDate.setText(DateAndTimeUtil.myDateAndTime(addressObj.optString("created_at"),mCalendar));
         holder.ivReviewImage.setDefaultImageResId(R.drawable.ic_user);
         holder.ivReviewImage.setImageUrl(Constants.BASE_URL + "/images/users/" + addressObj.optJSONObject("user").optString("image"), imageLoader);
-
+        holder.rbReview.setRating(Float.valueOf(addressObj.optString("rating")));
         return view;
     }
 

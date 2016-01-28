@@ -26,11 +26,11 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
         btBack.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_about_us);
-        llGifkar=(LinearLayout) findViewById(R.id.llGifkar);
+        llGifkar = (LinearLayout) findViewById(R.id.llGifkar);
         llGifkar.setOnClickListener(this);
-        llHelp=(LinearLayout) findViewById(R.id.llHelp);
+        llHelp = (LinearLayout) findViewById(R.id.llHelp);
         llHelp.setOnClickListener(this);
-        llFAQs=(LinearLayout) findViewById(R.id.llFAQS);
+        llFAQs = (LinearLayout) findViewById(R.id.llFAQS);
         llFAQs.setOnClickListener(this);
     }
 
@@ -44,10 +44,10 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
 
                 break;
             case R.id.llHelp:
-                startActivity(new Intent(this, TermsandCondtionsActivity.class));
+                startActivity(new Intent(this, TermsandCondtionsActivity.class).putExtra("page", 1).putExtra("text", getResources().getString(R.string.help)));
                 break;
             case R.id.llFAQS:
-                startActivity(new Intent(this, TermsandCondtionsActivity.class));
+                startActivity(new Intent(this, TermsandCondtionsActivity.class).putExtra("page", 2).putExtra("text", getResources().getString(R.string.faq)));
                 break;
 
         }

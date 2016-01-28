@@ -10,6 +10,8 @@
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/ivCheckout1ElementImage"
         android:layout_width="@dimen/product_image_height"
+        android:background="@drawable/borderwhite"
+        android:scaleType="fitXY"
         android:layout_height="@dimen/product_image_height" />
 
     <LinearLayout

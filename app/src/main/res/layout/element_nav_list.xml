@@ -1,53 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_5"
-    android:padding="@dimen/margin_5"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/iv_menuicon_drawer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_10"
-        android:layout_marginStart="@dimen/margin_10"
-        android:src="@drawable/ic_login" />
 
-    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-        android:id="@+id/tv_menuname_drawer"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/left_margin"
-        android:layout_marginStart="@dimen/left_margin"
-        android:layout_weight="2"
-        android:fontFamily="normal"
-        android:gravity="center_vertical"
-        android:padding="@dimen/padding_8"
-        android:text="@string/mobile"
-        android:textSize="@dimen/text_12" />
-
-    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-        android:id="@+id/tv_menucount_drawer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/left_margin"
-        android:layout_marginRight="@dimen/left_margin"
-        android:background="@drawable/round_blue"
-        android:fontFamily="normal"
-        android:padding="@dimen/padding_5"
-        android:textSize="@dimen/text_10"
-        android:text=" 1 "
-        android:textColor="@android:color/white"
-        android:visibility="gone" />
-
-    <View
-        android:id="@+id/viewLine"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:layout_margin="@dimen/margin_10"
-        android:layout_weight="1"
-        android:background="@color/activity_bg"
-        android:visibility="gone" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_5"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_5">
+
+        <ImageView
+            android:id="@+id/iv_menuicon_drawer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_marginStart="@dimen/margin_10"
+            android:src="@drawable/ic_login" />
+
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+            android:id="@+id/tv_menuname_drawer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/left_margin"
+            android:layout_marginStart="@dimen/left_margin"
+            android:layout_weight="2"
+            android:fontFamily="normal"
+            android:gravity="center_vertical"
+
+            android:padding="@dimen/padding_8"
+            android:text="@string/mobile"
+            android:textSize="@dimen/text_12" />
+
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+            android:id="@+id/tv_menucount_drawer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/left_margin"
+            android:layout_marginRight="@dimen/left_margin"
+            android:background="@drawable/round_blue"
+            android:fontFamily="normal"
+            android:padding="@dimen/padding_5"
+            android:text=" 1 "
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_10"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/viewLine"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_margin="@dimen/margin_10"
+            android:layout_weight="1"
+            android:background="@color/activity_bg"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+</RelativeLayout>

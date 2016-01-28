@@ -86,12 +86,14 @@ public class ShopFragment extends Fragment {
 
                         String str = (String) view.getTag();
 //                        String[] separated = str.split(" ");
-                        StringTokenizer st = new StringTokenizer(str, " ");
+                        StringTokenizer st = new StringTokenizer(str, "_");
                         Log.i("Shop", st.toString());
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_ID, st.nextToken());
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CATEGORY_ID, st.nextToken());
-                        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_NAME, st.nextToken());
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_IMAGE, st.nextToken());
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_NAME, st.nextToken());
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.MIN_ORDER, st.nextToken());
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.DELIVERY_CHARGES, st.nextToken());
                         SharedPreferenceUtil.save();
                         startActivity(new Intent(getActivity(), ProductListActivity.class));
                     }

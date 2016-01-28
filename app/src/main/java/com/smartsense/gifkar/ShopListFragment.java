@@ -169,6 +169,8 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                         values.put(DataBaseHelper.COLUMN_DELIVERY_FROM, prodJson.optString("deliveryFrom"));
                         values.put(DataBaseHelper.COLUMN_DELIVERY_TO, prodJson.optString("deliveryTo"));
                         values.put(DataBaseHelper.COLUMN_REMOTE_DELIVERY, prodJson.optString("remoteArea"));
+                        values.put(DataBaseHelper.COLUMN_DELIVERY_CHARGE, prodJson.optString("minDeliveryCharge"));
+                        values.put(DataBaseHelper.COLUMN_FREE_DELIVERY, prodJson.optString("freeDeliveryStatus"));
                         values.put(DataBaseHelper.COLUMN_TAGS, str.toString());
                         values.put(DataBaseHelper.COLUMN_CATEGORY_ID, catJson.optString("id"));
                         values.put(DataBaseHelper.COLUMN_CATEGORY_NAME, catJson.optString("name"));

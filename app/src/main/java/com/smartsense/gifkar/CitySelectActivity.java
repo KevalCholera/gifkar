@@ -158,7 +158,7 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                 }
                 break;
             case R.id.btActionBarBack:
-                if (titleTextView.getText().toString().equalsIgnoreCase(getResources().getString(R.string.screen_city))|getIntent().getBooleanExtra("area", false))
+                if (titleTextView.getText().toString().equalsIgnoreCase(getResources().getString(R.string.screen_city)) | getIntent().getBooleanExtra("area", false))
                     finish();
                 else {
                     titleTextView.setText(getResources().getString(R.string.screen_city));
@@ -268,7 +268,14 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                             break;
                     }
                 } else {
-                    JsonErrorShow.jsonErrorShow(response, this);
+                    switch (response.optInt("eventId")) {
+                        case Constants.Events.EVENT_PINCODE:
+                            CommonUtil.cancelProgressDialog();
+                            CommonUtil.alertBox(this, "", "Oops either we don't recongnized the area or we are not operating in that area yet. Sorry!");
+                            break;
+                        default:
+                            JsonErrorShow.jsonErrorShow(response, this);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
