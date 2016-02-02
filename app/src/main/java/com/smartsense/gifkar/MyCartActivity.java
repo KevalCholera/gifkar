@@ -55,8 +55,8 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
         btCart.setOnClickListener(this);
 
         getSupportActionBar().setCustomView(v);
-        Toolbar parent = (Toolbar) v.getParent();//first get parent toolbar of current action bar
-        parent.setContentInsetsAbsolute(0, 0);
+//        Toolbar parent = (Toolbar) v.getParent();//first get parent toolbar of current action bar
+//        parent.setContentInsetsAbsolute(0, 0);
 
         setContentView(R.layout.activity_my_cart);
         btnCartStartGifiting = (Button) findViewById(R.id.btnCartStartGifiting);

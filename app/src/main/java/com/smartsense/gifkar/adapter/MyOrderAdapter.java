@@ -85,7 +85,8 @@ public class MyOrderAdapter extends BaseAdapter {
         holder.tvDetails.setText(orderObj.optString("itemCount") + " Items");
         holder.tvShopName.setText(orderObj.optString("shopName"));
         holder.tvOrderStatus.setText("Your order is " + orderObj.optString("orderStatus"));
-        holder.ivImg.setImageUrl(Constants.BASE_URL + "/images/shops/thumbs/" + orderObj.optString("shopImage"), imageLoader);
+        holder.ivImg.setDefaultImageResId(R.drawable.default_img);
+        holder.ivImg.setImageUrl(Constants.BASE_URL_PHOTO + orderObj.optString("shopImage"), imageLoader);
 //        view.setTag(orderObj.optString("orderDetailId"));
         return view;
     }

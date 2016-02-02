@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.facebook.FacebookSdk;
 import com.mpt.storage.SharedPreferenceUtil;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
@@ -34,6 +35,7 @@ public class GifkarApp extends Application {
     public void onCreate() {
         super.onCreate();
         appInstance = this;
+        FacebookSdk.sdkInitialize(getInstance());
         TypefaceManager.addTextStyleExtractor(CooperHewittExtractor.getInstance());
         Parse.initialize(this, "9yjUxrJuubYfJQvh8gONZuZqTEu3gcpqB1mdRkpH", "w3znN1nsItMDKIZaTJ8qzdRDPnfFKeW6uAI56C8Y");
         ParseInstallation.getCurrentInstallation().saveInBackground();

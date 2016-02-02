@@ -22,8 +22,8 @@
         android:id="@+id/textInfoDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_25"
+        android:layout_margin="@dimen/margin_16"
         android:fontFamily="normal"
         android:text="@string/greet_text_main"
-        android:textSize="@dimen/text_12" />
+        android:textSize="@dimen/text_14" />
 </LinearLayout>

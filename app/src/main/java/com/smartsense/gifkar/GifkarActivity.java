@@ -108,6 +108,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
 //        btFilter.setOnClickListener(this);
         btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
+        btSearch.setBackgroundResource(R.drawable.home_search);
 //        btSearch.setOnClickListener(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

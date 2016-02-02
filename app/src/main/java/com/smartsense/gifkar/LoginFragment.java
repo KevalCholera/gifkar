@@ -104,9 +104,9 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         View view = (View) inflater.inflate(R.layout.fragment_login, container, false);
         // TODO Auto-generated method stub
 
-        FacebookSdk.sdkInitialize(getActivity());
+//        FacebookSdk.sdkInitialize(getActivity());
         callbackManager = CallbackManager.Factory.create();
-//        printHashKey(getActivity());
+        printHashKey(getActivity());
         // Input Email and Password field
         etInputemail = (EditText) view.findViewById(R.id.etLoginEmailId);
         etInputPassword = (EditText) view.findViewById(R.id.etLoginPassword);
@@ -148,7 +148,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
         return view;
     }
 
-    private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
+    public FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
             Log.d("All requested data", "success");

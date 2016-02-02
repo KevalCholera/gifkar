@@ -13,7 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:paddingLeft="0dp"
-        android:layout_marginLeft="@dimen/margin_10"
+
         android:scaleType="fitXY"
         android:src="@drawable/back_arrow" />
 

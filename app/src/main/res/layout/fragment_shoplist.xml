@@ -29,6 +29,14 @@
         android:text="@string/greet_text_main"
         android:textColor="@color/textcolorwhite"
         android:translationZ="10000dp" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="55dp" />
     <!--android:layout_above="@id/tvGreetText"-->
     <!--<LinearLayout-->
     <!--android:id="@+id/ll_scrollview_layout"-->
@@ -95,6 +103,8 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="55dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
 
     <!--</LinearLayout>-->
 

@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
@@ -22,6 +24,13 @@ public class StartActivity extends AppCompatActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.setStatusBarColor(getResources().getColor(
+                        R.color.red1));
+            }
 //            View decorView = getWindow().getDecorView();
 //// Hide the status bar.
 //            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -76,6 +85,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == LoginFragment.RC_SIGN_IN) {
             // If the error resolution was not successful we should not resolve further.
             if (resultCode != Activity.RESULT_OK) {
@@ -83,7 +93,8 @@ public class StartActivity extends AppCompatActivity {
 
             LoginFragment.mIsResolving = false;
             LoginFragment.mGoogleApiClient.connect();
-        } else
-            LoginFragment.callbackManager.onActivityResult(requestCode, resultCode, data);
+        } else{
+            Log.i("yes", "StartActvity");
+            LoginFragment.callbackManager.onActivityResult(requestCode, resultCode, data);}
     }
 }

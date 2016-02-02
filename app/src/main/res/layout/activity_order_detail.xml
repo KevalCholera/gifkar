@@ -93,9 +93,10 @@
 
                 <com.android.volley.toolbox.NetworkImageView
                     android:id="@+id/ivShopListImage"
+                    android:background="@drawable/borderwhite"
                     android:layout_width="@dimen/product_image_height"
                     android:layout_height="@dimen/product_image_height"
-                    android:background="@drawable/ic_gifkar_logo" />
+                     />
 
 
                 <LinearLayout
@@ -180,7 +181,7 @@
                     android:layout_width="0dp"
                     android:layout_height="6dp"
                     android:layout_marginBottom="6dp"
-                    android:layout_marginLeft="-18dp"
+                    android:layout_marginLeft="-16dp"
                     android:layout_marginRight="-14dp"
                     android:layout_weight="1"
                     android:background="@drawable/dashline" />

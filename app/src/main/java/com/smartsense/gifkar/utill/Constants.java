@@ -7,6 +7,8 @@ public class Constants {
     public static final int STATUS_CHECK = 201;
     public static final String DB_PATH = "/data/data/com.smartsense.gifkar/databases/";
     public static final String BASE_URL = "https://gifkar.cloudapp.net";
+    public static final String BASE_URL_PHOTO = BASE_URL + "/images/products/";
+    public static final String BASE_URL_PHOTO_THUMB = BASE_URL + "/images/products/";
     //    public static final String BASE_URL = "https://192.168.1.113";
     public static final String BASE_IMAGE_URL = "http://104.43.15.1:8025";
     public static final String PRO_TITLE = "Please Wait";

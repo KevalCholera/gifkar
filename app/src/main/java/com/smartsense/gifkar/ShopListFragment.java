@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -52,7 +53,8 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     private Handler handler;
     View newFeaturesView;
     TextView tvGreetText;
-    private Fragment fragment=this;
+    private Fragment fragment = this;
+    private ProgressBar progressBar;
 
     public ShopListFragment() {
         // Required empty public constructor
@@ -68,9 +70,11 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
         TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
         actionBarTitle.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
+        actionBarTitle.setBackgroundDrawable(getResources().getDrawable(R.drawable.head_squre));
         newFeaturesView = (View) rootView.findViewById(R.id.newfeaturesView);
         CommonUtil.disableView(newFeaturesView);
         tvGreetText = (TextView) rootView.findViewById(R.id.tvGreetText);
+        progressBar = (ProgressBar) newFeaturesView.findViewById(R.id.progressBar);
         ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
         btFilter.setVisibility(View.VISIBLE);
         ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
@@ -111,6 +115,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     DataBaseHelper dbHelper;
 
     private void setupViewPager(JSONArray category) {
+        progressBar.setVisibility(View.GONE);
         dbHelper = new DataBaseHelper(getActivity());
         Adapter adapter = new Adapter(getChildFragmentManager());
 //        String tempary = "{ \"eventId\" : 123, \n" +
@@ -180,7 +185,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                     }
 
                 }
-                adapter.addFragment(catJson.optString("id"), "     "+catJson.optString("name")+"     ");
+                adapter.addFragment(catJson.optString("id"), "     " + catJson.optString("name") + "     ");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -245,6 +250,8 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     Integer[] mImageResources = {R.mipmap.one, R.mipmap.two, R.mipmap.three, R.mipmap.four};
 
     public void setReference(final JSONArray mImageResources) {
+        ProgressBar progressBar = (ProgressBar) newFeaturesView.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         intro_images = (ViewPager) newFeaturesView.findViewById(R.id.pager_introduction);
         pager_indicator = (LinearLayout) newFeaturesView.findViewById(R.id.viewPagerCountDots);
         dotsCount = mImageResources.length();

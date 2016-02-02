@@ -97,7 +97,7 @@ public class ProductAdapter extends CursorAdapter {
 //        ibProdElementNext.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
         view.setTag(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_DETAIL_ID)));
         ivProdPhoto.setDefaultImageResId(R.drawable.default_img);
-        ivProdPhoto.setImageUrl(Constants.BASE_URL + "/images/products/" + cursor.getString(cursor
+        ivProdPhoto.setImageUrl(Constants.BASE_URL_PHOTO + cursor.getString(cursor
                 .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_IMAGE)), imageLoader);
 
 

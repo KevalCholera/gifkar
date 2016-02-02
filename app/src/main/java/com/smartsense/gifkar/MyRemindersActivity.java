@@ -72,10 +72,16 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
         actionBarTitle.setText(getResources().getString(R.string.screen_my_reminders));
         actionBarTitle.setBackgroundColor(getActivity().getResources().getColor(R.color.mainColor));
         ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
-        btFilter.setBackgroundResource(R.drawable.ic_action_info);
-//        btFilter.setVisibility(View.INVISIBLE);
+        btFilter.setVisibility(View.INVISIBLE);
         ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
-        btSearch.setVisibility(View.INVISIBLE);
+//        btSearch.setVisibility(View.INVISIBLE);
+        btSearch.setBackgroundResource(R.drawable.ic_action_info);
+        btSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openInfoPopup();
+            }
+        });
         tvMyReminder = (TextView) view.findViewById(R.id.tvMyReminder);
         tvMyReminder.setOnClickListener(this);
         lvMyReminder = (ListView) view.findViewById(R.id.lvMyReminders);
@@ -102,7 +108,7 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
                 startActivityForResult(new Intent(getActivity(), AddRemindersActivity.class), 0);
                 break;
             case R.id.btActionBarfilter:
-                openInfoPopup();
+//                openInfoPopup();
                 break;
             default:
         }

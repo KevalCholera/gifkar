@@ -79,9 +79,10 @@
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/ivShopListImage"
+            android:background="@drawable/borderwhite"
             android:layout_width="@dimen/product_image_height"
             android:layout_height="@dimen/product_image_height"
-            android:background="@drawable/ic_gifkar_logo" />
+             />
 
 
         <LinearLayout

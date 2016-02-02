@@ -24,6 +24,7 @@ import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.CheckoutAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
+import com.smartsense.gifkar.utill.DataBaseHelper;
 import com.smartsense.gifkar.utill.DataRequest;
 import com.smartsense.gifkar.utill.JsonErrorShow;
 
@@ -102,12 +103,25 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
 //            tvOrderDetailDateTime.setText(DateAndTimeUtil.myDateAndTime(response.optString("createdAt")));
             tvOrderDetailAddress.setText("Name : " + response.optJSONObject("deliveryAddress").optString("recipientName") + "\nMobile No. : " + response.optJSONObject("deliveryAddress").optString("recipientContact") + "\nAddress : " + response.optJSONObject("deliveryAddress").optString("address") + " " + response.optJSONObject("deliveryAddress").optString("landmark") + " " + response.optJSONObject("deliveryAddress").optString("area") + " " + response.optJSONObject("deliveryAddress").optString("city") + " " + response.optJSONObject("deliveryAddress").optString("pincode"));
             tvOrderElementShopName.setText(response.optString("shopName"));
-            ivShopListImage.setImageUrl(Constants.BASE_URL + "/images/shops/thumbs/" + response.optString("shopImage"), imageLoader);
+            ivShopListImage.setDefaultImageResId(R.drawable.default_img);
+            ivShopListImage.setImageUrl(Constants.BASE_URL_PHOTO + response.optString("shopImage"), imageLoader);
             tvOrderElementOrderStatus.setText("Your Order is " + response.optString("orderStatus"));
             tvOrderElementDetails.setText(response.optJSONArray("products").length() + " Items");
             tvOrderDetailName.setText("Name : " + response.optJSONObject("sender").optString("firstName") + " " + response.optJSONObject("sender").optString("lastName"));
             tvOrderDetailNo.setText("Mobile No. : " + response.optJSONObject("sender").optString("mobile"));
-
+            if (response.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("accepted")) {
+                tvOrderAccepted.setBackgroundDrawable(getResources().getDrawable(R.drawable.accepted_fill));
+                tvOrderProcess.setBackgroundDrawable(getResources().getDrawable(R.drawable.in_progress_unfill));
+                tvOrderCompleted.setBackgroundDrawable(getResources().getDrawable(R.drawable.deliverd_unfill));
+            }else if (response.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("prepared")) {
+                tvOrderAccepted.setBackgroundDrawable(getResources().getDrawable(R.drawable.accepted_unfill));
+                tvOrderProcess.setBackgroundDrawable(getResources().getDrawable(R.drawable.in_progress_fill));
+                tvOrderCompleted.setBackgroundDrawable(getResources().getDrawable(R.drawable.deliverd_unfill));
+            }else if (response.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("inProcess")) {
+                tvOrderProcess.setBackgroundDrawable(getResources().getDrawable(R.drawable.in_progress_unfill));
+                tvOrderAccepted.setBackgroundDrawable(getResources().getDrawable(R.drawable.accepted_unfill));
+                tvOrderCompleted.setBackgroundDrawable(getResources().getDrawable(R.drawable.deliverd_fill));
+            }
             CheckoutAdapter checkoutAdapter = new CheckoutAdapter(this, response.optJSONArray("products"), false);
             lvOrderDetail.setAdapter(checkoutAdapter);
         } catch (Exception e) {

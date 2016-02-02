@@ -34,7 +34,7 @@
         android:layout_centerVertical="true"
         android:padding="5dp"
         android:scaleType="fitXY"
-        android:src="@drawable/home_filter" />
+        android:background="@drawable/home_filter" />
 
     <ImageView
         android:id="@+id/btActionBarSearch"
@@ -44,7 +44,7 @@
         android:layout_toLeftOf="@id/btActionBarfilter"
         android:padding="5dp"
         android:scaleType="fitXY"
-        android:src="@drawable/home_search" />
+        android:background="@drawable/home_search" />
 
     <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
         android:id="@+id/actionBarHomeTitle"

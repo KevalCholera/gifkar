@@ -10,30 +10,52 @@
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/ivCheckout1ElementImage"
         android:layout_width="@dimen/product_image_height"
+        android:layout_height="@dimen/product_image_height"
         android:background="@drawable/borderwhite"
-        android:scaleType="fitXY"
-        android:layout_height="@dimen/product_image_height" />
+        android:scaleType="fitXY" />
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-            android:id="@+id/tvCheckout1ElementName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="normal"
-            android:paddingBottom="@dimen/padding_8"
-            android:singleLine="true"
-            android:text="Product Name"
-            android:textColor="@color/textcolor"
-            android:textSize="@dimen/text_14"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/margin_5"
+            android:paddingBottom="@dimen/margin_5"
+            android:orientation="horizontal">
+
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:id="@+id/tvCheckout1ElementName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginRight="@dimen/margin_5"
+                android:fontFamily="normal"
+                android:gravity="center_vertical"
+
+                android:singleLine="true"
+                android:text="Shop Name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_16" />
+
+
+            <ImageView
+                android:id="@+id/ivCheckout1ElementType"
+                android:layout_width="18dp"
+                android:gravity="center"
+                android:layout_height="18dp"
+
+                android:background="@drawable/veg" />
+        </LinearLayout>
+
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
             android:id="@+id/tvCheckout1ElementCate"
@@ -41,7 +63,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="normal"
             android:text="Eggless"
-            android:textColor="@color/textcolor"
+            android:textColor="@color/black_light"
             android:textSize="@dimen/text_12" />
 
 
@@ -49,6 +71,7 @@
             android:id="@+id/tvCheckout1ElementDeliveryTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
             android:fontFamily="normal"
             android:text="Delivery Time : 10:00AM to 5:00PM"
             android:textColor="@color/textcolor"

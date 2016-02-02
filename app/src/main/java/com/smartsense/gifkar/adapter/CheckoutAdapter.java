@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -69,27 +70,46 @@ public class CheckoutAdapter extends BaseAdapter {
             holder.tvcheckoutElementPrice = (TextView) view.findViewById(R.id.tvCheckout1ElementRs);
             holder.tvcheckoutElementName = (TextView) view.findViewById(R.id.tvCheckout1ElementName);
             holder.ivProdPhoto = (NetworkImageView) view.findViewById(R.id.ivCheckout1ElementImage);
+            holder.ivCheckout1ElementType = (ImageView) view.findViewById(R.id.ivCheckout1ElementType);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
         JSONObject addressObj = dataArray.optJSONObject(position);
-        if(check) {
+        if (check) {
 //            + " " + addressObj.optString(DataBaseHelper.COLUMN_PROD_PACKAGE_NAME)
-            holder.tvcheckoutElementCate.setText(addressObj.optString(DataBaseHelper.COLUMN_PROD_QUANTITY) + " " + addressObj.optString(DataBaseHelper.COLUMN_PROD_UNIT_NAME) );
+            holder.tvcheckoutElementCate.setText(addressObj.optString(DataBaseHelper.COLUMN_PROD_QUANTITY) + " " + addressObj.optString(DataBaseHelper.COLUMN_PROD_UNIT_NAME));
             holder.tvcheckoutElementDT.setText("\u20B9 " + addressObj.optString(DataBaseHelper.COLUMN_PROD_PRICE) + " x " + addressObj.optString("quantity"));
             holder.tvcheckoutElementPrice.setText("\u20B9 " + (addressObj.optDouble(DataBaseHelper.COLUMN_PROD_PRICE) * addressObj.optDouble("quantity")));
             holder.tvcheckoutElementName.setText(addressObj.optString(DataBaseHelper.COLUMN_PROD_NAME));
             holder.ivProdPhoto.setDefaultImageResId(R.drawable.default_img);
             holder.ivProdPhoto.setImageUrl(Constants.BASE_URL + "/images/products/" + addressObj.optString(DataBaseHelper.COLUMN_PROD_IMAGE), imageLoader);
-        }else{
+            if (addressObj.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("veg")) {
+                holder.ivCheckout1ElementType.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.veg));
+                holder.ivCheckout1ElementType.setVisibility(View.VISIBLE);
+            } else if (addressObj.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("non-veg")) {
+                holder.ivCheckout1ElementType.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.non_veg));
+                holder.ivCheckout1ElementType.setVisibility(View.VISIBLE);
+            } else {
+                holder.ivCheckout1ElementType.setVisibility(View.GONE);
+            }
+        } else {
 //             + " " + addressObj.optString("packageType")
             holder.tvcheckoutElementCate.setText(addressObj.optString("quantity") + " " + addressObj.optString("unit"));
             holder.tvcheckoutElementDT.setText("\u20B9 " + addressObj.optString("price") + " x " + addressObj.optString("quantity"));
             holder.tvcheckoutElementPrice.setText("\u20B9 " + (addressObj.optDouble("price") * addressObj.optDouble("quantity")));
             holder.tvcheckoutElementName.setText(addressObj.optString("name"));
             holder.ivProdPhoto.setDefaultImageResId(R.drawable.default_img);
-            holder.ivProdPhoto.setImageUrl(Constants.BASE_URL+"/images/products/"+addressObj.optString("image"),imageLoader);
+            holder.ivProdPhoto.setImageUrl(Constants.BASE_URL + "/images/products/" + addressObj.optString("image"), imageLoader);
+//            if (addressObj.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("veg")) {
+//                holder.ivCheckout1ElementType.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.veg));
+//                holder.ivCheckout1ElementType.setVisibility(View.VISIBLE);
+//            } else if (addressObj.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("non-veg")) {
+//                holder.ivCheckout1ElementType.setBackgroundDrawable(activity.getResources().getDrawable(R.drawable.non_veg));
+//                holder.ivCheckout1ElementType.setVisibility(View.VISIBLE);
+//            } else {
+//                holder.ivCheckout1ElementType.setVisibility(View.GONE);
+//            }
         }
         return view;
     }
@@ -100,6 +120,6 @@ public class CheckoutAdapter extends BaseAdapter {
         TextView tvcheckoutElementPrice;
         TextView tvcheckoutElementName;
         NetworkImageView ivProdPhoto;
-
+        ImageView ivCheckout1ElementType;
     }
 }
