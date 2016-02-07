@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.SyncStateContract;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -88,7 +89,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             tvMobile.setText(userInfo.optString("mobile"));
             if (userInfo.optString("mobile").equalsIgnoreCase("")) {
                 tvVerified.setVisibility(View.GONE);
-                tvMobile.setVisibility(View.GONE);
+                tvMobile.setText("Add Mobile No.");
+//                tvMobile.setVisibility(View.GONE);
             } else
                 tvMobile.setText(userInfo.optString("mobile"));
 
@@ -134,10 +136,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_IS_SOCIAL, "").equalsIgnoreCase("facebook") | SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_IS_SOCIAL, "").equalsIgnoreCase("google")){
+        if (SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_IS_SOCIAL, "").equalsIgnoreCase("facebook") | SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_IS_SOCIAL, "").equalsIgnoreCase("google")) {
             tabLayout.removeTab(tabLayout.getTabAt(2));
         }
-
 
 
     }
@@ -223,22 +224,27 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("response", response.toString());
+                        Log.d("response", response.optJSONObject("data").optString("imageName"));
                         CommonUtil.cancelProgressDialog();
                         try {
                             if (response.getInt("status") == Constants.STATUS_SUCCESS) {
 //                                ivProfileImage.setDefaultImageResId(R.drawable.ic_user);
+                                SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_PROIMG, Constants.BASE_URL + "/images/users/" + response.optJSONObject("data").optString("imageName"));
+                                SharedPreferenceUtil.save();
+                                Log.d("response", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""));
+                                CommonUtil.alertBox(ProfileActivity.this, "", response.optString("message"));
+//                                ivProfileImage.setDefaultImageResId(R.drawable.ic_user);
 //                                ivProfileImage.setImageUrl(Constants.BASE_URL + "/images/users/" + userInfo.optString("image"), imageLoader);
-                                final AlertDialog.Builder alert = new AlertDialog.Builder(ProfileActivity.this);
-                                alert.setTitle("Success!");
-                                alert.setMessage(response.optString("message"));
-                                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-
-                                    }
-
-                                });
-                                alert.show();
+//                                final AlertDialog.Builder alert = new AlertDialog.Builder(ProfileActivity.this);
+//                                alert.setTitle("Success!");
+//                                alert.setMessage(response.optString("message"));
+//                                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int id) {
+//
+//                                    }
+//
+//                                });
+//                                alert.show();
 
                             } else {
                                 JsonErrorShow.jsonErrorShow(response, ProfileActivity.this);
@@ -252,7 +258,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                CommonUtil.alertBox(ProfileActivity.this, "", getResources().getString(R.string.nointernet_try_again_msg));
                 CommonUtil.cancelProgressDialog();
+
                 Log.e("Volley Request Error", error.getLocalizedMessage());
 
             }
@@ -285,18 +293,20 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         CommonUtil.cancelProgressDialog();
                         ivProfileImage.setDefaultImageResId(R.drawable.ic_user);
                         SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_PROIMG);
+                        SharedPreferenceUtil.save();
                         try {
                             if (response.getInt("status") == Constants.STATUS_SUCCESS) {
-                                final AlertDialog.Builder alert = new AlertDialog.Builder(ProfileActivity.this);
-                                alert.setTitle("Success!");
-                                alert.setMessage(response.optString("message"));
-                                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-
-                                    }
-
-                                });
-                                alert.show();
+                                CommonUtil.alertBox(ProfileActivity.this,"",response.optString("message"));
+//                                final AlertDialog.Builder alert = new AlertDialog.Builder(ProfileActivity.this);
+//                                alert.setTitle("Success!");
+//                                alert.setMessage(response.optString("message"));
+//                                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int id) {
+//
+//                                    }
+//
+//                                });
+//                                alert.show();
 
                             } else {
                                 JsonErrorShow.jsonErrorShow(response, ProfileActivity.this);
@@ -311,6 +321,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onErrorResponse(VolleyError error) {
                 CommonUtil.cancelProgressDialog();
+                CommonUtil.alertBox(ProfileActivity.this, "", getResources().getString(R.string.nointernet_try_again_msg));
                 Log.e("Volley Request Error", error.getLocalizedMessage());
 
             }

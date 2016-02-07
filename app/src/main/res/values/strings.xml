@@ -255,13 +255,13 @@
 
     <string name="dob">Enter Date of Birth</string>
     <string name="noh">No Order History</string>
-    <string name="emapty_active_order">Looks like don\'t have any on going orders.</string>
-    <string name="emapty_past_order">Looks like don\'t have any on past orders.</string>
-    <string name="emapty_address">Looks like don\'t have any address.</string>
-    <string name="emapty_review">Looks like don\'t have any review.</string>
-    <string name="emapty_reminder">Looks like don\'t have any reminder.</string>
+    <string name="emapty_active_order">Looks like you don\'t have any on going orders.</string>
+    <string name="emapty_past_order">Looks like you don\'t have any on past orders.</string>
+    <string name="emapty_address">Looks like you don\'t have any address.</string>
+    <string name="emapty_review">Looks like you don\'t have any review.</string>
+    <string name="emapty_reminder">Looks like you don\'t have any reminder.</string>
     <string name="emapty_cart_gift">Why don\'t you Gift someone today?</string>
-    <string name="emapty_cart">Opps! Cart seems empty.</string>
+    <string name="emapty_cart">Oops! Cart seems empty.</string>
     <string name="btStartGift">START GIFTING</string>
     <string name="reception_name">Recipient Name</string>
     <string name="wrn_reception_name">Enter Recipient Name</string>
@@ -324,7 +324,10 @@
     <string name="days">Days : </string>
     <string name="total">Total</string>
     <string name="shipping">Shipping</string>
+    <string name="vat">VAT</string>
+    <string name="stax">Service Tax</string>
     <string name="payable">Payable</string>
+    <string name="paid">Paid</string>
     <string name="continue_checkout">CONTINUE CHECKOUT</string>
     <string name="delivery_address">Delivery Address</string>
     <string name="delivery_date_and_time">Delivery Date and Time</string>
@@ -333,7 +336,7 @@
     <string name="day_after_tommorow_del">Day After Tomorrow\nChoose a Time Slot</string>
     <string name="occasion">Write Occasion Message</string>
     <string name="select_occasion">Select Occasion</string>
-    <string name="write_occasion">Write Occasion Massage Here</string>
+    <string name="write_occasion">Write Occasion Message Here</string>
     <string name="by_using">By Using this Application, you agree to the Terms of Service and Privacy Policy</string>
     <string name="place_order">PLACE ORDER</string>
     <string name="add_new_address">Add a new address</string>
@@ -358,6 +361,7 @@
     <string name="screen_order_detail">Order Details</string>
     <string name="receiver_info">Receiver\'s Info:</string>
     <string name="sender_info">Sender\'s Info:</string>
+    <string name="total_amount">Total Amount:</string>
     <string name="email_details">Email Details</string>
     <string name="call_us">Call us</string>
     <string name="your_order">Your Order Details will be sent on this Email</string>

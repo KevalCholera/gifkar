@@ -1,6 +1,7 @@
 package com.smartsense.gifkar;
 
 import android.app.Application;
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
@@ -31,10 +32,13 @@ public class GifkarApp extends Application {
     private static char[] KEYSTORE_PASSWORD = "gifkar".toCharArray();
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
+    private static Context mAppContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
         appInstance = this;
+        this.setAppContext(getApplicationContext());
         FacebookSdk.sdkInitialize(getInstance());
         TypefaceManager.addTextStyleExtractor(CooperHewittExtractor.getInstance());
         Parse.initialize(this, "9yjUxrJuubYfJQvh8gONZuZqTEu3gcpqB1mdRkpH", "w3znN1nsItMDKIZaTJ8qzdRDPnfFKeW6uAI56C8Y");
@@ -44,6 +48,13 @@ public class GifkarApp extends Application {
 
     public static synchronized GifkarApp getInstance() {
         return appInstance;
+    }
+
+    public static Context getAppContext() {
+        return mAppContext;
+    }
+    public void setAppContext(Context mAppContext) {
+        this.mAppContext = mAppContext;
     }
 
     public RequestQueue getRequestQueue() {

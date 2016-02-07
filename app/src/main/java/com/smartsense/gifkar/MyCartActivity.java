@@ -23,6 +23,8 @@ import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MyCartActivity extends AppCompatActivity implements View.OnClickListener {
     static ListView lvMyCart;
@@ -37,7 +39,7 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
     static JSONArray productArray;
     private static TextView titleTextView;
     Button btnCartStartGifiting;
-
+    JSONObject userInfo = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +73,13 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
         tvCartTotalRs = (TextView) findViewById(R.id.tvCartTotalRs);
 
         checkCart();
+
+        try {
+            userInfo = new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_INFO, ""));
+            userInfo = userInfo.optJSONObject("userDetails");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -129,10 +138,14 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.llChackout:
-                if (totalAmount > Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"))) {
-                    if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
-                        startActivity(new Intent(this, Checkout1Activity.class));
-                    else
+                if (totalAmount >= Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"))) {
+                    if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+                        if (userInfo.optString("mobile").equalsIgnoreCase("")) {
+                            startActivity(new Intent(this, MobileNoActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_LOGIN));
+                        }else{
+                            startActivity(new Intent(this, Checkout1Activity.class));
+                        }
+                    } else
                         startActivity(new Intent(this, StartActivity.class));
                 } else {
                     Toast.makeText(MyCartActivity.this, "Minimum order amount from this shop is " + SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"), Toast.LENGTH_LONG).show();

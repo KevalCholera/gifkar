@@ -130,6 +130,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                     addAddress(check);
                 break;
             case R.id.btActionBarBack:
+                CommonUtil.closeKeyboard(AddAddressActivity.this);
                 finish();
                 break;
             case R.id.etMyAddressAddPinCode:
@@ -198,24 +199,26 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_ADD_ADDRESS:
-                            alert.setTitle("Success!");
-                            alert.setMessage("Address Successfully Added.");
-                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
+                            CommonUtil.alertBox(AddAddressActivity.this,"","Address Successfully Added.");
+//                            alert.setTitle("Success!");
+//                            alert.setMessage("Address Successfully Added.");
+//                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int whichButton) {
                                     finish();
-                                }
-                            });
-                            alert.show();
+//                                }
+//                            });
+//                            alert.show();
                             break;
                         case Constants.Events.EVENT_UPDATE:
-                            alert.setTitle("Success!");
-                            alert.setMessage("Address Successfully Updated.");
-                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
+                            CommonUtil.alertBox(AddAddressActivity.this,"","Address Successfully Updated.");
+//                            alert.setTitle("Success!");
+//                            alert.setMessage("Address Successfully Updated.");
+//                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int whichButton) {
                                     finish();
-                                }
-                            });
-                            alert.show();
+//                                }
+//                            });
+//                            alert.show();
                             break;
                         case Constants.Events.EVENT_CITY:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());
@@ -279,7 +282,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                     }
                 });
                 alertDialogs.setView(dialog);
-                alertDialogs.setCancelable(false);
+                alertDialogs.setCancelable(true);
                 alert = alertDialogs.create();
                 alert.show();
             }
@@ -314,7 +317,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                     }
                 });
                 alertDialogs.setView(dialog);
-                alertDialogs.setCancelable(false);
+                alertDialogs.setCancelable(true);
                 alert = alertDialogs.create();
                 alert.show();
             }

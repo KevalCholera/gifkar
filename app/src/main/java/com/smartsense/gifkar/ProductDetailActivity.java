@@ -23,6 +23,8 @@ import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 
@@ -36,7 +38,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     private ImageButton ibProdPlus;
     private TextView tvProdDes;
     private TextView tvProdUnitName;
-//    private TextView tvProdName;
+    private TextView tvProdName;
     private NetworkImageView ivProdPhoto;
     private TextView tvProdQty;
     private static TextView tvProdDetailCartCount;
@@ -47,7 +49,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
     CommonUtil commonUtil = new CommonUtil();
     static LinearLayout llProdDetailBottom;
     private ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
-
+    JSONObject userInfo = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +59,8 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         LayoutInflater inflater = LayoutInflater.from(this);
         View v = inflater.inflate(R.layout.action_bar_center, null);
         TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
-        titleTextView.setText(getResources().getString(R.string.prod_name));
+//        titleTextView.setText(getResources().getString(R.string.prod_name));
+        titleTextView.setText("");
         btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
 
         btBack.setOnClickListener(this);
@@ -67,7 +70,7 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
         tvProdDes = (TextView) findViewById(R.id.tvProdDetailDes);
         tvProdUnitName = (TextView) findViewById(R.id.tvProdDetailUnitName);
         tvProdPrice = (TextView) findViewById(R.id.tvProdDetailRs);
-//        tvProdName = (TextView) findViewById(R.id.tvProdDetailName);
+        tvProdName = (TextView) findViewById(R.id.tvProdDetailName);
         ivProdPhoto = (NetworkImageView) findViewById(R.id.ivProdDetailImage);
         tvProdQty = (TextView) findViewById(R.id.tvProdDetailQty);
         ibProdPlus = (ImageButton) findViewById(R.id.ibProdDetailPlus);
@@ -128,15 +131,20 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
             tvProdUnitName.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_QUANTITY)) + " " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_UNIT_NAME)));
             tvProdPrice.setText("₹ " +cursor.getString(cursor
                     .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_PRICE)));
-//            tvProdName.setText(cursor.getString(cursor
-//                    .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_NAME)));
-            titleTextView.setText(cursor.getString(cursor
+            tvProdName.setText(cursor.getString(cursor
                     .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_NAME)));
+//            titleTextView.setText(cursor.getString(cursor
+//                    .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_NAME)));
             ivProdPhoto.setDefaultImageResId(R.drawable.default_img);
             ivProdPhoto.setImageUrl(Constants.BASE_URL + "/images/products/" + cursor.getString(cursor
                     .getColumnIndexOrThrow(DataBaseHelper.COLUMN_PROD_IMAGE)), imageLoader);
         }
-
+        try {
+            userInfo = new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_INFO, ""));
+            userInfo = userInfo.optJSONObject("userDetails");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void getCartItem() {
@@ -206,9 +214,13 @@ public class ProductDetailActivity extends AppCompatActivity implements View.OnC
 //                finish();
                 break;
             case R.id.llProdDetailCheckOut:
-                if (totalAmount > Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"))) {
+                if (totalAmount >= Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"))) {
                     if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
-                        startActivity(new Intent(this, Checkout1Activity.class));
+                        if (userInfo.optString("mobile").equalsIgnoreCase("")) {
+                            startActivity(new Intent(this, MobileNoActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_LOGIN));
+                        }else{
+                            startActivity(new Intent(this, Checkout1Activity.class));
+                        }
                     else
                         startActivity(new Intent(this, StartActivity.class));
                 } else {

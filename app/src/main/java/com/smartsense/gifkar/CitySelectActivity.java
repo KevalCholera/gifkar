@@ -159,7 +159,8 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.btActionBarBack:
                 if (titleTextView.getText().toString().equalsIgnoreCase(getResources().getString(R.string.screen_city)) | getIntent().getBooleanExtra("area", false))
-                    finish();
+                {                    CommonUtil.closeKeyboard(CitySelectActivity.this);
+                    finish();}
                 else {
                     titleTextView.setText(getResources().getString(R.string.screen_city));
                     etCitySearch.setHint(getResources().getString(R.string.delivery_hint));

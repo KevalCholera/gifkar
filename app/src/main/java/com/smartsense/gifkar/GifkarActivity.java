@@ -139,8 +139,8 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
             llHeadProfile.setOnClickListener(this);
         }
-        llHeadAddress = (LinearLayout) header.findViewById(R.id.llHeadAddress);
-        llHeadAddress.setOnClickListener(this);
+//        llHeadAddress = (LinearLayout) header.findViewById(R.id.llHeadAddress);
+//        llHeadAddress.setOnClickListener(this);
 
         ImageView ivHeadEdit = (ImageView) header.findViewById(R.id.ivHeadEdit);
 
@@ -227,29 +227,29 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                     startActivity(new Intent(this, ProfileActivity.class));
                 }
                 break;
-            case R.id.llHeadAddress:
-                if (CommonUtil.checkCartCount() == 0) {
-                    startActivity(new Intent(this, CitySelectActivity.class));
-                } else {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(GifkarActivity.this);
-                    alert.setTitle("Empty Cart?");
-                    alert.setMessage("Do you wish to discard your current Cart?");
-                    alert.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            //Do something here where "ok" clicked
-                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_PROD_LIST);
-                            startActivity(new Intent(GifkarActivity.this, CitySelectActivity.class));
-                        }
-                    });
-                    alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            //Do something here where "Cancel" clicked
-                            dialog.cancel();
-                        }
-                    });
-                    alert.show();
-                }
-                break;
+//            case R.id.llHeadAddress:
+//                if (CommonUtil.checkCartCount() == 0) {
+//                    startActivity(new Intent(this, CitySelectActivity.class));
+//                } else {
+//                    AlertDialog.Builder alert = new AlertDialog.Builder(GifkarActivity.this);
+//                    alert.setTitle("Empty Cart?");
+//                    alert.setMessage("Do you wish to discard your current Cart?");
+//                    alert.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int whichButton) {
+//                            //Do something here where "ok" clicked
+//                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_PROD_LIST);
+//                            startActivity(new Intent(GifkarActivity.this, CitySelectActivity.class));
+//                        }
+//                    });
+//                    alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int whichButton) {
+//                            //Do something here where "Cancel" clicked
+//                            dialog.cancel();
+//                        }
+//                    });
+//                    alert.show();
+//                }
+//                break;
             case R.id.tvHeadPrivacy:
                 startActivity(new Intent(this, TermsandCondtionsActivity.class).putExtra("page", 3).putExtra("text", "Privacy Policy"));
                 break;
@@ -617,6 +617,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                         case Constants.Events.EVENT_USER_DETAIL:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_FULLNAME, response.optJSONObject("data").optJSONObject("userDetails").optString("firstName") + " " + response.optJSONObject("data").optJSONObject("userDetails").optString("lastName"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_EMAIL, response.optJSONObject("data").optJSONObject("userDetails").optString("email"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.optJSONObject("data").optJSONObject("userDetails").optString("id"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_MNO, response.optJSONObject("data").optJSONObject("userDetails").optString("mobile"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_PROIMG, Constants.BASE_URL + "/images/users/" + response.optJSONObject("data").optJSONObject("userDetails").optString("image"));
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_INFO, response.optJSONObject("data").toString());

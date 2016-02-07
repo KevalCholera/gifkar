@@ -3,6 +3,7 @@ package com.smartsense.gifkar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
 
     private ImageView btBack;
     private NetworkImageView ivShopListImage;
-    private TextView tvOrderDetailOrderNo;
+    private TextView tvOrderDetailOrderNo,tvOrderDetailPayable,tvOrderDetailShipping,tvOrderDetailTotal;
     private TextView tvOrderDetailDateTime;
     private TextView tvOrderDetailAddress;
     private TextView tvOrderElementShopName;
@@ -75,6 +76,9 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_order_detail);
         ivShopListImage = (NetworkImageView) findViewById(R.id.ivShopListImage);
         tvOrderDetailOrderNo = (TextView) findViewById(R.id.tvOrderDetailOrderNo);
+        tvOrderDetailTotal = (TextView) findViewById(R.id.tvOrderDetailTotal);
+        tvOrderDetailShipping = (TextView) findViewById(R.id.tvOrderDetailShipping);
+        tvOrderDetailPayable = (TextView) findViewById(R.id.tvOrderDetailPayable);
         tvOrderDetailDateTime = (TextView) findViewById(R.id.tvOrderDetailDateTime);
         tvOrderDetailAddress = (TextView) findViewById(R.id.tvOrderDetailAddress);
         tvOrderElementShopName = (TextView) findViewById(R.id.tvOrderElementShopName);
@@ -98,32 +102,37 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
     public void orderDetailFill(JSONObject response) {
         try {
             tvOrderDetailOrderNo.setText("Order ID : " + response.optString("orderNo"));
-            final SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             tvOrderDetailDateTime.setText(response.optString("createdAt"));
-//            tvOrderDetailDateTime.setText(DateAndTimeUtil.myDateAndTime(response.optString("createdAt")));
-            tvOrderDetailAddress.setText("Name : " + response.optJSONObject("deliveryAddress").optString("recipientName") + "\nMobile No. : " + response.optJSONObject("deliveryAddress").optString("recipientContact") + "\nAddress : " + response.optJSONObject("deliveryAddress").optString("address") + " " + response.optJSONObject("deliveryAddress").optString("landmark") + " " + response.optJSONObject("deliveryAddress").optString("area") + " " + response.optJSONObject("deliveryAddress").optString("city") + " " + response.optJSONObject("deliveryAddress").optString("pincode"));
+            tvOrderDetailShipping.setText("\u20B9 "+response.optString("shippingCharges"));
+            tvOrderDetailTotal.setText("\u20B9 "+response.optString("totalAmount"));
+            tvOrderDetailPayable.setText("\u20B9 "+response.optString("grossAmount"));
+            tvOrderDetailAddress.setText("Name : " + response.optJSONObject("deliveryAddress").optString("recipientName") + "\nMobile No. : " + response.optJSONObject("deliveryAddress").optString("recipientContact") + "\nAddress : " + response.optJSONObject("deliveryAddress").optString("address") + ", " + response.optJSONObject("deliveryAddress").optString("landmark") + ", " + response.optJSONObject("deliveryAddress").optString("area") + ", " + response.optJSONObject("deliveryAddress").optString("city") + " - " + response.optJSONObject("deliveryAddress").optString("pincode"));
             tvOrderElementShopName.setText(response.optString("shopName"));
             ivShopListImage.setDefaultImageResId(R.drawable.default_img);
-            ivShopListImage.setImageUrl(Constants.BASE_URL_PHOTO + response.optString("shopImage"), imageLoader);
+            ivShopListImage.setImageUrl(Constants.BASE_URL + "/images/shops/" + response.optString("shopImage"), imageLoader);
             tvOrderElementOrderStatus.setText("Your Order is " + response.optString("orderStatus"));
             tvOrderElementDetails.setText(response.optJSONArray("products").length() + " Items");
-            tvOrderDetailName.setText("Name : " + response.optJSONObject("sender").optString("firstName") + " " + response.optJSONObject("sender").optString("lastName"));
-            tvOrderDetailNo.setText("Mobile No. : " + response.optJSONObject("sender").optString("mobile"));
-            if (response.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("accepted")) {
-                tvOrderAccepted.setBackgroundDrawable(getResources().getDrawable(R.drawable.accepted_fill));
-                tvOrderProcess.setBackgroundDrawable(getResources().getDrawable(R.drawable.in_progress_unfill));
-                tvOrderCompleted.setBackgroundDrawable(getResources().getDrawable(R.drawable.deliverd_unfill));
-            }else if (response.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("prepared")) {
-                tvOrderAccepted.setBackgroundDrawable(getResources().getDrawable(R.drawable.accepted_unfill));
-                tvOrderProcess.setBackgroundDrawable(getResources().getDrawable(R.drawable.in_progress_fill));
-                tvOrderCompleted.setBackgroundDrawable(getResources().getDrawable(R.drawable.deliverd_unfill));
-            }else if (response.optString(DataBaseHelper.COLUMN_PROD_ITEM_TYPE).trim().equalsIgnoreCase("inProcess")) {
-                tvOrderProcess.setBackgroundDrawable(getResources().getDrawable(R.drawable.in_progress_unfill));
-                tvOrderAccepted.setBackgroundDrawable(getResources().getDrawable(R.drawable.accepted_unfill));
-                tvOrderCompleted.setBackgroundDrawable(getResources().getDrawable(R.drawable.deliverd_fill));
+            tvOrderDetailName.setText("Name : " + response.optJSONObject("sender").optString("firstName") + " " + response.optJSONObject("sender").optString("lastName")+"\nMobile No. : " + response.optJSONObject("sender").optString("mobile"));
+//            tvOrderDetailNo.setText();
+            if (response.optString("orderStatus").trim().equalsIgnoreCase("accepted")) {
+                tvOrderAccepted.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.accepted_fill, 0, 0);
+//                tvOrderAccepted.setBackgroundDrawable(getResources().getDrawable(R.drawable.accepted_fill));
+//                tvOrderProcess.setBackgroundDrawable(getResources().getDrawable(R.drawable.in_progress_unfill));
+//                tvOrderCompleted.setBackgroundDrawable(getResources().getDrawable(R.drawable.deliverd_unfill));
+            } else if (response.optString("orderStatus").trim().equalsIgnoreCase("prepared") | response.optString("orderStatus").trim().equalsIgnoreCase("In process")) {
+                tvOrderProcess.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.in_progress_fill, 0, 0);
+//                tvOrderAccepted.setBackgroundDrawable(getResources().getDrawable(R.drawable.accepted_unfill));
+//                tvOrderProcess.setBackgroundDrawable(getResources().getDrawable(R.drawable.in_progress_fill));
+//                tvOrderCompleted.setBackgroundDrawable(getResources().getDrawable(R.drawable.deliverd_unfill));
+            } else if (response.optString("orderStatus").trim().equalsIgnoreCase("delivered")) {
+                tvOrderCompleted.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.deliverd_fill, 0, 0);
+//                tvOrderProcess.setBackgroundDrawable(getResources().getDrawable(R.drawable.in_progress_unfill));
+//                tvOrderAccepted.setBackgroundDrawable(getResources().getDrawable(R.drawable.accepted_unfill));
+//                tvOrderCompleted.setBackgroundDrawable(getResources().getDrawable(R.drawable.deliverd_fill));
             }
             CheckoutAdapter checkoutAdapter = new CheckoutAdapter(this, response.optJSONArray("products"), false);
             lvOrderDetail.setAdapter(checkoutAdapter);
+            GifkarActivity.setListViewHeightBasedOnChildren(lvOrderDetail);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -133,21 +142,30 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btActionBarBack:
-                finish();
+                if (getIntent().getBooleanExtra("flag", false))
+                    startActivity(new Intent(getBaseContext(), GifkarActivity.class));
+                else
+                    finish();
                 break;
             case R.id.btEmailDialogSend:
-                AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
-                alertbox.setCancelable(true);
-                alertbox.setMessage("Mail Sent Successfully.");
-                alertbox.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                if (etEmail.length() <= 0) {
+                    CommonUtil.alertBox(OrderDetailActivity.this, "", "Please enter email address");
+                } else {
+                    sendMail();
+                }
 
-                    public void onClick(DialogInterface arg0, int arg1) {
-//                        JSONObject objAddress = (JSONObject) view.getTag();
-//                        String deleteId=objAddress.optString("");
-                    }
-
-                });
-                alertbox.show();
+//                AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+//                alertbox.setCancelable(true);
+//                alertbox.setMessage("Mail Sent Successfully.");
+//                alertbox.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//
+//                    public void onClick(DialogInterface arg0, int arg1) {
+////                        JSONObject objAddress = (JSONObject) view.getTag();
+////                        String deleteId=objAddress.optString("");
+//                    }
+//
+//                });
+//                alertbox.show();
                 break;
             case R.id.btEmailDialogCancel:
                 alert.dismiss();
@@ -170,6 +188,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
             alertDialogs.setView(dialog);
 //            alertDialogs.setCancelable(false);
             etEmail = (EditText) dialog.findViewById(R.id.etEmailDialogEmail);
+            etEmail.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_EMAIL,""));
             btEmail = (Button) dialog.findViewById(R.id.btEmailDialogSend);
             btEmail.setOnClickListener(this);
             btCancel = (Button) dialog.findViewById(R.id.btEmailDialogCancel);
@@ -183,11 +202,12 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
 
 
     public void sendMail() {
+        CommonUtil.closeKeyboard(OrderDetailActivity.this);
         final String tag = "sendMail";
         String url = Constants.BASE_URL + "/mobile/orderDetail/sendMail";
         Map<String, String> params = new HashMap<String, String>();
         params.put("email", etEmail.getText().toString());
-        params.put("orderDetailId", etEmail.getText().toString());
+        params.put("orderDetailId", getIntent().getStringExtra("id"));
         params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
         params.put("eventId", String.valueOf(Constants.Events.EVENT_DEL_ADDRESS));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
@@ -223,6 +243,10 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_ORDER_DETAIL:
                             orderDetailFill(response.getJSONObject("data").optJSONObject("orderDetails"));
+                            break;
+                        case Constants.Events.EVENT_DEL_ADDRESS:
+                            alert.dismiss();
+                            CommonUtil.alertBox(OrderDetailActivity.this, "", response.optString("message"));
                             break;
                     }
                 } else {

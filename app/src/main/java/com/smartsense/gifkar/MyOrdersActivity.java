@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -37,11 +38,11 @@ public class MyOrdersActivity extends Fragment implements Response.Listener<JSON
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = (View) inflater.inflate(R.layout.activity_my_orders, container, false);
-
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
         TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
         actionBarTitle.setText(getResources().getString(R.string.screen_order));
         actionBarTitle.setBackgroundColor(getActivity().getResources().getColor(R.color.mainColor));
+        actionBarTitle.setClickable(false);
         ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
         btFilter.setVisibility(View.INVISIBLE);
         ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
@@ -131,9 +132,9 @@ public class MyOrdersActivity extends Fragment implements Response.Listener<JSON
 
     private void setupViewPager(JSONObject response) {
         try {
-            Log.d("hm","no");
+//            Log.d("hm","no");
             MyOrderPagerAdapter myOrderPagerAdapter = new MyOrderPagerAdapter(getFragmentManager(), getActivity(), response.optJSONObject("data").optJSONObject("orderDetails"));
-            Log.d("hm","yes");
+//            Log.d("hm","yes");
             viewPager.setAdapter(myOrderPagerAdapter);
             tabLayout.setupWithViewPager(viewPager);
             CommonUtil.cancelProgressDialog();

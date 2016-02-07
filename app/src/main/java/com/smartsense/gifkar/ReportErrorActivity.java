@@ -95,6 +95,7 @@ public class ReportErrorActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             case R.id.btActionBarBack:
+                CommonUtil.closeKeyboard(ReportErrorActivity.this);
                 finish();
                 break;
             case R.id.btActionBarInfo:

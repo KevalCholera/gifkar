@@ -57,7 +57,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
     private static LinearLayout llProdBottom;
     private ProductListAdapter productListAdapter;
     private ImageView btActionBarSearch;
-
+    JSONObject userInfo = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +96,12 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         actionBarArea.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
         getProductList(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_ID, ""), SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CATEGORY_ID, ""));
         getCartItem();
+        try {
+            userInfo = new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_INFO, ""));
+            userInfo = userInfo.optJSONObject("userDetails");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getCartItem() {
@@ -133,7 +139,11 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
             case R.id.llProdListCheckOut:
                 if (totalAmount >= Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"))) {
                     if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
-                        startActivity(new Intent(this, Checkout1Activity.class));
+                        if (userInfo.optString("mobile").equalsIgnoreCase("")) {
+                            startActivity(new Intent(this, MobileNoActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_LOGIN));
+                        }else{
+                            startActivity(new Intent(this, Checkout1Activity.class));
+                        }
                     else
                         startActivity(new Intent(this, StartActivity.class));
                 } else {

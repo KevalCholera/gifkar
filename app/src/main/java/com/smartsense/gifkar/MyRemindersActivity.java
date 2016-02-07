@@ -67,10 +67,12 @@ public class MyRemindersActivity extends Fragment implements View.OnClickListene
 //        btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
 //        btBack.setOnClickListener(this);
 //        getSupportActionBar().setCustomView(v);
+
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
         TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
         actionBarTitle.setText(getResources().getString(R.string.screen_my_reminders));
         actionBarTitle.setBackgroundColor(getActivity().getResources().getColor(R.color.mainColor));
+        actionBarTitle.setClickable(false);
         ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
         btFilter.setVisibility(View.INVISIBLE);
         ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);

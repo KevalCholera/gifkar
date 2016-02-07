@@ -269,6 +269,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_SIGNUP:
+                            String mobile = etMobileNo.getText().toString();
                             etMobileNo.setText("");
                             etEmail.setText("");
                             etConPass.setText("");
@@ -278,7 +279,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                             cbTerms.setChecked(false);
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").optString("userId"));
                             SharedPreferenceUtil.save();
-                            startActivity(new Intent(getActivity(), OTPActivity.class).putExtra("mobile", etMobileNo.getText().toString()).putExtra("code", etCountryCode.getText().toString()).putExtra("tag", (String) etCountryCode.getTag()));
+                            startActivity(new Intent(getActivity(), OTPActivity.class).putExtra("mobile", mobile).putExtra("code", etCountryCode.getText().toString()).putExtra("tag", (String) etCountryCode.getTag()));
                             break;
                         case Constants.Events.EVENT_COUNTRY_LIST:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_COUNTRY_LIST, response.toString());

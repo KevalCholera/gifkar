@@ -2,6 +2,7 @@ package com.smartsense.gifkar;
 
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,10 +69,38 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_shoplist, container, false);
         handler = new Handler();
+        LinearLayout llHeadAddress = (LinearLayout) getActivity().findViewById(R.id.llHeadAddress);
+        llHeadAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (CommonUtil.checkCartCount() == 0) {
+                    startActivity(new Intent(getActivity(), CitySelectActivity.class));
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                    alert.setTitle("Empty Cart?");
+                    alert.setMessage("Do you wish to discard your current Cart?");
+                    alert.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //Do something here where "ok" clicked
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_PROD_LIST);
+                            startActivity(new Intent(getActivity(), CitySelectActivity.class));
+                        }
+                    });
+                    alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //Do something here where "Cancel" clicked
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+                }
+            }
+        });
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
         TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
         actionBarTitle.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
         actionBarTitle.setBackgroundDrawable(getResources().getDrawable(R.drawable.head_squre));
+        actionBarTitle.setClickable(true);
         newFeaturesView = (View) rootView.findViewById(R.id.newfeaturesView);
         CommonUtil.disableView(newFeaturesView);
         tvGreetText = (TextView) rootView.findViewById(R.id.tvGreetText);
@@ -78,8 +108,8 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
         btFilter.setVisibility(View.VISIBLE);
         ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
+        btSearch.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_search));
         btSearch.setVisibility(View.VISIBLE);
-
         btFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

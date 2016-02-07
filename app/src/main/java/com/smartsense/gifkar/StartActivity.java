@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.smartsense.gifkar.adapter.StartPagerAdapter;
+import com.smartsense.gifkar.utill.CommonUtil;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -67,6 +68,7 @@ public class StartActivity extends AppCompatActivity {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                CommonUtil.closeKeyboard(StartActivity.this);
                 viewPager.setCurrentItem(tab.getPosition());
             }
 

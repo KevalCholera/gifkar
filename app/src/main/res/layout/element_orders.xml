@@ -81,6 +81,7 @@
             android:id="@+id/ivShopListImage"
             android:background="@drawable/borderwhite"
             android:layout_width="@dimen/product_image_height"
+            android:scaleType="fitXY"
             android:layout_height="@dimen/product_image_height"
              />
 

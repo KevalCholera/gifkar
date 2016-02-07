@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/activity_bg"
-    android:fillViewport="true">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="bold"
+                    android:fontFamily="normal"
                     android:padding="@dimen/padding_8"
                     android:text="@string/order_no"
                     android:textSize="@dimen/text_14" />
@@ -94,6 +94,7 @@
                 <com.android.volley.toolbox.NetworkImageView
                     android:id="@+id/ivShopListImage"
                     android:background="@drawable/borderwhite"
+                    android:scaleType="fitXY"
                     android:layout_width="@dimen/product_image_height"
                     android:layout_height="@dimen/product_image_height"
                      />
@@ -109,7 +110,7 @@
                         android:id="@+id/tvOrderElementShopName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="bold"
+                        android:fontFamily="normal"
                         android:padding="@dimen/padding_2"
                         android:text="@string/shop_name"
                         android:textColor="@color/black"
@@ -140,7 +141,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/edittext_hint_color"
+                android:background="@color/edittext_hint_color1"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="@dimen/padding_10">
@@ -219,6 +220,176 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="bold"
                 android:padding="@dimen/padding_2"
+                android:text="@string/total_amount"
+                android:textColor="@color/mainColor"
+                android:textSize="@dimen/text_16" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_5">
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:text="@string/total"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_12" />
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:id="@+id/tvOrderDetailTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:gravity="right"
+                    android:text="\u20B9 200"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_5">
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:text="@string/shipping"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_12" />
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:id="@+id/tvOrderDetailShipping"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:gravity="right"
+                    android:text="\u20B9 0"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_5">
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:text="@string/vat"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_12" />
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:id="@+id/tvOrderDetailVAT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:gravity="right"
+                    android:text="\u20B9 0"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_5">
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:text="@string/stax"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_12" />
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:id="@+id/tvOrderDetailTax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:gravity="right"
+                    android:text="\u20B9 0"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_5">
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:text="@string/paid"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_14"
+                    android:textStyle="bold" />
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:id="@+id/tvOrderDetailPayable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_5"
+                    android:layout_weight="1"
+                    android:fontFamily="normal"
+                    android:gravity="right"
+                    android:text="\u20B9 0"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_14"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@color/textcolorwhite"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_20">
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="bold"
+                android:padding="@dimen/padding_2"
                 android:text="@string/sender_info"
                 android:textColor="@color/mainColor"
                 android:textSize="@dimen/text_16" />
@@ -243,6 +414,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:fontFamily="normal"
                     android:padding="@dimen/padding_2"
                     android:text="@string/mobile"

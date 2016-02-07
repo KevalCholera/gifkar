@@ -220,7 +220,7 @@ public class AddressFragment extends Fragment implements View.OnClickListener, R
                     }
                 });
                 alertDialogs.setView(dialog);
-                alertDialogs.setCancelable(false);
+                alertDialogs.setCancelable(true);
                 alert = alertDialogs.create();
                 alert.show();
             }
@@ -255,7 +255,7 @@ public class AddressFragment extends Fragment implements View.OnClickListener, R
                     }
                 });
                 alertDialogs.setView(dialog);
-                alertDialogs.setCancelable(false);
+                alertDialogs.setCancelable(true);
                 alert = alertDialogs.create();
                 alert.show();
             }

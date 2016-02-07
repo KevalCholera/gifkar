@@ -2,6 +2,7 @@ package com.smartsense.gifkar;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,14 +59,16 @@ public class SearchShopActivity extends AppCompatActivity implements View.OnClic
             public void onTextChanged(CharSequence s, int start, int before, int count) { // TODO Auto-generated method stub
                 if (!s.toString().equalsIgnoreCase("")) {
                     Cursor cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_SHOP + "  WHERE " + DataBaseHelper.COLUMN_CATEGORY_ID + " = '"
-                            + getIntent().getStringExtra("id") + "' AND (" + DataBaseHelper.COLUMN_SHOP_NAME + " like '" + s.toString() + "%' OR " + DataBaseHelper.COLUMN_TAGS + " like '%" + s.toString() + "%')");
+                            + getIntent().getStringExtra("id") + "' AND (" + DataBaseHelper.COLUMN_SHOP_NAME + " like '" + s.toString() + "%' OR " + DataBaseHelper.COLUMN_TAGS + " like '" + s.toString() + "%')");
                     if (cursor.getCount() > 0) {
                         lvSearch.setVisibility(View.VISIBLE);
                         llSearch.setVisibility(View.GONE);
                         lvSearch.setAdapter(new ShopListAdapter(SearchShopActivity.this, cursor));
 //                        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
                     } else {
-
+                        lvSearch.setVisibility(View.GONE);
+                        llSearch.setVisibility(View.VISIBLE);
+//                        Log.v("Cursor Object", DatabaseUtils.dumpCursorToString(cursor));
                     }
                     s.toString();
                 } else {
@@ -88,10 +91,14 @@ public class SearchShopActivity extends AppCompatActivity implements View.OnClic
 //                        Log.i("ShopID", String.valueOf());
                         String str = (String) view.getTag();
 //                        String[] separated = str.split(" ");
-                        StringTokenizer st = new StringTokenizer(str, " ");
+                        StringTokenizer st = new StringTokenizer(str, "_");
+                        Log.i("Shop", st.toString());
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_ID, st.nextToken());
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CATEGORY_ID, st.nextToken());
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_IMAGE, st.nextToken());
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_NAME, st.nextToken());
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.MIN_ORDER, st.nextToken());
+                        SharedPreferenceUtil.putValue(Constants.PrefKeys.DELIVERY_CHARGES, st.nextToken());
                         SharedPreferenceUtil.save();
                         startActivity(new Intent(SearchShopActivity.this, ProductListActivity.class));
                     }

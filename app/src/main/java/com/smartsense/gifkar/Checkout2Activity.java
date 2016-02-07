@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -57,6 +58,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
     private EditText etCheckout2WriteOccasion;
     private AlertDialog alert;
     private Boolean checkCountry = false;
+    private Boolean checkTimeSlot = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +103,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
 
     public void openPopupTimeSlot(JSONArray timeSlot, final int dateSelect) {
         try {
-
-
+            CommonUtil.closeKeyboard(this);
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View dialog = inflater.inflate(R.layout.dialog_pickup_time_slot, null);
@@ -131,6 +132,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                     tvPickupDate.setText("");
             }
             final RadioGroup rgPickUp = (RadioGroup) dialog.findViewById(R.id.rgPickUp);
+
             TextView tvPickupCancel = (TextView) dialog.findViewById(R.id.tvPickupCancel);
             tvPickupCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -143,6 +145,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
             tvPickupSet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    checkTimeSlot = true;
                     RadioButton rb = (RadioButton) rgPickUp.findViewById(rgPickUp.getCheckedRadioButtonId());
                     switch (dateSelect) {
                         case 1:
@@ -204,6 +207,8 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             for (int i = 0; i < timeSlot.length(); i++) {
                 radioButton[i] = new RadioButton(this);
+                if (i == 0)
+                    radioButton[i].setChecked(true);
                 radioButton[i].setLayoutParams(params);
                 radioButton[i].setText(timeSlot.optJSONObject(i).optString("slot"));
                 radioButton[i].setId(timeSlot.optJSONObject(i).optInt("id"));
@@ -249,6 +254,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                     finish();
                     break;
                 case R.id.tvChackout2DelAddress:
+                    CommonUtil.closeKeyboard(this);
                     startActivityForResult(new Intent(this, MyAddressActivity.class).putExtra(Constants.SCREEN, true), 0);
                     break;
                 case R.id.etCheckout2SelectOccasion:
@@ -260,10 +266,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                 case R.id.btnCheckout2PlaceOrder:
                     if (tvChackout2DelAddress.getText().toString().equalsIgnoreCase("")) {
                         CommonUtil.alertBox(this, "", "Please select delivery address.");
-                    } else if (btToday.getBackground().getConstantState()
-                            .equals(getResources().getDrawable(R.drawable.borderwhite).getConstantState()) & btTomorrow.getBackground().getConstantState()
-                            .equals(getResources().getDrawable(R.drawable.borderwhite).getConstantState()) & btAfterTomorrow.getBackground().getConstantState()
-                            .equals(getResources().getDrawable(R.drawable.borderwhite).getConstantState())) {
+                    } else if (!checkTimeSlot) {
                         CommonUtil.alertBox(this, "", "Please select time slot for delivery.");
                     } else if (etCheckout2WriteOccasion.getText().toString().equalsIgnoreCase("")) {
                         CommonUtil.alertBox(this, "", "Please enter occasion message.");
@@ -277,6 +280,10 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
         }
     }
 
+    //
+//    & btTomorrow.getBackground().getConstantState()
+//    .equals(getResources().getDrawable(R.drawable.borderwhite).getConstantState()) & btAfterTomorrow.getBackground().getConstantState()
+//    .equals(getResources().getDrawable(R.drawable.borderwhite).getConstantState())
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -286,7 +293,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
 
     public void openOccasionsPopup(JSONObject response) {
         try {
-
+            CommonUtil.closeKeyboard(this);
             final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -326,6 +333,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
 
 
     public void doCheckout() {
+        CommonUtil.closeKeyboard(this);
         final String tag = "doCheckout";
         String url = Constants.BASE_URL + "/mobile/orderDetail/create";
         Map<String, String> params = new HashMap<String, String>();
@@ -361,7 +369,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
             params.put("expectedDeliveryDate", formattedDate);
             params.put("deliveryTimeSlotId", "" + (Integer) btAfterTomorrow.getTag());
         }
-        Log.i("params", params.toString());
+        Log.i("params", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_PROD_LIST, ""));
         CommonUtil.showProgressDialog(this, "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -423,8 +431,10 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                             break;
                         case Constants.Events.EVENT_CHECK_OUT:
 //                            startActivity(new Intent(Checkout2Activity.this, OrderDetailActivity.class).putExtra("id", response.getJSONObject("data").optString("id")));
-                            startActivity(new Intent(Checkout2Activity.this, OrderDetailActivity.class).putExtra("id", response.optJSONObject("data").optString("orderDetailId")));
-                            finish();
+                            CommonUtil.closeKeyboard(this);
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_PROD_LIST);
+                            startActivity(new Intent(Checkout2Activity.this, OrderDetailActivity.class).putExtra("id", response.optJSONObject("data").optString("orderDetailId")).putExtra("flag", true));
+                            ActivityCompat.finishAffinity(this);
                             break;
                     }
                 } else {
@@ -440,10 +450,12 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
-            if (!data.getStringExtra("address").equalsIgnoreCase("")) {
-                tvChackout2DelAddress.setText(data.getStringExtra("address"));
-                tvChackout2DelAddress.setTag(data.getStringExtra("addressId"));
-                tvChackout2DelAddress.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.profile_edit, 0);
+            if (data != null) {
+                if (!data.getStringExtra("address").equalsIgnoreCase("")) {
+                    tvChackout2DelAddress.setText(data.getStringExtra("address"));
+                    tvChackout2DelAddress.setTag(data.getStringExtra("addressId"));
+                    tvChackout2DelAddress.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.profile_edit, 0);
+                }
             }
         }
     }

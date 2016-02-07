@@ -71,7 +71,7 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
                 public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
                     JSONObject addressObj = (JSONObject) adapterView.getItemAtPosition(position);
                     Intent intent = new Intent();
-                    String s1 = addressObj.optString("recipientName") + "\n" + addressObj.optString("recipientContact") + "\n" + addressObj.optString("address") + " " + addressObj.optString("companyName") + " " + addressObj.optString("landmark") + "\n" + addressObj.optJSONObject("area").optString("name") + "," + addressObj.optJSONObject("area").optString("name") + " " + addressObj.optJSONObject("area").optString("name");
+                    String s1 = addressObj.optString("recipientName") + "\n" + addressObj.optString("recipientContact") + "\n" + addressObj.optString("address") + " " + addressObj.optString("companyName") + " " + addressObj.optString("landmark") + "\n" + addressObj.optJSONObject("area").optString("name") + "," + addressObj.optJSONObject("area").optString("pincode") + " " + addressObj.optJSONObject("city").optString("name");
                     intent.putExtra("address", s1);
                     intent.putExtra("addressId", addressObj.optString("id"));
                     setResult(0, intent);
@@ -127,6 +127,15 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        Intent intent = new Intent();
+        intent.putExtra("address", "");
+        setResult(0, intent);
+        finish();
     }
 
     public void openInfoPopup() {

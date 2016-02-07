@@ -76,6 +76,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
+        CommonUtil.closeKeyboard(this);
         switch (view.getId()) {
             case R.id.btnSend:
                 if (TextUtils.isEmpty(etCountryCode.getText().toString())) {
@@ -85,6 +86,7 @@ public class MobileNoActivity extends AppCompatActivity implements View.OnClickL
                 } else if (!(etMobileNo.length() >= 8 && etMobileNo.length() <= 13)) {
                     etMobileNo.setError(getString(R.string.wrn_valid_mno));
                 } else {
+
                     doSendOTP();
                 }
                 break;

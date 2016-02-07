@@ -134,6 +134,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
         Map<String, String> params = new HashMap<String, String>();
         params.put("eventId", String.valueOf(Constants.Events.EVENT_RESEND_OTP));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        params.put("userId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_ID, ""));
         params.put("mobile", mobileNo);
         params.put("countryCode", countryCode.substring(1));
         CommonUtil.showProgressDialog(this, "Wait...");
@@ -171,6 +172,11 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
             }
 
         }.start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override

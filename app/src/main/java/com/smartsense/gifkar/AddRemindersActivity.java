@@ -180,6 +180,7 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                 saveReminder();
                 break;
             case R.id.btActionBarBack:
+                CommonUtil.closeKeyboard(AddRemindersActivity.this);
                 finish();
                 break;
             case R.id.etMyReminderAddTime:
@@ -296,24 +297,26 @@ public class AddRemindersActivity extends AppCompatActivity implements View.OnCl
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_ADD_REMINDER:
-                            alert.setTitle("Success!");
-                            alert.setMessage("Reminder Successfully Added.");
-                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
+                            CommonUtil.alertBox(AddRemindersActivity.this,"","Reminder Successfully Added.");
+//                            alert.setTitle("Success!");
+//                            alert.setMessage("Reminder Successfully Added.");
+//                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int whichButton) {
                                     finish();
-                                }
-                            });
-                            alert.show();
+//                                }
+//                            });
+//                            alert.show();
                             break;
                         case Constants.Events.EVENT_UPDATE_REMINDER:
-                            alert.setTitle("Success!");
-                            alert.setMessage("Reminder Successfully Updated.");
-                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
+                            CommonUtil.alertBox(AddRemindersActivity.this,"","Reminder Successfully Updated.");
+//                            alert.setTitle("Success!");
+//                            alert.setMessage("Reminder Successfully Updated.");
+//                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int whichButton) {
                                     finish();
-                                }
-                            });
-                            alert.show();
+//                                }
+//                            });
+//                            alert.show();
                             break;
                     }
                     try {

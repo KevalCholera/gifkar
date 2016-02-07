@@ -10,7 +10,8 @@
     <color name="googlebackcolor">#da4835</color>
     <color name="facebookbackcolor">#1263b5</color>
     <color name="edittext_color">#F7F7F7</color>
-    <color name="edittext_hint_color">#C9C9C9</color>
+    <color name="edittext_hint_color1">#C9C9C9</color>
+    <color name="edittext_hint_color">#80000000</color>
     <color name="edittext_border_color">#E4E4E4</color>
     <color name="btn_orange">#ec9301</color>
     <color name="btn_blue">#00aff0</color>

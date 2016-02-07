@@ -30,6 +30,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.mpt.storage.SharedPreferenceUtil;
 
@@ -67,11 +68,12 @@ public class CommonUtil {
     }
 
     public static void alertBox(Context context, String title, String msg) {
-        Builder alert = new AlertDialog.Builder(context);
-        alert.setTitle(title);
-        alert.setMessage(msg);
-        alert.setPositiveButton("OK", null);
-        alert.show();
+//        Builder alert = new AlertDialog.Builder(context);
+//        alert.setTitle(title);
+//        alert.setMessage(msg);
+//        alert.setPositiveButton("OK", null);
+//        alert.show();
+        Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
     }
 
     static public ActionBar getActionBar(Activity a) {

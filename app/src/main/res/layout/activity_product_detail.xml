@@ -1,250 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/textcolorwhite"
-    android:orientation="vertical">
+android:fillViewport="true"
 
-    <LinearLayout
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_16">
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/ivProdDetailImage"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:background="@drawable/borderwhite"
-            android:scaleType="fitXY" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/activity_bg" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_8">
+        android:layout_height="match_parent"
+        android:background="@color/textcolorwhite"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_8"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_16">
 
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            <com.android.volley.toolbox.NetworkImageView
+                android:id="@+id/ivProdDetailImage"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/borderwhite"
+                android:scaleType="fitXY" />
+        </LinearLayout>
 
-            <!--<com.smartsense.gifkar.textstyleUtil.TypefaceTextView-->
-            <!--android:id="@+id/tvProdDetailName"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:fontFamily="normal"-->
-            <!--android:text="@string/prod_name"-->
-            <!--android:textSize="@dimen/text_16"-->
-            <!--android:textStyle="bold" />-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/activity_bg" />
 
-            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                android:id="@+id/tvProdDetailRs"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_8">
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_8"
+
                 android:layout_weight="1"
-                android:fontFamily="normal"
-                android:text="\u20B9 100"
-                android:textSize="@dimen/text_16"
-                android:textStyle="bold" />
+                android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/ivProdDetailType"
-                android:layout_width="18dp"
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:id="@+id/tvProdDetailName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="normal"
+                    android:singleLine="true"
+                    android:text="@string/prod_name"
+                    android:textSize="@dimen/text_16" />
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:id="@+id/tvProdDetailRs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="normal"
+                    android:text="\u20B9 100"
+                    android:textSize="@dimen/text_16" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
                 android:gravity="center"
-                android:layout_height="18dp"
+                android:orientation="vertical">
 
-                android:background="@drawable/veg" />
+                <ImageView
+                    android:id="@+id/ivProdDetailType"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:background="@drawable/veg" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+
+                        android:id="@+id/ibProdDetailMinus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_product_minus_unfill"
+                        android:padding="@dimen/padding_1" />
+
+                    <TextView
+                        android:id="@+id/tvProdDetailQty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:text="@string/total_quntity"
+                        android:textColor="@color/textcolorblack"
+                        android:textSize="@dimen/text_16" />
+
+                    <ImageButton
+                        android:id="@+id/ibProdDetailPlus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_product_plus_unfill"
+                        android:padding="@dimen/padding_1" />
+
+
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/activity_bg" />
+
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageButton
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
 
-                android:id="@+id/ibProdDetailMinus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_product_minus_unfill"
-                android:padding="@dimen/padding_1" />
-
-            <TextView
-                android:id="@+id/tvProdDetailQty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="@string/total_quntity"
-                android:textColor="@color/textcolorblack"
+                android:fontFamily="normal"
+                android:gravity="right"
+                android:paddingLeft="@dimen/padding_16"
+                android:paddingTop="@dimen/padding_8"
+                android:text="@string/unit_name"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_16" />
 
-            <ImageButton
-                android:id="@+id/ibProdDetailPlus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_product_plus_unfill"
-                android:padding="@dimen/padding_1" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/activity_bg" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="normal"
-            android:gravity="right"
-            android:paddingLeft="@dimen/padding_16"
-            android:paddingTop="@dimen/padding_8"
-            android:text="@string/unit_name"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_16" />
-
-        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-            android:id="@+id/tvProdDetailUnitName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="normal"
-            android:paddingLeft="@dimen/padding_16"
-            android:paddingTop="@dimen/padding_8"
-            android:text="@string/prod_name"
-            android:textSize="@dimen/text_16" />
-
-
-    </LinearLayout>
-
-
-    <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="normal"
-        android:paddingLeft="@dimen/padding_16"
-        android:paddingTop="10dp"
-        android:text="@string/description"
-        android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_16" />
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-
-        >
-
-
             <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                android:id="@+id/tvProdDetailDes"
+                android:id="@+id/tvProdDetailUnitName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="normal"
                 android:paddingLeft="@dimen/padding_16"
-                android:paddingRight="@dimen/padding_8"
                 android:paddingTop="@dimen/padding_8"
-                android:text="\u20B9 100"
+                android:text="@string/prod_name"
                 android:textSize="@dimen/text_16" />
 
 
-    </ScrollView>
-
-
-    <LinearLayout
-        android:id="@+id/llProdDetailBottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:translationZ="10000dp">
-
-
-        <RelativeLayout
-            android:id="@+id/llProdDetailCart"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:visibility="visible">
-
-            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                android:id="@+id/tvProdDetailCartRs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="@dimen/padding_5"
-                android:drawableLeft="@drawable/ic_cart_large"
-                android:drawablePadding="@dimen/padding_8"
-                android:gravity="center"
-                android:text="100"
-                android:textColor="@color/textcolorwhite"
-                android:textSize="@dimen/text_14" />
-
-            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-                android:id="@+id/tvProdDetailCartCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/tvProdDetailCartRs"
-                android:layout_alignTop="@id/tvProdDetailCartRs"
-                android:layout_marginLeft="21dp"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/badge_circle"
-                android:fontFamily="bold"
-                android:text="10"
-                android:textColor="@color/mainColor"
-                android:textSize="8sp" />
-        </RelativeLayout>
+        </LinearLayout>
 
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
-            android:id="@+id/llProdDetailCheckOut"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/colorPrimaryDark"
-            android:drawableRight="@drawable/ic_right_arrow"
             android:fontFamily="normal"
+            android:paddingLeft="@dimen/padding_16"
+            android:paddingTop="10dp"
+            android:text="@string/description"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_16" />
+
+
+        <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+            android:id="@+id/tvProdDetailDes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="normal"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/padding_16"
+            android:paddingRight="@dimen/padding_8"
+            android:paddingTop="@dimen/padding_8"
+            android:paddingBottom="@dimen/padding_8"
+            android:text="\u20B9 100"
+            android:textSize="@dimen/text_16" />
+
+
+        <LinearLayout
+            android:id="@+id/llProdDetailBottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimaryDark"
             android:gravity="center"
-            android:text="@string/checkout"
-            android:textColor="@color/textcolorwhite"
-            android:textSize="@dimen/text_14" />
+            android:orientation="horizontal"
+            android:translationZ="10000dp">
+
+
+            <RelativeLayout
+                android:id="@+id/llProdDetailCart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:visibility="visible">
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:id="@+id/tvProdDetailCartRs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/padding_5"
+                    android:drawableLeft="@drawable/ic_cart_large"
+                    android:drawablePadding="@dimen/padding_8"
+                    android:gravity="center"
+                    android:text="100"
+                    android:textColor="@color/textcolorwhite"
+                    android:textSize="@dimen/text_14" />
+
+                <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                    android:id="@+id/tvProdDetailCartCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/tvProdDetailCartRs"
+                    android:layout_alignTop="@id/tvProdDetailCartRs"
+                    android:layout_marginLeft="21dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/badge_circle"
+                    android:fontFamily="bold"
+                    android:text="10"
+                    android:textColor="@color/mainColor"
+                    android:textSize="8sp" />
+            </RelativeLayout>
+
+
+            <com.smartsense.gifkar.textstyleUtil.TypefaceTextView
+                android:id="@+id/llProdDetailCheckOut"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"
+                android:drawableRight="@drawable/ic_right_arrow"
+                android:fontFamily="normal"
+                android:gravity="center"
+                android:text="@string/checkout"
+                android:textColor="@color/textcolorwhite"
+                android:textSize="@dimen/text_14" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

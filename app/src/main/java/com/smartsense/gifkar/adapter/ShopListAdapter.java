@@ -14,6 +14,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.smartsense.gifkar.GifkarApp;
 import com.smartsense.gifkar.R;
+
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
 import java.text.ParseException;
@@ -28,6 +29,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
     CursorAdapter mCursorAdapter;
     Context mContext;
     ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
+//    ImageLoader imageLoader;
     final SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
     private Calendar mCalendar = null;
     private Calendar mCalendar1 = null;
@@ -36,7 +38,8 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
         mCalendar = Calendar.getInstance();
         mCalendar1 = Calendar.getInstance();
         mContext = context;
-
+//        imageLoader = CustomVolleyRequestQueue.getInstance(context)
+//                .getImageLoader();
         mCursorAdapter = new CursorAdapter(mContext, c, 0) {
 
             @Override
@@ -72,7 +75,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
                     ivShopListMidNight.setVisibility(View.GONE);
                 }
                 tvShopListRating.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING)).equalsIgnoreCase("null") ? "  -  " : cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING)));
-                tvShopListCutofTime.setText("Cut off Time : " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CUT_OF_TIME)) + " hours");
+                tvShopListCutofTime.setText("Cut off Time : " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CUT_OF_TIME)) + " min.");
                 if (!cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_FROM)).equalsIgnoreCase("null")) {
 
                     try {
@@ -90,6 +93,9 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
                 tvShopListMinOrder.setText("Min. : \u20B9 " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_MIN_ORDER)));
                 tvShopListTag.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_TAGS)));
                 ivShopListImage.setDefaultImageResId(R.drawable.default_img);
+//                imageLoader.get(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB)), ImageLoader.getImageListener(ivShopListImage,
+//                        R.drawable.default_img, android.R.drawable
+//                                .ic_dialog_alert));
 //                Constants.BASE_URL + "/images/shops/thumbs/" +
                 ivShopListImage.setImageUrl(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB)), imageLoader);
                 view.setTag(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_ID)) + "_" + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CATEGORY_ID)) + "_" + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_IMAGE_THUMB)) + "_" + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_SHOP_NAME))+ "_" + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_MIN_ORDER))+ "_" + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_CHARGE)));
