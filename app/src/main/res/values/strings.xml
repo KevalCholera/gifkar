@@ -246,7 +246,7 @@
     <string name="cart">Cart</string>
 
     <string name="flat">Flat/House/Office Number</string>
-    <string name="street">Street/Society Name</string>
+    <string name="street">Street/Society Name/Company Name</string>
     <string name="area">Area Name</string>
     <string name="city">City Name</string>
     <string name="country">Country Name</string>
@@ -322,11 +322,11 @@
     <string name="close_time">Close Time : </string>
     <string name="map">Map : </string>
     <string name="days">Days : </string>
-    <string name="total">Total</string>
-    <string name="shipping">Shipping</string>
+    <string name="total">Subtotal</string>
+    <string name="shipping">Delivery Charges</string>
     <string name="vat">VAT</string>
     <string name="stax">Service Tax</string>
-    <string name="payable">Payable</string>
+    <string name="payable">Total Payable Amount</string>
     <string name="paid">Paid</string>
     <string name="continue_checkout">CONTINUE CHECKOUT</string>
     <string name="delivery_address">Delivery Address</string>
@@ -353,6 +353,8 @@
     <string name="review_user">Review By Ronak</string>
     <string name="pickup_time">Pick a time slot</string>
     <string name="search">Search</string>
+    <string name="search_text">Search your favourite local shop</string>
+    <string name="search_prod">Search products</string>
     <string name="no_internet">No Internet</string>
     <string name="order_no">Order ID : 256754651</string>
     <string name="details">Details</string>
@@ -378,6 +380,6 @@
     <string name="suggest_des">You can suggest us your favorite local gifting shop from your area if we are in your city. We will try to get them on board for you.</string>
     <string name="near_des">Oops either we don\'t recongnized the area or we are not operating in that area yet. Sorry!</string>
     <string name="del_des">Select or Add delivery address of your recipient. The delivery address should be from the same area and city of selected local shop.</string>
-    <string name="remind_des">Do you forget birthdays of your loved ones? Do you forget special occasions with whom you want to celebrate? You can set reminders about birthdays, occasions etc. to get advance notifications.</string>
+    <string name="remind_des">Reminder will help you to get advance notifications about occasions. Do you forget special occasions with whom you want to celebrate? You can set reminders about birthdays, occasions etc. to get advance notifications.</string>
     <string name="address_des1">Select or Add delivery address of your recipient. The delivery address should be from the same area and city of selected local shop.</string>
 </resources>

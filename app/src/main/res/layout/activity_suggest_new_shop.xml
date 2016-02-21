@@ -16,15 +16,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_5"
-            android:inputType="textCapSentences"
             android:background="@drawable/edittext_round"
             android:ems="10"
             android:fontFamily="normal"
             android:hint="@string/shop_name"
+            android:inputType="textCapSentences"
             android:padding="@dimen/padding_5"
-            android:textSize="@dimen/text_16"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etNewShopAddress"
@@ -35,11 +35,11 @@
             android:ems="10"
             android:fontFamily="normal"
             android:hint="@string/address"
-            android:padding="@dimen/padding_5"
             android:inputType="textCapSentences"
-            android:textSize="@dimen/text_16"
+            android:padding="@dimen/padding_5"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etNewShopArea"
@@ -49,12 +49,12 @@
             android:background="@drawable/edittext_round"
             android:ems="10"
             android:fontFamily="normal"
-            android:inputType="textCapSentences"
             android:hint="@string/area"
+            android:inputType="textCapSentences"
             android:padding="@dimen/padding_5"
-            android:textSize="@dimen/text_16"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
@@ -66,11 +66,11 @@
             android:ems="10"
             android:fontFamily="normal"
             android:hint="@string/city"
-            android:padding="@dimen/padding_5"
             android:inputType="textCapSentences"
-            android:textSize="@dimen/text_16"
+            android:padding="@dimen/padding_5"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
             android:id="@+id/etNewShopPin"
@@ -83,9 +83,9 @@
             android:hint="@string/pin"
             android:inputType="number"
             android:padding="@dimen/padding_5"
-            android:textSize="@dimen/text_16"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
@@ -95,13 +95,13 @@
             android:layout_margin="@dimen/margin_5"
             android:background="@drawable/edittext_round"
             android:ems="10"
-
             android:fontFamily="normal"
             android:hint="@string/weblink"
             android:padding="@dimen/padding_5"
-            android:textSize="@dimen/text_16"
+            android:singleLine="true"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
@@ -113,12 +113,12 @@
             android:ems="10"
 
             android:fontFamily="normal"
-            android:inputType="textEmailAddress"
             android:hint="@string/email1"
+            android:inputType="textEmailAddress"
             android:padding="@dimen/padding_5"
-            android:textSize="@dimen/text_16"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@color/edittext_hint_color" />
+            android:textColorHint="@color/edittext_hint_color"
+            android:textSize="@dimen/text_16" />
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceButton
             android:id="@+id/btnNewShopAdd"

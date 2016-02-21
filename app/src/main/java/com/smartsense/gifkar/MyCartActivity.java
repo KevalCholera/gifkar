@@ -140,7 +140,7 @@ public class MyCartActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.llChackout:
                 if (totalAmount >= Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"))) {
                     if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
-                        if (userInfo.optString("mobile").equalsIgnoreCase("")) {
+                        if (userInfo.optString("isMobileVerified").equalsIgnoreCase("0")) {
                             startActivity(new Intent(this, MobileNoActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_LOGIN));
                         }else{
                             startActivity(new Intent(this, Checkout1Activity.class));

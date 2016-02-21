@@ -97,8 +97,9 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         getProductList(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_ID, ""), SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CATEGORY_ID, ""));
         getCartItem();
         try {
+            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)){
             userInfo = new JSONObject(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_INFO, ""));
-            userInfo = userInfo.optJSONObject("userDetails");
+            userInfo = userInfo.optJSONObject("userDetails");}
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -139,7 +140,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
             case R.id.llProdListCheckOut:
                 if (totalAmount >= Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.MIN_ORDER, "0"))) {
                     if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN))
-                        if (userInfo.optString("mobile").equalsIgnoreCase("")) {
+                        if (userInfo.optString("isMobileVerified").equalsIgnoreCase("0")) {
                             startActivity(new Intent(this, MobileNoActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_LOGIN));
                         }else{
                             startActivity(new Intent(this, Checkout1Activity.class));

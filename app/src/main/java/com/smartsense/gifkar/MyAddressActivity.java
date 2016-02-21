@@ -161,9 +161,9 @@ public class MyAddressActivity extends AppCompatActivity implements View.OnClick
         final String tag = "address";
         String url = Constants.BASE_URL + "/mobile/deliveryAddress/get";
         Map<String, String> params = new HashMap<String, String>();
-//        if (getIntent().getBooleanExtra(Constants.SCREEN, false))
-//            params.put("areaId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_ID, ""));
-//        else
+        if (getIntent().getBooleanExtra(Constants.SCREEN, false))
+            params.put("areaId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_ID, ""));
+        else
             params.put("address", "all");
         params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
         params.put("eventId", String.valueOf(Constants.Events.EVENT_GET_ADDRESS));

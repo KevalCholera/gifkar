@@ -170,7 +170,7 @@ public class SignupFragment extends Fragment implements View.OnClickListener, Re
                     }
                 });
                 alertDialogs.setView(dialog);
-                alertDialogs.setCancelable(false);
+                alertDialogs.setCancelable(true);
                 alert = alertDialogs.create();
                 alert.show();
             }

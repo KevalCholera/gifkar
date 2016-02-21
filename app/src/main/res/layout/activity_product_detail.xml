@@ -55,6 +55,7 @@ android:fillViewport="true"
                     android:layout_height="wrap_content"
                     android:fontFamily="normal"
                     android:singleLine="true"
+                    android:layout_marginBottom="@dimen/margin_10"
                     android:text="@string/prod_name"
                     android:textSize="@dimen/text_16" />
 
@@ -64,7 +65,7 @@ android:fillViewport="true"
                     android:layout_height="wrap_content"
                     android:fontFamily="normal"
                     android:text="\u20B9 100"
-                    android:textSize="@dimen/text_16" />
+                    android:textSize="@dimen/text_14" />
 
             </LinearLayout>
 

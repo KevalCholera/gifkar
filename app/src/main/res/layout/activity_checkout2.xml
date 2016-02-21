@@ -325,6 +325,7 @@
                 android:background="@drawable/edittext_round"
                 android:fontFamily="normal"
                 android:gravity="top"
+                android:maxLines="4"
                 android:hint="@string/write_occasion"
                 android:padding="@dimen/padding_8"
                 android:textSize="@dimen/text_14"

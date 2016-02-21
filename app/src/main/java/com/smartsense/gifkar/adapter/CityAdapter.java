@@ -1,6 +1,7 @@
 package com.smartsense.gifkar.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
+import com.smartsense.gifkar.CitySelectActivity;
 import com.smartsense.gifkar.GifkarApp;
 import com.smartsense.gifkar.R;
 
@@ -22,14 +24,14 @@ public class CityAdapter extends BaseAdapter implements Filterable {
     Boolean isCity;
     private LayoutInflater inflater;
     ImageLoader imageLoader = GifkarApp.getInstance().getDiskImageLoader();
-
+    Context context;
     private ItemFilter mFilter = new ItemFilter();
     JSONArray originalDataArray;
     String highlight = null;
 
 
     public CityAdapter(Context context, JSONArray dataArray, Boolean check) {
-
+        this.context = context;
         this.dataArray = dataArray;
         this.originalDataArray = dataArray;
         isCity = check;
@@ -88,7 +90,7 @@ public class CityAdapter extends BaseAdapter implements Filterable {
 //                //for highlight color
 //                tmpstrname = testJson.optString("area_name").replace(highlight, "<font color='red'>" + highlight + "</font>");
 //            } else {
-            tmpstrname = testJson.optString("name")+" - "+testJson.optString("pincode");
+            tmpstrname = testJson.optString("name") + " - " + testJson.optString("pincode");
 //            }
 //            holder.tv_cityName_City.setText(testJson.optString("area_name"));
             holder.tv_cityName_City.setText(Html.fromHtml(tmpstrname), TextView.BufferType.SPANNABLE);
@@ -134,6 +136,9 @@ public class CityAdapter extends BaseAdapter implements Filterable {
                     if (tempobj.optString("name").toLowerCase().contains(filterString)) {
                         newj.put(tempobj);
                     }
+//                    else {
+//                        viewDialog();
+//                    }
                 }
             } else if (!isCity) {
                 for (int i = 0; i < count; i++) {
@@ -142,6 +147,9 @@ public class CityAdapter extends BaseAdapter implements Filterable {
                     if (tempobj.optString("name").toLowerCase().contains(filterString)) {
                         newj.put(tempobj);
                     }
+//                    else {
+//                        viewDialog();
+//                    }
                 }
             }
 
@@ -155,6 +163,10 @@ public class CityAdapter extends BaseAdapter implements Filterable {
 
             results.values = newj;
             results.count = newj.length();
+            if(newj.length()==0){
+                viewDialog();
+//                CitySelectActivity.titleTextView.setText("");
+            }
 
             return results;
         }
@@ -166,5 +178,17 @@ public class CityAdapter extends BaseAdapter implements Filterable {
             notifyDataSetChanged();
         }
 
+    }
+
+    public void viewDialog() {
+        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(context);
+//        alert.setTitle("Success!");
+        alert.setMessage("Oops either we don't recognized the city/area or we are not operating in that city/area yet. Sorry, please select the city/area name from the list provided.");
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
+        alert.show();
     }
 }

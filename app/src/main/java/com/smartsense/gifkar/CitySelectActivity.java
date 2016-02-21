@@ -56,7 +56,7 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
     CityAdapter cityAdapter = null;
     JSONObject tempCityObj = new JSONObject();
     boolean flagMode = true;
-    TextView titleTextView;
+    public static TextView titleTextView;
     LinearLayout llAutoSeletCity;
     View v;
     private JSONObject cityObj;

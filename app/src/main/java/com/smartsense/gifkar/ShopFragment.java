@@ -32,17 +32,27 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.ShopListAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataBaseHelper;
+import com.smartsense.gifkar.utill.DataRequest;
+import com.smartsense.gifkar.utill.JsonErrorShow;
 import com.smartsense.gifkar.utill.RecyclerItemClickListener;
 import com.smartsense.gifkar.utill.SimpleDividerItemDecoration;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.StringTokenizer;
 
-public class ShopFragment extends Fragment {
+public class ShopFragment extends Fragment implements Response.Listener<JSONObject>,
+        Response.ErrorListener {
 
     //    static JSONArray jsonArray;
     RecyclerView recyclerView;
@@ -88,7 +98,7 @@ public class ShopFragment extends Fragment {
 
                         final String str = (String) view.getTag();
                         String[] separated = str.split("_");
-                        if (CommonUtil.checkCartCount() != 0 & !SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_ID,"").equalsIgnoreCase(separated[0])) {
+                        if (CommonUtil.checkCartCount() != 0 & !SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_ID, "").equalsIgnoreCase(separated[0])) {
                             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                             alert.setTitle("Empty Cart?");
                             alert.setMessage("Do you wish to discard your current Cart?");
@@ -116,7 +126,7 @@ public class ShopFragment extends Fragment {
         return view;
     }
 
-    public void openShop(String str){
+    public void openShop(String str) {
         StringTokenizer st = new StringTokenizer(str, "_");
         Log.i("Shop", st.toString());
         SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_ID, st.nextToken());
@@ -126,7 +136,8 @@ public class ShopFragment extends Fragment {
         SharedPreferenceUtil.putValue(Constants.PrefKeys.MIN_ORDER, st.nextToken());
         SharedPreferenceUtil.putValue(Constants.PrefKeys.DELIVERY_CHARGES, st.nextToken());
         SharedPreferenceUtil.save();
-        startActivity(new Intent(getActivity(), ProductListActivity.class));
+        getShopStatus();
+//        startActivity(new Intent(getActivity(), ProductListActivity.class));
     }
 
     public void fillShopList() {
@@ -162,6 +173,62 @@ public class ShopFragment extends Fragment {
 //            if (!s1.equalsIgnoreCase("")) {
             fillShopList();
 //            }
+        }
+    }
+
+    public void getShopStatus() {
+        CommonUtil.showProgressDialog(getActivity(),"Please wait");
+        final String tag = "EVENT_Shop_Status";
+        String url = Constants.BASE_URL + "/mobile/shop/checkOpenStatus?defaultToken=" + Constants.DEFAULT_TOKEN + "&shopId=" + SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_ID, "") + "&eventId=" + String.valueOf(Constants.Events.EVENT_SHOP_STATUS);
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+
+    @Override
+    public void onErrorResponse(VolleyError volleyError) {
+        CommonUtil.alertBox(getActivity(), "", getResources().getString(R.string.nointernet_try_again_msg));
+        CommonUtil.cancelProgressDialog();
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        CommonUtil.cancelProgressDialog();
+        if (response != null) {
+            try {
+                if (response.getInt("status") == Constants.STATUS_SUCCESS) {
+                    switch (Integer.valueOf(response.getString("eventId"))) {
+                        case Constants.Events.EVENT_SHOP_STATUS:
+                            if (response.optJSONObject("data").optInt("shopStatus") == 0) {
+                                android.app.AlertDialog.Builder alertbox = new android.app.AlertDialog.Builder(getActivity());
+                                alertbox.setCancelable(true);
+                                alertbox.setMessage("Sorry this shop is closed for accepting new orders Today. Please check Delivery Timings and Cut of Time.\n" +
+                                        "Do you want to place order for tomorrow or day after?");
+                                alertbox.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface arg0, int arg1) {
+                                        startActivity(new Intent(getActivity(), ProductListActivity.class));
+
+                                    }
+
+                                });
+                                alertbox.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface arg0, int arg1) {
+
+                                    }
+                                });
+                                alertbox.show();
+                            } else {
+                                startActivity(new Intent(getActivity(), ProductListActivity.class));
+                            }
+                            break;
+                    }
+                } else {
+                    JsonErrorShow.jsonErrorShow(response, getActivity());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mpt.storage.SharedPreferenceUtil;
+import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataBaseHelper;
 
@@ -133,6 +134,7 @@ public class ProductFilterActivity extends AppCompatActivity implements View.OnC
                 SharedPreferenceUtil.putValue(Constants.PrefKeys.FILTER_PROD_PRICE, false);
                 SharedPreferenceUtil.save();
                 setResult(1, intent);
+                CommonUtil.alertBox(this, "", "Filter Cleared");
                 finish();
                 break;
             case R.id.btActionBarInfo:

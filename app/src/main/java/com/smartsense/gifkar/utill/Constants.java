@@ -100,6 +100,7 @@ public class Constants {
         public static final int EVENT_CITY = 1;
         public static final int EVENT_CATEGORY = 2;
         public static final int EVENT_FEATURE = 3;
+
         public static final int EVENT_LOGIN = 4;
         public static final int EVENT_PRODUCT_CATEGORY = 5;
         public static final int EVENT_EMAIL_CHECK = 6;
@@ -147,6 +148,7 @@ public class Constants {
         public static final int EVENT_REPORT_ERROR = 48;
         public static final int EVENT_UPDATE_PHOTO_REMOVE = 49;
         public static final int EVENT_ADD_REVIEW = 50;
+        public static final int EVENT_SHOP_STATUS = 51;
     }
 
 

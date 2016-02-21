@@ -420,10 +420,10 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                             if (checkCountry)
                                 openOccasionsPopup(response);
                             checkCountry = true;
-                            if (response.getJSONObject("data").optJSONArray("occasions").length() != 0) {
-                                etCheckout2SelectOccasion.setText(response.getJSONObject("data").optJSONArray("occasions").optJSONObject(0).optString("name"));
-                                etCheckout2SelectOccasion.setTag(response.getJSONObject("data").optJSONArray("occasions").optJSONObject(0).optString("id"));
-                            }
+//                            if (response.getJSONObject("data").optJSONArray("occasions").length() != 0) {
+//                                etCheckout2SelectOccasion.setText(response.getJSONObject("data").optJSONArray("occasions").optJSONObject(0).optString("name"));
+//                                etCheckout2SelectOccasion.setTag(response.getJSONObject("data").optJSONArray("occasions").optJSONObject(0).optString("id"));
+//                            }
                             break;
                         case Constants.Events.EVENT_GET_TIMESLOT:
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.TIMESLOT, response.optJSONObject("data").optJSONArray("timeSlots").toString());
