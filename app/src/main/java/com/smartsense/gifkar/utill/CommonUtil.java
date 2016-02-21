@@ -53,6 +53,7 @@ public class CommonUtil {
     public static void showProgressDialog(Context activity, String msg) {
         pDialog = new ProgressDialog(activity);
         pDialog.setMessage(msg);
+        pDialog.setCancelable(false);
         pDialog.show();
     }
 

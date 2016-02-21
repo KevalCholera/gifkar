@@ -1,8 +1,6 @@
 package com.smartsense.gifkar;
 
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.media.Rating;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -64,7 +62,7 @@ public class ReviewsFragment extends Fragment implements View.OnClickListener, R
         switch (view.getId()) {
             case R.id.tvReview:
             case R.id.btnAddReview:
-                openAddReviewPopup();
+//                openAddReviewPopup();
                 break;
             default:
         }
@@ -89,24 +87,24 @@ public class ReviewsFragment extends Fragment implements View.OnClickListener, R
     }
 
 
-    public void openAddReviewPopup() {
-        try {
-            final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(getActivity());
-            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View dialog = inflater.inflate(R.layout.dialog_write_review, null);
-            alertDialogs.setView(dialog);
-//            ivReviewUser=(CircleImageView) dialog.findViewById(R.id.ivReviewUser);
-            tvUserName = (TextView) dialog.findViewById(R.id.tvReviewUserName);
-            etReviewAdd = (EditText) dialog.findViewById(R.id.etReviewAdd);
-            btAddReview = (Button) dialog.findViewById(R.id.btnReviewAdd);
-//            rbReview=(Rating) dialog.findViewById(R.id.rbReview);
-//            alertDialogs.setCancelable(false);
-            AlertDialog alert = alertDialogs.create();
-            alert.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public void openAddReviewPopup() {
+//        try {
+//            final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(getActivity());
+//            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            View dialog = inflater.inflate(R.layout.dialog_write_review, null);
+//            alertDialogs.setView(dialog);
+////            ivReviewUser=(CircleImageView) dialog.findViewById(R.id.ivReviewUser);
+//            tvUserName = (TextView) dialog.findViewById(R.id.tvReviewUserName);
+//            etReviewAdd = (EditText) dialog.findViewById(R.id.etReviewAdd);
+//            btAddReview = (Button) dialog.findViewById(R.id.btnReviewAdd);
+////            rbReview=(Rating) dialog.findViewById(R.id.rbReview);
+////            alertDialogs.setCancelable(false);
+//            AlertDialog alert = alertDialogs.create();
+//            alert.show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 
     public void getReview() {

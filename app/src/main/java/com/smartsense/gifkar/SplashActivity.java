@@ -121,8 +121,12 @@ public class SplashActivity extends AppCompatActivity implements AnimationListen
                                 startActivity(new Intent(getBaseContext(), GifkarActivity.class));
                             else
                                 startActivity(new Intent(getBaseContext(), CitySelectActivity.class));
-                        else
-                            startActivity(new Intent(getBaseContext(), StartActivity.class));
+                        else {
+                            if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))
+                                startActivity(new Intent(getBaseContext(), GifkarActivity.class));
+                            else
+                                startActivity(new Intent(getBaseContext(), StartActivity.class));
+                        }
                     } else
                         startActivity(new Intent(getBaseContext(), NoInternetConnection.class));
                     finish();

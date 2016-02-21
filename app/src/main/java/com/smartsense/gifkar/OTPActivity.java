@@ -176,7 +176,8 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+
+//        super.onBackPressed();
     }
 
     @Override
@@ -204,7 +205,7 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                             etThree.setText("");
                             etFour.setText("");
                             etOne.setText("");
-                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
+                            SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
                             SharedPreferenceUtil.save();
 //                            otp=response.optJSONObject("data").optString("userToken");
                             coundDownStart();

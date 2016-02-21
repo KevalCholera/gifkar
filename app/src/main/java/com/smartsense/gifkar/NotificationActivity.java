@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,28 +33,54 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NotificationActivity extends Fragment implements View.OnClickListener, Response.Listener<JSONObject>,
+public class NotificationActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
         Response.ErrorListener {
     ImageView btBack;
     private LinearLayout llNotification;
     private ListView lvNotification;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = (View) inflater.inflate(R.layout.activity_notification, container, false);
-
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
-        TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
-        actionBarTitle.setText(getResources().getString(R.string.screen_notification));
-        actionBarTitle.setBackgroundColor(getActivity().getResources().getColor(R.color.mainColor));
-        actionBarTitle.setClickable(false);
-        ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
-        btFilter.setVisibility(View.INVISIBLE);
-        ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
-        btSearch.setVisibility(View.INVISIBLE);
-        lvNotification = (ListView) view.findViewById(R.id.lvNotification);
-        llNotification = (LinearLayout) view.findViewById(R.id.llNotification);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View v = inflater.inflate(R.layout.action_bar_center, null);
+        TextView titleTextView = (TextView) v.findViewById(R.id.actionBarTitle);
+        titleTextView.setText(getResources().getString(R.string.screen_notification));
+        btBack = (ImageView) v.findViewById(R.id.btActionBarBack);
+        btBack.setOnClickListener(this);
+        getSupportActionBar().setCustomView(v);
+        setContentView(R.layout.activity_notification);
+        lvNotification = (ListView) findViewById(R.id.lvNotification);
+        llNotification = (LinearLayout) findViewById(R.id.llNotification);
         getNotification();
+        lvNotification.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
+                JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
+                android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(NotificationActivity.this);
+                alert.setTitle(getCodeObj.optString("subject"));
+                alert.setMessage(getCodeObj.optString("message"));
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //Do something here where "ok" clicked
+                        seenNotification();
+
+                    }
+                });
+                alert.show();
+            }
+        });
+//        View view = (View) inflater.inflate(R.layout.activity_notification, container, false);
+//        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar_gifkar);
+//        TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
+//        actionBarTitle.setText(getResources().getString(R.string.screen_notification));
+//        actionBarTitle.setBackgroundColor(this.getResources().getColor(R.color.mainColor));
+//        actionBarTitle.setClickable(false);
+//        ImageView btFilter = (ImageView) toolbar.findViewById(R.id.btActionBarfilter);
+//        btFilter.setVisibility(View.INVISIBLE);
+//        ImageView btSearch = (ImageView) toolbar.findViewById(R.id.btActionBarSearch);
+//        btSearch.setVisibility(View.INVISIBLE);
 //        String temp = "{ \"eventId\" : 123,   \"errorCode\" : 0,   \"status\" : 200,   \"message\" : \"Address list.\", \"data\" :  { \"deliveryAddresses\" : [ { \"recipientName\" : \"raju bhai\",  \"recipientContact\" : \"98989898\", \"address\" : \"titanium city center\",  \"landmark\" : \"sachin tower\", \"isActive\" : \"1\",   \"area\" : { \"id\" : \"1\",   \"name\" : \"Prahlad nagar\" } },  { \"recipientName\" : \"raju bhai\",   \"recipientContact\" : \"98989898\",  \"address\" : \"titanium city center\",    \"landmark\" : \"sachin tower\",  \"isActive\" : \"1\",  \"area\" : { \"id\" : \"1\" , \"name\" : \"Prahlad nagar\" } } ] } }";
 //        try {
 //            JSONObject notification = new JSONObject(temp);
@@ -62,15 +88,15 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
 //        } catch (JSONException e) {
 //            e.printStackTrace();
 //        }
-        return view;
+//        return view;
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-//            case R.id.btActionBarBack:
-//                finish();
-//                break;
+            case R.id.btActionBarBack:
+                finish();
+                break;
             default:
         }
     }
@@ -81,7 +107,7 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
             if (notification.getJSONObject("data").getJSONArray("notifications").length() > 0) {
                 lvNotification.setVisibility(View.VISIBLE);
                 llNotification.setVisibility(View.GONE);
-                notificationAdapter = new NotificationAdapter(getActivity(), notification.getJSONObject("data").getJSONArray("notifications"), true);
+                notificationAdapter = new NotificationAdapter(this, notification.getJSONObject("data").getJSONArray("notifications"), true);
                 lvNotification.setAdapter(notificationAdapter);
             } else {
                 lvNotification.setVisibility(View.GONE);
@@ -103,7 +129,7 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
         params.put("eventId", String.valueOf(Constants.Events.EVENT_DEL_NOTIFICATION));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         Log.i("params", params.toString());
-        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        CommonUtil.showProgressDialog(this, "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
@@ -118,7 +144,7 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
         params.put("eventId", String.valueOf(Constants.Events.EVENT_SEEN_NOTIFICATION));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         Log.i("params", params.toString());
-//        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+//        CommonUtil.showProgressDialog(this, "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
@@ -127,7 +153,7 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
     public void getNotification() {
         final String tag = "notification";
         String url = Constants.BASE_URL + "/mobile/userNotification/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&userToken=" + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "") + "&eventId=" + String.valueOf(Constants.Events.EVENT_GET_NOTIFICATION);
-        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        CommonUtil.showProgressDialog(this, "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
@@ -136,7 +162,7 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
-        CommonUtil.alertBox(getActivity(), "", getResources().getString(R.string.nointernet_try_again_msg));
+        CommonUtil.alertBox(this, "", getResources().getString(R.string.nointernet_try_again_msg));
         CommonUtil.cancelProgressDialog();
     }
 
@@ -149,14 +175,14 @@ public class NotificationActivity extends Fragment implements View.OnClickListen
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_GET_NOTIFICATION:
                             notificationFill(response);
-//                            seenNotification();
+                            seenNotification();
                             break;
                         case Constants.Events.EVENT_DEL_NOTIFICATION:
                             getNotification();
                             break;
                     }
                 } else {
-                    JsonErrorShow.jsonErrorShow(response, getActivity());
+                    JsonErrorShow.jsonErrorShow(response, this);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

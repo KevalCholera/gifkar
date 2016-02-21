@@ -1,8 +1,9 @@
 package com.smartsense.gifkar;
 
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,15 +13,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -57,6 +62,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     TextView tvGreetText;
     private Fragment fragment = this;
     private ProgressBar progressBar;
+    private AlertDialog alert;
 
     public ShopListFragment() {
         // Required empty public constructor
@@ -69,33 +75,14 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_shoplist, container, false);
         handler = new Handler();
-        LinearLayout llHeadAddress = (LinearLayout) getActivity().findViewById(R.id.llHeadAddress);
-        llHeadAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (CommonUtil.checkCartCount() == 0) {
-                    startActivity(new Intent(getActivity(), CitySelectActivity.class));
-                } else {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                    alert.setTitle("Empty Cart?");
-                    alert.setMessage("Do you wish to discard your current Cart?");
-                    alert.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            //Do something here where "ok" clicked
-                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_PROD_LIST);
-                            startActivity(new Intent(getActivity(), CitySelectActivity.class));
-                        }
-                    });
-                    alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            //Do something here where "Cancel" clicked
-                            dialog.cancel();
-                        }
-                    });
-                    alert.show();
-                }
-            }
-        });
+//        LinearLayout llHeadAddress = (LinearLayout) getActivity().findViewById(R.id.llHeadAddress);
+//        llHeadAddress.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+
+//                }
+//            }
+//        });
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_gifkar);
         TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
         actionBarTitle.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_NAME, "") + ", " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_AREA_PIN_CODE, ""));
@@ -138,7 +125,10 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         getBanner();
         getBottom();
         getShopList();
-
+        if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN) & GifkarActivity.checkPush) {
+            GifkarActivity.checkPush=false;
+            checkReview();
+        }
         return rootView;
     }
 
@@ -364,6 +354,32 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         params.put("eventId", String.valueOf(Constants.Events.EVENT_SHOPLIST));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
         Log.i("params", params.toString());
+//        CommonUtil.showProgressDialog(getActivity(), "Wait...");
+        DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+
+    public void checkReview() {
+        final String tag = "CheckReview";
+        String url = Constants.BASE_URL + "/mobile/orderDetail/checkReviewStatus?defaultToken=" + Constants.DEFAULT_TOKEN + "&userToken=" + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "") + "&eventId=" + String.valueOf(Constants.Events.EVENT_CHECK_RATING);
+        DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
+        loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
+    }
+
+    public void addReview(String orderDetailId, String review, float rating) {
+        final String tag = "AddReview";
+        String url = Constants.BASE_URL + "/mobile/shopReview/create";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
+        params.put("eventId", String.valueOf(Constants.Events.EVENT_ADD_REVIEW));
+        params.put("rating", String.valueOf(rating));
+        params.put("review", review);
+        params.put("orderDetailId", orderDetailId);
+        params.put("defaultToken", Constants.DEFAULT_TOKEN);
+        Log.i("params", params.toString());
         CommonUtil.showProgressDialog(getActivity(), "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.POST, url, params, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -379,6 +395,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
 
     @Override
     public void onResponse(JSONObject response) {
+        CommonUtil.cancelProgressDialog();
         if (response != null) {
             try {
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
@@ -393,8 +410,13 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                         case Constants.Events.EVENT_SHOPLIST:
                             setupViewPager(response.optJSONObject("data").optJSONArray("categories"));
                             break;
-
-
+                        case Constants.Events.EVENT_CHECK_RATING:
+                            if (response.optJSONObject("data").has("shopReview"))
+                                popupRating(response.optJSONObject("data").getJSONObject("shopReview"));
+                            break;
+                        case Constants.Events.EVENT_ADD_REVIEW:
+                            CommonUtil.alertBox(getActivity(), "", response.optJSONObject("data").optString("message"));
+                            break;
                     }
                 } else {
                     JsonErrorShow.jsonErrorShow(response, getActivity());
@@ -402,6 +424,68 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void popupRating(final JSONObject response) {
+        try {
+            final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(getActivity());
+            LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View dialog = inflater.inflate(R.layout.dialog_write_review, null);
+            alertDialogs.setView(dialog);
+            dialog.findViewById(R.id.tvReviewSkip).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    alert.dismiss();
+                }
+            });
+            TextView tShopName = (TextView) dialog.findViewById(R.id.tvReviewShopName);
+            tShopName.setText("Shop Name : " + response.optString("shopName"));
+            TextView tOrderId = (TextView) dialog.findViewById(R.id.tvReviewOrderId);
+            tOrderId.setText("Order ID : " + response.optString("orderDetailId"));
+            final RatingBar rbReview = (RatingBar) dialog.findViewById(R.id.rbReview);
+            rbReview.setRating(2);
+            final EditText etReviewAdd = (EditText) dialog.findViewById(R.id.etReviewAdd);
+            etReviewAdd.setOnKeyListener(new View.OnKeyListener() {
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    // If the event is a key-down event on the "enter" button
+                    if ((event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.KEYCODE_ENTER) &&
+                            (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                        // Perform action on key press
+                        CommonUtil.closeKeyboard(getActivity());
+                        if (rbReview.getRating() == 0f) {
+                            CommonUtil.alertBox(getActivity(), "", "Rating can not be zero");
+                        } else if (TextUtils.isEmpty(etReviewAdd.getText().toString().trim())) {
+                            CommonUtil.alertBox(getActivity(), "", "Please enter description");
+                        } else {
+                            alert.dismiss();
+                            CommonUtil.closeKeyboard(getActivity());
+                            addReview(response.optString("orderDetailId"), etReviewAdd.getText().toString().trim(), rbReview.getRating());
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            dialog.findViewById(R.id.btnReviewAdd).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CommonUtil.closeKeyboard(getActivity());
+                    if (rbReview.getRating() == 0f) {
+                        CommonUtil.alertBox(getActivity(), "", "Rating can not be zero");
+                    } else if (TextUtils.isEmpty(etReviewAdd.getText().toString().trim())) {
+                        CommonUtil.alertBox(getActivity(), "", "Please enter description");
+                    } else {
+                        alert.dismiss();
+                        addReview(response.optString("orderDetailId"), etReviewAdd.getText().toString().trim(), rbReview.getRating());
+                    }
+                }
+            });
+            alertDialogs.setCancelable(true);
+            alert = alertDialogs.create();
+            alert.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

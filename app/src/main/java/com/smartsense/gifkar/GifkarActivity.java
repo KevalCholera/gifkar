@@ -33,8 +33,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.mpt.storage.SharedPreferenceUtil;
 import com.parse.ParseInstallation;
-import com.smartsense.gifkar.receivers.AlarmReceiver;
-import com.smartsense.gifkar.utill.AlarmUtil;
 import com.smartsense.gifkar.utill.CircleImageView;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
@@ -45,11 +43,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class GifkarActivity extends AppCompatActivity implements View.OnClickListener, Response.Listener<JSONObject>,
@@ -67,6 +61,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
     private TextView tvHeadAddress;
     private TextView tvHeadTerms;
     private TextView tvHeadPrivacy;
+    public static Boolean checkPush = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,8 +134,8 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
             llHeadProfile.setOnClickListener(this);
         }
-//        llHeadAddress = (LinearLayout) header.findViewById(R.id.llHeadAddress);
-//        llHeadAddress.setOnClickListener(this);
+        llHeadAddress = (LinearLayout) header.findViewById(R.id.llHeadAddress);
+        llHeadAddress.setOnClickListener(this);
 
         ImageView ivHeadEdit = (ImageView) header.findViewById(R.id.ivHeadEdit);
 
@@ -161,6 +156,19 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShopListFragment()).commit();
 //        fm.beginTransaction().replace(R.id.fragment_container, frg).commit();
+        if (getIntent().getBooleanExtra("check", false)) {
+            checkPush=true;
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle(getIntent().getStringExtra("subject"));
+            alert.setMessage(getIntent().getStringExtra("message"));
+            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    //Do something here where "ok" clicked
+
+                }
+            });
+            alert.show();
+        }
 
     }
 
@@ -171,7 +179,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         setListViewHeightBasedOnChildren(lvNavList);
         tvHeadAddress.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_CITY_NAME, ""));
         tVHeadMobileNo.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_EMAIL, ""));
-        tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, "WelCome"));
+        tVHeadName.setText(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, "Welcome"));
         ivHeadImage.setDefaultImageResId(R.drawable.ic_user);
         ivHeadImage.setImageUrl(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_PROIMG, ""), imageLoader);
     }
@@ -227,29 +235,29 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                     startActivity(new Intent(this, ProfileActivity.class));
                 }
                 break;
-//            case R.id.llHeadAddress:
-//                if (CommonUtil.checkCartCount() == 0) {
-//                    startActivity(new Intent(this, CitySelectActivity.class));
-//                } else {
-//                    AlertDialog.Builder alert = new AlertDialog.Builder(GifkarActivity.this);
-//                    alert.setTitle("Empty Cart?");
-//                    alert.setMessage("Do you wish to discard your current Cart?");
-//                    alert.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int whichButton) {
-//                            //Do something here where "ok" clicked
-//                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_PROD_LIST);
-//                            startActivity(new Intent(GifkarActivity.this, CitySelectActivity.class));
-//                        }
-//                    });
-//                    alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int whichButton) {
-//                            //Do something here where "Cancel" clicked
-//                            dialog.cancel();
-//                        }
-//                    });
-//                    alert.show();
-//                }
-//                break;
+            case R.id.llHeadAddress:
+                if (CommonUtil.checkCartCount() == 0) {
+                    startActivity(new Intent(this, CitySelectActivity.class));
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(GifkarActivity.this);
+                    alert.setTitle("Empty Cart?");
+                    alert.setMessage("Do you wish to discard your current Cart?");
+                    alert.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //Do something here where "ok" clicked
+                            SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_PROD_LIST);
+                            startActivity(new Intent(GifkarActivity.this, CitySelectActivity.class));
+                        }
+                    });
+                    alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //Do something here where "Cancel" clicked
+                            dialog.cancel();
+                        }
+                    });
+                    alert.show();
+                }
+                break;
             case R.id.tvHeadPrivacy:
                 startActivity(new Intent(this, TermsandCondtionsActivity.class).putExtra("page", 3).putExtra("text", "Privacy Policy"));
                 break;
@@ -420,7 +428,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                         viewLine.setVisibility(View.GONE);
                         tvTitle.setVisibility(View.VISIBLE);
                         Log.d("postion", "" + position);
-                        tvTitle.setTextColor(mContext.getResources().getColor(R.color.activity_bg));
+                        tvTitle.setTextColor(mContext.getResources().getColor(R.color.disable_text));
                         iv_image.setVisibility(View.VISIBLE);
                     } else {
                         convertView.setOnClickListener(this);
@@ -486,7 +494,9 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                 fragmentCall(c, new MyRemindersActivity(), fm, check);
                 break;
             case Constants.NavigationItems.NAV_NOTIFICATIONS:
-                fragmentCall(c, new NotificationActivity(), fm, check);
+//                fragmentCall(c, new NotificationActivity(), fm, check);
+                fragmentCall(c, new ShopListFragment(), fm, check);
+                c.startActivity(new Intent(c, NotificationActivity.class));
                 break;
             case Constants.NavigationItems.NAV_REFER_FRIEND:
 //                fragmentCall(c, new ReferFriendsActivity(), fm, check);

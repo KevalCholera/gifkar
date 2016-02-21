@@ -16,11 +16,13 @@
 
 package com.smartsense.gifkar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -84,22 +86,47 @@ public class ShopFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position) {
 
-                        String str = (String) view.getTag();
-//                        String[] separated = str.split(" ");
-                        StringTokenizer st = new StringTokenizer(str, "_");
-                        Log.i("Shop", st.toString());
-                        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_ID, st.nextToken());
-                        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CATEGORY_ID, st.nextToken());
-                        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_IMAGE, st.nextToken());
-                        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_NAME, st.nextToken());
-                        SharedPreferenceUtil.putValue(Constants.PrefKeys.MIN_ORDER, st.nextToken());
-                        SharedPreferenceUtil.putValue(Constants.PrefKeys.DELIVERY_CHARGES, st.nextToken());
-                        SharedPreferenceUtil.save();
-                        startActivity(new Intent(getActivity(), ProductListActivity.class));
+                        final String str = (String) view.getTag();
+                        String[] separated = str.split("_");
+                        if (CommonUtil.checkCartCount() != 0 & !SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_ID,"").equalsIgnoreCase(separated[0])) {
+                            AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                            alert.setTitle("Empty Cart?");
+                            alert.setMessage("Do you wish to discard your current Cart?");
+                            alert.setPositiveButton("DISCARD", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    //Do something here where "ok" clicked
+                                    SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_PROD_LIST);
+                                    openShop(str);
+                                }
+                            });
+                            alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    //Do something here where "Cancel" clicked
+                                    dialog.cancel();
+                                }
+                            });
+                            alert.show();
+                        } else {
+                            openShop(str);
+                        }
+
                     }
                 })
         );
         return view;
+    }
+
+    public void openShop(String str){
+        StringTokenizer st = new StringTokenizer(str, "_");
+        Log.i("Shop", st.toString());
+        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_ID, st.nextToken());
+        SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CATEGORY_ID, st.nextToken());
+        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_IMAGE, st.nextToken());
+        SharedPreferenceUtil.putValue(Constants.PrefKeys.SHOP_NAME, st.nextToken());
+        SharedPreferenceUtil.putValue(Constants.PrefKeys.MIN_ORDER, st.nextToken());
+        SharedPreferenceUtil.putValue(Constants.PrefKeys.DELIVERY_CHARGES, st.nextToken());
+        SharedPreferenceUtil.save();
+        startActivity(new Intent(getActivity(), ProductListActivity.class));
     }
 
     public void fillShopList() {
@@ -108,7 +135,7 @@ public class ShopFragment extends Fragment {
             final Cursor cursor;
             if (SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_NAME, false) | SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_RATTING, false) | SharedPreferenceUtil.getBoolean(Constants.PrefKeys.FILTER_SHOP_MIN, false)) {
                 cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_SHOP + "  WHERE " + DataBaseHelper.COLUMN_CATEGORY_ID + " = '"
-                        + getArguments().getString("ID") + "' ORDER BY " + SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_FILTER,"") + " COLLATE NOCASE");
+                        + getArguments().getString("ID") + "' ORDER BY " + SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_FILTER, "") + " COLLATE NOCASE");
             } else {
                 cursor = commonUtil.rawQuery(dbHelper, "SELECT * FROM " + DataBaseHelper.TABLE_SHOP + "  WHERE " + DataBaseHelper.COLUMN_CATEGORY_ID + " = '"
                         + getArguments().getString("ID") + "' ");
@@ -133,7 +160,7 @@ public class ShopFragment extends Fragment {
         if (requestCode == 2) {
 //            s1 = data.getStringExtra("orderBy");
 //            if (!s1.equalsIgnoreCase("")) {
-                fillShopList();
+            fillShopList();
 //            }
         }
     }

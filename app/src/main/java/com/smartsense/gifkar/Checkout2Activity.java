@@ -251,6 +251,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                         openPopupTimeSlot(new JSONArray(SharedPreferenceUtil.getString(Constants.PrefKeys.TIMESLOT, "")), 3);
                     break;
                 case R.id.btActionBarBack:
+                    CommonUtil.closeKeyboard(Checkout2Activity.this);
                     finish();
                     break;
                 case R.id.tvChackout2DelAddress:

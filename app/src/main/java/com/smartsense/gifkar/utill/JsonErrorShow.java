@@ -1,13 +1,13 @@
 package com.smartsense.gifkar.utill;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.widget.Toast;
 
 import com.mpt.storage.SharedPreferenceUtil;
+import com.parse.ParseInstallation;
 import com.smartsense.gifkar.GifkarActivity;
+import com.smartsense.gifkar.StartActivity;
 
 import org.json.JSONObject;
 
@@ -23,6 +23,20 @@ public class JsonErrorShow {
                 break;
             case Constants.ErrorCode.INVALID_CREDENTIALS:
                 diloagMsgShow(a, msg);
+                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                installation.put("UserID", "");
+//                                installation.addAllUnique("channels", Arrays.asList("test"));
+                installation.saveInBackground();
+                SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_ID);
+                SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_FULLNAME);
+                SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_EMAIL);
+                SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_MNO);
+                SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_ACCESS_TOKEN);
+                SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_PROIMG);
+                SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_INFO);
+                SharedPreferenceUtil.save();
+                a.startActivity(new Intent(a, StartActivity.class));
+                a.finish();
                 break;
             case Constants.ErrorCode.UNAUTHORIZED:
                 SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_ACCESS_TOKEN);
@@ -49,7 +63,7 @@ public class JsonErrorShow {
     }
 
     public static void diloagMsgShow(Activity a, String msg) {
-        Toast.makeText(a, msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(a, msg, Toast.LENGTH_SHORT).show();
 //        final AlertDialog.Builder alert = new AlertDialog.Builder(a);
 ////        alert.setTitle("Error!");
 //        alert.setMessage(msg);

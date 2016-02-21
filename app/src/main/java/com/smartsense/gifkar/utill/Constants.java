@@ -6,6 +6,9 @@ public class Constants {
     public static final int STATUS_FAIL = 500;
     public static final int STATUS_CHECK = 201;
     public static final String DB_PATH = "/data/data/com.smartsense.gifkar/databases/";
+    public static final String TEST_URL_PAYU = "https://test.payu.in/_payment";
+    public static final String LIVE_URL_PAYU = "https://secure.payu.in/_payment";
+
     public static final String BASE_URL = "https://gifkar.cloudapp.net";
     public static final String BASE_URL_PHOTO = BASE_URL + "/images/products/";
     public static final String BASE_URL_PHOTO_THUMB = BASE_URL + "/images/products/";
@@ -143,6 +146,7 @@ public class Constants {
         public static final int EVENT_GET_REVIEW = 47;
         public static final int EVENT_REPORT_ERROR = 48;
         public static final int EVENT_UPDATE_PHOTO_REMOVE = 49;
+        public static final int EVENT_ADD_REVIEW = 50;
     }
 
 

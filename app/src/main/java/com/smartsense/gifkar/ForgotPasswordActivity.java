@@ -126,7 +126,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
                             doForgot("email", etEmail.getText().toString());
                     }
                 } else {
-                    CommonUtil.alertBox(this, "", "Please Enter Email or Mobile No.");
+                    CommonUtil.alertBox(this, "", "Please enter email address or mobile number");
 //                    startActivity(new Intent(this, OTPActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_FORGOT));
                 }
                 break;
