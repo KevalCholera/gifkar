@@ -27,7 +27,8 @@ public class Checkout1Activity extends AppCompatActivity implements View.OnClick
     private TextView tvCheckoutShipping;
     private TextView tvCheckoutShopName;
     private Button btCheckout;
-
+    double totalAmount = 0;
+    double shipping =0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +61,8 @@ public class Checkout1Activity extends AppCompatActivity implements View.OnClick
     public void checkoutFill(JSONArray productCartArray) {
         CheckoutAdapter checkoutAdapter = null;
         try {
-            double totalAmount = 0;
-            double shipping = Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.DELIVERY_CHARGES,"0"));
+            totalAmount = 0;
+            shipping = Double.valueOf(SharedPreferenceUtil.getString(Constants.PrefKeys.DELIVERY_CHARGES,"0"));
             for (int i = 0; i < productCartArray.length(); i++) {
                 totalAmount += (productCartArray.optJSONObject(i).optDouble(DataBaseHelper.COLUMN_PROD_PRICE) * productCartArray.optJSONObject(i).optDouble("quantity"));
             }
@@ -80,7 +81,7 @@ public class Checkout1Activity extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnContinueCheckout:
-                startActivity(new Intent(this, Checkout2Activity.class).putExtra("ship", tvCheckoutShipping.getText().toString()).putExtra("total", tvCheckoutTotal.getText().toString()).putExtra("pay", tvCheckoutPayable.getText().toString()));
+                startActivity(new Intent(this, Checkout2Activity.class).putExtra("ship", tvCheckoutShipping.getText().toString()).putExtra("total", tvCheckoutTotal.getText().toString()).putExtra("pay", tvCheckoutPayable.getText().toString()).putExtra("rs",(shipping + totalAmount)));
                 break;
             case R.id.btActionBarBack:
                 finish();

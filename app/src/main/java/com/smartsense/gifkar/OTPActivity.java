@@ -215,8 +215,13 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                             SharedPreferenceUtil.save();
                             if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT) {
                                 startActivity(new Intent(this, ChangePasswordActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_OTP));
-                            } else
-                                startActivity(new Intent(this, CitySelectActivity.class));
+                            } else {
+                                if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))
+                                    startActivity(new Intent(this, GifkarActivity.class));
+                                else
+                                    startActivity(new Intent(this, CitySelectActivity.class));
+                            }
+                            finish();
                             break;
                     }
                 } else {

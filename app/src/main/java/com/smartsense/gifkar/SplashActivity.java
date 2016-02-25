@@ -28,8 +28,8 @@ public class SplashActivity extends AppCompatActivity implements AnimationListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+
+
         if (Build.VERSION.SDK_INT < 16) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -41,16 +41,18 @@ public class SplashActivity extends AppCompatActivity implements AnimationListen
                 window.setStatusBarColor(getResources().getColor(
                         R.color.red1));
             }
-//            View decorView = getWindow().getDecorView();
+            View decorView = getWindow().getDecorView();
 // Hide the status bar.
-//            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
 
-//            decorView.setSystemUiVisibility(uiOptions);
+            decorView.setSystemUiVisibility(uiOptions);
 
 //            getSupportActionBar().hide();
 
 
         }
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
         img1 = (ImageView) findViewById(R.id.imageView6);
         img2 = (ImageView) findViewById(R.id.imageView2);
         img3 = (ImageView) findViewById(R.id.imageView3);

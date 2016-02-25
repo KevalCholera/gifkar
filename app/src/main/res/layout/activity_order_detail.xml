@@ -194,7 +194,7 @@
                     android:background="@android:color/transparent"
                     android:drawableTop="@drawable/deliverd_unfill"
                     android:gravity="center"
-                    android:text="DLIVERED" />
+                    android:text="DELIVERED" />
 
 
             </LinearLayout>
@@ -462,7 +462,7 @@
                 android:fontFamily="normal"
                 android:gravity="center"
                 android:padding="@dimen/padding_5"
-                android:text="@string/call_us"
+                android:text="@string/contact_us"
                 android:textColor="@color/textcolorwhite"
                 android:textSize="@dimen/text_14" />
 

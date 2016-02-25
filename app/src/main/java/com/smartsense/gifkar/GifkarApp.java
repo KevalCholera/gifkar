@@ -42,6 +42,7 @@ public class GifkarApp extends Application {
         FacebookSdk.sdkInitialize(getInstance());
         TypefaceManager.addTextStyleExtractor(CooperHewittExtractor.getInstance());
         Parse.initialize(this, "9yjUxrJuubYfJQvh8gONZuZqTEu3gcpqB1mdRkpH", "w3znN1nsItMDKIZaTJ8qzdRDPnfFKeW6uAI56C8Y");
+        ParseInstallation.getCurrentInstallation().put("user", "customer");
         ParseInstallation.getCurrentInstallation().saveInBackground();
         SharedPreferenceUtil.init(this);
     }

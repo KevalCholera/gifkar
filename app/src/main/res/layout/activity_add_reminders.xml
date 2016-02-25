@@ -174,6 +174,7 @@
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/switchMyReminder"
+                style="@style/Color1SwitchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|right"
@@ -190,6 +191,7 @@
 
             <com.smartsense.gifkar.textstyleUtil.TypefaceRadioButton
                 android:id="@+id/rbMyReminder1Day"
+                android:buttonTint="@color/mainColor"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -202,6 +204,7 @@
                 android:id="@+id/rbMyReminder2Day"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/mainColor"
                 android:layout_weight="1"
                 android:fontFamily="normal"
                 android:text="2 Day Before"
@@ -213,6 +216,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="normal"
+                android:buttonTint="@color/mainColor"
                 android:text="1 Hour Befoure"
                 android:textSize="@dimen/text_12" />
         </RadioGroup>

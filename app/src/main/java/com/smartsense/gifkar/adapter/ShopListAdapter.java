@@ -75,7 +75,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
                     ivShopListMidNight.setVisibility(View.GONE);
                 }
                 tvShopListRating.setText(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING)).equalsIgnoreCase("null") ? "  -  " : cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_RATING)));
-                tvShopListCutofTime.setText("Cut off Time : " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CUT_OF_TIME)) + " hour");
+                tvShopListCutofTime.setText("Cut off Time : " + cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_CUT_OF_TIME)) + " hrs");
                 if (!cursor.getString(cursor.getColumnIndexOrThrow(DataBaseHelper.COLUMN_DELIVERY_FROM)).equalsIgnoreCase("null")) {
 
                     try {

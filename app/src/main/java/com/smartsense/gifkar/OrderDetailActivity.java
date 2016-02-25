@@ -2,7 +2,6 @@ package com.smartsense.gifkar;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,14 +24,12 @@ import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.adapter.CheckoutAdapter;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
-import com.smartsense.gifkar.utill.DataBaseHelper;
 import com.smartsense.gifkar.utill.DataRequest;
 import com.smartsense.gifkar.utill.JsonErrorShow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -119,7 +116,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
 //                tvOrderAccepted.setBackgroundDrawable(getResources().getDrawable(R.drawable.accepted_fill));
 //                tvOrderProcess.setBackgroundDrawable(getResources().getDrawable(R.drawable.in_progress_unfill));
 //                tvOrderCompleted.setBackgroundDrawable(getResources().getDrawable(R.drawable.deliverd_unfill));
-            } else if (response.optString("orderStatus").trim().equalsIgnoreCase("prepared") | response.optString("orderStatus").trim().equalsIgnoreCase("In process")) {
+            } else if (response.optString("orderStatus").trim().equalsIgnoreCase("In process")) {
                 tvOrderProcess.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.in_progress_fill, 0, 0);
 //                tvOrderAccepted.setBackgroundDrawable(getResources().getDrawable(R.drawable.accepted_unfill));
 //                tvOrderProcess.setBackgroundDrawable(getResources().getDrawable(R.drawable.in_progress_fill));
@@ -171,7 +168,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
                 alert.dismiss();
                 break;
             case R.id.btProdDetailCall:
-
+                openContact();
                 break;
             case R.id.btProdDetailEmail:
                 openInfoPopup();
@@ -255,6 +252,31 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    public void openContact() {
+        try {
+            final AlertDialog.Builder alertDialogs = new AlertDialog.Builder(this);
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View dialog = inflater.inflate(R.layout.dialog_info, null);
+            alertDialogs.setView(dialog);
+            alertDialogs.setCancelable(true);
+            TextView tvDialog=(TextView) dialog.findViewById(R.id.textInfoDialog);
+            tvDialog.setText("Gifkar Technology Private Limited\n" +
+                    "OFFICE NO 2, C WING GROUND FLOOR,\n" +
+                    "SHREENATH PLAZA,1184/4\n" +
+                    "FC ROAD, SHIVAJI NAGAR\n" +
+                    "PUNE. MAHARASHTRA - 411005\n" +
+                    "www.gifkar.com\n" +
+                    "info@gifkar.com");
+            TextView tvDialogHead=(TextView) dialog.findViewById(R.id.textInfoDialogHead);
+            tvDialogHead.setText("Contact us");
+            AlertDialog alert = alertDialogs.create();
+            alert.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

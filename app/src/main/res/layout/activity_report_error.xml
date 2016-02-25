@@ -32,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/phone_no"
+            android:buttonTint="@color/mainColor"
             android:textColor="@color/mainColor"
             android:textSize="@dimen/text_12" />
 
@@ -39,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_25"
+
             android:orientation="horizontal">
 
             <View
@@ -53,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/address"
+            android:buttonTint="@color/mainColor"
             android:textColor="@color/mainColor"
             android:textSize="@dimen/text_12" />
 
@@ -72,6 +75,7 @@
         <CheckBox
             android:id="@+id/rbReportErrorShopClose"
             android:layout_width="wrap_content"
+            android:buttonTint="@color/mainColor"
             android:layout_height="wrap_content"
             android:text="@string/shop_close"
             android:textColor="@color/mainColor"
@@ -96,6 +100,7 @@
             android:layout_height="wrap_content"
             android:text="@string/menu_in"
             android:textColor="@color/mainColor"
+            android:buttonTint="@color/mainColor"
             android:textSize="@dimen/text_12" />
 
         <com.smartsense.gifkar.textstyleUtil.TypefaceEditText
