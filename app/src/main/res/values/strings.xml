@@ -382,4 +382,6 @@
     <string name="del_des">Select or Add delivery address of your recipient. The delivery address should be from the same area and city of selected local shop.</string>
     <string name="remind_des">Reminder will help you to get advance notifications about occasions. Do you forget special occasions with whom you want to celebrate? You can set reminders about birthdays, occasions etc. to get advance notifications.</string>
     <string name="address_des1">Select or Add delivery address of your recipient. The delivery address should be from the same area and city of selected local shop.</string>
+    <string name="rating">rating</string>
+    <string name="min_order">min order</string>
 </resources>

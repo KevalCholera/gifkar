@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
@@ -18,7 +19,7 @@
         android:textSize="@dimen/text_16" />
 
 
-    <LinearLayout
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_10"
@@ -26,29 +27,54 @@
         android:orientation="vertical"
         android:padding="@dimen/padding_20">
 
-        <CheckBox
+        <RadioButton
             android:id="@+id/cbShopFilterRatting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ratting_background"
-            android:button="@android:color/transparent" />
+            android:background="@drawable/radio_filter"
+            android:button="@drawable/radio_image_rating"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="45dp"
+            android:paddingTop="10dp"
+            android:text="@string/rating"
+            android:textAllCaps="true"
+            android:textColor="@drawable/radio_filter"
+            android:textSize="25sp" />
 
-        <CheckBox
+        <RadioButton
             android:id="@+id/cbShopFilterMinOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_25"
             android:layout_marginTop="@dimen/margin_25"
-            android:background="@drawable/min_order_background"
-            android:button="@android:color/transparent" />
+            android:background="@drawable/radio_filter"
+            android:button="@drawable/radio_image_min_order"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="@string/min_order"
+            android:textAllCaps="true"
+            android:textColor="@drawable/radio_filter"
+            android:textSize="25sp" />
 
-        <CheckBox
+        <RadioButton
             android:id="@+id/cbShopFilterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/name_background"
-            android:button="@android:color/transparent" />
-    </LinearLayout>
+            android:layout_marginBottom="@dimen/margin_25"
+            android:background="@drawable/radio_filter"
+            android:button="@drawable/radio_image_name"
+            android:paddingBottom="10dp"
+            android:paddingLeft="45dp"
+            android:paddingRight="45dp"
+            android:paddingTop="10dp"
+            android:text="@string/name"
+            android:textAllCaps="true"
+            android:textColor="@drawable/radio_filter"
+            android:textSize="25sp" />
+    </RadioGroup>
 
     <com.smartsense.gifkar.textstyleUtil.TypefaceButton
         android:id="@+id/btnShopApplyFilter"
@@ -68,8 +94,8 @@
         android:layout_margin="@dimen/margin_10"
         android:background="@color/mainColor"
         android:fontFamily="normal"
-        android:visibility="gone"
         android:text="@string/cancel_filter"
         android:textColor="@color/textcolorwhite"
-        android:textSize="@dimen/text_16" />
+        android:textSize="@dimen/text_16"
+        android:visibility="gone" />
 </LinearLayout>

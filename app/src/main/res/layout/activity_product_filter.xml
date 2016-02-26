@@ -18,7 +18,7 @@
         android:textSize="16dp" />
 
 
-    <LinearLayout
+    <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_10"
@@ -27,21 +27,42 @@
         android:padding="@dimen/padding_20">
 
 
-        <CheckBox
+        <RadioButton
             android:id="@+id/cbProdFilterPrice"
+            style="@style/Radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_25"
-            android:background="@drawable/price_background"
-            android:button="@android:color/transparent" />
+            android:background="@drawable/radio_filter"
+            android:button="@drawable/radio_image_price"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="45dp"
+            android:paddingTop="10dp"
+            android:text="Price"
+            android:textAllCaps="true"
+            android:textColor="@drawable/radio_filter"
+            android:textSize="25sp" />
 
-        <CheckBox
+        <RadioButton
             android:id="@+id/cbProdFilterName"
+            style="@style/Radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/name_background"
-            android:button="@android:color/transparent" />
-    </LinearLayout>
+            android:layout_marginBottom="@dimen/margin_25"
+            android:background="@drawable/radio_filter"
+            android:button="@drawable/radio_image_name"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="45dp"
+            android:paddingTop="10dp"
+            android:text="Name"
+            android:textAllCaps="true"
+            android:textColor="@drawable/radio_filter"
+            android:textSize="25sp" />
+    </RadioGroup>
 
     <com.smartsense.gifkar.textstyleUtil.TypefaceButton
         android:id="@+id/btnProdApplyFilter"
@@ -61,8 +82,8 @@
         android:layout_margin="@dimen/margin_10"
         android:background="@color/mainColor"
         android:fontFamily="normal"
-        android:visibility="gone"
         android:text="@string/cancel_filter"
         android:textColor="@color/textcolorwhite"
-        android:textSize="@dimen/text_16" />
+        android:textSize="@dimen/text_16"
+        android:visibility="gone" />
 </LinearLayout>

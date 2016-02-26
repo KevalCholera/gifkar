@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="false"
+        android:color="@color/mainColor">
+        <shape android:shape="rectangle">
+
+            <stroke android:width="1px" android:color="@color/mainColor" />
+
+        </shape>
+    </item>
+    <item android:state_checked="true"
+        android:color="@color/textcolorwhite">
+        <shape android:shape="rectangle">
+
+            <stroke android:width="1px" android:color="@color/orange" />
+            <solid android:color="@color/orange" />
+
+        </shape>
+
+    </item>
+
+</selector>
