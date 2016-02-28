@@ -276,7 +276,7 @@ public class CommonUtil {
             inputManager.hideSoftInputFromWindow(a.getCurrentFocus().getWindowToken(),
                     InputMethodManager.HIDE_NOT_ALWAYS);
         } catch (Exception e) {
-
+e.printStackTrace();
         }
     }
 

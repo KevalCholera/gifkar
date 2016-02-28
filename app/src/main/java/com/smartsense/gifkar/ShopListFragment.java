@@ -463,14 +463,13 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                     if ((event.getAction() == KeyEvent.ACTION_DOWN || event.getAction() == EditorInfo.IME_ACTION_DONE || event.getAction() == KeyEvent.KEYCODE_ENTER) &&
                             (keyCode == KeyEvent.KEYCODE_ENTER)) {
                         // Perform action on key press
-                        CommonUtil.closeKeyboard(getActivity());
                         if (rbReview.getRating() == 0f) {
                             CommonUtil.alertBox(getActivity(), "", "Rating can not be zero");
                         } else if (TextUtils.isEmpty(etReviewAdd.getText().toString().trim())) {
                             CommonUtil.alertBox(getActivity(), "", "Please enter description");
                         } else {
-                            alert.dismiss();
                             CommonUtil.closeKeyboard(getActivity());
+                            alert.dismiss();
                             addReview(response.optString("orderDetailId"), etReviewAdd.getText().toString().trim(), rbReview.getRating());
                         }
                         return true;
@@ -481,12 +480,12 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
             dialog.findViewById(R.id.btnReviewAdd).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    CommonUtil.closeKeyboard(getActivity());
                     if (rbReview.getRating() == 0f) {
                         CommonUtil.alertBox(getActivity(), "", "Rating can not be zero");
                     } else if (TextUtils.isEmpty(etReviewAdd.getText().toString().trim())) {
                         CommonUtil.alertBox(getActivity(), "", "Please enter description");
                     } else {
+                        CommonUtil.closeKeyboard(getActivity());
                         alert.dismiss();
                         addReview(response.optString("orderDetailId"), etReviewAdd.getText().toString().trim(), rbReview.getRating());
                     }

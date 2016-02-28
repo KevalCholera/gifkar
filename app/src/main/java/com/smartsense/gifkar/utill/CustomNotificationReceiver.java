@@ -46,21 +46,21 @@ public class CustomNotificationReceiver extends ParsePushBroadcastReceiver {
     @Override
     public void onPushReceive(Context context, Intent intent) {
 
-        JSONObject jsonObject = getDataFromIntent(intent);
-        if (jsonObject.isNull("subject")) {
+        JSONObject jsonObject1 = getDataFromIntent(intent);
+        if (!jsonObject1.has("aps")) {
             Toast.makeText(context, "Notification Data Null", Toast.LENGTH_SHORT).show();
         } else {
             if (!TextUtils.isEmpty(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, null))) {
-
+                JSONObject jsonObject =jsonObject1.optJSONObject("aps");
                 notifySound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 mBuilder = new NotificationCompat.Builder(context);
                 mBuilder.setSmallIcon(R.mipmap.ic_launcher);
 //                mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
                 mBuilder.setContentTitle(jsonObject.optString("subject"));
                 // mBuilder.setContentText(alert);
-                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,startAppropriateActivity(context, jsonObject.optString("subject"), jsonObject.optString("message"), jsonObject.optString("sentBy")), 0);
+                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,startAppropriateActivity(context, jsonObject.optString("subject"), jsonObject.optString("alert"), jsonObject.optString("sentBy"), jsonObject.optString("notificationId")), 0);
                 mBuilder.setContentIntent(pendingIntent);
-                mBuilder.setContentText(jsonObject.optString("message"));
+                mBuilder.setContentText(jsonObject.optString("alert"));
                 mBuilder.setSound(notifySound);
                 // mBuilder.addAction(R.drawable.accept, "Accept", pIntent);
                 // mBuilder.addAction(R.drawable.cancel, "Cancel", pIntent);
@@ -82,7 +82,7 @@ public class CustomNotificationReceiver extends ParsePushBroadcastReceiver {
         return data;
     }
 
-    private Intent startAppropriateActivity(Context context, String subject, String message, String sentBy) {
+    private Intent startAppropriateActivity(Context context, String subject, String message, String sentBy,String id) {
         // TODO startAppropriateActivity
         Intent intent = null;
         switch (sentBy) {
@@ -90,7 +90,7 @@ public class CustomNotificationReceiver extends ParsePushBroadcastReceiver {
                 intent = new Intent(context, GifkarActivity.class).putExtra("subject", subject).putExtra("message", message).putExtra("check", true);
                 break;
             case "admin":
-                intent = new Intent(context, NotificationActivity.class).putExtra("subject", subject).putExtra("message", message).putExtra("check", true);
+                intent = new Intent(context, NotificationActivity.class).putExtra("id", id).putExtra("subject", subject).putExtra("message", message).putExtra("check", true);
                 break;
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

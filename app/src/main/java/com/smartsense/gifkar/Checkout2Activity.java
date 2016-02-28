@@ -301,9 +301,8 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                         CommonUtil.alertBox(this, "", "Please select time slot for delivery.");
                     } else if (etCheckout2WriteOccasion.getText().toString().equalsIgnoreCase("")) {
                         CommonUtil.alertBox(this, "", "Please enter occasion message.");
-                    } else
-                        doPayment();
-//                        doCheckout();
+                    } else//                        doPayment();
+                        doCheckout();
                     break;
                 default:
             }
@@ -567,7 +566,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
 
         @Override
         protected void onPreExecute() {
-            CommonUtil.showProgressDialog(Checkout2Activity.this,"Wait...");
+            CommonUtil.showProgressDialog(Checkout2Activity.this, "Wait...");
         }
 
         @Override

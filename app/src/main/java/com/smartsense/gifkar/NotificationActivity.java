@@ -57,18 +57,20 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
         getNotification();
         lvNotification.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(final AdapterView<?> adapterView, View view, final int position, long index) {
+                view.setBackgroundColor(NotificationActivity.this.getResources().getColor(R.color.activity_bg));
                 JSONObject getCodeObj = (JSONObject) adapterView.getItemAtPosition(position);
                 android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(NotificationActivity.this);
-                alert.setTitle(getCodeObj.optString("subject"));
-                alert.setMessage(getCodeObj.optString("message"));
+                alert.setTitle(getCodeObj.optJSONObject("notification").optString("subject"));
+                alert.setMessage(getCodeObj.optJSONObject("notification").optString("message"));
                 alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         //Do something here where "ok" clicked
-                        seenNotification();
+
 
                     }
                 });
                 alert.show();
+                seenNotification(false,getCodeObj.optJSONObject("notification").optString("id"));
             }
         });
         if (getIntent().getBooleanExtra("check", false)) {
@@ -82,6 +84,7 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
                 }
             });
             alert.show();
+            seenNotification(false, getIntent().getStringExtra("id"));
         }
 //        View view = (View) inflater.inflate(R.layout.activity_notification, container, false);
 //        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar_gifkar);
@@ -147,11 +150,14 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
     }
 
-    public void seenNotification() {
+    public void seenNotification(Boolean isSeen, String id) {
         final String tag = "seenNotification";
         String url = Constants.BASE_URL + "/mobile/userNotification/update";
         Map<String, String> params = new HashMap<String, String>();
-        params.put("isSeen", "all");
+        if (isSeen)
+            params.put("isSeen", "all");
+        else
+            params.put("notificationId", id);
         params.put("userToken", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, ""));
         params.put("eventId", String.valueOf(Constants.Events.EVENT_SEEN_NOTIFICATION));
         params.put("defaultToken", Constants.DEFAULT_TOKEN);
@@ -188,7 +194,6 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_GET_NOTIFICATION:
                             notificationFill(response);
-                            seenNotification();
                             break;
                         case Constants.Events.EVENT_DEL_NOTIFICATION:
                             getNotification();
