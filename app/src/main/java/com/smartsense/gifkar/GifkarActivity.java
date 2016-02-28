@@ -157,7 +157,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShopListFragment()).commit();
 //        fm.beginTransaction().replace(R.id.fragment_container, frg).commit();
         if (getIntent().getBooleanExtra("check", false)) {
-            checkPush=true;
+            checkPush = true;
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle(getIntent().getStringExtra("subject"));
             alert.setMessage(getIntent().getStringExtra("message"));
@@ -379,9 +379,18 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
 //            iv_image.setColorFilter(getResources().getColor(R.color.iconcolor));
 
             if (position == Constants.NavigationItems.NAV_NOTIFICATIONS) {
-                convertView.setOnClickListener(this);
+
                 tvCount.setVisibility(View.VISIBLE);
-                tvCount.setText(" " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_DJ_WALLET, "0") + " ");
+                tvCount.setText(" " + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_NOTIFICATION_COUNT, "0") + " ");
+                if (!SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
+                    viewLine.setVisibility(View.GONE);
+                    tvTitle.setVisibility(View.VISIBLE);
+                    Log.d("postion", "" + position);
+                    tvTitle.setTextColor(mContext.getResources().getColor(R.color.disable_text));
+                    iv_image.setVisibility(View.VISIBLE);
+                }else{
+                    convertView.setOnClickListener(this);
+                }
             } else if (position == Constants.NavigationItems.NAV_MY_CART) {
                 convertView.setOnClickListener(this);
                 try {
@@ -424,7 +433,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                     viewLine.setVisibility(View.VISIBLE);
 
                 } else if (!SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN)) {
-                    if (position == Constants.NavigationItems.NAV_MY_ORDERS | position == Constants.NavigationItems.NAV_MY_REMINDERS | position == Constants.NavigationItems.NAV_MY_ADDRESSES | position == Constants.NavigationItems.NAV_NOTIFICATIONS) {
+                    if (position == Constants.NavigationItems.NAV_NOTIFICATIONS | position == Constants.NavigationItems.NAV_MY_ORDERS | position == Constants.NavigationItems.NAV_MY_REMINDERS | position == Constants.NavigationItems.NAV_MY_ADDRESSES) {
                         viewLine.setVisibility(View.GONE);
                         tvTitle.setVisibility(View.VISIBLE);
                         Log.d("postion", "" + position);
@@ -575,7 +584,7 @@ public class GifkarActivity extends AppCompatActivity implements View.OnClickLis
                         Log.d("response", response.toString());
                         CommonUtil.cancelProgressDialog();
                         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                        installation.put("UserID", "");
+                        installation.put("userId", "");
 //                                installation.addAllUnique("channels", Arrays.asList("test"));
                         installation.saveInBackground();
                         SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_ID);

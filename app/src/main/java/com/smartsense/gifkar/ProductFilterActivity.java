@@ -9,8 +9,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.mpt.storage.SharedPreferenceUtil;
@@ -24,7 +24,7 @@ import java.util.List;
 public class ProductFilterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView btBack, btInfo;
-    CheckBox cbName, cbPrice;
+    RadioButton cbName, cbPrice;
     private Button btApplyFilter, btnProdCancelFilter;
 
     @Override
@@ -43,8 +43,8 @@ public class ProductFilterActivity extends AppCompatActivity implements View.OnC
         btInfo.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_product_filter);
-        cbName = (CheckBox) findViewById(R.id.cbProdFilterName);
-        cbPrice = (CheckBox) findViewById(R.id.cbProdFilterPrice);
+        cbName = (RadioButton) findViewById(R.id.cbProdFilterName);
+        cbPrice = (RadioButton) findViewById(R.id.cbProdFilterPrice);
         cbName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

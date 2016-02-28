@@ -10,8 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.mpt.storage.SharedPreferenceUtil;
@@ -25,9 +25,9 @@ import java.util.List;
 public class ShopFilterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView btBack, btInfo;
-    private CheckBox cbRatting;
-    private CheckBox cbName;
-    private CheckBox cbMinOrder;
+    private RadioButton cbRatting;
+    private RadioButton cbName;
+    private RadioButton cbMinOrder;
     private Button btApplyFilter;
     private Button btnShopCancelFilter;
 
@@ -47,9 +47,9 @@ public class ShopFilterActivity extends AppCompatActivity implements View.OnClic
         btInfo.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         setContentView(R.layout.activity_shop_filter);
-        cbName = (CheckBox) findViewById(R.id.cbShopFilterName);
-        cbMinOrder = (CheckBox) findViewById(R.id.cbShopFilterMinOrder);
-        cbRatting = (CheckBox) findViewById(R.id.cbShopFilterRatting);
+        cbName = (RadioButton) findViewById(R.id.cbShopFilterName);
+        cbMinOrder = (RadioButton) findViewById(R.id.cbShopFilterMinOrder);
+        cbRatting = (RadioButton) findViewById(R.id.cbShopFilterRatting);
         btApplyFilter = (Button) findViewById(R.id.btnShopApplyFilter);
         btApplyFilter.setOnClickListener(this);
         btnShopCancelFilter = (Button) findViewById(R.id.btnShopCancelFilter);

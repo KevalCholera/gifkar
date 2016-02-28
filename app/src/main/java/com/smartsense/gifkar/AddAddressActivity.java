@@ -1,7 +1,6 @@
 package com.smartsense.gifkar;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -199,6 +198,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
                 if (response.getInt("status") == Constants.STATUS_SUCCESS) {
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_ADD_ADDRESS:
+                            CommonUtil.closeKeyboard(AddAddressActivity.this);
                             CommonUtil.alertBox(AddAddressActivity.this,"","Address Successfully Added.");
 //                            alert.setTitle("Success!");
 //                            alert.setMessage("Address Successfully Added.");
@@ -210,6 +210,7 @@ public class AddAddressActivity extends AppCompatActivity implements View.OnClic
 //                            alert.show();
                             break;
                         case Constants.Events.EVENT_UPDATE:
+                            CommonUtil.closeKeyboard(AddAddressActivity.this);
                             CommonUtil.alertBox(AddAddressActivity.this,"","Address Successfully Updated.");
 //                            alert.setTitle("Success!");
 //                            alert.setMessage("Address Successfully Updated.");

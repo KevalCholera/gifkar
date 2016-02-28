@@ -1,6 +1,5 @@
 package com.smartsense.gifkar;
 
-import android.*;
 import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -12,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.SyncStateContract;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -147,6 +145,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btActionBarBack:
+                CommonUtil.closeKeyboard(this);
                 finish();
                 break;
             case R.id.tVProfileMobileNo:

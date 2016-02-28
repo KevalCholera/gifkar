@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -35,7 +34,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +77,7 @@ public class ProductListActivity extends AppCompatActivity implements View.OnCli
         btActionBarSearch.setOnClickListener(this);
         getSupportActionBar().setCustomView(v);
         Toolbar parent = (Toolbar) v.getParent();
-        parent.setContentInsetsAbsolute(15, 15);
+        parent.setContentInsetsAbsolute(35, 15);
         setContentView(R.layout.activity_product_list);
         viewPager = (ViewPager) findViewById(R.id.vpProdListDetail);
         tabLayout = (TabLayout) findViewById(R.id.tlProdListTabList);

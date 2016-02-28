@@ -98,11 +98,12 @@ public class CitySelectActivity extends AppCompatActivity implements View.OnClic
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_NAME, getCityObj.optString("name"));
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_ID, getCityObj.optString("id"));
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_AREA_PIN_CODE, getCityObj.optString("pincode"));
+                        Log.i("tempCityObj", tempCityObj.toString());
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_ID, tempCityObj.optString("id"));
                         SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_CITY_NAME, tempCityObj.optString("name"));
                         SharedPreferenceUtil.save();
                         flagMode = true;
-//                        Log.i("getCity", getCityObj.toString());
+
                         startActivity(new Intent(CitySelectActivity.this, GifkarActivity.class));
                         finish();
                     }

@@ -71,6 +71,18 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
                 alert.show();
             }
         });
+        if (getIntent().getBooleanExtra("check", false)) {
+            android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(this);
+            alert.setTitle(getIntent().getStringExtra("subject"));
+            alert.setMessage(getIntent().getStringExtra("message"));
+            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    //Do something here where "ok" clicked
+
+                }
+            });
+            alert.show();
+        }
 //        View view = (View) inflater.inflate(R.layout.activity_notification, container, false);
 //        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar_gifkar);
 //        TextView actionBarTitle = (TextView) toolbar.findViewById(R.id.actionBarHomeTitle);
@@ -153,7 +165,8 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
     public void getNotification() {
         final String tag = "notification";
         String url = Constants.BASE_URL + "/mobile/userNotification/get?defaultToken=" + Constants.DEFAULT_TOKEN + "&userToken=" + SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, "") + "&eventId=" + String.valueOf(Constants.Events.EVENT_GET_NOTIFICATION);
-        CommonUtil.showProgressDialog(this, "Wait...");
+        if (!getIntent().getBooleanExtra("check", false))
+            CommonUtil.showProgressDialog(this, "Wait...");
         DataRequest loginRequest = new DataRequest(Request.Method.GET, url, null, this, this);
         loginRequest.setRetryPolicy(new DefaultRetryPolicy(20000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         GifkarApp.getInstance().addToRequestQueue(loginRequest, tag);
@@ -240,10 +253,11 @@ public class NotificationActivity extends AppCompatActivity implements View.OnCl
             else
                 view.setBackgroundColor(activity.getResources().getColor(R.color.textcolorwhite));
 //            if (!notificationObj.optString("notification").equalsIgnoreCase(null)) {
-            if(notificationObj.has("notification")){
-            holder.tvTitle.setText(notificationObj.optJSONObject("notification").optString("subject"));
+            if (notificationObj.has("notification")) {
+                holder.tvTitle.setText(notificationObj.optJSONObject("notification").optString("subject"));
                 holder.tvDate.setText(notificationObj.optJSONObject("notification").optString("startDate"));
-            holder.tvDec.setText(notificationObj.optJSONObject("notification").optString("message"));}
+                holder.tvDec.setText(notificationObj.optJSONObject("notification").optString("message"));
+            }
 //            }
             holder.ivDelete.setOnClickListener(this);
             holder.ivDelete.setTag(notificationObj.toString());

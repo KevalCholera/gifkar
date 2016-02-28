@@ -2,6 +2,7 @@ package com.smartsense.gifkar.utill;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
@@ -49,21 +50,25 @@ public class CustomNotificationReceiver extends ParsePushBroadcastReceiver {
         if (jsonObject.isNull("subject")) {
             Toast.makeText(context, "Notification Data Null", Toast.LENGTH_SHORT).show();
         } else {
-            if (!TextUtils.isEmpty(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, null)))
-                startAppropriateActivity(context, jsonObject.optString("subject"), jsonObject.optString("message"), jsonObject.optString("sentBy"));
-            notifySound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            mBuilder = new NotificationCompat.Builder(context);
-            mBuilder.setSmallIcon(R.drawable.ic_launcher);
-            mBuilder.setContentTitle(context.getResources().getString(R.string.app_name));
-            // mBuilder.setContentText(alert);
-            mBuilder.setContentText(jsonObject.optString("'subject' "));
-            mBuilder.setSound(notifySound);
-            // mBuilder.addAction(R.drawable.accept, "Accept", pIntent);
-            // mBuilder.addAction(R.drawable.cancel, "Cancel", pIntent);
-            mBuilder.setAutoCancel(true);
-            mBuilder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
-            notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-            notificationManager.notify(mNotificationId, mBuilder.build());
+            if (!TextUtils.isEmpty(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_ACCESS_TOKEN, null))) {
+
+                notifySound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                mBuilder = new NotificationCompat.Builder(context);
+                mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+//                mBuilder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
+                mBuilder.setContentTitle(jsonObject.optString("subject"));
+                // mBuilder.setContentText(alert);
+                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,startAppropriateActivity(context, jsonObject.optString("subject"), jsonObject.optString("message"), jsonObject.optString("sentBy")), 0);
+                mBuilder.setContentIntent(pendingIntent);
+                mBuilder.setContentText(jsonObject.optString("message"));
+                mBuilder.setSound(notifySound);
+                // mBuilder.addAction(R.drawable.accept, "Accept", pIntent);
+                // mBuilder.addAction(R.drawable.cancel, "Cancel", pIntent);
+                mBuilder.setAutoCancel(true);
+                mBuilder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
+                notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+                notificationManager.notify(mNotificationId, mBuilder.build());
+            }
         }
     }
 
@@ -77,19 +82,20 @@ public class CustomNotificationReceiver extends ParsePushBroadcastReceiver {
         return data;
     }
 
-    private void startAppropriateActivity(Context context, String subject, String message, String sentBy) {
+    private Intent startAppropriateActivity(Context context, String subject, String message, String sentBy) {
         // TODO startAppropriateActivity
         Intent intent = null;
         switch (sentBy) {
-            case "admin":
-                intent = new Intent(context, GifkarActivity.class).putExtra("subject", subject).putExtra("message", message).putExtra("check",true);
-                break;
             case "system":
-                intent = new Intent(context, NotificationActivity.class).putExtra("subject", subject).putExtra("message", message);
+                intent = new Intent(context, GifkarActivity.class).putExtra("subject", subject).putExtra("message", message).putExtra("check", true);
+                break;
+            case "admin":
+                intent = new Intent(context, NotificationActivity.class).putExtra("subject", subject).putExtra("message", message).putExtra("check", true);
                 break;
         }
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(intent);
+//        context.startActivity(intent);
+        return intent;
     }
 
 }

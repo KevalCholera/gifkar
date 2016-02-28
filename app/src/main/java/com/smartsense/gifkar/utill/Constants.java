@@ -37,7 +37,7 @@ public class Constants {
         public static final String PREF_AREA_ID = "area_id";
         public static final String PREF_AREA_NAME = "area_name";
         public static final String PREF_CATEGORY_ID = "category_id";
-        public static final String PREF_DJ_WALLET = "djwallet";
+        public static final String PREF_NOTIFICATION_COUNT = "count";
         public static final String PREF_ACCESS_TOKEN = "accessToken";
         public static final String PREF_REFER_CODE = "refer_code";
         public static final String PREF_USER_ID = "user_id";

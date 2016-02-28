@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -20,10 +21,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.mpt.storage.SharedPreferenceUtil;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
-import com.smartsense.gifkar.utill.DataBaseHelper;
 import com.smartsense.gifkar.utill.DataRequest;
 import com.smartsense.gifkar.utill.JsonErrorShow;
 
@@ -56,6 +59,7 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
     Calendar mCalendar = Calendar.getInstance();
     Calendar mCalendar1 = Calendar.getInstance();
     final SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
+    private ProgressBar pbShopDetailMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,6 +74,7 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
 //        tvShopDetailOpenTime = (TextView) view.findViewById(R.id.tvShopDetailOpenTime);
 //        tvShopDetailCloseTIme = (TextView) view.findViewById(R.id.tvShopDetailCloseTIme);
         ivShopDetailMap = (ImageView) view.findViewById(R.id.ivShopDetailMap);
+        pbShopDetailMap= (ProgressBar) view.findViewById(R.id.pbShopDetailMap);
         ivShopDetailMap.setOnClickListener(this);
         ivShopTopElementIMG = (NetworkImageView) shopTop.findViewById(R.id.ivShopTopElementIMG);
         llShopDetailDays = (LinearLayout) view.findViewById(R.id.llShopDetailDays);
@@ -86,7 +91,18 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
         ivShopTopElementIMG.setImageUrl(Constants.BASE_URL + "/images/shops/" + response.optString("image"), imageLoader);
         String url = "https://maps.googleapis.com/maps/api/staticmap?size=300x300&markers=color:blue|" + response.optString("latitude") + "," + response.optString("longitude") + "&key=AIzaSyC6skw69zy87ANbkWl_Rq05_LYxkji_4fg";
         tvShopDetailEmail.setTag(response.optString("latitude") + "," + response.optString("longitude"));
-        Glide.with(ShopDetailFragment.this).load(url).centerCrop().into(ivShopDetailMap);
+        Glide.with(ShopDetailFragment.this).load(url).listener(new RequestListener<String, GlideDrawable>() {
+            @Override
+            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                pbShopDetailMap.setVisibility(View.GONE);
+                return false;
+            }
+        }).centerCrop().into(ivShopDetailMap);
         String day = "";
         String open = "";
         String close = "";
@@ -124,11 +140,13 @@ public class ShopDetailFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ivShopDetailMap:
-                StringTokenizer st = new StringTokenizer((String) tvShopDetailEmail.getTag(), ",");
-                String uri = "google.navigation:q=" + st.nextToken() + "," + st.nextToken();
-                Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                mapsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(mapsIntent);
+                if (tvShopDetailEmail.getTag() != null) {
+                    StringTokenizer st = new StringTokenizer((String) tvShopDetailEmail.getTag(), ",");
+                    String uri = "google.navigation:q=" + st.nextToken() + "," + st.nextToken();
+                    Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    mapsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(mapsIntent);
+                }
                 break;
             default:
         }

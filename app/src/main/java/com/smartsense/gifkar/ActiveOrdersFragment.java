@@ -75,7 +75,7 @@ public class ActiveOrdersFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnActiveStartGifiting:
-
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShopListFragment()).commit();
                 break;
             default:
         }

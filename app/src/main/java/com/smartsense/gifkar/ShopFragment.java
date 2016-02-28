@@ -201,23 +201,22 @@ public class ShopFragment extends Fragment implements Response.Listener<JSONObje
                     switch (Integer.valueOf(response.getString("eventId"))) {
                         case Constants.Events.EVENT_SHOP_STATUS:
                             if (response.optJSONObject("data").optInt("shopStatus") == 0) {
-                                android.app.AlertDialog.Builder alertbox = new android.app.AlertDialog.Builder(getActivity());
-                                alertbox.setCancelable(true);
-                                alertbox.setMessage("Sorry this shop is closed for accepting new orders Today. Please check Delivery Timings and Cut of Time.\n" +
+                                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+                                alert.setMessage("Sorry this shop is closed for accepting new orders Today. Please check Delivery Timings and Cut of Time.\n" +
                                         "Do you want to place order for tomorrow or day after?");
-                                alertbox.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface arg0, int arg1) {
+                                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        //Do something here where "ok" clicked
                                         startActivity(new Intent(getActivity(), ProductListActivity.class));
-
-                                    }
-
-                                });
-                                alertbox.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface arg0, int arg1) {
-
                                     }
                                 });
-                                alertbox.show();
+                                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        //Do something here where "Cancel" clicked
+                                        dialog.cancel();
+                                    }
+                                });
+                                alert.show();
                             } else {
                                 startActivity(new Intent(getActivity(), ProductListActivity.class));
                             }

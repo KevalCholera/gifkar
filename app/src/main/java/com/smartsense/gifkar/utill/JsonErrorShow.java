@@ -12,7 +12,7 @@ import com.smartsense.gifkar.StartActivity;
 import org.json.JSONObject;
 
 /**
- * Created by Sanchi on 10/15/2015.
+ * Created by Ronak on 10/15/2015.
  */
 public class JsonErrorShow {
     public static void jsonErrorShow(JSONObject response, Activity a) {
@@ -22,10 +22,10 @@ public class JsonErrorShow {
                 diloagMsgShow(a, msg);
                 break;
             case Constants.ErrorCode.INVALID_CREDENTIALS:
+            case Constants.ErrorCode.UNAUTHORIZED:
                 diloagMsgShow(a, msg);
                 ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                installation.put("UserID", "");
-//                                installation.addAllUnique("channels", Arrays.asList("test"));
+                installation.put("userId", "");
                 installation.saveInBackground();
                 SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_ID);
                 SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_USER_FULLNAME);
@@ -37,12 +37,10 @@ public class JsonErrorShow {
                 SharedPreferenceUtil.save();
                 a.startActivity(new Intent(a, StartActivity.class));
                 a.finish();
-                break;
-            case Constants.ErrorCode.UNAUTHORIZED:
-                SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_ACCESS_TOKEN);
-                SharedPreferenceUtil.save();
-                a.startActivity(new Intent(a, GifkarActivity.class));
-                a.finish();
+//                SharedPreferenceUtil.remove(Constants.PrefKeys.PREF_ACCESS_TOKEN);
+//                SharedPreferenceUtil.save();
+//                a.startActivity(new Intent(a, GifkarActivity.class));
+//                a.finish();
                 break;
             case Constants.ErrorCode.PARAM_MISSING:
                 diloagMsgShow(a, msg);

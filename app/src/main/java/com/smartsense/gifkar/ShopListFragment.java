@@ -125,9 +125,10 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
         getBanner();
         getBottom();
         getShopList();
-        if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN) & GifkarActivity.checkPush) {
-            GifkarActivity.checkPush=false;
+        if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_ACCESS_TOKEN) && !GifkarActivity.checkPush) {
             checkReview();
+        } else {
+            GifkarActivity.checkPush = false;
         }
         return rootView;
     }
@@ -324,9 +325,19 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
     }
 
     @Override
+    public void onStop() {
+        if (handler != null) {
+            handler.removeCallbacks(runnable);
+        }
+        super.onStop();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        handler.postDelayed(runnable, 3000);
+        if (handler != null) {
+            handler.postDelayed(runnable, 3000);
+        }
         CommonUtil.cancelProgressDialog();
     }
 
@@ -481,7 +492,7 @@ public class ShopListFragment extends Fragment implements ViewPager.OnPageChange
                     }
                 }
             });
-            alertDialogs.setCancelable(true);
+            alertDialogs.setCancelable(false);
             alert = alertDialogs.create();
             alert.show();
         } catch (Exception e) {

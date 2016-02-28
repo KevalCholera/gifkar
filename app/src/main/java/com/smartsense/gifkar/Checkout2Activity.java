@@ -25,10 +25,8 @@ import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.RequestFuture;
 import com.mpt.storage.SharedPreferenceUtil;
 import com.payu.india.Model.PaymentParams;
 import com.payu.india.Model.PayuConfig;
@@ -89,8 +87,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
     private PaymentParams mPaymentParams;
     private PayuConfig payuConfig;
     private String salt = "eCwWELxi";
-    RequestQueue queue;
-    RequestFuture<JSONObject> future;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -304,8 +301,9 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
                         CommonUtil.alertBox(this, "", "Please select time slot for delivery.");
                     } else if (etCheckout2WriteOccasion.getText().toString().equalsIgnoreCase("")) {
                         CommonUtil.alertBox(this, "", "Please enter occasion message.");
-                    } else//doPayment();
-                        doCheckout();
+                    } else
+                        doPayment();
+//                        doCheckout();
                     break;
                 default:
             }
@@ -369,7 +367,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
         CommonUtil.closeKeyboard(this);
         mPaymentParams = new PaymentParams();
         mPaymentParams.setKey(merchantKey);
-        mPaymentParams.setAmount(""+getIntent().getDoubleExtra("rs",0));
+        mPaymentParams.setAmount("" + getIntent().getDoubleExtra("rs", 0));
 //        mPaymentParams.setAmount(ge);
         mPaymentParams.setProductInfo(SharedPreferenceUtil.getString(Constants.PrefKeys.SHOP_NAME, ""));
         mPaymentParams.setFirstName(SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_FULLNAME, ""));
@@ -568,6 +566,11 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
     class GetHashesFromServerTask extends AsyncTask<String, String, PayuHashes> {
 
         @Override
+        protected void onPreExecute() {
+            CommonUtil.showProgressDialog(Checkout2Activity.this,"Wait...");
+        }
+
+        @Override
         protected PayuHashes doInBackground(String... postParams) {
             PayuHashes payuHashes = new PayuHashes();
             try {
@@ -651,6 +654,7 @@ public class Checkout2Activity extends AppCompatActivity implements View.OnClick
         @Override
         protected void onPostExecute(PayuHashes payuHashes) {
             super.onPostExecute(payuHashes);
+            CommonUtil.cancelProgressDialog();
             callPayuMoney(payuHashes);
         }
     }

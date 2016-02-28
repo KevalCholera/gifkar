@@ -37,7 +37,6 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
@@ -161,7 +160,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                             if (response.getError() != null) {
                                 // handle error
                             } else {
-                               // String email = me.optString("email");
+                                // String email = me.optString("email");
                                 Log.d("All requested data", me.toString());
                                 try {
                                     String accessToken = AccessToken.getCurrentAccessToken().getToken();
@@ -251,7 +250,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
             mGoogleApiClient.connect();
         } else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
-
         }
     }
 
@@ -430,7 +428,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                                 startActivity(new Intent(getActivity(), MobileNoActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_LOGIN));
                             } else {
                                 ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                                installation.put("UserID", response.getJSONObject("data").getString("userId"));
+                                installation.put("userId", response.getJSONObject("data").getString("userId"));
 //                                installation.addAllUnique("channels", Arrays.asList("test"));
                                 installation.saveInBackground();
                                 SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_USER_ID, response.getJSONObject("data").getString("userId"));
@@ -445,7 +443,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                             break;
                         case Constants.Events.EVENT_SIGNUP:
                             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                            installation.put("UserID", response.getJSONObject("data").getString("userId"));
+                            installation.put("userId", response.getJSONObject("data").getString("userId"));
 //                                installation.addAllUnique("channels", Arrays.asList("test"));
                             installation.saveInBackground();
                             SharedPreferenceUtil.putValue(Constants.PrefKeys.PREF_ACCESS_TOKEN, response.getJSONObject("data").getString("userToken"));
@@ -458,7 +456,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.Connectio
                             break;
                     }
                 } else {
-                    JsonErrorShow.jsonErrorShow(response, getActivity());
+                    if (Constants.Events.EVENT_LOGIN == Integer.valueOf(response.getString("eventId"))) {
+                        CommonUtil.alertBox(getActivity(),"",response.optString("message"));
+                    } else {
+                        JsonErrorShow.jsonErrorShow(response, getActivity());
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();

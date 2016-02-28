@@ -19,8 +19,6 @@ import android.net.Uri;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -52,6 +50,7 @@ public class CommonUtil {
 
     public static void showProgressDialog(Context activity, String msg) {
         pDialog = new ProgressDialog(activity);
+//        pDialog.getIndeterminateDrawable().setColorFilter(0xFFFF0000, android.graphics.PorterDuff.Mode.MULTIPLY);
         pDialog.setMessage(msg);
         pDialog.setCancelable(false);
         pDialog.show();
@@ -74,7 +73,7 @@ public class CommonUtil {
 //        alert.setMessage(msg);
 //        alert.setPositiveButton("OK", null);
 //        alert.show();
-        Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
+        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
     static public ActionBar getActionBar(Activity a) {

@@ -73,7 +73,7 @@ public class PastOrdersFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnPastStartGifiting:
-
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ShopListFragment()).commit();
                 break;
             default:
         }

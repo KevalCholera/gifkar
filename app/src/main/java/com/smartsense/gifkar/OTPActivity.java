@@ -21,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.mpt.storage.SharedPreferenceUtil;
+import com.parse.ParseInstallation;
 import com.smartsense.gifkar.utill.CommonUtil;
 import com.smartsense.gifkar.utill.Constants;
 import com.smartsense.gifkar.utill.DataRequest;
@@ -216,6 +217,9 @@ public class OTPActivity extends AppCompatActivity implements View.OnClickListen
                             if (getIntent().getIntExtra(Constants.SCREEN, 1) == Constants.ScreenCode.SCREEN_FORGOT) {
                                 startActivity(new Intent(this, ChangePasswordActivity.class).putExtra(Constants.SCREEN, Constants.ScreenCode.SCREEN_OTP));
                             } else {
+                                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                                installation.put("userId", SharedPreferenceUtil.getString(Constants.PrefKeys.PREF_USER_ID, ""));
+                                installation.saveInBackground();
                                 if (SharedPreferenceUtil.contains(Constants.PrefKeys.PREF_AREA_PIN_CODE))
                                     startActivity(new Intent(this, GifkarActivity.class));
                                 else

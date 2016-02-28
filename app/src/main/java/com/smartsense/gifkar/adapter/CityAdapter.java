@@ -1,5 +1,6 @@
 package com.smartsense.gifkar.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Html;
@@ -12,7 +13,6 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.smartsense.gifkar.CitySelectActivity;
 import com.smartsense.gifkar.GifkarApp;
 import com.smartsense.gifkar.R;
 
@@ -28,7 +28,7 @@ public class CityAdapter extends BaseAdapter implements Filterable {
     private ItemFilter mFilter = new ItemFilter();
     JSONArray originalDataArray;
     String highlight = null;
-
+    AlertDialog alertDialog;
 
     public CityAdapter(Context context, JSONArray dataArray, Boolean check) {
         this.context = context;
@@ -163,8 +163,14 @@ public class CityAdapter extends BaseAdapter implements Filterable {
 
             results.values = newj;
             results.count = newj.length();
-            if(newj.length()==0){
-                viewDialog();
+            if (newj.length() == 0) {
+                try {
+                    if (!alertDialog.isShowing()) {
+                        viewDialog();
+                    }
+                } catch (Exception e) {
+                    viewDialog();
+                }
 //                CitySelectActivity.titleTextView.setText("");
             }
 
@@ -181,7 +187,7 @@ public class CityAdapter extends BaseAdapter implements Filterable {
     }
 
     public void viewDialog() {
-        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(context);
+        AlertDialog.Builder alert = new AlertDialog.Builder(context);
 //        alert.setTitle("Success!");
         alert.setMessage("Oops either we don't recognized the city/area or we are not operating in that city/area yet. Sorry, please select the city/area name from the list provided.");
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -189,6 +195,7 @@ public class CityAdapter extends BaseAdapter implements Filterable {
 
             }
         });
-        alert.show();
+        alertDialog = alert.create();
+        alertDialog.show();
     }
 }
